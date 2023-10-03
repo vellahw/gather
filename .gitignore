@@ -13,6 +13,8 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+.log
+
 root-context.xml
 
 # Package Files #
@@ -23,6 +25,10 @@ root-context.xml
 *.zip
 *.tar.gz
 *.rar
+
+.DS_Store
+.classpath
+.project
 
 # External tool builders
 .externalToolBuilders/
@@ -67,9 +73,3 @@ root-context.xml
 .cache-main
 .scala_dependencies
 .worksheet
-
-# Uncomment this line if you wish to ignore the project description file.
-# Typically, this file would be tracked if it contains build/dependency configurations:
-#.project
-
-# End of https://www.toptal.com/developers/gitignore/api/eclipse
