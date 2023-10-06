@@ -15,8 +15,6 @@ local.properties
 .recommenders
 .log
 
-root-context.xml
-
 # Package Files #
 *.jar
 *.war
@@ -73,3 +71,6 @@ root-context.xml
 .cache-main
 .scala_dependencies
 .worksheet
+
+# private
+config/

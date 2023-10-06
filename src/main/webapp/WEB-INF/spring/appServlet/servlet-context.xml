@@ -1,28 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/mvc"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:beans="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
-		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+<beans xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:p="http://www.springframework.org/schema/p"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns="http://www.springframework.org/schema/beans"
+   
+   xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xmlns:aop="http://www.springframework.org/schema/aop"
+   xmlns:websocket="http://www.springframework.org/schema/websocket"
+   xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+      http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+      >
 
-	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	
-	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
+	<!-- 전송된 데이터를 자바빈이 아닌 맵으로 받기 위한 설정 -->
+    <mvc:annotation-driven>
+       <mvc:argument-resolvers>
+          <bean class="com.our.gather.common.resolver.CustomMapArgumentResolver"/>
+       </mvc:argument-resolvers>
+    </mvc:annotation-driven>
+    <mvc:interceptors>
+       <mvc:interceptor>
+          <mvc:mapping path="/**"/>
+          <bean id="loggerInterceptor" class="com.our.gather.common.interceptor.LoggerInterceptor"/>
+       </mvc:interceptor>
+    </mvc:interceptors>
 
-	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
-	<resources mapping="/resources/**" location="/resources/" />
+	<!-- 리소스 파일 맵핑 -->
+   	<mvc:resources mapping="/resources/**" location="/resources/" />
 
-	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
-		<beans:property name="suffix" value=".jsp" />
-	</beans:bean>
-	
+    <!-- 뷰리솔버 순서: 이름으로 뷰 전달 -> URL 기반 뷰 전달 -->
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0" />
+   
+    <!-- JSON으로 뷰 전달을 위한 설정 -->
+    <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+    <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver"
+       p:order="1"
+       p:viewClass="org.springframework.web.servlet.view.JstlView"
+       p:prefix="/WEB-INF/views/" p:suffix=".jsp"/>
+
+	<!-- bean 스캔 -->
 	<context:component-scan base-package="com.our.gather" />
 	
-	
-	
-</beans:beans>
+</beans>
