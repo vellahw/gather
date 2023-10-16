@@ -1,4 +1,4 @@
-package com.our.gather.common.domain;
+package com.our.gather.common.common;
 
 import java.util.HashMap;
 import java.util.Map;

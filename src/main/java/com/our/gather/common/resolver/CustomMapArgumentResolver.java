@@ -7,7 +7,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import com.our.gather.common.domain.CommandMap;
+import com.our.gather.common.common.CommandMap;
 
 public class CustomMapArgumentResolver implements HandlerMethodArgumentResolver{
 	@Override
