@@ -1,5 +1,5 @@
 package com.our.gather.moimList.controller;
 
-public class MoimListController {
+public class MoimListController2 {
 
 }
