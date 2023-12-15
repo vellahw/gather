@@ -335,14 +335,14 @@
          <groupId>com.oracle.database.jdbc</groupId>
          <artifactId>ojdbc8</artifactId>
          <version>21.1.0.0</version>
-      </dependency>    
+      </dependency>
    </dependencies>
     
     <!-- 프로젝트의 빌드방법을 지정 -->
     <build>
        <defaultGoal>install</defaultGoal>
       <directory>${basedir}/target</directory>
-      <finalName>sosu</finalName>
+      <finalName>gather</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-eclipse-plugin</artifactId>
