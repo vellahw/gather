@@ -41,6 +41,10 @@
        p:prefix="/WEB-INF/views/" p:suffix=".jsp"/>
 
 	<!-- bean 스캔 -->
-	<context:component-scan base-package="com.our.gather" />
+	<context:component-scan base-package="com.our.gather" >
+
+	<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+
+</context:component-scan>
 	
 </beans>

@@ -1,36 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="moim">
+<mapper namespace="mainPage">
 
    <!-- 메인에서 카테고리 눌렀을때 -->
-   <select id="moimList" parameterType='hashmap'
+   <select id="menu_List" parameterType='hashmap'
       resultType="hashmap">
-      <if test="pageNum != null">
-         <include refid="pagingPre"></include>
-      </if>
-      SELECT ROW_NUMBER() OVER (ORDER BY MO_REGDATE DESC) RNUM,
-      M.*,
-      SUBSTR(MO_TITLE,1,16) AS MOTT,
-      NVL(F.F_SVNAME,0) AS MF_SVNAME,
-      MEM.M_NICKNAME
-      FROM MOIM M, FILE_T F, MEMBER MEM
-      WHERE F.F_DEL_YN(+) = 'N'
-      AND F.F_MAIN_YN(+) = 'Y'
-      AND M.MO_DEL_YN = 'N'
-      AND F.F_TABLE(+) = 'M'
-      AND M.M_IDX = MEM.M_IDX
-      AND M.MO_CATEGORY = #{MO_CATEGORY}
-      AND F.F_ARTICLE(+) = M.MO_IDX
-      AND (CASE WHEN TO_CHAR(M.MO_DEADLINE,'YYMMDD')+'3' 
-     <![CDATA[<=]]> TO_CHAR(SYSDATE,'YYMMDD') AND M.MO_CLOSE_YN = 'Y'
-      THEN 'Y' ELSE 'N' END) = 'N'
-      <if test="MO_REGION != null">
-         AND M.MO_REGION = #{MO_REGION}
-      </if>
-      <if test="pageNum != null">
-         <include refid="pagingPost"></include>
-      </if>
+   	SELECT COMD_CODE
+      	 , COMD_NAME
+         , CODE_OPT1
+         , CODE_OPT2
+	  FROM TB_CODEXD
+     WHERE COMM_CODE = 'CATE_IDXX'
+     ORDER BY COMD_CODE
    </select>
 
    <sql id="pagingPre">
