@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.main.dao.mainDao;
 
+
+
 @Service("mainService")
 public class mainServiceImpl implements mainService {
 	@Resource(name = "mainDao")

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.our.gather.moimList.dao.MoimListDao;
 
-@Service("mainService")
+@Service("MoimListService")
 public class MoimListServiceImpl implements MoimListService {
 	@Resource(name = "moimListDao")
 	private MoimListDao moimListDao;
