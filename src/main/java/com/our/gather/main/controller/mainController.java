@@ -19,21 +19,21 @@ import com.our.gather.main.service.mainService;
 
 @Controller
 public class mainController {
-	
+
 	 @Resource(name="mainService")
 	   private mainService mainService;
-	 
+
 	 @RequestMapping(value = "/gather.com")
 	   public ModelAndView main(HttpSession session, CommandMap commandMap, Model model) throws Exception {
-		 
+
 		  ModelAndView mv = new ModelAndView("/mainPage/mainPage");
-		  
+
 	      List<Map<String, Object>> list  = mainService.menuList(commandMap.getMap(), session, commandMap);
-	      
+
 	      mv.addObject("list", list);
-	      
+
 	      return mv;
-	   
+
 
 	 }
 }

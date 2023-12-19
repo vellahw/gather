@@ -7,6 +7,7 @@ URL :gather/join.com
  -->
 
 <mapper namespace="joinModal">
+
    <!-- 회원가입 -->
    <insert id="join_us" parameterType="hashmap"useGeneratedKeys="true" keyProperty="MO_IDX">
       <selectKey keyProperty="MO_IDX" order="BEFORE" resultType="String">
