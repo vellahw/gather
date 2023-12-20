@@ -14,5 +14,5 @@
 	     WHERE COMM_CODE = 'CATE_IDXX'
 	  ORDER BY COMD_CODE
    </select>
-
+  
 </mapper>
