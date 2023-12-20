@@ -10,9 +10,5 @@ import com.our.gather.common.common.CommandMap;
 
 
 public interface mainService {
-
 	List<Map<String, Object>> menuList(Map<String, Object> map, HttpSession session, CommandMap commandMap) throws Exception;
-
-
-
 }

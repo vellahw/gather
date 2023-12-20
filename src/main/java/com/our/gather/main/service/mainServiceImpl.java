@@ -23,6 +23,5 @@ public class mainServiceImpl implements mainService {
 		// TODO Auto-generated method stub
 
 		return mainDao.menuList(map, commandMap, session);
-
 	}
 }

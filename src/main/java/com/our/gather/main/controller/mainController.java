@@ -15,8 +15,6 @@ import com.our.gather.common.common.CommandMap;
 import com.our.gather.main.service.mainService;
 
 
-
-
 @Controller
 public class mainController {
 
@@ -33,7 +31,5 @@ public class mainController {
 	      mv.addObject("list", list);
 
 	      return mv;
-
-
 	 }
 }
