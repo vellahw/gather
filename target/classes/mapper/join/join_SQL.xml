@@ -408,5 +408,3 @@ URL :gather/join.com
       WHERE MO_IDX = #{MO_IDX}
       ]]>
    </update>
-   
-</mapper>

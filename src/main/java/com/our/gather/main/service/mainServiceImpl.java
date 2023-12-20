@@ -17,12 +17,11 @@ import com.our.gather.main.dao.mainDao;
 public class mainServiceImpl implements mainService {
 	@Resource(name = "mainDao")
 	private mainDao mainDao;
-	
+
 	@Override
 	public List<Map<String, Object>> menuList(Map<String, Object> map, HttpSession session, CommandMap commandMap) throws Exception {
 		// TODO Auto-generated method stub
-		
-		return mainDao.menuList(map, commandMap, session);
 
+		return mainDao.menuList(map, commandMap, session);
 	}
 }
