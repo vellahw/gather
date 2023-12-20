@@ -74,3 +74,4 @@ local.properties
 
 # private
 config/
+target/
