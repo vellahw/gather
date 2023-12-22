@@ -8,12 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
+import com.our.gather.common.dao.commonDao;
 import com.our.gather.common.utils.FileUtils;
 import com.our.gather.join.dao.joinDao;
 
 @Service("joinService")
 public class joinServiceImpl implements joinService {
-
+	
+	@Resource(name = "commonDao")
+	private commonDao commonDao;
+	
 	@Resource(name = "joinDao")
 	private joinDao joinDao;
 
@@ -37,9 +41,10 @@ public class joinServiceImpl implements joinService {
 		List<Map<String, Object>> plist = fileUtils.fileInsert(map, request);
 		
 		for (int i = 0, size = plist.size(); i < size; i++) {
-			//moimDao.moimImg(plist.get(i));
+			commonDao.comFileInsert(map);
 		}
-
+	    
+		
 		joinDao.joinUs(map);
 	}
 }

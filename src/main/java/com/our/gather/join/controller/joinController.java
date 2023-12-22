@@ -21,7 +21,7 @@ public class joinController {
 	   private joinService joinService;
 	 
 	 //회원가입 처리
-	   @RequestMapping(value = "/gather/joinDo.sosu", method = RequestMethod.POST)
+	   @RequestMapping(value = "/gather/joinDo.com", method = RequestMethod.POST)
 	   public ModelAndView userJoin(CommandMap commandMap, HttpServletRequest request) throws Exception {
 
 	      ModelAndView mv = new ModelAndView("main_layout");
