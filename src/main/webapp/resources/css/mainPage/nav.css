@@ -79,12 +79,15 @@ input::placeholder {
 }
 
 .iconContainer {
-    display: flex;
-    flex-direction: column;
+    padding-left: 31px;
+}
+
+.iconLink {
+	display: flex;
+	flex-direction: column;
+    cursor: pointer;
     justify-content: center;
     align-items: center;
-    padding-left: 31px;
-    cursor: pointer;
 }
 
 .icon {
