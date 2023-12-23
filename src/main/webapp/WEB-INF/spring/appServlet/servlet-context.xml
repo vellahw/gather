@@ -30,15 +30,31 @@
 	<!-- 리소스 파일 맵핑 -->
    	<mvc:resources mapping="/resources/**" location="/resources/" />
 
-    <!-- 뷰리솔버 순서: 이름으로 뷰 전달 -> URL 기반 뷰 전달 -->
-    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0" />
+     <!-- <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/> -->
+   <!-- 뷰리솔버 순서: 이름으로 뷰 전달 -> URL 기반 뷰 전달 -->
+   <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0" />
    
-    <!-- JSON으로 뷰 전달을 위한 설정 -->
+   <!-- JSON으로 뷰 전달을 위한 설정 -->
     <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
-    <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver"
-       p:order="1"
-       p:viewClass="org.springframework.web.servlet.view.JstlView"
-       p:prefix="/WEB-INF/views/" p:suffix=".jsp"/>
+   <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver"
+      p:order="2"
+      p:viewClass="org.springframework.web.servlet.view.JstlView"
+      p:prefix="/WEB-INF/views/" p:suffix=".jsp"/>
+      
+   <!-- Tiles 관련 추가 내용-->
+   <!-- Tiles관련 설정파일 -->
+   <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+       <property name="definitions">
+           <list>
+               <value>/WEB-INF/tiles.xml</value>
+           </list>
+       </property>
+   </bean>        
+   <!-- Tiles의 우선순위를 1로 해줌. -->
+   <bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+       <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
+       <property name="order" value="1" />
+   </bean>   
 
 	<!-- bean 스캔 -->
 	<context:component-scan base-package="com.our.gather" >

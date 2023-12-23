@@ -1,16 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>GATHER | 게더? 투게더!</title>
+<link rel="stylesheet" href="/resources/css/mainPage/variable.css">
+<link rel="stylesheet" href="/resources/css/mainPage/nav.css">
 </head>
 <body>
-<c:forEach items="${list}" var="m">
-<td>${m.COMD_CODE}</td>
-<td>${m.COMD_NAME}</td>
-</c:forEach>
+	히히히
 </body>
 </html>

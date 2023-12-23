@@ -25,6 +25,7 @@ public class mainController {
 	   public ModelAndView main(HttpSession session, CommandMap commandMap, Model model) throws Exception {
 
 		  ModelAndView mv = new ModelAndView("/mainPage/mainPage");
+		  mv.setViewName("mainPage");
 
 	      List<Map<String, Object>> list  = mainService.menuList(commandMap.getMap(), session, commandMap);
 

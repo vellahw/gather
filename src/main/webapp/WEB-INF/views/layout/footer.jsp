@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="/resources/css/mainPage/variable.css">
-<link rel="stylesheet" href="/resources/css/mainPage/nav.css">
+<title>Insert title here</title>
 </head>
 <body>
+푸터입니둥
 </body>
 </html>
