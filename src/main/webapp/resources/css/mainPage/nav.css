@@ -1,8 +1,7 @@
 .nav {
     height: 121px;
     padding: 0 171px;
-    /* background-color: var(--color-white); */
-	background-color: #dddddd;
+    background-color: var(--color-white);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -11,11 +10,17 @@
 .leftContainer {
     display: flex;
     align-items: center;
+}
 
+.logoContainer {
+    display: flex;
+    align-items: center;
+	padding-right: 20px;
 }
 
 .logo {
     width: 194px;
+    cursor: pointer;
 }
 
 .menu {
@@ -26,6 +31,7 @@
     font-size: 20px;
     font-weight: 500;
     padding-left: 40px;
+    cursor: pointer;
 }
 
 .rightContainer {
@@ -34,43 +40,60 @@
 
 }
 
-.searchBox {
-    width: 360px;
-    height: 34px;
-    border-radius: 20px;
-    border: 1px solid var(--color-gray);
+.searchContainer {
+    padding-right: 17px;
     display: flex;
     justify-content: right;
     align-items: center;
+    position: relative;
+}
+
+.searchBox {
+    width: 344px;
+    height: 34px;
+    border-radius: 20px;
+    border: 1px solid var(--color-gray);
+    background-color: transparent;
+    outline: none;
+    font-size: 14px;
+    padding: 0 16px;
+}
+
+input::placeholder {
+    color: var(--color-gray);
 }
 
 .searchBtn {
     background-color: transparent;
-    display: flex;
+    position: absolute;
+    right: 30px;
+    height: 24px;
 }
 
 .searchIcon {
     width: 24px;
-    padding-right: 20px;
 }
 
 .userContainer {
     display: flex;
-    background-color: aqua;
 }
 
 .iconContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     padding-left: 31px;
+    cursor: pointer;
 }
 
 .icon {
-    width: 37px;
+    width: 29px;
+    padding-bottom: 3px;
 }
 
 .text {
     color: var(--color-gray);
     font-size: 12px;
-}
+    font-weight: 500;
+} 
