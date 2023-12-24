@@ -5,6 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<title>GATHER | 게더? 투게더!</title>
+<link rel="stylesheet" href="/resources/css/common/nav.css">
+<link rel="stylesheet" href="/resources/css/common/variable.css">
+<link rel="icon" href="/resources/img/logo/favicon.ico">
 </head>
 <body>
 <!-- header -->

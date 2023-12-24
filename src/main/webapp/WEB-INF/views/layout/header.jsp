@@ -3,8 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<link rel="stylesheet" href="/resources/css/mainPage/nav.css">
+
 </head>
 <body>
 <nav class="nav">
@@ -44,5 +43,3 @@
     </div>
   </div>
 </nav>
-</body>
-</html>
