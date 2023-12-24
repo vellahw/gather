@@ -4,9 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="/resources/css/mainPage/variable.css">
-<link rel="stylesheet" href="/resources/css/mainPage/nav.css">
 </head>
 <body>
+<% response.sendRedirect("gather.com"); %>
 </body>
 </html>
