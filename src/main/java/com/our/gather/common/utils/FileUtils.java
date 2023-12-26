@@ -48,7 +48,7 @@ public class FileUtils {
 				
 				if (map.get("USER_NAME") != null) {
 					
-					File file = new File(realPath + "upload/profile" + map.get("USER_NAME") +storedFileName);
+					File file = new File(realPath + "upload/profile/" + map.get("USER_NAME") + "/" + storedFileName);
 					multipartFile.transferTo(file); // 프로필폴더에 업로드 처리
 					
 					// 배경 이미지는 input type = "file" name = "wallPaper" 로
@@ -62,21 +62,21 @@ public class FileUtils {
 					
 				} else if (map.get("GATH_IDXX") != null) {
 					
-					File file = new File(realPath + "upload/gather" + map.get("GATH_IDXX") +storedFileName);
+					File file = new File(realPath + "upload/gather/" + map.get("GATH_IDXX") + "/" + storedFileName);
 					multipartFile.transferTo(file); // 게더폴더에 업로드 처리
 					
 					listMap.put("FILE_IDXX", map.get("GATH_IDXX"));
 
 				} else if (map.get("CLUB_IDXX") != null) {
 					
-					File file = new File(realPath + "upload/club" + map.get("CLUB_IDXX") +storedFileName);
+					File file = new File(realPath + "upload/club/" + map.get("CLUB_IDXX")+ "/" + storedFileName);
 					multipartFile.transferTo(file); // 게더폴더에 업로드 처리
 					
 					listMap.put("FILE_IDXX", map.get("CLUB_IDXX"));
 					
 				} else if (map.get("CHAL_IDXX") != null) {
 									
-					File file = new File(realPath + "upload/challenge" + map.get("CHAL_IDXX") +storedFileName);
+					File file = new File(realPath + "upload/challenge/" + map.get("CHAL_IDXX") + "/" + storedFileName);
 					multipartFile.transferTo(file); // 게더폴더에 업로드 처리
 					
 					listMap.put("FILE_IDXX", map.get("GATH_IDXX"));

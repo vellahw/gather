@@ -23,7 +23,7 @@ public class joinController {
 	private joinService joinService;
 
 	// 아이디 중복 검사
-	@RequestMapping(value = "/join/checkidDo.com")
+	@RequestMapping(value = "/gather/checkidDo.com")
 	@ResponseBody // 자바객체를 다시 HTTP 응답 바디로 변환
 	public Map<String, Object> checkId(@RequestBody HashMap<String, Object> param) throws Exception {
 
@@ -33,8 +33,8 @@ public class joinController {
 	}
 
 	// 닉네임 중복 검사
-	@RequestMapping(value = "/join/checknickDo.com")
-	@ResponseBody //
+	@RequestMapping(value = "/gather/checknickDo.com")
+	@ResponseBody
 	public Map<String, Object> checkNickname(@RequestBody HashMap<String, Object> param) throws Exception {
 
 		Map<String, Object> result = joinService.checkNick(param);
