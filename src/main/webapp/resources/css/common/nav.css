@@ -54,7 +54,7 @@
     width: 344px;
     height: 34px;
     border-radius: 20px;
-    border: 1px solid var(--color-gray);
+    border: 1px solid var(--color-gray500);
     background-color: transparent;
     outline: none;
     font-size: 14px;
@@ -62,7 +62,7 @@
 }
 
 input::placeholder {
-    color: var(--color-gray);
+    color: var(--color-gray500);
 }
 
 .searchBtn {
@@ -98,7 +98,7 @@ input::placeholder {
 }
 
 .text {
-    color: var(--color-gray);
+    color: var(--color-gray500);
     font-size: 12px;
     font-weight: 500;
 } 

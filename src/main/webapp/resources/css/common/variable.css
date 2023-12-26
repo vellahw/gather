@@ -4,7 +4,8 @@
 :root {
     --color-white: #fff;
     --color-black: #171717;
-    --color-gray: #939393;
+    --color-gray500: #939393;
+    --color-gray100 : #D7D7D7;
     --color-red : #FD5631;
     --primary: #FD8731;
   }
@@ -32,4 +33,5 @@
   button {
     cursor: pointer;
     border: none;
+    background-color: transparent;
   }
