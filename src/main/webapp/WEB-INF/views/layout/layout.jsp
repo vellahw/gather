@@ -11,13 +11,14 @@
 <link rel="icon" href="/resources/img/logo/favicon.ico">
 </head>
 <body>
-<!-- header -->
-<tiles:insertAttribute name="header"/>
+<header>
+  <tiles:insertAttribute name="header"/>
+</header>
 	
-<!-- body -->
 <tiles:insertAttribute name="body"/>
-	
-<!-- footer --> 
-<tiles:insertAttribute name="footer"/>
+
+<footer>
+  <tiles:insertAttribute name="footer"/>
+</footer>	
 </body>
 </html>
