@@ -3,7 +3,7 @@
 <!-- 
 	작성자:Hwai
     작성일:23.12.19
-	페이지:gather/join.com
+	페이지:gather/join.com 
  -->
 <mapper namespace="joinModal">
 
@@ -53,10 +53,24 @@
 	            ]]>
 	   </insert>
 
-   <select id= "" parameterType="hashmap"
-      resultType="hashmap">
-     
-    
+   <!-- ID 중복 확인 -->
+   <select id="checkId" resultType="hashmap" parameterType="hashmap">
+      <![CDATA[
+        SELECT CASE WHEN COUNT(*) = 1 THEN '이미 사용중인 이메일입니다.'
+                    ELSE '사용가능한 이메일입니다.' END AS CHECK_ID
+    	  FROM TM_USERXM
+		 WHERE USER_IDXX = #{USER_IDXX}
+    ]]>
+   </select>
+   
+    <!-- 닉네임 중복확인 -->
+   <select id="checkNick" resultType="hashmap" parameterType="hashmap">
+      <![CDATA[
+         SELECT CASE WHEN COUNT(*) = 1 THEN '이미 사용중인 닉네임입니다.'
+                     ELSE '사용가능한 닉네임입니다.' END AS CHECK_NICKNAME
+    	   FROM TM_USERXM
+		  WHERE USER_NICK = #{USER_NICK}
+    ]]>
    </select>
   
 </mapper>
