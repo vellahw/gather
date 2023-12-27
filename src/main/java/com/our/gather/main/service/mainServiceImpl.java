@@ -20,14 +20,12 @@ public class mainServiceImpl implements mainService {
 
 	@Override
 	public List<Map<String, Object>> menuList(Map<String, Object> map, CommandMap commandMap) throws Exception {
-		// TODO Auto-generated method stub
 
 		return mainDao.menuList(map, commandMap);
 	}
 	
 	@Override
 	public List<Map<String, Object>> getGather(Map<String, Object> map, HttpSession session, CommandMap commandMap) throws Exception {
-		// TODO Auto-generated method stub
 
 		return mainDao.getGather(map, commandMap, session);
 	}
