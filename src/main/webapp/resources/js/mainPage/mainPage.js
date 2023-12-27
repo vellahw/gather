@@ -2,7 +2,7 @@
  * 231224 장한원
  */
 
-// document.addEventListener("DOMContentLoaded", function(){
+ document.addEventListener("DOMContentLoaded", function(){
 //   const categoryContainer = document.getElementById('categoryContainer');
   
 //   //새로 생성되는 카테고리 li
@@ -23,4 +23,17 @@
   
 //   //추가해주기
 //   categoryContainer.appendChild(categoryList);
-// })
+
+//const list = document.querySelector('.slideContentsWrap');
+//const btn = document.querySelector('.arrowBtn');
+
+//  list.addEventListener('mouseover', function(){
+  //console.log('gasdgasd');
+    //btn.classList.add('arrowBtn-hover');
+  //});
+
+//  list.addEventListener('mouseleave', function(){
+  //  btn.classList.remove('arrowBtn-hover');
+//});
+
+ })

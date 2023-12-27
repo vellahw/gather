@@ -48,7 +48,7 @@
 
 .areaTitle {
   background: rgb(2,0,36);
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(253,135,49,1) 0%, rgba(202,216,91,1) 100%);
+background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(253,135,49,1) 0%, rgba(216,194,80,1) 65%, rgba(202,216,91,1) 100%);
   color: transparent;
   -webkit-background-clip: text;
 }
@@ -171,8 +171,6 @@
   width: 30px;
   height: 400px;
   border-radius: 8px;
-  visibility: hidden;
-  opacity: 0;
   transition: all 0.2s linear 0s;
 }
 
