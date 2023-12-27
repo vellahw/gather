@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" href="/resources/css/mainPage/mainPage.css">
 <script src="/resources/js/mainPage/mainPage.js"></script>
 
@@ -10,24 +11,30 @@
 </div>
 
 <div class="categoryContainer" id="categoryContainer">
-  <ul class="categoryList">
-  <li class="categoryItem">
-    <a href="#" class="categoryLink">전체</a>
-  </li>
-  <li class="categoryItem">
-    <a href="#" class="categoryLink">
-    <img src="/resources/img/icon/category/sp.png" class="categoryIcon" alt="카테고리 이미지">
-    문화·예술
-    </a>
-  </li>
-  <li class="categoryItem">
-    <a href="#" class="categoryLink">운동·액티비티</a>
-  </li>
-  </ul>
+  <div class="categoryList">
+    <div class="categoryItem">
+      <a href="#" class="categoryLink">전체</a>
+    </div>
+    <c:forEach var="menu" items="${menu}">
+      <c:set var="childCodes" value="${menu.CHILD_CODE}" />
+      <c:set var="length" value="${fn:length(childCodes)}" />
+      <c:if test="${length == 1}">
+        <div class="categoryItem">
+          <a href="${menu.CATE_PATH}" class="categoryLink">
+            <img src="/resources/img/icon/category/sp.png" class="categoryIcon" alt="카테고리 이미지">
+    	    ${menu.CHILD_CATE}
+          </a>
+        </div>
+      </c:if>
+    </c:forEach>
+  </div>
 </div>
 
 <div class="contentsContainer">
-  <h1 class="areaTitle">일일하논님의 취향 저격 게더</h1>
+  <h1 class="areaTitle">
+    일일하논님의 취향 저격 게더
+    <img src="/resources/img/icon/tasteTilteIcon.png" class="areaTitleIcon" alt="타이틀 아이콘">
+  </h1>
   <div class="slideContentsWrap">
     <button type="submit" class="arrowBtn left">
       <img src="/resources/img/icon/arrowL.png" class="arrowLIcon" alt="left arrow">

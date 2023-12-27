@@ -2,12 +2,34 @@
 
 .nav {
     height: 121px;
-    padding: 0 171px;
+    padding: 0 10rem;
     background-color: var(--color-white);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
+@media screen and (max-width: 1426px) {
+	.nav {
+	  padding: 0 4rem;
+	}
+}
+
+@media screen and (max-width: 1138px) {
+	.searchBox {
+	  display: none;
+	  position: static;
+	}
+	
+	.searchBtn {
+	  position: static;
+	}
+	
+	.searchIcon {
+	  width: 29px;
+	}
+}
+
 
 .leftContainer {
     display: flex;
@@ -17,7 +39,7 @@
 .logoContainer {
     display: flex;
     align-items: center;
-	padding-right: 20px;
+	padding-right: 1.25rem;
 }
 
 .logo {
@@ -30,20 +52,18 @@
 }
 
 .menuItem {
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: 500;
-    padding-left: 40px;
+    padding-left: 2.5rem;
     cursor: pointer;
 }
 
 .rightContainer {
     display: flex;
     align-items: center;
-
 }
 
 .searchContainer {
-    padding-right: 17px;
     display: flex;
     justify-content: right;
     align-items: center;
@@ -66,7 +86,6 @@ input::placeholder {
 }
 
 .searchBtn {
-    background-color: transparent;
     position: absolute;
     right: 30px;
     height: 24px;
@@ -81,7 +100,7 @@ input::placeholder {
 }
 
 .iconContainer {
-    padding-left: 31px;
+    padding-left: 1.875rem;
 }
 
 .iconLink {
