@@ -1,9 +1,20 @@
-/**
- * 231224 장한원
- */
-
  document.addEventListener("DOMContentLoaded", function(){
-//   const categoryContainer = document.getElementById('categoryContainer');
+  const buttonContainer = document.querySelector('.slideContentsWrap');
+  const hiddenButton = document.querySelectorAll('.arrowBtn');
+  
+  buttonContainer.addEventListener('mouseenter', () => {
+    for (let i = 0; i < hiddenButton.length; i++) {
+      hiddenButton[i].classList.add('btnHover');
+    }
+  })
+  
+  buttonContainer.addEventListener('mouseleave', () => {
+    for (let i = 0; i < hiddenButton.length; i++) {
+      hiddenButton[i].classList.remove('btnHover');
+    }
+  })
+
+  //   const categoryContainer = document.getElementById('categoryContainer');
   
 //   //새로 생성되는 카테고리 li
 //   let categoryItem = document.createElement('li');
@@ -24,16 +35,5 @@
 //   //추가해주기
 //   categoryContainer.appendChild(categoryList);
 
-//const list = document.querySelector('.slideContentsWrap');
-//const btn = document.querySelector('.arrowBtn');
-
-//  list.addEventListener('mouseover', function(){
-  //console.log('gasdgasd');
-    //btn.classList.add('arrowBtn-hover');
-  //});
-
-//  list.addEventListener('mouseleave', function(){
-  //  btn.classList.remove('arrowBtn-hover');
-//});
-
- })
+	
+})
