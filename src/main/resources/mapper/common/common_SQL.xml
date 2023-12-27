@@ -3,7 +3,8 @@
 
 <mapper namespace="common">
 	
-	<insert id="insertFile" parameterType="hashmap">
+
+	<insert id="insertFile" parameterType="hashMap">
   		<![CDATA[
 	    INSERT INTO TM_FILEXM (
 			       , FILE_IDXX     <!-- 파일 번호 / 파일 유형(각 PK) -->

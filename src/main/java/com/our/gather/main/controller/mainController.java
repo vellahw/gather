@@ -27,9 +27,13 @@ public class mainController {
 		  ModelAndView mv = new ModelAndView("/mainPage/mainPage");
 		  mv.setViewName("mainPage");
 
-	      List<Map<String, Object>> list  = mainService.menuList(commandMap.getMap(), session, commandMap);
+	      List<Map<String, Object>> menu  = mainService.menuList(commandMap.getMap(), commandMap);
+	      
+	      List<Map<String, Object>> gather  = mainService.getGather(commandMap.getMap(), session, commandMap);
 
-	      mv.addObject("list", list);
+	      mv.addObject("menu", menu);  //menu바 menu들
+	      
+	      mv.addObject("gather", gather); //게더 리스트
 
 	      return mv;
 	 }
