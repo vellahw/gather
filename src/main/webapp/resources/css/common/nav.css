@@ -1,0 +1,104 @@
+@charset 'utf-8';
+
+.nav {
+    height: 121px;
+    padding: 0 171px;
+    background-color: var(--color-white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.leftContainer {
+    display: flex;
+    align-items: center;
+}
+
+.logoContainer {
+    display: flex;
+    align-items: center;
+	padding-right: 20px;
+}
+
+.logo {
+    width: 194px;
+    cursor: pointer;
+}
+
+.menu {
+    display: flex;
+}
+
+.menuItem {
+    font-size: 20px;
+    font-weight: 500;
+    padding-left: 40px;
+    cursor: pointer;
+}
+
+.rightContainer {
+    display: flex;
+    align-items: center;
+
+}
+
+.searchContainer {
+    padding-right: 17px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    position: relative;
+}
+
+.searchBox {
+    width: 344px;
+    height: 34px;
+    border-radius: 20px;
+    border: 1px solid var(--color-gray500);
+    background-color: transparent;
+    outline: none;
+    font-size: 14px;
+    padding: 0 16px;
+}
+
+input::placeholder {
+    color: var(--color-gray500);
+}
+
+.searchBtn {
+    background-color: transparent;
+    position: absolute;
+    right: 30px;
+    height: 24px;
+}
+
+.searchIcon {
+    width: 24px;
+}
+
+.userContainer {
+    display: flex;
+}
+
+.iconContainer {
+    padding-left: 31px;
+}
+
+.iconLink {
+	display: flex;
+	flex-direction: column;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon {
+    width: 29px;
+    padding-bottom: 3px;
+}
+
+.text {
+    color: var(--color-gray500);
+    font-size: 12px;
+    font-weight: 500;
+} 

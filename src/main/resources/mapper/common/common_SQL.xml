@@ -3,6 +3,7 @@
 
 <mapper namespace="common">
 	
+
 	<insert id="insertFile" parameterType="hashMap">
   		<![CDATA[
 	    INSERT INTO TM_FILEXM (
