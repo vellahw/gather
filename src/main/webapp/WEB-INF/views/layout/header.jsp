@@ -18,13 +18,13 @@
     <div class="searchContainer">
       <input type="text" class="searchBox" placeholder="관심사, 해시태그, 회원명을 검색해주세요!">
       <button type="submit" class="searchBtn" >
-        <img class="searchIcon" src="/resources/img/icon/navbar/searchIcon.png" alt="로그인">
+        <img class="searchIcon" src="/resources/img/icon/navbar/searchIcon.png" alt="검색버튼">
       </button>
     </div>
     <div class="userContainer">
       <div class="iconContainer">
         <a class="iconLink">
-        <img class="icon" src="/resources/img/icon/navbar/loginIcon.png" alt="로그인">
+        <img class="icon" src="/resources/img/icon/navbar/logoutIcon.png" alt="로그아웃 아이콘">
         <span class="text">Login</span>
         </a>
       </div>
