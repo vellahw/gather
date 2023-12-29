@@ -10,25 +10,8 @@
   <img src="/resources/img/banner/banner.png" class="bannerImg">
 </div>
 
-<div class="categoryContainer" id="categoryContainer">
-  <div class="categoryList">
-    <div class="categoryItem">
-      <a href="#" class="categoryLink">전체</a>
-    </div>
-    <c:forEach var="menu" items="${menu}">
-      <c:set var="childCodes" value="${menu.CHILD_CODE}" />
-      <c:set var="length" value="${fn:length(childCodes)}" />
-      <c:if test="${length == 1}">
-        <div class="categoryItem">
-          <a href="${menu.CATE_PATH}" class="categoryLink">
-            <img src="/resources/img/icon/category/sp.png" class="categoryIcon" alt="카테고리 이미지">
-    	    ${menu.CHILD_CATE}
-          </a>
-        </div>
-      </c:if>
-    </c:forEach>
-  </div>
-</div>
+
+<%@ include file="./components/category.jsp" %>
 
 <div class="contentsContainer">
   <h1 class="areaTitle">
