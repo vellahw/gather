@@ -1,19 +1,3 @@
- document.addEventListener("DOMContentLoaded", function(){
-  const buttonContainer = document.querySelector('.slideContentsWrap');
-  const hiddenButton = document.querySelectorAll('.arrowBtn');
-  
-  buttonContainer.addEventListener('mouseenter', () => {
-    for (let i = 0; i < hiddenButton.length; i++) {
-      hiddenButton[i].classList.add('btnHover');
-    }
-  })
-  
-  buttonContainer.addEventListener('mouseleave', () => {
-    for (let i = 0; i < hiddenButton.length; i++) {
-      hiddenButton[i].classList.remove('btnHover');
-    }
-  })
-
   //   const categoryContainer = document.getElementById('categoryContainer');
   
 //   //새로 생성되는 카테고리 li
@@ -34,6 +18,3 @@
   
 //   //추가해주기
 //   categoryContainer.appendChild(categoryList);
-
-	
-})
