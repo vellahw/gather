@@ -7,7 +7,9 @@
     </div>
     <div class="menuContainer">
       <ul class="menu">
-        <li class="menuItem">게더</li>
+        <li class="menuItem">
+          <span class="itemText">게더</span>
+        </li>
         <li class="menuItem">클럽</li>
         <li class="menuItem">챌린지</li>
         <li class="menuItem">피드</li>

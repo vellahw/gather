@@ -30,10 +30,10 @@
 	}
 }
 
-
 .leftContainer {
     display: flex;
     align-items: center;
+    height: 100%;
 }
 
 .logoContainer {
@@ -49,13 +49,20 @@
 
 .menu {
     display: flex;
+    align-items: center;
+    height: 100%
 }
 
 .menuItem {
     font-size: 1.25rem;
     font-weight: 500;
-    padding-left: 2.5rem;
+    margin-left: 2.5rem;
+    padding-bottom: 2px;
     cursor: pointer;
+}
+
+.menuItem:hover {
+    border-bottom: 4px solid var(--primary);
 }
 
 .rightContainer {
