@@ -34,7 +34,9 @@
             <h3 class="title">아야코록카쿠 전시보러가요</h3>
             <div class="hashtagContainer">
               <!-- hashtag for문 -->
-              <button type="button" class="hashtag">#전시회</button>
+              <button type="button" class="hashtag">
+                #전시회
+              </button>
               <button type="button" class="hashtag">#같이가요</button>
             </div>
             <div class="locationDateContainer">

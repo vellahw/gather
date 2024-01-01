@@ -72,6 +72,17 @@
   color: var(--primary);
   margin-right: 4px;
   margin-bottom: 5px;
+  overflow: hidden;
+  background-image: linear-gradient(var(--primary), var(--primary));
+  background-size: 100% 0;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: all 0.3s ease;
+}
+
+.hashtag:hover {
+  background-size: 100% 100%;
+  color: var(--color-white);
 }
 
 .locationDateContainer {
