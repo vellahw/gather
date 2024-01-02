@@ -1,9 +1,4 @@
-/**
- * 231224 장한원
- */
-
-// document.addEventListener("DOMContentLoaded", function(){
-//   const categoryContainer = document.getElementById('categoryContainer');
+  //   const categoryContainer = document.getElementById('categoryContainer');
   
 //   //새로 생성되는 카테고리 li
 //   let categoryItem = document.createElement('li');
@@ -23,4 +18,3 @@
   
 //   //추가해주기
 //   categoryContainer.appendChild(categoryList);
-// })
