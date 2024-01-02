@@ -39,7 +39,7 @@
 .logoContainer {
   display: flex;
   align-items: center;
-	padding-right: 1.25rem;
+  padding-right: 1.25rem;
 }
 
 .logo {
@@ -56,8 +56,8 @@
 .menuItem {
   font-size: 1.25rem;
   font-weight: 500;
-  margin-left: 2.5rem;
-  padding-bottom: 8px;
+  margin-left: 2rem;
+  padding: 8px 4px 8px 4px;
   cursor: pointer;
   position: relative;
   transition: opacity .2s;
