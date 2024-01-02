@@ -31,8 +31,8 @@ public class mainController {
 	      
           List<Map<String, Object>> gather  = mainService.getGather(commandMap.getMap(), session, commandMap);
 
-	      mv.addObject("menu", menu);  //menu바 menu들
-	      
+          
+	      mv.addObject("category", menu);  //menu바 menu들
 	      mv.addObject("gather", gather); //게더 리스트
 
 	      return mv;
