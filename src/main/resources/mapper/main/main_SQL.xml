@@ -3,22 +3,39 @@
 
 <mapper namespace="mainPage">
 
-   <!-- 메인 카테고리 -->
-   <select id="category" parameterType='hashmap'
+   	 <!-- 부모 카테고리 -->
+   <select id="pCate" parameterType='hashmap'
       resultType="hashmap">
       <![CDATA[
-		   SELECT
-	       		  SUBSTR(COMD_CODE,'1','1')  AS PARENTS_CODE							/* 부모 카테고리 코드 */
-	     		, COMD_CODE AS CHILD_CODE												/* 자식 카테고리 코드 */
-	     		, GETCODENAME('CATE_IDXX',SUBSTR(COMD_CODE,'1','1')) AS PARENTS_CATE	/* 부모 카테고리 이름 */
-	     		, COMD_NAME AS CHILD_CATE    											/* 자식 카테고리 이름 */
-	     		, CODE_OPT1 AS CATE_PATH												/* 자식 카테고리 경로 */
-	     		, CODE_OPT2 AS IMAG_SRCC												/* 자식 카테고리 이미지 경로 */
+		   SELECT 
+	     		  COMD_CODE AS CATE_CODE												/* 부모 카테고리 코드 */
+	     		, COMD_NAME AS CATE_NAME    											/* 부모 카테고리 이름 */
+	     		, CODE_OPT1 AS CATE_PATH												/*  카테고리 경로 */
+	     		, CODE_OPT2 AS IMAG_SRCC												/*  카테고리 이미지 경로 */
 	 		FROM TB_CODEXD
 		   WHERE COMM_CODE = 'CATE_IDXX'
+             AND LENGTH(COMD_CODE) = 1
 		ORDER BY COMD_CODE
 	 ]]>
    </select>
+   
+    <!-- 자식 카테고리 -->
+   <select id="cCate" parameterType='hashmap'
+      resultType="hashmap">
+      <![CDATA[
+		   SELECT 
+	     	      SUBSTR(COMD_CODE,'1','1')  AS PARENTS_CODE							/* 부모 카테고리 코드 */
+                , COMD_CODE AS CATE_CODE												/* 카테고리 코드 */
+	     		, COMD_NAME AS CATE_NAME    											/* 자식 카테고리 이름 */
+	     		, CODE_OPT1 AS CATE_PATH												/* 자식 카테고리 경로 */
+	 		FROM TB_CODEXD
+		   WHERE COMM_CODE = 'CATE_IDXX'
+             AND LENGTH(COMD_CODE) = 3
+		ORDER BY COMD_CODE
+        
+	 ]]>
+   </select>
+   
    
    <!-- 로그인 메인화면 -->
    <select id="mainLoginGather" parameterType='hashmap'

@@ -1,6 +1,7 @@
 
 document.addEventListener("DOMContentLoaded", function(){
 
+
   /**
   * 231224 장한원
   * 동적 카테고리 생성

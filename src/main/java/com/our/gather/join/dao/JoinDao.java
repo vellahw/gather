@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.our.gather.common.dao.AbstractDao;
 
-@Repository("joinDao")
+@Repository("JoinDao")
 public class JoinDao extends AbstractDao {
 
 	// 회원PK채번
