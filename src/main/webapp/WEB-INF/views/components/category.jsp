@@ -10,7 +10,7 @@
 
     <c:forEach var="parentsCate" items="${pCate}">
       <c:set var="parentsCode" value="${parentsCate.CATE_CODE}" />
-      <div class="categoryItem">
+      <div class="categoryItem" data-code="${parentsCode}">
         <a href='./gather.com?cate=<c:out value="${parentsCate.CATE_CODE}"/>' class="categoryLink">
           <img src="/resources/img/icon/category/sp.png" class="categoryIcon" alt="카테고리 이미지"/>
           <c:out value="${parentsCate.CATE_NAME}"/>
