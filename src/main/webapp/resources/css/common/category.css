@@ -60,12 +60,11 @@
   bottom: 0;
   height: 2px;
   background-color: var(--primary);
-  transition: opacity .2s;
 }
 
-.categoryItem:hover::before {
+/* .categoryItem:hover::before {
   opacity: 1;
-}
+} */
 
 .categoryLink {
   display: flex;
@@ -75,14 +74,14 @@
 
 
 .categoryIcon {
-  padding-right: 28px;
+  padding-right: 22px;
   width: 20px;
 }
 
 .childCateList {
   opacity: 0;
   position: absolute;
-  top: 44px;
+  top: 40px;
   right: -120px;
   padding: 11px;
   background-color: var(--primary);
@@ -92,6 +91,7 @@
   width: 280px;
   height: auto;
   margin-top: 10px;
+  transition: all .3s;
 }
 
 .childCateItem {

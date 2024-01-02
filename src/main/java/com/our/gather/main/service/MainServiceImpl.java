@@ -11,9 +11,6 @@ import org.springframework.stereotype.Service;
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.main.dao.MainDao;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Service("MainService")
 public class MainServiceImpl implements MainService {
 	@Resource(name = "MainDao")
