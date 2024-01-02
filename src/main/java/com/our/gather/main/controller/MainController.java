@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.our.gather.common.common.CommandMap;
+import com.our.gather.common.service.CommonService;
 import com.our.gather.main.service.MainService;
 
 
@@ -22,6 +23,9 @@ public class MainController {
 	@Resource(name = "MainService")
 	private MainService mainService;
 
+	@Resource(name = "CommonService")
+	private CommonService commonService;
+
 	@RequestMapping(value = "/gather.com")
 	public ModelAndView main(@RequestParam(value = "type", required = false) String LIST_TYPE,
 			@RequestParam(value = "cate", required = false) String CATE_IDXX, HttpSession session,
@@ -30,8 +34,8 @@ public class MainController {
 		ModelAndView mv = new ModelAndView("/mainPage/mainPage");
 		mv.setViewName("mainPage");
 		
-		List<Map<String, Object>> pCate = mainService.pCate(commandMap.getMap(), commandMap);
-		List<Map<String, Object>> cCate = mainService.cCate(commandMap.getMap(), commandMap);
+		List<Map<String, Object>> pCate = commonService.pCate(commandMap.getMap(), commandMap);
+		List<Map<String, Object>> cCate = commonService.cCate(commandMap.getMap(), commandMap);
 		mv.addObject("pCate",pCate);
 		mv.addObject("cCate",cCate);
 
