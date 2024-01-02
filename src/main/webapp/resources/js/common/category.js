@@ -37,14 +37,10 @@ categoryContainer.addEventListener('mouseenter', (event) => {
   if (target.classList.contains('categoryItem')) {
     // 해당 요소의 자식 요소들을 선택합니다.
     const childList = target.querySelector('.childCateList');
-    const parentsHover = target.querySelector('.parentsHover');
 
     // 자식 요소들과 parentsHover 요소를 보이게 만듭니다.
     if (childList) {
-      childList.style.display = 'block';
-    }
-    if (parentsHover) {
-      parentsHover.style.display = 'block';
+      childList.style.opacity = '1';
     }
   }
 });
@@ -55,13 +51,9 @@ categoryContainer.addEventListener('mouseleave', (event) => {
 
   if (target.classList.contains('categoryItem')) {
     const childList = target.querySelector('.childCateList');
-    const parentsHover = target.querySelector('.parentsHover');
 
     if (childList) {
-      childList.style.display = 'none';
-    }
-    if (parentsHover) {
-      parentsHover.style.display = 'none';
+      childList.style.opacity = '0';
     }
   }
 });
