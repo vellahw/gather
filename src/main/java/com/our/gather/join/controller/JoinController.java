@@ -19,7 +19,7 @@ import com.our.gather.join.service.JoinService;
 @Controller
 public class JoinController {
 
-	@Resource(name = "joinService")
+	@Resource(name = "JoinService")
 	private JoinService joinService;
 
 	// 아이디 중복 검사

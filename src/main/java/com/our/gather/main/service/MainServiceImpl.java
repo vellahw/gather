@@ -20,10 +20,17 @@ public class MainServiceImpl implements MainService {
 	private MainDao mainDao;
 
 	@Override
-	public List<Map<String, Object>> category(Map<String, Object> map, CommandMap commandMap) throws Exception {
+	public List<Map<String, Object>> pCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
 		// TODO Auto-generated method stub
 
-		return mainDao.category(map, commandMap);
+		return mainDao.pCate(map, commandMap);
+	}
+	
+	@Override
+	public List<Map<String, Object>> cCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
+		// TODO Auto-generated method stub
+
+		return mainDao.cCate(map, commandMap);
 	}
 
 	@Override

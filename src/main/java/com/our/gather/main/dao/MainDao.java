@@ -12,14 +12,23 @@ import com.our.gather.common.dao.AbstractDao;
 
 @Repository("MainDao")
 public class MainDao extends AbstractDao {
-	// 메인 카테고리바
+	
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> category(Map<String, Object> map, CommandMap commandMap)
+	public List<Map<String, Object>> pCate(Map<String, Object> map, CommandMap commandMap)
 			throws Exception {
 
-		List<Map<String, Object>> category = (List<Map<String, Object>>) selectList("mainPage.category", map);
+		List<Map<String, Object>> pCate = (List<Map<String, Object>>) selectList("common.pCate", map);
 
-		return category;
+		return pCate;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> cCate(Map<String, Object> map, CommandMap commandMap)
+			throws Exception {
+
+		List<Map<String, Object>> cCate = (List<Map<String, Object>>) selectList("common.cCate", map);
+
+		return cCate;
 	}
 
 	// 로그인시 메인
