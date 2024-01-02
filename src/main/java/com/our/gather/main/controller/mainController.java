@@ -29,7 +29,7 @@ public class mainController {
 
 	      List<Map<String, Object>> menu  = mainService.menuList(commandMap.getMap(), commandMap);
 	      
-	      List<Map<String, Object>> gather  = mainService.getGather(commandMap.getMap(), session, commandMap);
+          List<Map<String, Object>> gather  = mainService.getGather(commandMap.getMap(), session, commandMap);
 
 	      mv.addObject("menu", menu);  //menu바 menu들
 	      
