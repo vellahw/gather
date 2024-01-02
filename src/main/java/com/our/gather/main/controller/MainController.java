@@ -30,9 +30,10 @@ public class MainController {
 		ModelAndView mv = new ModelAndView("/mainPage/mainPage");
 		mv.setViewName("mainPage");
 		
-		List<Map<String, Object>> category = mainService.category(commandMap.getMap(), commandMap);
-		mv.addObject("category", category); // 카테고리바
-		
+		List<Map<String, Object>> pCate = mainService.pCate(commandMap.getMap(), commandMap);
+		List<Map<String, Object>> cCate = mainService.cCate(commandMap.getMap(), commandMap);
+		mv.addObject("pCate",pCate);
+		mv.addObject("cCate",cCate);
 
 		if (LIST_TYPE == null && CATE_IDXX == null) {
 
@@ -48,7 +49,6 @@ public class MainController {
 			
 		} else if(LIST_TYPE == null && CATE_IDXX != null){
 			ModelAndView mv2 = new ModelAndView("/listPage/list");
-			mv2.addObject("category", category); // menu바
 			mv2.setViewName("list");
 			mv2.addObject("list", mainService.getGather(commandMap.getMap(), session, commandMap)); // 게더
 

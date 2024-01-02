@@ -12,13 +12,13 @@ import com.our.gather.common.dao.CommonDao;
 import com.our.gather.common.utils.FileUtils;
 import com.our.gather.join.dao.JoinDao;
 
-@Service("joinService")
+@Service("JoinService")
 public class JoinServiceImpl implements JoinService {
 
-	@Resource(name = "commonDao")
+	@Resource(name = "CommonDao")
 	private CommonDao commonDao;
 
-	@Resource(name = "joinDao")
+	@Resource(name = "JoinDao")
 	private JoinDao joinDao;
 
 	@Resource(name = "fileUtils")

@@ -12,7 +12,7 @@
 </div>
 
 
-<%@ include file="./components/category.jsp" %>
+<%@ include file="../components/category.jsp" %>
 
 <div class="contentsContainer">
   <h1 class="areaTitle">
