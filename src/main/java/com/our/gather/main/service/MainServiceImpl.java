@@ -11,11 +11,10 @@ import org.springframework.stereotype.Service;
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.main.dao.MainDao;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Service("MainService")
 public class MainServiceImpl implements MainService {
+	
+	
 	@Resource(name = "MainDao")
 	private MainDao mainDao;
 
@@ -54,6 +53,9 @@ public class MainServiceImpl implements MainService {
 		if (session.getAttribute("USER_NUMB") != null) {
 
 			commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
+		} else {
+			
+			commandMap.put("USER_NUMB", "null");
 		}
 
 		return mainDao.getGather(map, commandMap, session);
