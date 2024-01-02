@@ -4,10 +4,10 @@
 	작성자:Hwai
     작성일:23.12.19
 	페이지:gather/join.com 
- -->
+-->
 <mapper namespace="joinModal">
 
-   <!-- 회원번호 채번-->
+   <!--   회원번호 채번 -->
    <select id="getUserPK" resultType="hashmap" parameterType="hashmap" >
          <![CDATA[
         SELECT 'UR' ||TO_CHAR(SYSDATE, 'YYMM') ||LPAD(NVL(MAX(CAST(SUBSTR(USER_NUMB,7,4) AS NUMBER))+1,1),4,'0') AS USER_NUMB  --회원번호 채번
@@ -16,44 +16,44 @@
          ]]>
    </select>
 
-	   <!-- 회원가입 -->
+	   <!--  회원가입 -->
 	   <insert id="joinUs" parameterType="hashmap" useGeneratedKeys="true" keyProperty="USER_NUMB">
 	        <![CDATA[
 	       INSERT INTO TM_USERXM (
-					      USER_NUMB  <!-- 회원번호 -->
-					    , USER_NAME  <!-- 회원이름 -->
-					    , REGI_NUMB  <!-- 주민등록번호 7자리 -->
-					    , USER_NICK  <!-- 닉네임 -->
-					    , USER_IDXX  <!-- 아이디 -->
-					    , PASS_WORD  <!-- 비밀번호 -->
-					    , CELL_NUMB  <!-- 휴대폰번호 -->
-					    , FILE_SVNM  <!-- 프로필사진 -->
-					    , SELF_INTR  <!-- 자기소개 -->
-					    , DONG_CODE  <!-- 시군구코드 -->
-					    , REGI_DATE  <!-- 가입일 -->
-					    , QUST_CODE  <!-- 회원가입시 받는 질문코드 -->
-					    , ANSR_CODE  <!-- 질문에 대한 답 -->
-					    , BANN_DATE  <!-- 정지일 -->
+					      USER_NUMB  /* 회원번호 */
+					    , USER_NAME  /* 회원이름 */
+					    , REGI_NUMB  /* 주민등록번호 7자리 */
+					    , USER_NICK  /* 닉네임 */
+					    , USER_IDXX  /* 아이디 */
+					    , PASS_WORD  /* 비밀번호 */
+					    , CELL_NUMB  /* 휴대폰번호 */
+					    , FILE_SVNM  /* 프로필사진 */
+					    , SELF_INTR  /* 자기소개 */
+					    , DONG_CODE  /* 시군구코드 */
+					    , REGI_DATE  /* 가입일 */
+					    , QUST_CODE  /* 회원가입시 받는 질문코드 */
+					    , ANSR_CODE  /* 질문에 대한 답 */
+					    , BANN_DATE  /* 정지일 */
 			) VALUES (
-					      #{USER_NUMB}  <!-- 회원번호 -->
-					    , #{USER_NAME}  <!-- 회원이름 -->
-					    , #{REGI_NUMB}  <!-- 주민등록번호 7자리 -->
-					    , #{USER_NICK}  <!-- 닉네임 -->
-					    , #{USER_IDXX}  <!-- 아이디 -->
-					    , #{PASS_WORD}  <!-- 비밀번호 -->
-					    , #{CELL_NUMB}  <!-- 휴대폰번호 -->
-					    , #{FILE_SVNM}  <!-- 프로필사진 -->
-					    , #{SELF_INTR}  <!-- 자기소개 -->
-					    , #{DONG_CODE}  <!-- 시군구코드 -->
-					    , SYSDATE       <!-- 가입일 -->
-					    , #{QUST_CODE}  <!-- 회원가입시 받는 질문코드 -->
-					    , #{ANSR_CODE}  <!-- 질문에 대한 답 -->
-					    , NULL          <!-- 정지일 -->
+					      #{USER_NUMB}  /* 회원번호 */
+					    , #{USER_NAME}  /* 회원이름 */
+					    , #{REGI_NUMB}  /* 주민등록번호 7자리 */
+					    , #{USER_NICK}  /* 닉네임 */
+					    , #{USER_IDXX}  /* 아이디 */
+					    , #{PASS_WORD}  /* 비밀번호 */
+					    , #{CELL_NUMB}  /* 휴대폰번호 */
+					    , #{FILE_SVNM}  /* 프로필사진 */
+					    , #{SELF_INTR}  /* 자기소개 */
+					    , #{DONG_CODE}  /* 시군구코드 */
+					    , SYSDATE       /* 가입일 */
+					    , #{QUST_CODE}  /* 회원가입시 받는 질문코드 */
+					    , #{ANSR_CODE}  /* 질문에 대한 답 */
+					    , NULL          /* 정지일 */
 					   )
 	            ]]>
 	   </insert>
 
-   <!-- ID 중복 확인 -->
+   <!--   ID 중복 확인 -->
    <select id="checkId" resultType="hashmap" parameterType="hashmap">
       <![CDATA[
         SELECT CASE WHEN COUNT(*) = 1 THEN '이미 사용중인 이메일입니다.'
@@ -70,6 +70,34 @@
                      ELSE '사용가능한 닉네임입니다.' END AS CHECK_NICKNAME
     	   FROM TM_USERXM
 		  WHERE USER_NICK = #{USER_NICK}
+    ]]>
+   </select>
+   
+   <!-- 로그인 -->
+   <select id="login" resultType="hashmap" parameterType="hashmap">
+      <![CDATA[
+     SELECT 
+       		USER_NUMB
+     	  , getCodeName('USER_TYPE',SUBSTR(USER_NUMB,1,2)) AS USER_TYPE
+     	  , USER_NAME
+     	  , USER_NICK
+          , CASE WHEN LENGTH(FILE_SVNM) > 32 
+                	  THEN '/resources/img/upload/profile/'|| USER_NUMB ||'/'|| FILE_SVNM 
+               	 	  ELSE '/resources/img/basic/profile/' || FILE_SVNM 
+                  END AS USER_IMAG 							
+     	  , SUBSTR(REGI_NUMB, 1, 6) AS USER_BIRTH
+          , CASE 
+            	 WHEN MOD(TO_NUMBER(SUBSTR(REGI_NUMB, 7, 1)), 2) = 1 THEN 'M'
+            	 ELSE 'W'
+        	 END AS USER_GNDR
+     	  , CASE
+            	 WHEN BANN_DATE IS NULL
+                 THEN 'N'
+            ELSE 'Y'
+        	 END AS BANN_YSNO
+  		    FROM TM_USERXM
+ 		   WHERE USER_IDXX = 'user1@example.com'
+   			 AND PASS_WORD = 'password1'
     ]]>
    </select>
   

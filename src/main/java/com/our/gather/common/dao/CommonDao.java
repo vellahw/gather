@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.our.gather.common.dao.AbstractDao;
 
 @Repository("commonDao")
-public class commonDao extends AbstractDao {
+public class CommonDao extends AbstractDao {
 
 	
 	// 회원가입

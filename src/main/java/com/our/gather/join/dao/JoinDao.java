@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.our.gather.common.dao.AbstractDao;
 
 @Repository("joinDao")
-public class joinDao extends AbstractDao {
+public class JoinDao extends AbstractDao {
 
 	// 회원PK채번
 	@SuppressWarnings("unchecked")

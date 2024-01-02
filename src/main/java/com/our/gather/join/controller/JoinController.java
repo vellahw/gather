@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.our.gather.common.common.CommandMap;
-import com.our.gather.join.service.joinService;
+import com.our.gather.join.service.JoinService;
 
 @Controller
-public class joinController {
+public class JoinController {
 
 	@Resource(name = "joinService")
-	private joinService joinService;
+	private JoinService joinService;
 
 	// 아이디 중복 검사
 	@RequestMapping(value = "/gather/checkidDo.com")

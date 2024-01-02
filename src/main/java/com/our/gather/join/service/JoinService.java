@@ -4,7 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-public interface joinService {
+public interface JoinService {
 
 	// 회원PK채번
 	Map<String, Object> getUserPK(Map<String, Object> map) throws Exception;
