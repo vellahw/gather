@@ -8,18 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
-import com.our.gather.common.dao.commonDao;
+import com.our.gather.common.dao.CommonDao;
 import com.our.gather.common.utils.FileUtils;
-import com.our.gather.join.dao.joinDao;
+import com.our.gather.join.dao.JoinDao;
 
 @Service("joinService")
-public class joinServiceImpl implements joinService {
+public class JoinServiceImpl implements JoinService {
 
 	@Resource(name = "commonDao")
-	private commonDao commonDao;
+	private CommonDao commonDao;
 
 	@Resource(name = "joinDao")
-	private joinDao joinDao;
+	private JoinDao joinDao;
 
 	@Resource(name = "fileUtils")
 	private FileUtils fileUtils;

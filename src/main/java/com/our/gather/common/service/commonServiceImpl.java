@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
-import com.our.gather.common.dao.commonDao;
+import com.our.gather.common.dao.CommonDao;
 import com.our.gather.common.utils.FileUtils;
 
 @Service("commonService")

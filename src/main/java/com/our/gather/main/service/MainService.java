@@ -9,9 +9,11 @@ import com.our.gather.common.common.CommandMap;
 
 
 
-public interface mainService {
+public interface MainService {
 	
-	List<Map<String, Object>> menuList(Map<String, Object> map, CommandMap commandMap) throws Exception;
+	List<Map<String, Object>> category(Map<String, Object> map, CommandMap commandMap) throws Exception;
+	
+	List<Map<String, Object>> loginMainGather(Map<String, Object> map, HttpSession session, CommandMap commandMap) throws Exception;
 	
 	List<Map<String, Object>> getGather(Map<String, Object> map, HttpSession session, CommandMap commandMap) throws Exception;
 }

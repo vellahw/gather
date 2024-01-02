@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	작성자:Hwai
+    작성일:23.12.27
+	페이지:gather/join.com 
+-->
+<mapper namespace="login">
+
+   <!-- 로그인 -->
+   <select id="login" resultType="hashmap" parameterType="hashmap">
+      <![CDATA[
+     SELECT 
+       		USER_NUMB
+     	  , getCodeName('USER_TYPE',SUBSTR(USER_NUMB,1,2)) AS USER_TYPE
+     	  , USER_NAME
+     	  , USER_NICK
+          , CASE WHEN LENGTH(FILE_SVNM) > 32 
+                	  THEN '/resources/img/upload/profile/'|| USER_NUMB ||'/'|| FILE_SVNM 
+               	 	  ELSE '/resources/img/basic/profile/' || FILE_SVNM 
+                  END AS USER_IMAG 							
+     	  , SUBSTR(REGI_NUMB, 1, 6) AS USER_BIRTH
+     	  , SUBSTR(REGI_NUMB, 7) AS USER_JUMIN2
+          , CASE 
+            	 WHEN MOD(TO_NUMBER(SUBSTR(REGI_NUMB, 7, 1)), 2) = 1 THEN 'M'
+            	 ELSE 'W'
+        	 END AS USER_GNDR
+     	  , CASE
+            	 WHEN BANN_DATE IS NULL
+                 THEN 'N'
+            ELSE 'Y'
+        	 END AS BANN_YSNO
+  		    FROM TM_USERXM
+ 		   WHERE USER_IDXX = 'user1@example.com'
+   			 AND PASS_WORD = 'password1'
+    ]]>
+   </select>
+  
+</mapper>

@@ -3,87 +3,171 @@
 
 <mapper namespace="mainPage">
 
-   <!-- 메인에서 카테고리 눌렀을때 -->
-   <select id="menu_List" parameterType='hashmap'
+   <!-- 메인 카테고리 -->
+   <select id="category" parameterType='hashmap'
       resultType="hashmap">
       <![CDATA[
 		   SELECT
-	       		  SUBSTR(COMD_CODE,'1','1')  AS PARENTS_CODE
-	     		, COMD_CODE AS CHILD_CODE
-	     		, GETCODENAME('CATE_IDXX',SUBSTR(COMD_CODE,'1','1')) AS PARENTS_CATE
-	     		, COMD_NAME AS CHILD_CATE    
-	     		, CODE_OPT1 AS CATE_PATH
-	     		, CODE_OPT2 AS IMAG_SRCC
+	       		  SUBSTR(COMD_CODE,'1','1')  AS PARENTS_CODE							/* 부모 카테고리 코드 */
+	     		, COMD_CODE AS CHILD_CODE												/* 자식 카테고리 코드 */
+	     		, GETCODENAME('CATE_IDXX',SUBSTR(COMD_CODE,'1','1')) AS PARENTS_CATE	/* 부모 카테고리 이름 */
+	     		, COMD_NAME AS CHILD_CATE    											/* 자식 카테고리 이름 */
+	     		, CODE_OPT1 AS CATE_PATH												/* 자식 카테고리 경로 */
+	     		, CODE_OPT2 AS IMAG_SRCC												/* 자식 카테고리 이미지 경로 */
 	 		FROM TB_CODEXD
 		   WHERE COMM_CODE = 'CATE_IDXX'
 		ORDER BY COMD_CODE
 	 ]]>
    </select>
    
-    <!-- 메인에서 카테고리 눌렀을때 -->
+   <!-- 로그인 메인화면 -->
+   <select id="mainLoginGather" parameterType='hashmap'
+      resultType="hashmap">
+      <![CDATA[
+         SELECT /*로그인 메인화면*/
+         		  RNUM
+                , TYPE                
+                , GATH_IDXX
+                , GATH_TITL
+                , GATH_CNTT
+                , GATH_IMAG
+                , CATE_IDXX
+                , PARENTS_CATE
+                , CHILD_CATE
+                , PRES_PEOP
+                , APPR_YSNO
+                , MOIM_AGEE
+                , APPR_GNDR
+                , REGI_NAME
+                , USER_NICK
+                , USER_IMAG
+                , SMAL_DATE
+                , FULL_DATE
+                , LIKE_COUNT
+                , REGG_DATE
+             FROM (
+                  	(
+                    	SELECT  ROW_NUMBER() OVER (ORDER BY REGG_DATE DESC) RNUM
+                              , 'Taste' AS TYPE
+                    		  , GATH_IDXX
+                    		  , GATH_TITL
+                    		  , GATH_CNTT
+		                      , GATH_IMAG
+		                      , CATE_IDXX
+		                      , PARENTS_CATE
+		                      , CHILD_CATE
+		                      , PRES_PEOP
+		                      , APPR_YSNO
+		                      , MOIM_AGEE
+		                      , APPR_GNDR
+		                      , REGI_NAME
+		                      , USER_NICK
+		                      , USER_IMAG
+		                      , SMAL_DATE
+		                      , FULL_DATE
+		                      , LIKE_COUNT
+		                      , REGG_DATE
+		                   FROM VW_GATHER
+		                  WHERE CATE_IDXX IN ( 
+                                    		  SELECT CATE_IDXX
+                                       			FROM TB_URCATE
+                                      		   WHERE USER_NUMB = 'UR23120001')
+                 )
+        UNION ALL
+                (
+		        			SELECT ROW_NUMBER() OVER (ORDER BY REGG_DATE DESC) RNUM
+			                     ,'Hot' AS TYPE
+			                     , GATH_IDXX
+			                     , GATH_TITL
+			                     , GATH_CNTT
+			                     , GATH_IMAG
+			                     , CATE_IDXX
+			                     , PARENTS_CATE
+			                     , CHILD_CATE
+			                     , PRES_PEOP
+			                     , APPR_YSNO
+			                     , MOIM_AGEE
+			                     , APPR_GNDR
+			                     , REGI_NAME
+			                     , USER_NICK
+			                     , USER_IMAG
+			                     , SMAL_DATE
+			                     , FULL_DATE
+			                     , LIKE_COUNT
+			                     , REGG_DATE
+			                  FROM VW_GATHER
+			                 WHERE (MEMB_COUNT/MAXX_PEOP)*100 > 70
+                 )
+        UNION ALL
+                 (
+                  			SELECT ROW_NUMBER() OVER (ORDER BY REGG_DATE DESC) RNUM
+			                     , 'Region' AS TYPE
+			                     , GATH_IDXX
+			                     , GATH_TITL
+			                     , GATH_CNTT
+			                     , GATH_IMAG
+			                     , CATE_IDXX
+			                     , PARENTS_CATE
+			                     , CHILD_CATE
+			                     , PRES_PEOP
+			                     , APPR_YSNO
+			                     , MOIM_AGEE
+			                     , APPR_GNDR
+			                     , REGI_NAME
+			                     , USER_NICK
+			                     , USER_IMAG
+			                     , SMAL_DATE
+			                     , FULL_DATE
+			                     , LIKE_COUNT
+			                     , REGG_DATE
+			                  FROM VW_GATHER
+			                 WHERE REGI_CODE IN ( 
+			                                     SELECT REGI_CODE
+			                                       FROM TB_URREGI
+			                                      WHERE USER_NUMB = 'UR23120001')
+			                 )
+                 		)
+                 WHERE RNUM <= 8
+      ]]>
+   </select>
+   
    <select id="getGather" parameterType='hashmap'
       resultType="hashmap">
       <![CDATA[
-	      SELECT /* 모임 검색 */
-                  A.GATH_IDXX                                              /*게더 ID*/
-                , A.GATH_TITL                                              /*게더 제목*/
-               , A.GATH_CNTT                                             /*게더 내용*/
-               , 'upload/gather/' || A.GATH_IDXX ||'/'|| A.FILE_SVNM AS GATH_IMAG      /*게더 대표이미지*/
-               , getCodeName('CATE_IDXX',SUBSTR(A.CATE_IDXX,'1','1')) AS PARENTS_CATE  /*상위 카테고리*/
-               , getCodeName('CATE_IDXX', A.CATE_IDXX) AS CHILD_CATE                /*하위 카테고리*/
-               , CASE WHEN D.MEMB_COUNT IS NULL 
-                        THEN  0 ||'/'|| A.MAXX_PEOP 
-                      ELSE D.MEMB_COUNT||'/'|| A.MAXX_PEOP 
-                     END AS PRES_PEOP                                          /*현재 인원*/
-               , A.APPR_YSNO -- 승인여부
-               , CASE WHEN A.MINN_AGEE = 0 AND A.MAXX_AGEE = 100
-                      THEN '나이제한없음'
-                      ELSE A.MINN_AGEE ||'~' || A.MAXX_AGEE || '세'
-                      END AS MOIM_AGEE                                       /*모임 나이제한*/
-               , CASE WHEN A.APPR_GNDR IS NULL
-                      THEN ' '
-                      ELSE getCodeName('COMM_GNDR',APPR_GNDR) ||'만'
-                   END AS APPR_GNDR                                          /*모임 성별제한*/
-               , getCodeName('REGI_CODE', A.REGI_CODE) AS REGI_NAME                /* 지역 */
-               , A.USER_NUMB                                              /*방장 회원번호*/
-               , B.USER_NICK                                              /*방장 닉네임*/
-               , CASE WHEN LENGTH(B.FILE_SVNM) > 32 
-                      THEN '/resources/img/upload/profile/'|| B.USER_NUMB ||'/'||B.FILE_SVNM 
-                         ELSE '/resources/img/basic/profile/' || B.FILE_SVNM 
-                   END AS USER_IMAG                                        /*방장 프로필사진*/
-               , TO_CHAR(A.MOIM_DATE, 'MM.DD(DY)') || formatTime(A.MOIM_TIME) AS SMAL_DATE
-               , formatDate(A.MOIM_DATE) ||' '|| formatTime(A.MOIM_TIME) AS FULL_DATE
-               , CASE WHEN C.LIKE_COUNT IS NOT NULL
-                      THEN C.LIKE_COUNT
-                      ELSE 0 
-                   END AS LIKE_COUNT                                       /*좋아요 갯수*/
-                     ]]>
-                   <if test="USER_NUMB != null"> 
-                  <![CDATA[                                                     
-               , getAmILike(A.GATH_IDXX, #{USER_NUMB}) AS AMII_LIKE               /*로그인회원 좋아요 유무*/
-               , getAmIBkmk(A.GATH_IDXX, #{USER_NUMB}) AS AMII_BKMK               /*로그인회원 북마크 유무 */
+       	  SELECT               
+                  GATH_IDXX
+                , GATH_TITL
+                , GATH_CNTT
+                , GATH_IMAG
+                , CATE_IDXX
+                , PARENTS_CATE
+                , CHILD_CATE
+                , PRES_PEOP
+                , APPR_YSNO
+                , MOIM_AGEE
+                , APPR_GNDR
+                , REGI_NAME
+                , USER_NICK
+                , USER_IMAG
+                , SMAL_DATE
+                , FULL_DATE
+                , LIKE_COUNT
+                , REGG_DATE
                  ]]>
-                  </if>
-                  <![CDATA[   
-             FROM TM_GATHER A
-       LEFT JOIN TM_USERXM B
-             ON A.USER_NUMB = B.USER_NUMB
-       LEFT JOIN (SELECT COUNT(*) AS LIKE_COUNT               
-                       , LIKE_IDXX 
-                    FROM TM_HEARTS      
-                   WHERE DELT_YSNO = 'N'
-                GROUP BY LIKE_IDXX
-                ) C
-             ON A.GATH_IDXX = C.LIKE_IDXX
-       LEFT JOIN (SELECT COUNT(*) AS MEMB_COUNT
-                       , MOIM_IDXX
-                    FROM TB_MEMBER
-                  WHERE BANN_YSNO = 'N'
-                    AND ENDD_YSNO = 'N'
-               GROUP BY MOIM_IDXX
-                      ) D
-             ON A.GATH_IDXX = D.MOIM_IDXX
-           WHERE A.DELT_YSNO = 'N'
-	 ]]>
+                 <if test="USER_NUMB != null">
+      			 	<![CDATA[
+                , getAmILike (GATH_IDXX, #{USER_NUMB}) AS LIKE_YSNO
+                , getAmIBkmk (GATH_IDXX, #{USER_NUMB}) AS BKMK_YSNO					/*북마크 유무*/
+                  	]]>
+     			 </if>
+     			  <![CDATA[
+			FROM VW_GATHER
+		   WHERE 1=1
+      ]]>
+      <if test="CATE_IDXX != null">
+      	 <![CDATA[
+         AND CATE_IDXX LIKE '%'||#{CATE_IDXX}||'%'
+         ]]>
+      </if>
    </select>
 </mapper>
