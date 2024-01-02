@@ -80,7 +80,7 @@
 }
 
 .childCateList {
-  display: none;
+  opacity: 0;
   position: absolute;
   top: 44px;
   right: -120px;
