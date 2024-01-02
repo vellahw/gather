@@ -7,9 +7,10 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GATHER | 게더? 투게더!</title>
+<title>GATHER | 투게더? 게더!</title>
 <link rel="stylesheet" href="/resources/css/common/nav.css">
 <link rel="stylesheet" href="/resources/css/common/variable.css">
+<script src="/resources/js/common/category.js"></script>
 <link rel="icon" href="/resources/img/logo/favicon.ico">
 </head>
 <body>
