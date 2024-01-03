@@ -79,7 +79,7 @@
 }
 
 .childCateListWrap {
-	text-align: center;
+  text-align: center;
 }
 
 .childCateList {
@@ -87,13 +87,14 @@
   z-index: -1;
   position: absolute;
   top: 40px;
-  left: -14px;
+  left: 50%;
+  transform: translate(-42%, 0%);
   padding: 10px 12px 10px 12px;
   background-color: var(--primary);
   border-radius: 10px;
   font-size: 16px;
   color: var(--color-white);
-  width: 130%;
+  width: 223px;
   height: auto;
   margin-top: 10px;
   transition: all .3s;
