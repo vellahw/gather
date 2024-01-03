@@ -1,47 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!-- 
+	작성자:Hwai
+    작성일:23.12.19
+-->
 <mapper namespace="mainPage">
 
-   	 <!-- 부모 카테고리 -->
-   <select id="pCate" parameterType='hashmap'
-      resultType="hashmap">
-      <![CDATA[
-		   SELECT 
-	     		  COMD_CODE AS CATE_CODE												/* 부모 카테고리 코드 */
-	     		, COMD_NAME AS CATE_NAME    											/* 부모 카테고리 이름 */
-	     		, CODE_OPT1 AS CATE_PATH												/*  카테고리 경로 */
-	     		, CODE_OPT2 AS IMAG_SRCC												/*  카테고리 이미지 경로 */
-	 		FROM TB_CODEXD
-		   WHERE COMM_CODE = 'CATE_IDXX'
-             AND LENGTH(COMD_CODE) = 1
-		ORDER BY COMD_CODE
-	 ]]>
-   </select>
-   
-    <!-- 자식 카테고리 -->
-   <select id="cCate" parameterType='hashmap'
-      resultType="hashmap">
-      <![CDATA[
-		   SELECT 
-	     	      SUBSTR(COMD_CODE,'1','1')  AS PARENTS_CODE							/* 부모 카테고리 코드 */
-                , COMD_CODE AS CATE_CODE												/* 카테고리 코드 */
-	     		, COMD_NAME AS CATE_NAME    											/* 자식 카테고리 이름 */
-	     		, CODE_OPT1 AS CATE_PATH												/* 자식 카테고리 경로 */
-	 		FROM TB_CODEXD
-		   WHERE COMM_CODE = 'CATE_IDXX'
-             AND LENGTH(COMD_CODE) = 3
-		ORDER BY COMD_CODE
-        
-	 ]]>
-   </select>
-   
-   
    <!-- 로그인 메인화면 -->
    <select id="mainLoginGather" parameterType='hashmap'
       resultType="hashmap">
       <![CDATA[
-         SELECT /*로그인 메인화면*/
+         SELECT /*mainPage.mainLoginGather*/
          		  RNUM
                 , TYPE                
                 , GATH_IDXX
@@ -151,7 +121,7 @@
    <select id="getGather" parameterType='hashmap'
       resultType="hashmap">
       <![CDATA[
-       	  SELECT               
+       	  SELECT /*mainPage.getGather*/              
                   GATH_IDXX
                 , GATH_TITL
                 , GATH_CNTT

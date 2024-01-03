@@ -13,25 +13,10 @@ import com.our.gather.main.dao.MainDao;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service("MainService")
 public class MainServiceImpl implements MainService {
 	@Resource(name = "MainDao")
 	private MainDao mainDao;
-
-	@Override
-	public List<Map<String, Object>> pCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
-		// TODO Auto-generated method stub
-
-		return mainDao.pCate(map, commandMap);
-	}
-	
-	@Override
-	public List<Map<String, Object>> cCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
-		// TODO Auto-generated method stub
-
-		return mainDao.cCate(map, commandMap);
-	}
 
 	@Override
 	public List<Map<String, Object>> loginMainGather(Map<String, Object> map, HttpSession session,

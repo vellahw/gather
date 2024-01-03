@@ -1,0 +1,200 @@
+.backGroundContainer {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.backGroundContainer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  transition: transform 1s ease-in-out; /* 슬라이딩 애니메이션 설정 */
+}
+
+.backgroundItem {
+  flex: 0 0 100%; /* 각 배경 이미지가 전체 너비를 차지하도록 설정 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.backGroundImg {
+  width:100vw;
+  height:87vh;
+  filter: blur(0.2px);
+  filter: brightness(90%);
+  object-fit: cover; /* 이미지 비율 유지 및 container에 꽉 차도록 설정 */
+}
+
+body{
+ -ms-overflow-style: none;
+ }
+::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* 특정 부분 스크롤바 없애기 */
+.box{
+   -ms-overflow-style: none;
+}
+.box::-webkit-scrollbar{
+  display:none;
+}
+
+.loginContainer {
+  position: absolute;
+  top:50%;
+  left:75%;
+  bottom: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--color-white);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  height: 530px;
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  ransition: left 0.5s ease-in-out;
+  
+}
+
+
+.LoginHead {
+  padding: 26px 0px 45px 0px;
+   
+}
+
+.inputLogin {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#loginButton {
+  padding: 10px;
+  background-color: var(--color-white);
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+#loginButton:hover {
+  background-color: var(--primary);
+  color: var(--color-white);
+}
+.additionalButtons {
+  margin-top: 10px;
+}
+
+.additionalButtons button {
+  display: inline-block;
+  margin-right: 35px;
+  margin-left: 35px;
+  color: var(--color-gray500);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.additionalButtons button:hover {
+  color: var(--primary);
+}
+
+.additionalButtons {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.socialButtons button {
+  align-items: center;
+  text-algin:center;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  width:100%;
+  height:45px;
+}
+
+/* 네이버 로그인 버튼 스타일 */
+.socialButtons button.naverLogin {
+  background-color: var(--color-white); 
+  color: #1EC800; 
+  border: 1px solid #1EC800; 
+}
+
+/* 네이버 로그인 버튼 hover 스타일 */
+.socialButtons button.naverLogin:hover {
+  background-color: #1EC800; 
+  border: 1px solid #1EC800;
+}
+
+/* 카카오 로그인 버튼 스타일 */
+.socialButtons button.kakaoLogin {
+  background-color: var(--color-white); 
+  color: #FFEB00; 
+  border: 1px solid #FFEB00; 
+}
+
+/* 카카오 로그인 버튼 hover 스타일 */
+.socialButtons button.kakaoLogin:hover {
+  background-color: #FFEB00; 
+  border: 1px solid #FFEB00;
+}
+
+/* 구글 로그인 버튼 스타일 */
+.socialButtons button.googleLogin {
+  background-color: var(--color-white); 
+  color: #808080; 
+  border: 1px solid #808080; 
+}
+
+/* 구글 로그인 버튼 hover 스타일 */
+.socialButtons button.googleLogin:hover {
+  background-color: #808080; 
+  border: 1px solid #808080;
+}
+
+.socialButtons button:hover {
+  color: var(--color-white); 
+}
+
+.socialButtons img {
+  margin-right: 10px;
+  max-height: 20px;
+}
+
+.signupContainer {
+    position: relative;
+    width: 400px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.signupSection {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 300%;
+    transition: left 0.5s ease-in-out;
+}
+
+#step2, #step3 {
+    left: -100%;
+}
+
+#step3 {
+    left: -200%;
+}

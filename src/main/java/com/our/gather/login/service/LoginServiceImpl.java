@@ -1,5 +1,6 @@
 package com.our.gather.login.service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -22,7 +23,15 @@ public class LoginServiceImpl implements LoginService {
     //로그인
     @Override
     public Map<String, Object> login(Map<String, Object> map) throws Exception {
+    	
        return loginDao.login(map);
+    }
+    
+    //로그인
+    @Override
+    public List<Map<String, Object>> loginBackImg(Map<String, Object> map) throws Exception {
+    	
+       return loginDao.loginBackImg(map);
     }
 
 } 

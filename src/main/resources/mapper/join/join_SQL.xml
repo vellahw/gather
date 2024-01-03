@@ -3,21 +3,18 @@
 <!-- 
 	작성자:Hwai
     작성일:23.12.19
-	페이지:gather/join.com 
 -->
-<mapper namespace="joinModal">
-
-   <!--   회원번호 채번 -->
-   <select id="getUserPK" resultType="hashmap" parameterType="hashmap" >
-         <![CDATA[
-        SELECT 'UR' ||TO_CHAR(SYSDATE, 'YYMM') ||LPAD(NVL(MAX(CAST(SUBSTR(USER_NUMB,7,4) AS NUMBER))+1,1),4,'0') AS USER_NUMB  --회원번호 채번
-		  FROM TM_USERXM
-		 WHERE SUBSTR(USER_NUMB,3,4) = TO_CHAR(SYSDATE, 'YYMM')
-         ]]>
-   </select>
+<mapper namespace="join">
 
 	   <!--  회원가입 -->
 	   <insert id="joinUs" parameterType="hashmap" useGeneratedKeys="true" keyProperty="USER_NUMB">
+		   <selectKey resultType="string" keyProperty="USER_NUMB" >
+	    	<![CDATA[
+	    	SELECT 'UR' ||TO_CHAR(SYSDATE, 'YYMM') ||LPAD(NVL(MAX(CAST(SUBSTR(USER_NUMB,7,4) AS NUMBER))+1,1),4,'0') AS USER_NUMB  --회원번호 채번
+		  	  FROM TM_USERXM
+		 	 WHERE SUBSTR(USER_NUMB,3,4) = TO_CHAR(SYSDATE, 'YYMM')
+	    	]]>
+	    	</selectKey>
 	        <![CDATA[
 	       INSERT INTO TM_USERXM (
 					      USER_NUMB  /* 회원번호 */

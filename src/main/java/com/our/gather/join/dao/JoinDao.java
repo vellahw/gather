@@ -9,12 +9,6 @@ import com.our.gather.common.dao.AbstractDao;
 @Repository("JoinDao")
 public class JoinDao extends AbstractDao {
 
-	// 회원PK채번
-	@SuppressWarnings("unchecked")
-	public Map<String, Object> getUserPK(Map<String, Object> map) throws Exception {
-		return (Map<String, Object>) selectOne("join.getUserPK", map);
-	}
-
 	// 회원가입
 	public void joinUs(Map<String, Object> map) throws Exception {
 		insert("join.joinUs", map);
