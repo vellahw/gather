@@ -9,7 +9,7 @@ function menuOnClick(val) {
       break;
    
     case 'cb':
-      location.href = '/gather.com?type=cb';
+      location.href = '/gather.com?type=cb&cate=all';
       break;
     
     case 'cg':
@@ -35,22 +35,34 @@ document.addEventListener("DOMContentLoaded", function(){
   
  /**
   * 240103 장한원
-  * url에 맞게 active 클래스 적용
+  * 게더/클럽/챌린지/피드 네비게이션바 active 클래스 적용
   */
-  const currentURL = location.pathname;
+  const currentURL = location.href;
+  const params = new URL(location.href).searchParams;
+  const type = params.get('type');
 
-  if(currentURL == '/gather.com') {
-    addActiveClass();
-  } else if(currentURL == '/gather.com?type=cb') {
-    addActiveClass();
-  } else if(currentURL == '/gather.com?type=cg') {
-    addActiveClass();
-  } else if(currentURL == '/gather.com?type=fd') {
-    addActiveClass();
+  // type 파라미터를 가져와 비교
+  switch (type) {
+    case 'cb':
+      addActiveClass(2)
+      break;
+
+    case 'cg':
+      addActiveClass(3)
+      break;
+    
+      case 'fd':
+      addActiveClass(4)
+      break;
+  
+    default: null
+      addActiveClass(1);
+      break;
   }
 
-  function addActiveClass() {
-    document.querySelector('.menuItem:nth-child(1)').classList.add('active');
+  // 클래스 추가하는 함수
+  function addActiveClass(order) {
+    document.querySelector('.menuItem:nth-child('+ order +')').classList.add('active');
   }
   
   
