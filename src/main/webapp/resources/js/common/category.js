@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
       if (childList) {
         childList.style.opacity = '1';
+        childList.style.zIndex = '1';
       }
     });
 
@@ -37,8 +38,23 @@ document.addEventListener("DOMContentLoaded", function(){
       const childList = item.querySelector('.childCateList');
 
       if (childList) {
-        childList.style.opacity = '0';
+       childList.style.opacity = '0';
+        childList.style.zIndex = '-1';
       }
     });
   });
+  
+  $.ajax({
+    url: '/cateGory.get', 
+    type: 'GET', 
+    dataType: 'json', 
+    success: function(response) {
+
+        console.log(response);
+    },
+    error: function(error) {
+
+        console.error('실패:', error);
+    }
+});
 })

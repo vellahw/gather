@@ -57,10 +57,18 @@
   font-size: 1.25rem;
   font-weight: 500;
   margin-left: 2rem;
-  padding: 8px 4px 8px 4px;
+  padding: 8px 4px 10px 4px;
   cursor: pointer;
   position: relative;
-  transition: opacity .2s;
+  transition: all .2s;
+}
+
+.menuItem:hover {
+  color: var(--primary);
+}
+
+.menuItem.active {
+  color: var(--primary);
 }
 
 .menuItem::before {
@@ -79,9 +87,6 @@
   opacity: 1;
 }
 
-.menuItem:hover {
-  color: var(--primary);
-}
 
 .rightContainer {
   display: flex;
@@ -145,4 +150,5 @@ input::placeholder {
   color: var(--color-gray500);
   font-size: 12px;
   font-weight: 500;
+  transition: all .2s;
 } 

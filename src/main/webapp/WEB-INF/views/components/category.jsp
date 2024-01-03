@@ -15,14 +15,18 @@
           <img src="${parentsCate.IMAG_SRCC}" class="categoryIcon" alt="카테고리 이미지"/>
           <c:out value="${parentsCate.CATE_NAME}"/>
         </a>
+        <div class="childCateListWrap">
         <ul class="childCateList">
           <c:forEach var="childCate" items="${cCate}">
             <c:set var="childCode" value="${childCate.PARENTS_CODE}" />
             <c:if test = "${parentsCode == childCode}">
-              <li class="childCateItem">${childCate.CATE_NAME}</li>
+              <li class="childCateItem">
+                <c:out value="${childCate.CATE_NAME}" />
+              </li>
             </c:if>
           </c:forEach>
         </ul>
+        </div>
         
       </div>
     </c:forEach>
