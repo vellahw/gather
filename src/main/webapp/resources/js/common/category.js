@@ -56,5 +56,26 @@ document.addEventListener("DOMContentLoaded", function(){
 
         console.error('실패:', error);
     }
-});
+  });
+
 })
+
+  /*
+   * 240103 장한원
+   * 카테고리바 '전체' 클릭 이벤트
+  */
+  function cateAllOnclick() {
+    const currentURL = location.href;
+    const params = new URL(location.href).searchParams;
+    const type = params.type;
+
+    if (type != null) {
+      makeCateAllParam(currentURL, '&');
+    } else {
+      makeCateAllParam(currentURL, '?');
+    }
+  }
+
+  function makeCateAllParam(currentURL, char) {
+    location.href = currentURL + char +'cate=all'
+  }

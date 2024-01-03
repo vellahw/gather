@@ -4,8 +4,8 @@
 
 <div class="categoryContainer" id="categoryContainer">
   <div class="categoryList">
-    <div class="categoryItem">
-      <a href="#" class="categoryLink">전체</a>
+    <div class="categoryItem" onClick="cateAllOnclick();">
+      <div class="categoryLink">전체</div>
     </div>
 
     <c:forEach var="parentsCate" items="${pCate}">
