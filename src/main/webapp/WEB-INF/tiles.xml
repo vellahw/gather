@@ -10,4 +10,9 @@
 		<put-attribute name="body" value="/WEB-INF/views/mainPage/mainPage.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
 	</definition>
+	
+	<!-- 로그인 관련 -->
+    <definition name="/com/login/*" extends="mainPage">
+        <put-attribute name="body" value="/WEB-INF/views/com/login/{1}.jsp"/>
+    </definition>
 </tiles-definitions>
