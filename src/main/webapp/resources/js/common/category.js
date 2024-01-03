@@ -43,22 +43,29 @@ document.addEventListener("DOMContentLoaded", function(){
       }
     });
   });
-  
-  $.ajax({
-    url: '/cateGory.get', 
-    type: 'GET', 
-    dataType: 'json', 
-    success: function(response) {
+});
 
-        console.log(response);
-    },
-    error: function(error) {
+// $.ajax({
+//     url: '/cateGory.get', 
+//     type: 'GET', 
+//     dataType: 'json', 
+//     success: function(response) {
+//       const childCateData = response.cCate;
+//       const parentsCateData = response.pCate;
 
-        console.error('실패:', error);
-    }
-  });
+//       const categoryIcon = document.getElementById('categoryIcon');
+//       const categoryIconData = childCateData[i].IMAG_SRCC;
+//       categoryIcon.src = categoryIconData;
 
-})
+//       append.childCateData[i].CATE_CODE
+
+
+
+//     },
+//     error: function(error) {
+//         console.error('데이터를 가져오는데 실패했습니다. >> ', error);
+//     }
+// });
 
   /*
    * 240103 장한원

@@ -7,11 +7,11 @@
     <div class="categoryItem" onClick="cateAllOnclick();">
       <div class="categoryLink">전체</div>
     </div>
-
+    
     <c:forEach var="parentsCate" items="${pCate}">
       <c:set var="parentsCode" value="${parentsCate.CATE_CODE}" />
       <div class="categoryItem" data-code="${parentsCode}">
-        <a href='./gather.com?cate=<c:out value="${parentsCate.CATE_CODE}"/>' class="categoryLink">
+        <a href="#" class="categoryLink">
           <img src="${parentsCate.IMAG_SRCC}" class="categoryIcon" alt="카테고리 이미지"/>
           <c:out value="${parentsCate.CATE_NAME}"/>
         </a>
@@ -30,5 +30,7 @@
         
       </div>
     </c:forEach>
+    
+    
   </div>
 </div>
