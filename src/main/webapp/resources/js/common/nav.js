@@ -9,7 +9,7 @@ function menuOnClick(val) {
       break;
    
     case 'cb':
-      location.href = '/gather.com?type=cb&cate=all';
+      location.href = '/gather.com?type=cb';
       break;
     
     case 'cg':
