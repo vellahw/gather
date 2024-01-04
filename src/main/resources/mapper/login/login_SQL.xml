@@ -7,10 +7,22 @@
 -->
 <mapper namespace="login">
 
+   <!-- 로그인 배경이미지-->
+   <select id="loginBackImg" resultType="hashmap" parameterType="hashmap">
+      <![CDATA[
+	  SELECT /*login.loginBackImg*/
+	         '/resources/img/login/' || COMD_NAME as BACK_IMGG
+	    FROM TB_CODEXD
+	   WHERE COMM_CODE = 'LOGI_BIMG'
+	ORDER BY CODE_OPT1
+    ]]>
+   </select>
+   
+   
    <!-- 로그인 -->
    <select id="login" resultType="hashmap" parameterType="hashmap">
       <![CDATA[
-     SELECT 
+     SELECT /*login.login*/
        		USER_NUMB
      	  , getCodeName('USER_TYPE',SUBSTR(USER_NUMB,1,2)) AS USER_TYPE
      	  , USER_NAME

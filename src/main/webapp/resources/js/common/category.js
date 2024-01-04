@@ -1,5 +1,7 @@
 
 document.addEventListener("DOMContentLoaded", function(){
+  
+  
   /**
   * 231224 장한원
   * 동적 슬라이드 버튼 생성
@@ -57,5 +59,18 @@ categoryContainer.addEventListener('mouseleave', (event) => {
     }
   }
 });
-
+  $.ajax({
+    url: '/cateGory.get', 
+    type: 'GET', 
+    dataType: 'json', 
+    success: function(response) {
+      
+      console.log(response);
+     
+    },
+    error: function(error) {
+     
+      console.error('Error:', error);
+  }
+  });
 })

@@ -24,19 +24,14 @@ public class JoinServiceImpl implements JoinService {
 	@Resource(name = "fileUtils")
 	private FileUtils fileUtils;
 
-	// userPK채번
-	@Override
-	public Map<String, Object> getUserPK(Map<String, Object> map) throws Exception {
-		return joinDao.getUserPK(map);
-	}
-
-	// userPK채번
+	
+	// 아이디 중복 검사
 	@Override
 	public Map<String, Object> checkId(Map<String, Object> map) throws Exception {
 		return joinDao.checkId(map);
 	}
 
-	// userPK채번
+	// 닉네임 중복 검사
 	@Override
 	public Map<String, Object> checkNick(Map<String, Object> map) throws Exception {
 		return joinDao.checkNick(map);
@@ -46,17 +41,14 @@ public class JoinServiceImpl implements JoinService {
 	@Override
 	public void userJoin(Map<String, Object> map, HttpServletRequest request) throws Exception {
 
-		Map<String, Object> pk = joinDao.getUserPK(map);
-
-		String userNumb = (String) pk.get("USER_NUMB");
-		map.put("USER_NUMB", userNumb);
+		joinDao.joinUs(map);
 
 		List<Map<String, Object>> plist = fileUtils.fileInsert(map, request);
 
 		for (int i = 0, size = plist.size(); i < size; i++) {
+			
 			commonDao.comFileInsert(map);
 		}
 
-		joinDao.joinUs(map);
 	}
 }

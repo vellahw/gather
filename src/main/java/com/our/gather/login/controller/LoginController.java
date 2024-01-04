@@ -1,6 +1,9 @@
 package com.our.gather.login.controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -20,6 +23,19 @@ public class LoginController {
 
 	@Resource(name = "LoginService")
 	private LoginService loginService;
+
+	// 로그인 폼
+	@RequestMapping(value = "/gather/login.com", method = RequestMethod.GET)
+	public ModelAndView loginForm(CommandMap commandMap) throws Exception {
+		
+		ModelAndView mv = new ModelAndView("/login/login");
+		mv.setViewName("login");
+		
+		List<Map<String, Object>> loginBackImg = loginService.loginBackImg(commandMap.getMap());
+		mv.addObject("Bimag", loginBackImg);
+		
+		return mv;
+	}
 
 	// 로그인 처리
 	@RequestMapping(value = "/gather/loginDo.com", method = RequestMethod.POST)
