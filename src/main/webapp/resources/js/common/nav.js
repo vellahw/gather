@@ -29,20 +29,24 @@ function menuOnClick(val) {
  function showHoverIcon(container) {
   const hoverIcon = container.querySelector("#hoverIcon");
   const basicIcon = container.querySelector("#basicIcon");
+  const iconLink = container.querySelector("#iconLink");
 
   if (hoverIcon) {
     hoverIcon.style.display = "block";
     basicIcon.style.display = "none";
+    iconLink.style.color = "var(--primary)";
   }
 }
 
 function hideHoverIcon(container) {
   const hoverIcon = container.querySelector("#hoverIcon");
-  const basicIcon = container.querySelector("#icon");
+  const basicIcon = container.querySelector("#basicIcon");
+  const iconLink = container.querySelector("#iconLink");
 
   if (hoverIcon) {
     hoverIcon.style.display = "none";
     basicIcon.style.display = "block";
+    iconLink.style.color = "var(--color-gray500)";
   }
 }
 
@@ -88,4 +92,9 @@ document.addEventListener("DOMContentLoaded", function(){
   function addActiveClass(order) {
     document.querySelector('.menuItem:nth-child('+ order +')').classList.add('active');
   }
+
+  const loginBtn = document.getElementById('login');
+  loginBtn.addEventListener('click', ()=>{
+    this.location.href = '/gather/login.com';
+  })
 });

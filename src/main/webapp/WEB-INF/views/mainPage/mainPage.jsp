@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" href="/resources/css/mainPage/mainPage.css">
-<link rel="stylesheet" href="/resources/css/common/category.css">
 <script src="/resources/js/common/category.js"></script>
 
 <div class="bannerContainer">
