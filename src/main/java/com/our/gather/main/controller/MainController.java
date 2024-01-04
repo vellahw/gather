@@ -16,7 +16,6 @@ import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.service.CommonService;
 import com.our.gather.main.service.MainService;
 
-
 @Controller
 public class MainController {
 
@@ -33,45 +32,47 @@ public class MainController {
 
 		ModelAndView mv = new ModelAndView("/mainPage/mainPage");
 		mv.setViewName("mainPage");
-		
+
 		List<Map<String, Object>> pCate = commonService.pCate(commandMap.getMap(), commandMap);
 		List<Map<String, Object>> cCate = commonService.cCate(commandMap.getMap(), commandMap);
-		mv.addObject("pCate",pCate);
-		mv.addObject("cCate",cCate);
+		mv.addObject("pCate", pCate);
+		mv.addObject("cCate", cCate);
 
 		if (LIST_TYPE == null && CATE_IDXX == null) {
 
 			if (session.getAttribute("USER_NUMB") != null) {
-				
+
 				commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
-				mv.addObject("loginGather", mainService.loginMainGather(commandMap.getMap(), session, commandMap)); // 로그인시 게더메인
+				mv.addObject("loginGather", mainService.loginMainGather(commandMap.getMap(), session, commandMap)); // 로그인시
+																													// 게더메인
 
 			} else {
-				
-				mv.addObject("loginGather", mainService.loginMainGather(commandMap.getMap(), session, commandMap)); // 비로그인시 게더메인
+
+				mv.addObject("loginGather", mainService.loginMainGather(commandMap.getMap(), session, commandMap)); // 비로그인시
+																													// 게더메인
 			}
-			
-		} else if(LIST_TYPE == null && CATE_IDXX != null){
+
+		} else if (LIST_TYPE == null && CATE_IDXX != null) {
 			ModelAndView mv2 = new ModelAndView("/listPage/list");
 			mv2.setViewName("list");
 			mv2.addObject("list", mainService.getGather(commandMap.getMap(), session, commandMap)); // 게더
 
 			return mv2;
-		
+
 		}
-		
+
 		if (LIST_TYPE == "CB") {
-			
+
 			ModelAndView cbmv = new ModelAndView("redirect:/gather.com/club");
 			return cbmv;
 
 		}
-		
+
 		if (LIST_TYPE == "CH") {
-			
+
 			ModelAndView chmv = new ModelAndView("redirect:/gather.com/challenge");
 			return chmv;
-		
+
 		}
 
 		return mv;

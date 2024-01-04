@@ -4,15 +4,14 @@
   "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<!-- ·¹ÀÌ¾Æ¿ô -->
+	<!-- Â·Â¹Ã€ÃŒÂ¾Ã†Â¿Ã´ -->
 	<definition name="mainPage" template="/WEB-INF/views/layout/layout.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
 		<put-attribute name="body" value="/WEB-INF/views/mainPage/mainPage.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
 	</definition>
-	
-	<!-- ·Î±×ÀÎ °ü·Ã -->
-    <definition name="/com/login/*" extends="mainPage">
-        <put-attribute name="body" value="/WEB-INF/views/com/login/{1}.jsp"/>
-    </definition>
+
+  <definition name="login" extends="mainPage">
+    <put-attribute name="body" value="/WEB-INF/views/login/login.jsp"/>
+  </definition>
 </tiles-definitions>

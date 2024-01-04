@@ -13,24 +13,6 @@ import com.our.gather.common.dao.AbstractDao;
 @Repository("MainDao")
 public class MainDao extends AbstractDao {
 	
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> pCate(Map<String, Object> map, CommandMap commandMap)
-			throws Exception {
-
-		List<Map<String, Object>> pCate = (List<Map<String, Object>>) selectList("common.pCate", map);
-
-		return pCate;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> cCate(Map<String, Object> map, CommandMap commandMap)
-			throws Exception {
-
-		List<Map<String, Object>> cCate = (List<Map<String, Object>>) selectList("common.cCate", map);
-
-		return cCate;
-	}
-
 	// 로그인시 메인
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> loginMainGather(Map<String, Object> map, CommandMap commandMap, HttpSession session)

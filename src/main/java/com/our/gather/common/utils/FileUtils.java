@@ -46,9 +46,9 @@ public class FileUtils {
 
 				listMap = new HashMap<String, Object>();
 				
-				if (map.get("USER_NAME") != null) {
+				if (map.get("USER_NUMB") != null) {
 					
-					File file = new File(realPath + "upload/profile/" + map.get("USER_NAME") + "/" + storedFileName);
+					File file = new File(realPath + "upload/profile/" + map.get("USER_NUMB") + "/" + storedFileName);
 					multipartFile.transferTo(file); // 프로필폴더에 업로드 처리
 					
 					// 배경 이미지는 input type = "file" name = "wallPaper" 로

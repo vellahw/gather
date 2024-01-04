@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function(){
+  
+  
   /**
   * 231224 장한원
   * 동적 슬라이드 버튼 생성
