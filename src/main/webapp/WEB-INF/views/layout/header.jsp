@@ -22,16 +22,22 @@
       </button>
     </div>
     <div class="userContainer">
-      <div class="iconContainer">
+      <div class="iconContainer"
+           onmouseover="showHoverIcon(this)"
+           onmouseout="hideHoverIcon(this)">
         <a class="iconLink" href="/gather/login.com">
-        <img class="icon" src="/resources/img/icon/navbar/logoutIcon.png" alt="로그아웃 아이콘">
-        <span class="text">Login</span>
+          <img id="basicIcon" class="icon" src="/resources/img/icon/navbar/logoutIcon.png" alt="로그아웃 아이콘">
+          <img id="hoverIcon" class="icon" src="/resources/img/icon/navbar/logoutIcon_hover.png" alt="로그아웃 아이콘">
+          Login
         </a>
       </div>
-      <div class="iconContainer">
+      <div class="iconContainer"
+           onmouseover="showHoverIcon(this)"
+           onmouseout="hideHoverIcon(this)">
         <a class="iconLink">
-          <img class="icon" src="/resources/img/icon/navbar/helpIcon.png" alt="고객센터">
-          <span class="text">Help</span>
+          <img id="basicIcon" class="icon" src="/resources/img/icon/navbar/helpIcon.png" alt="고객센터">
+          <img id="hoverIcon" class="icon" src="/resources/img/icon/navbar/helpIcon_hover.png" alt="로그아웃 아이콘">
+          Help
         </a>
       </div>
     </div>

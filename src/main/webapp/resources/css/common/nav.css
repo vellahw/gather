@@ -117,7 +117,7 @@ input::placeholder {
 
 .searchBtn {
   position: absolute;
-  right: 30px;
+  right: 15px;
   height: 24px;
 }
 
@@ -130,7 +130,8 @@ input::placeholder {
 }
 
 .iconContainer {
-  padding-left: 1.875rem;
+  margin-left: 1.8rem;
+  padding: 0 5px 0 5px;
 }
 
 .iconLink {
@@ -139,16 +140,19 @@ input::placeholder {
   cursor: pointer;
   justify-content: center;
   align-items: center;
+  color: var(--color-gray500);
+  font-size: 12px;
+  font-weight: 500;
+  transition: all .2s;
 }
 
 .icon {
   width: 29px;
   padding-bottom: 3px;
+  transition: transform 0.3s ease;
 }
 
-.text {
-  color: var(--color-gray500);
-  font-size: 12px;
-  font-weight: 500;
-  transition: all .2s;
-} 
+#hoverIcon {
+  display: none;	
+  transition: transform 0.3s ease;
+}

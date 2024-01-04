@@ -22,6 +22,30 @@ function menuOnClick(val) {
   }
 }
 
+ /**
+  * 240104 장한원
+  * 마우스오버/아웃시 로그아웃, 고객센터 아이콘 컬러 바뀜
+  */
+ function showHoverIcon(container) {
+  const hoverIcon = container.querySelector("#hoverIcon");
+  const basicIcon = container.querySelector("#basicIcon");
+
+  if (hoverIcon) {
+    hoverIcon.style.display = "block";
+    basicIcon.style.display = "none";
+  }
+}
+
+function hideHoverIcon(container) {
+  const hoverIcon = container.querySelector("#hoverIcon");
+  const basicIcon = container.querySelector("#icon");
+
+  if (hoverIcon) {
+    hoverIcon.style.display = "none";
+    basicIcon.style.display = "block";
+  }
+}
+
 document.addEventListener("DOMContentLoaded", function(){
   /**
    * 240103 장한원
@@ -64,6 +88,4 @@ document.addEventListener("DOMContentLoaded", function(){
   function addActiveClass(order) {
     document.querySelector('.menuItem:nth-child('+ order +')').classList.add('active');
   }
-  
-  
-})
+});
