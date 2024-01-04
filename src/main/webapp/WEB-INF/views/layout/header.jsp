@@ -21,24 +21,17 @@
         <img class="searchIcon" src="/resources/img/icon/navbar/searchIcon.png" alt="검색버튼">
       </button>
     </div>
-    <div class="userContainer">
-      <div class="iconContainer"
-           onmouseover="showHoverIcon(this)"
-           onmouseout="hideHoverIcon(this)">
-        <a class="iconLink" href="/gather/login.com">
-          <img id="basicIcon" class="icon" src="/resources/img/icon/navbar/logoutIcon.png" alt="로그아웃 아이콘">
-          <img id="hoverIcon" class="icon" src="/resources/img/icon/navbar/logoutIcon_hover.png" alt="로그아웃 아이콘">
-          Login
-        </a>
+    <div class="userWrap">
+      <div class="iconContainer mypage">
+        <div class="profileImgWrap">
+          <img src="${USER_IMAG}" class="profileImg" alt="프로필사진">
+        </div>
       </div>
-      <div class="iconContainer"
-           onmouseover="showHoverIcon(this)"
-           onmouseout="hideHoverIcon(this)">
-        <a class="iconLink">
-          <img id="basicIcon" class="icon" src="/resources/img/icon/navbar/helpIcon.png" alt="고객센터">
-          <img id="hoverIcon" class="icon" src="/resources/img/icon/navbar/helpIcon_hover.png" alt="로그아웃 아이콘">
-          Help
-        </a>
+      <div class="iconContainer">
+        <div class="textWrap" id="login">로그인</div>
+      </div>
+      <div class="iconContainer">
+        <div class="textWrap">고객센터</div>
       </div>
     </div>
   </div>
