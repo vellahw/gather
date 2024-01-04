@@ -1,8 +1,8 @@
 package com.our.gather.login.controller;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -13,11 +13,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.login.service.LoginService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class LoginController {
 
@@ -39,6 +43,7 @@ public class LoginController {
 
 	// 로그인 처리
 	@RequestMapping(value = "/gather/loginDo.com", method = RequestMethod.POST)
+	@ResponseBody
 	public ModelAndView login(CommandMap commandMap, HttpSession session, HttpServletRequest request) throws Exception {
 
 		ModelAndView mv = new ModelAndView();
@@ -80,7 +85,13 @@ public class LoginController {
 			session.setAttribute("USER_AGEE", tmpAge);
 
 			mv.setViewName("redirect:/gather.com");
-
+			
+			LocalDateTime now = LocalDateTime.now();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd | HH:mm:ss");
+			System.out.println("<------------------Login Success!!!!!------------------>");
+			System.out.println("Date:" + now.format(formatter) + "\nUSER_NUMB :" + session.getAttribute("USER_NUMB"));
+			System.out.println("<------------------------------------------------------>");
+			
 			return mv;
 		}
 		mv.setViewName("redirect:/gather/login.com");
