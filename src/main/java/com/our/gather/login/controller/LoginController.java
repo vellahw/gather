@@ -31,13 +31,13 @@ public class LoginController {
 	// 로그인 폼
 	@RequestMapping(value = "/gather/login.com", method = RequestMethod.GET)
 	public ModelAndView loginForm(CommandMap commandMap) throws Exception {
-		
+
 		ModelAndView mv = new ModelAndView("/login/login");
 		mv.setViewName("login");
-		
+
 		List<Map<String, Object>> loginBackImg = loginService.loginBackImg(commandMap.getMap());
 		mv.addObject("Bimag", loginBackImg);
-		
+
 		return mv;
 	}
 
@@ -85,16 +85,28 @@ public class LoginController {
 			session.setAttribute("USER_AGEE", tmpAge);
 
 			mv.setViewName("redirect:/gather.com");
-			
+
 			LocalDateTime now = LocalDateTime.now();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd | HH:mm:ss");
 			System.out.println("<------------------Login Success!!!!!------------------>");
 			System.out.println("Date:" + now.format(formatter) + "\nUSER_NUMB :" + session.getAttribute("USER_NUMB"));
 			System.out.println("<------------------------------------------------------>");
-			
+
 			return mv;
 		}
 		mv.setViewName("redirect:/gather/login.com");
+
+		return mv;
+	}
+
+	// 로그아웃
+	@RequestMapping(value = "/gather/logoutDo.com", method = RequestMethod.GET)
+	public ModelAndView logout(HttpSession session) throws Exception {
+
+		ModelAndView mv = new ModelAndView();
+
+		session.invalidate();
+		mv.setViewName("redirect:/gather.com");
 
 		return mv;
 	}
