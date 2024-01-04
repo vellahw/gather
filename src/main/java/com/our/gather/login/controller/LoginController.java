@@ -87,7 +87,7 @@ public class LoginController {
 			mv.setViewName("redirect:/gather.com");
 
 			LocalDateTime now = LocalDateTime.now();
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd | HH:mm:ss");
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd | Time: HH:mm:ss");
 			System.out.println("<------------------Login Success!!!!!------------------>");
 			System.out.println("Date:" + now.format(formatter) + "\nUSER_NUMB :" + session.getAttribute("USER_NUMB"));
 			System.out.println("<------------------------------------------------------>");
