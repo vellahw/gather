@@ -4,27 +4,33 @@
 
 <div class="categoryContainer" id="categoryContainer">
   <div class="categoryList">
-    <div class="categoryItem">
-      <a href="#" class="categoryLink">전체</a>
+    <div class="categoryItem" onClick="cateAllOnclick();">
+      <div class="categoryLink">전체</div>
     </div>
-
+    
     <c:forEach var="parentsCate" items="${pCate}">
       <c:set var="parentsCode" value="${parentsCate.CATE_CODE}" />
       <div class="categoryItem" data-code="${parentsCode}">
-        <a href='./gather.com?cate=<c:out value="${parentsCate.CATE_CODE}"/>' class="categoryLink">
-          <img src="/resources/img/icon/category/sp.png" class="categoryIcon" alt="카테고리 이미지"/>
+        <a href="#" class="categoryLink">
+          <img src="${parentsCate.IMAG_SRCC}" class="categoryIcon" alt="카테고리 이미지"/>
           <c:out value="${parentsCate.CATE_NAME}"/>
         </a>
+        <div class="childCateListWrap">
         <ul class="childCateList">
           <c:forEach var="childCate" items="${cCate}">
             <c:set var="childCode" value="${childCate.PARENTS_CODE}" />
             <c:if test = "${parentsCode == childCode}">
-              <li class="childCateItem">${childCate.CATE_NAME}</li>
+              <li class="childCateItem">
+                <c:out value="${childCate.CATE_NAME}" />
+              </li>
             </c:if>
           </c:forEach>
         </ul>
+        </div>
         
       </div>
     </c:forEach>
+    
+    
   </div>
 </div>

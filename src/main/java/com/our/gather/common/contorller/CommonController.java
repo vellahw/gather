@@ -18,22 +18,22 @@ import com.our.gather.common.service.CommonService;
 @Controller
 public class CommonController {
 
-	@Resource(name = "CommonService")
-	private CommonService commonService;
+    @Resource(name = "CommonService")
+    private CommonService commonService;
 
-	@RequestMapping(value = "/cateGory.get", produces = "application/json")
-	@ResponseBody
-	public Map<String, List<Map<String, Object>>> getCate(HttpSession session, CommandMap commandMap, Model model)
-			throws Exception {
+    @RequestMapping(value = "/cateGory.get", produces = "application/json")
+    @ResponseBody
+    public Map<String, List<Map<String, Object>>> getCate(HttpSession session, CommandMap commandMap, Model model)
+            throws Exception {
 
-		Map<String, List<Map<String, Object>>> resultMap = new HashMap<>();
+        Map<String, List<Map<String, Object>>> resultMap = new HashMap<>();
 
-		List<Map<String, Object>> pCate = commonService.pCate(commandMap.getMap(), commandMap);
-		List<Map<String, Object>> cCate = commonService.cCate(commandMap.getMap(), commandMap);
+        List<Map<String, Object>> pCate = commonService.pCate(commandMap.getMap(), commandMap);
+        List<Map<String, Object>> cCate = commonService.pCate(commandMap.getMap(), commandMap);
 
-		resultMap.put("pCate", pCate);
-		resultMap.put("cCate", cCate);
+        resultMap.put("pCate", pCate);
+        resultMap.put("cCate", cCate);
 
-		return resultMap;
-	}
+        return resultMap;
+    }
 }

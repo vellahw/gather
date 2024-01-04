@@ -11,11 +11,6 @@ import org.springframework.stereotype.Service;
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.main.dao.MainDao;
 
-<<<<<<< HEAD
-import lombok.extern.slf4j.Slf4j;
-
-=======
->>>>>>> refs/remotes/origin/hwai
 @Service("MainService")
 public class MainServiceImpl implements MainService {
 	

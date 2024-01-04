@@ -12,7 +12,9 @@
 <link rel="stylesheet" href="/resources/css/common/variable.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="/resources/js/common/category.js"></script>
+<script src="/resources/js/common/nav.js"></script>
 <link rel="icon" href="/resources/img/logo/favicon.ico">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 <header>

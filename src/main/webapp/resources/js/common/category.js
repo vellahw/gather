@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function(){
   
   
@@ -22,55 +21,70 @@ document.addEventListener("DOMContentLoaded", function(){
   })
 
   /**
-  * 240102 장한원
+  * 240103 장한원
   * 카테고리바 hover시 하위 카테고리 보여짐
   */
-// categoryContainer 요소를 선택합니다.
-const categoryContainer = document.getElementById('categoryContainer');
+  const categoryItems = document.querySelectorAll('.categoryItem');
 
-// 마우스 진입 이벤트를 부여합니다.
-categoryContainer.addEventListener('mouseenter', (event) => {
-  // 마우스 이벤트가 발생한 요소를 확인합니다.
-  const target = event.target;
+  categoryItems.forEach(item => {
+    item.addEventListener('mouseenter', () => {
+      const childList = item.querySelector('.childCateList');
 
-  console.log(target)
+      if (childList) {
+        childList.style.opacity = '1';
+        childList.style.zIndex = '1';
+      }
+    });
 
-  // categoryItem 클래스를 가진 요소인지 확인합니다.
-  if (target.classList.contains('categoryItem')) {
-    // 해당 요소의 자식 요소들을 선택합니다.
-    const childList = target.querySelector('.childCateList');
+    item.addEventListener('mouseleave', () => {
+      const childList = item.querySelector('.childCateList');
 
-    // 자식 요소들과 parentsHover 요소를 보이게 만듭니다.
-    if (childList) {
-      childList.style.opacity = '1';
-    }
-  }
-});
-
-// 마우스 벗어남 이벤트를 부여합니다.
-categoryContainer.addEventListener('mouseleave', (event) => {
-  const target = event.target;
-
-  if (target.classList.contains('categoryItem')) {
-    const childList = target.querySelector('.childCateList');
-
-    if (childList) {
-      childList.style.opacity = '0';
-    }
-  }
-});
-  $.ajax({
-    url: '/cateGory.get', 
-    type: 'GET', 
-    dataType: 'json', 
-    success: function(response) {
-      
-      console.log(response);
-     
-    },
-    error: function(error) {
-     
-      console.error('Error:', error);
-  }
+      if (childList) {
+       childList.style.opacity = '0';
+        childList.style.zIndex = '-1';
+      }
+    });
   });
-})
+});
+
+// $.ajax({
+//     url: '/cateGory.get', 
+//     type: 'GET', 
+//     dataType: 'json', 
+//     success: function(response) {
+//       const childCateData = response.cCate;
+//       const parentsCateData = response.pCate;
+
+//       const categoryIcon = document.getElementById('categoryIcon');
+//       const categoryIconData = childCateData[i].IMAG_SRCC;
+//       categoryIcon.src = categoryIconData;
+
+//       append.childCateData[i].CATE_CODE
+
+
+
+//     },
+//     error: function(error) {
+//         console.error('데이터를 가져오는데 실패했습니다. >> ', error);
+//     }
+// });
+
+  /*
+   * 240103 장한원
+   * 카테고리바 '전체' 클릭 이벤트
+  */
+  function cateAllOnclick() {
+    const currentURL = location.href;
+    const params = new URL(location.href).searchParams;
+    const type = params.type;
+
+    if (type != null) {
+      makeCateAllParam(currentURL, '&');
+    } else {
+      makeCateAllParam(currentURL, '?');
+    }
+  }
+
+  function makeCateAllParam(currentURL, char) {
+    location.href = currentURL + char +'cate=all'
+  }

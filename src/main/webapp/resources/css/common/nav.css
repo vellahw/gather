@@ -57,10 +57,18 @@
   font-size: 1.25rem;
   font-weight: 500;
   margin-left: 2rem;
-  padding: 8px 4px 8px 4px;
+  padding: 8px 4px 10px 4px;
   cursor: pointer;
   position: relative;
-  transition: opacity .2s;
+  transition: all .2s;
+}
+
+.menuItem:hover {
+  color: var(--primary);
+}
+
+.menuItem.active {
+  color: var(--primary);
 }
 
 .menuItem::before {
@@ -79,9 +87,6 @@
   opacity: 1;
 }
 
-.menuItem:hover {
-  color: var(--primary);
-}
 
 .rightContainer {
   display: flex;
@@ -112,7 +117,7 @@ input::placeholder {
 
 .searchBtn {
   position: absolute;
-  right: 30px;
+  right: 15px;
   height: 24px;
 }
 
@@ -125,7 +130,8 @@ input::placeholder {
 }
 
 .iconContainer {
-  padding-left: 1.875rem;
+  margin-left: 1.8rem;
+  padding: 0 5px 0 5px;
 }
 
 .iconLink {
@@ -134,15 +140,19 @@ input::placeholder {
   cursor: pointer;
   justify-content: center;
   align-items: center;
+  color: var(--color-gray500);
+  font-size: 12px;
+  font-weight: 500;
+  transition: all .2s;
 }
 
 .icon {
   width: 29px;
   padding-bottom: 3px;
+  transition: transform 0.3s ease;
 }
 
-.text {
-  color: var(--color-gray500);
-  font-size: 12px;
-  font-weight: 500;
-} 
+#hoverIcon {
+  display: none;	
+  transition: transform 0.3s ease;
+}
