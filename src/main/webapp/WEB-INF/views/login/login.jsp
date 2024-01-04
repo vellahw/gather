@@ -29,7 +29,7 @@
 
             <!-- 소셜 로그인 버튼 추가 -->
             <div class="socialButtons">
-                <button class="naverLogin"><img src="/resources/img/icon/loginApi/naver.png"> 네이버아이디 로그인</button>
+                <button class="naverLogin"><img src="/resources/img/icon/loginApi/naver.png"> 네이버 로그인</button>
                 <button class="kakaoLogin"><img src="path/to/kakao-icon.png" alt="Kakao Icon"> 카카오 로그인</button>
                 <button class="googleLogin"><img src="path/to/google-icon.png" alt="Google Icon"> 구글 로그인</button>
             </div>
