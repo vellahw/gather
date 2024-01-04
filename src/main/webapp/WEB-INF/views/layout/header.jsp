@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <nav class="nav">
   <div class="leftContainer">
     <div class="logoContainer" id="logoContainer">
@@ -22,14 +23,21 @@
       </button>
     </div>
     <div class="userWrap">
-      <div class="iconContainer mypage">
-        <div class="profileImgWrap">
-          <img src="${USER_IMAG}" class="profileImg" alt="프로필사진">
+      <c:if test="${USER_NUMB != null }">
+        <div class="iconContainer mypage">
+          <div class="profileImgWrap">
+            <img src="${USER_IMAG}" class="profileImg" alt="프로필사진">
+          </div>
         </div>
-      </div>
-      <div class="iconContainer">
-        <div class="textWrap" id="login">로그인</div>
-      </div>
+        <div class="iconContainer">
+          <div class="textWrap" id="logout">로그아웃</div>
+        </div>
+      </c:if>
+      <c:if test="${USER_NUMB == null }">
+        <div class="iconContainer login">
+          <div class="textWrap" id="login">로그인</div>
+        </div>
+      </c:if>
       <div class="iconContainer">
         <div class="textWrap">고객센터</div>
       </div>
