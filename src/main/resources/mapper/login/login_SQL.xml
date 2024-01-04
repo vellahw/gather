@@ -43,8 +43,8 @@
             ELSE 'Y'
         	 END AS BANN_YSNO
   		    FROM TM_USERXM
- 		   WHERE USER_IDXX = 'user1@example.com'
-   			 AND PASS_WORD = 'password1'
+ 		   WHERE USER_IDXX = #{USER_IDXX}
+   			 AND PASS_WORD = #{PASS_WORD}
     ]]>
    </select>
   
