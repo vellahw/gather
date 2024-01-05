@@ -30,9 +30,7 @@
           </div>
         </div>
         <div class="iconContainer">
-        <a href="/gather/logoutDo.com">
-          <div class="textWrap">로그아웃</div>
-        </a>
+          <div onclick="logoutOnclick()" class="textWrap">로그아웃</div>
         </div>
       </c:if>
       <c:if test="${USER_NUMB == null }">
