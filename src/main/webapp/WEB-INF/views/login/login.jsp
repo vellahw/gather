@@ -4,7 +4,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="/resources/css/login/login.css">
 <script src="/resources/js/login/login.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <div class="backGroundContainer">
     <ul>
