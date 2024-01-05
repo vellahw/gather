@@ -1,4 +1,27 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // 로그인시 이메일 유효성 검사
+    function checkId(email) {
+        var pattern = /^[0-9a-zA-Z가-힣]([-_.]?[0-9a-zA-Z가-힣])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+        if(!pattern.test(email)) {
+           return false;
+        }
+        return true;
+    }
+
+    const userIdForm = document.getElementById('USER_IDXX');
+    const appendArea = document.getElementById('appendId');
+
+    userIdForm.addEventListener("change", function(num){
+        if(checkId(userIdForm.value) == false){ 
+            appendArea.style.display = 'block';
+            appendArea.innerHTML = "올바른 이메일 형식을 입력해주세요."; 
+            appendArea.style.marginBottom = '10px';
+        } else {
+            appendArea.style.display = 'none';
+        }
+    });
+
+
     // 로그인 폼 처리    
     $("#loginForm").submit(function (event) {
         event.preventDefault();
@@ -16,14 +39,16 @@ document.addEventListener('DOMContentLoaded', function () {
             contentType: "application/json",
             success: function (result) {
                 const resultData = result.result;
-                console.log(resultData);
-
+                const inputId = $('#USER_IDXX').val();
                 if(resultData == "success") {
                 	const USER_NICK = result.USER_NICK;
                     alert( USER_NICK + "님 안녕하세요!");
                     location.href = "/gather.com";
                 } else {
-                    alert("실패!");
+                    const appendArea = document.getElementById('append');
+                    appendArea.innerHTML = '아이디 또는 비밀번호가 일치하지 않습니다.'
+                    document.getElementById('USER_IDXX').focus();
+                    appendArea.style.marginBottom = "10px";
                 }
             },
             error: function (xhr, status, error) {
@@ -48,20 +73,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // 로그인/회원가입 폼 전환을 담당하는 JavaScript 함수
 function toggleForm(formId) {
-    var loginForm = document.getElementById("loginForm");
-    var signupForm = document.getElementById("signupForm");
-    var findIdForm = document.getElementById("findIdForm");
+    const loginForm = document.getElementById("loginForm");
+    const signupForm = document.getElementById("signupForm");
+    const findIdForm = document.getElementById("findIdForm");
+    const findPwForm = document.getElementById("findPwForm");
 
     if (formId === 'signupForm') {
-        signupForm.style.display = "block";
+   		 signupForm.style.display = "block";
         loginForm.style.display = "none";
         findIdForm.style.display = "none";
+        findPwForm.style.display = "none";
     } else if (formId === 'findIdForm') {
         loginForm.style.display = "none";
         signupForm.style.display = "none";
         findIdForm.style.display = "block";
-    } else {
-        loginForm.style.display = "block";
+        findPwForm.style.display = "none";
+    } else if(formId === 'findPwForm') {
+        loginForm.style.display = "none";
+        findPwForm.style.display = "block";
         signupForm.style.display = "none";
         findIdForm.style.display = "none";
     }

@@ -19,30 +19,42 @@
         <!-- 로그인 폼 -->
         <form id="loginForm" action="/gather/loginDo.com" method="post">
             <h2 class="LoginHead">로그인</h2>
-            <input type="text" class="inputLogin" name="USER_IDXX" id = "USER_IDXX" placeholder="ID" required>
-            <input type="password" class="inputLogin" name="PASS_WORD" id = "PASS_WORD"placeholder="PASSWORD" required>
-            <button id="loginButton">Login</button>
+            <input type="text" class="inputLogin" name="USER_IDXX" id="USER_IDXX" placeholder="아이디(이메일 형식)" required>
+            <div id="appendId" class="append"></div>
+            <input type="password" class="inputLogin" name="PASS_WORD" id="PASS_WORD" placeholder="비밀번호" required>
+            <div id="append" class="append"></div>
+            <button class="inputLogin btn">로그인</button>
             <div class="additionalButtons">
-                <button id="toggleFormButton" onclick="toggleForm('findIdForm')" class="findIdButton">아이디찾기</button>
-                <button id="toggleFormButton" onclick="toggleForm('signupForm')" class="signupButton">회원가입</button>
+                <button onclick="toggleForm('findIdForm')" class="findIdButton">아이디 찾기</button>
+                <button onclick="toggleForm('findPwForm')" class="findIdButton">비밀번호 찾기</button>
+                <button onclick="toggleForm('signupForm')" class="signupButton">회원가입</button>
             </div>
 
             <!-- 소셜 로그인 버튼 추가 -->
             <div class="socialButtons">
-                <button class="naverLogin"><img src="/resources/img/icon/loginApi/naver.png"> 네이버 로그인</button>
-                <button class="kakaoLogin"><img src="path/to/kakao-icon.png" alt="Kakao Icon"> 카카오 로그인</button>
-                <button class="googleLogin"><img src="path/to/google-icon.png" alt="Google Icon"> 구글 로그인</button>
+                <button class="loginButton naver">
+                	<img class="navericon" src="/resources/img/icon/loginApi/naver.png">
+                	네이버 로그인
+                </button>
+                <button class="loginButton kakao">
+                	<img class="kakaoicon" src="/resources/img/icon/loginApi/kakao.png" alt="Kakao Icon">
+                 	카카오 로그인
+                </button>
+                <button class="Login google">
+                	<img class="googleicon" src="/resources/img/icon/loginApi/google.png" alt="Google Icon">
+                 	구글 로그인
+                </button>
             </div>
         </form>
 
         <!-- 회원가입 폼 -->
-        <form id="signupForm" action="/signup" method="post" style="display:none;">
-            <h2 class="LoginHead">회원가입</h2>
-            <!-- 회원가입 폼의 필드들을 여기에 추가 -->
-            <input type="text" name="newUsername" placeholder="New Username">
-            <input type="password" name="newPassword" placeholder="New Password">
-            <button type="button" onclick="nextSection('step2')">Next</button>
-        </form>
+                <form id="signupForm" action="/signup" method="post"  style="display:none;">
+                    <h2 class="LoginHead">회원가입</h2>
+                    <!-- 회원가입 폼의 필드들을 여기에 추가 -->
+                    <input type="text" name="newUsername" placeholder="New Username">
+                    <input type="password" name="newPassword" placeholder="New Password">
+                    <button type="button" onclick="nextSection('step2')">Next</button>
+                </form>
 
         <!-- Step 2: 추가 정보 입력 -->
         <form id="step2" action="/signup" method="post" style="display:none;">
@@ -62,10 +74,18 @@
 
         <!-- 아이디 찾기 폼 -->
         <form id="findIdForm" action="/findId" method="post" style="display:none;">
-            <h2 id="LoginHead">아이디 비밀번호 찾기</h2>
+            <h2 id="LoginHead">아이디 찾기</h2>
             <!-- 아이디 찾기 폼의 필드들을 여기에 추가 -->
             <input type="email" name="email" placeholder="Email">
-            <button type="submit">Find ID</button>
+            <button type="submit">아이디 찾기</button>
+        </form>
+        
+        <!-- 비밀번호 찾기 폼 -->
+        <form id="findPwForm" action="/findPw" method="post" style="display:none;">
+            <h2 id="LoginHead">비밀번호 찾기</h2>
+            <!-- 비번 찾기 폼의 필드들을 여기에 추가 -->
+            <input type="email" name="email" placeholder="Email">
+            <button type="submit">비밀번호 찾기</button>
         </form>
     </div>
 </div>

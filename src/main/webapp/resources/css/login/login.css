@@ -1,3 +1,10 @@
+body{
+  -ms-overflow-style: none;
+  }
+ ::-webkit-scrollbar {
+   display: none;
+ }
+
 .backGroundContainer {
   overflow: hidden;
   position: relative;
@@ -27,14 +34,6 @@
   object-fit: cover; /* 이미지 비율 유지 및 container에 꽉 차도록 설정 */
 }
 
-body{
- -ms-overflow-style: none;
- }
-::-webkit-scrollbar {
-  display: none;
-}
-
-
 /* 특정 부분 스크롤바 없애기 */
 .box{
    -ms-overflow-style: none;
@@ -63,47 +62,50 @@ form {
   flex-direction: column;
   padding: 0;
   margin: 0;
-  ransition: left 0.5s ease-in-out;
-  
+  transition: left 0.5s ease-in-out;
 }
 
-
 .LoginHead {
-  padding: 26px 0px 45px 0px;
-   
+  padding: 26px 0px 30px 0px;
 }
 
 .inputLogin {
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 10px;
+  border: 1px solid var(--color-gray100);
+  border-radius: 25px;
 }
 
-#loginButton {
-  padding: 10px;
-  background-color: var(--color-white);
-  color: var(--primary);
+input.inputLogin:focus {
+  outline: 1px solid var(--primary);
+  border: 1px solid var(--color-white);
+}
+
+.btn {
   border: 1px solid var(--primary);
-  border-radius: 5px;
-  cursor: pointer;
+  background-color: var(--primary);
+  color: var(--color-white);
   transition: background-color 0.3s, color 0.3s;
 }
 
-#loginButton:hover {
-  background-color: var(--primary);
-  color: var(--color-white);
+.inputLogin.btn:hover {
+  background-color: #F6700E;
+  border: 1px solid #F6700E;
 }
+
+.append {
+  color: var(--color-red);
+  font-size: 12px;
+}
+
 .additionalButtons {
-  margin-top: 10px;
+  margin: 6px 0 26px 0;
 }
 
 .additionalButtons button {
   display: inline-block;
-  margin-right: 35px;
-  margin-left: 35px;
+  margin: 0 12px 0 12px;
   color: var(--color-gray500);
-  text-decoration: none;
   transition: color 0.3s;
 }
 
@@ -111,64 +113,54 @@ form {
   color: var(--primary);
 }
 
-.additionalButtons {
-  margin-top: 30px;
-  margin-bottom: 30px;
-}
-
 .socialButtons button {
-  align-items: center;
-  text-algin:center;
-  border-radius: 5px;
-  padding: 10px;
+  padding: 15px;
+  border: 1px solid var(--color-gray100);
+  border-radius: 25px;
+  outline: none;
   margin-bottom: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s;
   width:100%;
   height:45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* 네이버 로그인 버튼 스타일 */
-.socialButtons button.naverLogin {
-  background-color: var(--color-white); 
-  color: #1EC800; 
+.socialButtons .naver {
+  background-color: #1EC800; 
+  color: #fff; 
   border: 1px solid #1EC800; 
 }
 
 /* 네이버 로그인 버튼 hover 스타일 */
-.socialButtons button.naverLogin:hover {
-  background-color: #1EC800; 
-  border: 1px solid #1EC800;
+.socialButtons .naver:hover {
+  background-color: #17B75E; 
 }
 
 /* 카카오 로그인 버튼 스타일 */
-.socialButtons button.kakaoLogin {
-  background-color: var(--color-white); 
-  color: #FFEB00; 
-  border: 1px solid #FFEB00; 
+.socialButtons .kakao {
+  background-color: #FEE500; 
+  color: #000; 
+  border: 1px solid #FEE500; 
 }
 
 /* 카카오 로그인 버튼 hover 스타일 */
-.socialButtons button.kakaoLogin:hover {
-  background-color: #FFEB00; 
-  border: 1px solid #FFEB00;
+.socialButtons .kakao:hover {
+  background-color: #FFD600; 
 }
 
 /* 구글 로그인 버튼 스타일 */
-.socialButtons button.googleLogin {
+.socialButtons .google {
   background-color: var(--color-white); 
-  color: #808080; 
-  border: 1px solid #808080; 
-}
-
-/* 구글 로그인 버튼 hover 스타일 */
-.socialButtons button.googleLogin:hover {
-  background-color: #808080; 
+  color: #000; 
   border: 1px solid #808080;
 }
 
-.socialButtons button:hover {
-  color: var(--color-white); 
+/* 구글 로그인 버튼 hover 스타일 */
+.socialButtons .google:hover {
+  border: 2px solid #808080;
 }
 
 .socialButtons img {
@@ -178,17 +170,13 @@ form {
 
 .signupContainer {
     position: relative;
-    width: 400px;
-    margin: 0 auto;
-    overflow: hidden;
+    z-index: -99;
 }
 
 .signupSection {
     position: absolute;
-    left: 0;
-    top: 0;
-    width: 300%;
-    transition: left 0.5s ease-in-out;
+    right: -300%;
+    transition: right 0.5s ease-in-out;
 }
 
 #step2, #step3 {
