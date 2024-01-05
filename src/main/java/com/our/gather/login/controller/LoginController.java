@@ -3,6 +3,7 @@ package com.our.gather.login.controller;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,9 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.login.service.LoginService;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Controller
 public class LoginController {
 
@@ -42,12 +40,12 @@ public class LoginController {
 	}
 
 	// 로그인 처리
-	@RequestMapping(value = "/gather/loginDo.com", method = RequestMethod.POST)
+	@RequestMapping(value = "/gather/loginDo.com", method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
 	@ResponseBody
-	public ModelAndView login(CommandMap commandMap, HttpSession session, HttpServletRequest request) throws Exception {
-
-		ModelAndView mv = new ModelAndView();
-
+	public Map<String, Object> login(CommandMap commandMap, HttpSession session, HttpServletRequest request) throws Exception {
+		
+		Map<String, Object> result = new HashMap<>();
+		
 		// 로그인 성공 시 세션값 저장
 		if (loginService.login(commandMap.getMap()) != null) {
 			Map<String, Object> map = loginService.login(commandMap.getMap());
@@ -84,19 +82,22 @@ public class LoginController {
 
 			session.setAttribute("USER_AGEE", tmpAge);
 
-			mv.setViewName("redirect:/gather.com");
-
 			LocalDateTime now = LocalDateTime.now();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 			System.out.println("<------------------Login Success!!!!!------------------>");
 			System.out.println("DateTime:" + now.format(formatter) + "\nUSER_NUMB :" + session.getAttribute("USER_NUMB"));
 			System.out.println("<------------------------------------------------------>");
 
-			return mv;
+			result.put("success", true);
+			
+		} else {
+			
+			System.out.println("<------------------Login Fail...------------------>");
+			result.put("success", false);
+			
 		}
-		mv.setViewName("redirect:/gather/login.com");
-
-		return mv;
+		
+		 return result;
 	}
 
 	// 로그아웃

@@ -8,7 +8,10 @@ public interface LoginService {
    // 로그인
    Map<String, Object> login(Map<String, Object> map) throws Exception;
    
-   // 로그인 배너이미지
+   // 로그인 체크
+   int loginCheck(Map<String, Object> map) throws Exception;
+   
+   // 로그인 배경이미지
    List<Map<String, Object>> loginBackImg(Map<String, Object> map) throws Exception;
 
    

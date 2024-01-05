@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="/resources/css/login/login.css">
 <script src="/resources/js/login/login.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <div class="backGroundContainer">
     <ul>
@@ -19,8 +20,8 @@
         <!-- 로그인 폼 -->
         <form id="loginForm" action="/gather/loginDo.com" method="post">
             <h2 class="LoginHead">로그인</h2>
-            <input type="text" class="inputLogin" name="USER_IDXX" placeholder="ID" required>
-            <input type="password" class="inputLogin" name="PASS_WORD" placeholder="PASSWORD" required>
+            <input type="text" class="inputLogin" name="USER_IDXX" id = "USER_IDXX" placeholder="ID" required>
+            <input type="password" class="inputLogin" name="PASS_WORD" id = "PASS_WORD"placeholder="PASSWORD" required>
             <button type="submit" id="loginButton">Login</button>
             <div class="additionalButtons">
                 <button id="toggleFormButton" onclick="toggleForm('findIdForm')" class="findIdButton">아이디찾기</button>
