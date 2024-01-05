@@ -12,10 +12,12 @@ import javax.print.attribute.standard.PageRanges;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -41,14 +43,25 @@ public class LoginController {
 		return mv;
 	}
 
+	// 아이디 중복 검사
+	@RequestMapping(value = "/gather/loginCheck.com", method = RequestMethod.POST)
+	@ResponseBody 
+	public int checkId(@RequestBody HashMap<String, Object> param) throws Exception {
+
+		int result = loginService.loginCheck(param); // 중복이면 0, 사용가능이면 1
+
+		return result;
+	}
+
 	// 로그인 처리
-	@ResponseBody
 	@RequestMapping(value = "/gather/loginDo.com", method = RequestMethod.POST)
-	public ModelAndView login(@RequestBody HashMap<String, Object> param, CommandMap commandMap, HttpSession session, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("jsonView");	
+	@ResponseBody
+	public ModelAndView login(CommandMap commandMap, HttpSession session, HttpServletRequest request) throws Exception {
+
+		ModelAndView mv = new ModelAndView();
 		
-		int result = loginService.loginCheck(param);
-		
+		Map<String, Object> result = new HashMap<>();
+
 		// 로그인 성공 시 세션값 저장
 		if (result != 0) {
 			
@@ -92,7 +105,8 @@ public class LoginController {
 			LocalDateTime now = LocalDateTime.now();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 			System.out.println("<------------------Login Success!!!!!------------------>");
-			System.out.println("DateTime:" + now.format(formatter) + "\nUSER_NUMB :" + session.getAttribute("USER_NUMB"));
+			System.out
+					.println("DateTime:" + now.format(formatter) + "\nUSER_NUMB :" + session.getAttribute("USER_NUMB"));
 			System.out.println("<------------------------------------------------------>");
 			
 		} else {

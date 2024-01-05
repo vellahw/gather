@@ -22,7 +22,7 @@
    <select id="loginCheck" resultType="int" parameterType="hashmap">
       <![CDATA[
           SELECT /*login.loginCheck*/
-       	    	 COUNT(*)
+       	    	 COUNT(1)
   		    FROM TM_USERXM
  		   WHERE USER_IDXX = #{USER_IDXX}
    			 AND PASS_WORD = #{PASS_WORD}
