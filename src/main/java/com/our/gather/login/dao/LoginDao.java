@@ -10,11 +10,16 @@ import com.our.gather.common.dao.AbstractDao;
 @Repository("loginDao")
 public class LoginDao extends AbstractDao {
 
-	// 로그인
+	// 로그인화면 배경 이미지
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> loginBackImg(Map<String, Object> map) throws Exception {
-		
+
 		return (List<Map<String, Object>>) selectList("login.loginBackImg", map);
+	}
+
+	// 로그인시 아이디 확인
+	public int loginCheck(Map<String, Object> map) throws Exception {
+		return Integer.parseInt(selectOne("login.loginCheck", map).toString());
 	}
 
 	// 로그인

@@ -27,6 +27,11 @@ public class LoginServiceImpl implements LoginService {
        return loginDao.login(map);
     }
     
+    @Override
+    public int loginCheck(Map<String, Object> map) throws Exception {
+          return loginDao.loginCheck(map);
+    }
+    
     //로그인
     @Override
     public List<Map<String, Object>> loginBackImg(Map<String, Object> map) throws Exception {
