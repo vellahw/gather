@@ -1,33 +1,38 @@
-$(document).ready(function () {
-
+document.addEventListener('DOMContentLoaded', function () {
+    // 로그인 폼 처리    
     $("#loginForm").submit(function (event) {
         event.preventDefault();
-
-        debugger;
-
+        const USER_IDXX = $('#USER_IDXX').val();
+        const PASS_WORD = $('#PASS_WORD').val();
+        const data = {
+            "USER_IDXX": USER_IDXX,
+            "PASS_WORD": PASS_WORD,
+        }
+        
         $.ajax({
             type: "POST",
             url: "/gather/loginDo.com",
-            data: $("#loginForm").serialize(),
-            contentType: "application/x-www-form-urlencoded",
-            success: function (data) {
-                if (data.success) {
-                    // 로그인 성공 시의 처리
-                    window.location.href = "/gather.com";
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (result) {
+                const resultData = result.result;
+                console.log(resultData);
+
+                if(resultData == "success") {
+                	const USER_NICK = result.USER_NICK;
+                    alert( USER_NICK + "님 안녕하세요!");
+                    location.href = "/gather.com";
                 } else {
-                    // 로그인 실패 시의 처리
-                    alert("로그인 실패");
+                    alert("실패!");
                 }
             },
             error: function (xhr, status, error) {
-    		console.log(xhr.responseText); // 서버에서 받은 응답 내용 확인
-    		alert("서버 오류 발생");
+    		    console.log(xhr.responseText); // 서버에서 받은 응답 내용 확인
+    		    alert("서버 오류 발생"); 
             }
         });
     });
-});
 
-document.addEventListener('DOMContentLoaded', function () {
     let currentImageIndex = 0;
     const backgroundImageList = document.querySelectorAll('.backGroundContainer .backGroundImg');
     const totalImages = backgroundImageList.length;
