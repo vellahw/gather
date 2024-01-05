@@ -8,16 +8,13 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.print.attribute.standard.PageRanges;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -56,11 +53,11 @@ public class LoginController {
 	// 로그인 처리
 	@RequestMapping(value = "/gather/loginDo.com", method = RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView login(CommandMap commandMap, HttpSession session, HttpServletRequest request) throws Exception {
+	public ModelAndView login(@RequestBody HashMap<String, Object> param, CommandMap commandMap, HttpSession session, HttpServletRequest request) throws Exception {
 
-		ModelAndView mv = new ModelAndView();
+		ModelAndView mv = new ModelAndView("jsonView");
 		
-		Map<String, Object> result = new HashMap<>();
+		int result = loginService.loginCheck(param);
 
 		// 로그인 성공 시 세션값 저장
 		if (result != 0) {
