@@ -16,14 +16,14 @@ document.addEventListener('DOMContentLoaded', function () {
             contentType: "application/json",
             success: function (result) {
                 const resultData = result.result;
-                console.log(resultData);
 
                 if(resultData == "success") {
                 	const USER_NICK = result.USER_NICK;
-                    alert( USER_NICK + "님 안녕하세요!");
-                    location.href = "/gather.com";
+                	comAlert("앙야야야야양");
+                    comAlert2(5,"로그인 완료!.", USER_NICK + "님 반갑습니다!", "gather","/gather.com")
+                    
                 } else {
-                    alert("실패!");
+                    comAlert("앙야야야야양");
                 }
             },
             error: function (xhr, status, error) {
