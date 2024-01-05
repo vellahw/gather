@@ -40,15 +40,17 @@ document.addEventListener('DOMContentLoaded', function () {
             success: function (result) {
                 const resultData = result.result;
                 const inputId = $('#USER_IDXX').val();
+
                 if(resultData == "success") {
                 	const USER_NICK = result.USER_NICK;
-                    alert( USER_NICK + "님 안녕하세요!");
-                    location.href = "/gather.com";
+                	comAlert2(5,"로그인 완료!.", USER_NICK + "님 반갑습니다!", "gather","/gather.com")
+                    
                 } else {
-                    const appendArea = document.getElementById('append');
-                    appendArea.innerHTML = '아이디 또는 비밀번호가 일치하지 않습니다.'
-                    document.getElementById('USER_IDXX').focus();
-                    appendArea.style.marginBottom = "10px";
+                  comAlert("앙야야야야양");
+                  const appendArea = document.getElementById('append');
+                  appendArea.innerHTML = '아이디 또는 비밀번호가 일치하지 않습니다.'
+                  document.getElementById('USER_IDXX').focus();
+                  appendArea.style.marginBottom = "10px";
                 }
             },
             error: function (xhr, status, error) {
