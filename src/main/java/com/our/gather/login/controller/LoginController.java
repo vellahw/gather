@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.print.attribute.standard.PageRanges;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -62,9 +63,10 @@ public class LoginController {
 		Map<String, Object> result = new HashMap<>();
 
 		// 로그인 성공 시 세션값 저장
-		if (loginService.login(commandMap.getMap()) != null) {
-			Map<String, Object> map = loginService.login(commandMap.getMap());
-
+		if (result != 0) {
+			
+			Map<String, Object> map = loginService.login(param);
+			
 			session.setAttribute("USER_NUMB", map.get("USER_NUMB"));
 			session.setAttribute("USER_TYPE", map.get("USER_TYPE"));
 			session.setAttribute("USER_NAME", map.get("USER_NAME"));
@@ -75,45 +77,46 @@ public class LoginController {
 			session.setAttribute("REGI_NUMB", map.get("REGI_NUMB"));
 			session.setAttribute("USER_GNDR", map.get("USER_GNDR"));
 			session.setAttribute("BANN_YSNO", map.get("BANN_YSNO"));
-
+			
 			LocalDate today = LocalDate.now();
 			int todayYear = today.getYear();
-
+			
 			String Jumin1 = (String) session.getAttribute("USER_BIRTH");
 			int Jumin2 = Integer.parseInt(String.valueOf(session.getAttribute("USER_JUMIN2")));
-
+			
 			int userYear = Integer.parseInt(String.valueOf(Jumin1.substring(0, 2)));
-
+			
 			if (Jumin2 == 1 || Jumin2 == 2) {
 				userYear = userYear + 1900;
-
+				
 			} else if (Jumin2 == 3 || Jumin2 == 4) {
 				userYear += 2000;
 			} else if (Jumin2 == 0 || Jumin2 == 9) {
 				userYear += 1800;
 			}
-
+			
 			int tmpAge = todayYear - userYear + 1;
-
+			
 			session.setAttribute("USER_AGEE", tmpAge);
-
+			
+			mv.addObject("result", "success");
+			mv.addObject("USER_NICK", session.getAttribute("USER_NICK"));
+			
 			LocalDateTime now = LocalDateTime.now();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 			System.out.println("<------------------Login Success!!!!!------------------>");
 			System.out
 					.println("DateTime:" + now.format(formatter) + "\nUSER_NUMB :" + session.getAttribute("USER_NUMB"));
 			System.out.println("<------------------------------------------------------>");
-
+			
 		} else {
-
-			System.out.println("<---------------------Login Fail...--------------------->");
-			result.put("data", false);
-			System.out.println(result);
-
+			mv.addObject("result", null);
+			System.out.println("<------------------Login Fail...------------------>");
 		}
-		
-		return result;
+
+		return mv;
 	}
+	
 
 	// 로그아웃
 	@RequestMapping(value = "/gather/logoutDo.com", method = RequestMethod.GET)

@@ -49,13 +49,11 @@
 	<!-- 리소스 파일 맵핑 -->
    	<mvc:resources mapping="/resources/**" location="/resources/" />
 
-     <!-- <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/> -->
-   <!-- 뷰리솔버 순서: 이름으로 뷰 전달 -> URL 기반 뷰 전달 -->
-   <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0" />
-   
-   <!-- JSON으로 뷰 전달을 위한 설정 -->
-    <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
-   <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver"
+	<bean id="beanNameResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0" />
+	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+    	<property name="contentType" value="application/json;charset=UTF-8"></property>
+	</bean>
+	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver"
       p:order="2"
       p:viewClass="org.springframework.web.servlet.view.JstlView"
       p:prefix="/WEB-INF/views/" p:suffix=".jsp"/>

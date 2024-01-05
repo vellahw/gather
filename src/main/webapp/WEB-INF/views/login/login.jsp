@@ -21,7 +21,7 @@
             <h2 class="LoginHead">로그인</h2>
             <input type="text" class="inputLogin" name="USER_IDXX" id = "USER_IDXX" placeholder="ID" required>
             <input type="password" class="inputLogin" name="PASS_WORD" id = "PASS_WORD"placeholder="PASSWORD" required>
-            <button type="submit" id="loginButton">Login</button>
+            <button id="loginButton">Login</button>
             <div class="additionalButtons">
                 <button id="toggleFormButton" onclick="toggleForm('findIdForm')" class="findIdButton">아이디찾기</button>
                 <button id="toggleFormButton" onclick="toggleForm('signupForm')" class="signupButton">회원가입</button>
