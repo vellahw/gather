@@ -100,7 +100,6 @@ public class LoginController {
 			System.out.println("<------------------Login Fail...------------------>");
 		}
 
-		System.out.println("오잉" + mv );
 		return mv;
 	}
 	
