@@ -14,9 +14,10 @@
 <link rel="stylesheet" href="/resources/css/common/swal.css">
 <script src="/resources/js/common/nav.js"></script>
 <script src="/resources/js/common/common.js"></script>
+<script src="/resources/js/common/sweetalert.min.js"></script>
 <link rel="icon" href="/resources/img/logo/favicon.ico">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </head>
 <body>
 <header>
