@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <nav class="nav">
   <div class="leftContainer">
     <div class="logoContainer" id="logoContainer">
@@ -7,10 +8,10 @@
     </div> 
     <div class="menuContainer">
       <ul class="menu">
-        <li class="menuItem" onClick="menuOnClick('gt')">게더</li>
-        <li class="menuItem" onClick="menuOnClick('cb')">클럽</li>
-        <li class="menuItem" onClick="menuOnClick('cg')">챌린지</li>
-        <li class="menuItem" onClick="menuOnClick('fd')">피드</li>
+        <li class="menuItem" onclick="menuOnClick('gt')">게더</li>
+        <li class="menuItem" onclick="menuOnClick('cb')">클럽</li>
+        <li class="menuItem" onclick="menuOnClick('cg')">챌린지</li>
+        <li class="menuItem" onclick="menuOnClick('fd')">피드</li>
       </ul>
     </div>
   </div>
@@ -22,14 +23,23 @@
       </button>
     </div>
     <div class="userWrap">
-      <div class="iconContainer mypage">
-        <div class="profileImgWrap">
-          <img src="${USER_IMAG}" class="profileImg" alt="프로필사진">
+      <c:if test="${USER_NUMB != null }">
+        <div class="iconContainer mypage">
+          <div class="profileImgWrap">
+            <img src="${USER_IMAG}" class="profileImg" alt="프로필사진">
+          </div>
         </div>
-      </div>
-      <div class="iconContainer">
-        <div class="textWrap" id="login">로그인</div>
-      </div>
+        <div class="iconContainer">
+        <a href="/gather/logoutDo.com">
+          <div class="textWrap">로그아웃</div>
+        </a>
+        </div>
+      </c:if>
+      <c:if test="${USER_NUMB == null }">
+        <div class="iconContainer login">
+          <div class="textWrap" onclick="loginOnClick()">로그인</div>
+        </div>
+      </c:if>
       <div class="iconContainer">
         <div class="textWrap">고객센터</div>
       </div>
