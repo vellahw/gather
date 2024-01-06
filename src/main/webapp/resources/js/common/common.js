@@ -68,7 +68,7 @@ function comAlert2(type, title, content, button ,url){
 
 /* 
 admin:Hwai
-name:cusAlert2
+name:cusAlert
 parameter:(type : 알럿타입 , title : 제목, content: 내용 , okFn : 확인 후 함수
 */ 
 function cusAlert(title, icon, button, okFn){

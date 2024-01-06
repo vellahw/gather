@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if(resultData == "success") {
                 	const USER_NICK = result.USER_NICK;
-                	comAlert2(5,"로그인 완료!.", USER_NICK + "님 반갑습니다!", "gather","/gather.com")
+                	comAlert2(5,"로그인 완료!", USER_NICK + "님 반갑습니다!", "확인","/gather.com")
                     
                 } else {
                   comAlert("앙야야야야양");
