@@ -19,8 +19,8 @@
         <!-- 로그인 폼 -->
         <form id="loginForm" action="/gather/loginDo.com" method="post">
             <h2 class="LoginHead">로그인</h2>
-            <input type="text" class="inputLogin" name="USER_IDXX" id="USER_IDXX" placeholder="아이디(이메일 형식)" required>
-            <input type="password" class="inputLogin" name="PASS_WORD" id="PASS_WORD" placeholder="비밀번호" required>
+            <input type="text" class="inputLogin" name="USER_IDXX" id="USER_IDXX" placeholder="아이디(이메일 형식)">
+            <input type="password" class="inputLogin" name="PASS_WORD" id="PASS_WORD" placeholder="비밀번호">
             <div id="append" class="append"></div>
             <button class="inputLogin btn">로그인</button>
             <div class="additionalButtons">
