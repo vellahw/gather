@@ -3,10 +3,10 @@ admin:Hwai
 name:comAlert
 parameter:(content: 내용)
 */ 
-function comAlert(content){
-    
+function comAlert(title){
+
 	 swal({ 
-            text: content,
+            title: title,
             button:"확인"                                   
         });
 }
@@ -22,7 +22,9 @@ function comAlert2(type, title, content, button ,url){
     if(type == 1){                            
         swal({ 
             title: title,
-            text: content,                                   
+            text: content,
+            button: "확인",
+            closeOnClickOutside: false                                 
         });
     }
     else if(type == 2){
