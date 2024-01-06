@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const userIdForm = document.getElementById('USER_IDXX');
-    const appendArea = document.getElementById('appendId');
+    const appendArea = document.getElementById('append');
 
     userIdForm.addEventListener("change", function(num){
         if(checkId(userIdForm.value) == false){ 
@@ -43,10 +43,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if(resultData == "success") {
                 	const USER_NICK = result.USER_NICK;
-                	comAlert2(5,"로그인 완료!.", USER_NICK + "님 반갑습니다!", "gather","/gather.com")
+                	comAlert2(5,"로그인 완료", USER_NICK + "님 반갑습니다!", "let's gather!","/gather.com")
                     
                 } else {
-                  comAlert("앙야야야야양");
+                 
                   const appendArea = document.getElementById('append');
                   appendArea.innerHTML = '아이디 또는 비밀번호가 일치하지 않습니다.'
                   document.getElementById('USER_IDXX').focus();

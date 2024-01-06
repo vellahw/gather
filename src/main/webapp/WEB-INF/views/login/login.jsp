@@ -20,7 +20,6 @@
         <form id="loginForm" action="/gather/loginDo.com" method="post">
             <h2 class="LoginHead">로그인</h2>
             <input type="text" class="inputLogin" name="USER_IDXX" id="USER_IDXX" placeholder="아이디(이메일 형식)" required>
-            <div id="appendId" class="append"></div>
             <input type="password" class="inputLogin" name="PASS_WORD" id="PASS_WORD" placeholder="비밀번호" required>
             <div id="append" class="append"></div>
             <button class="inputLogin btn">로그인</button>

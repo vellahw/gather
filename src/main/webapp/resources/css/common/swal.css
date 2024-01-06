@@ -7,13 +7,13 @@ comAlert버튼
 확인 : .swal-button
 취소 : .swal-button--cancel
 위험 : .swal-button--danger
-로딩 : .swal-button--
+로딩 : .swal-button--loading
 */
 .swal-button {
   padding: 7px 19px;
-  border-radius: 2px;
+  border-radius: 5px;
   background-color: var(--primary);
-  border: 1px solid var(--color-gray100);
+  border: 2px solid #D7D7D7;
   font-size: 14px;
   text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
 }
