@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -154,9 +153,9 @@ public class LoginController {
 			JSONParser parser = new JSONParser();
 			Object obj = null;
 			try {
-				obj = parser.parse(apiResult);
 			} catch (ParseException e) {
 				e.printStackTrace();
+				
 			}
 			JSONObject jsonobj = (JSONObject) obj;
 			JSONObject response = (JSONObject) jsonobj.get("response");
