@@ -44,7 +44,6 @@ public class MainController {
 
 				commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 				commandMap.put("USER_IMAG", session.getAttribute("USER_IMAG"));
-				commandMap.put("USER_NICK", session.getAttribute("USER_NICK"));
 				mv.addObject("loginGather", mainService.loginMainGather(commandMap.getMap(), session, commandMap)); // 로그인시
 																													// 게더메인
 
