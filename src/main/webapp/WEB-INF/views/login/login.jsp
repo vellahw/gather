@@ -4,7 +4,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="/resources/css/login/login.css">
 <script src="/resources/js/login/login.js"></script>
-<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 
 <div class="backGroundContainer">
   <ul>
@@ -31,26 +30,29 @@
 	  			<button onclick="toggleForm('findPwForm')" class="findIdButton">비밀번호 찾기</button>
 	  			<button onclick="toggleForm('signupForm')" class="signupButton">회원가입</button>
 	  		</div>
+   		</form>
 	
-	  		<!-- 소셜 로그인 버튼 추가 -->
-	  		<div class="socialButtons">
-	  			<button class="loginButton naver">
-	  				<img class="navericon" src="/resources/img/icon/loginApi/naver.png">
-	  				네이버 로그인
-	  			</button>
-	  			<button class="loginButton kakao">
-	  				<img class="kakaoicon" src="/resources/img/icon/loginApi/kakao.png" alt="Kakao Icon">
-	   				카카오 로그인
-	  			</button>
-	  			<button class="Login google">
-	  				<img class="googleicon" src="/resources/img/icon/loginApi/google.png" alt="Google Icon">
-	   				구글 로그인
-	  			</button>
-	  		</div>
-			</form>
+	  	<div class="socialButtons">
+	  	  <button class="loginButton naver" id="naver_id_login">
+	  			<img class="navericon" src="/resources/img/icon/loginApi/naver.png">
+	  			네이버 로그인
+	  		</button>
+	  		<script type="text/javascript">
+					var naver_id_login = new naver_id_login("imq4BJkILgfjUij4Rw1W", "http://localhost:8080/gather/naverLoginDo.com");
+					naver_id_login.init_naver_id_login();
+					naver_id_login.setPopup();
+  			</script>
+	  		<button class="loginButton kakao">
+	  			<img class="kakaoicon" src="/resources/img/icon/loginApi/kakao.png" alt="Kakao Icon">
+	   			카카오 로그인
+	  		</button>
+	  		<button class="Login google">
+	  			<img class="googleicon" src="/resources/img/icon/loginApi/google.png" alt="Google Icon">
+	   			구글 로그인
+	  		</button>
+	  	</div>
 		</div>
 
-	  <!-- 아이디 찾기 폼 -->
 	  <div id="findIdForm"  style="display:none;">
 	   <form action="/findId" method="post">
 	   <h2 id="LoginHead">아이디 찾기</h2>
@@ -60,7 +62,6 @@
 	   </form>
 	  </div>
 	
-	  <!-- 회원가입 폼 -->
 	  <form id="signupForm" action="/signup" method="post"  style="display:none;">
 	    <h2 class="LoginHead">회원가입</h2>
 	    <!-- 회원가입 폼의 필드들을 여기에 추가 -->
@@ -85,7 +86,6 @@
 	  <button type="button" onclick="prevSection()">Back</button>
 	  </form>
 	
-	  <!-- 비밀번호 찾기 폼 -->
 	  <form id="findPwForm" action="/findPw" method="post" style="display:none;">
 	  <h2 id="LoginHead">비밀번호 찾기</h2>
 	  <!-- 비번 찾기 폼의 필드들을 여기에 추가 -->

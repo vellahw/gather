@@ -114,7 +114,6 @@ public class LoginController {
 		return mv;
 	}
 	
-
 	// 로그아웃
 	@RequestMapping(value = "/gather/logoutDo.com", method = RequestMethod.GET)
 	public ModelAndView logout(HttpSession session) throws Exception {
