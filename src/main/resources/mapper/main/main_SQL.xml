@@ -13,7 +13,7 @@
       <![CDATA[
          SELECT /*mainPage.mainGather*/
          		  RNUM
-                , TYPE                	/* 게더 타입 ('Taste': 취항 , 'Hot': 핫한게더 , 'Taste': 취항 , 'Region': 지역 */
+                , TYPE                	/* 게더 타입 ('Taste': 취항 , 'Hot': 핫한게더 , 'Region': 지역) */
                 , GATH_IDXX				/* 게더 ID */
                 , GATH_TITL				/* 게더 제목 */
                 , GATH_CNTT				/* 게더 내용 */

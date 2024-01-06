@@ -45,6 +45,7 @@ public class MainController {
 		}
 
     if (LIST_TYPE == null && CATE_IDXX == null) {
+    	
 			mv.addObject("mainGather", mainService.mainGather(commandMap.getMap(), session, commandMap)); //게더 메인
       
 		} else if (LIST_TYPE == null && CATE_IDXX != null) {
