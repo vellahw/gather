@@ -44,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 if(resultData == "success") {
                 	const USER_NICK = result.USER_NICK;
                 	comAlert2(5,"로그인 완료", USER_NICK + "님 반갑습니다!", "let's gather!","/gather.com")
-                    
                 } else {
                  
                   const appendArea = document.getElementById('append');
