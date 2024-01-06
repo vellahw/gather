@@ -37,22 +37,18 @@ public class MainController {
 		List<Map<String, Object>> cCate = commonService.cCate(commandMap.getMap(), commandMap);
 		mv.addObject("pCate", pCate);
 		mv.addObject("cCate", cCate);
+		
+		if (session.getAttribute("USER_NUMB") != null) {
+
+			mv.addObject("sUSER_NUMB", session.getAttribute("USER_NUMB"));
+			mv.addObject("sUSER_IMAG", session.getAttribute("USER_IMAG"));
+			mv.addObject("sUSER_NICK", session.getAttribute("USER_NICK"));
+		}
 
 		if (LIST_TYPE == null && CATE_IDXX == null) {
 
-			if (session.getAttribute("USER_NUMB") != null) {
-
-				commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
-				commandMap.put("USER_IMAG", session.getAttribute("USER_IMAG"));
-				commandMap.put("USER_NICK", session.getAttribute("USER_NICK"));
-				mv.addObject("loginGather", mainService.loginMainGather(commandMap.getMap(), session, commandMap)); // 로그인시
-																													// 게더메인
-
-			} else {
-
-				mv.addObject("loginGather", mainService.loginMainGather(commandMap.getMap(), session, commandMap)); // 비로그인시
-																													// 게더메인
-			}
+			mv.addObject("mainGather", mainService.mainGather(commandMap.getMap(), session, commandMap)); //게더 메
+																												
 
 		} else if (LIST_TYPE == null && CATE_IDXX != null) {
 			ModelAndView mv2 = new ModelAndView("/listPage/list");

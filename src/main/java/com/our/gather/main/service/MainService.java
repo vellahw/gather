@@ -9,7 +9,7 @@ import com.our.gather.common.common.CommandMap;
 
 public interface MainService {
 
-	List<Map<String, Object>> loginMainGather(Map<String, Object> map, HttpSession session, CommandMap commandMap)
+	List<Map<String, Object>> mainGather(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception;
 
 	List<Map<String, Object>> getGather(Map<String, Object> map, HttpSession session, CommandMap commandMap)

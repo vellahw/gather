@@ -19,16 +19,18 @@ public class MainServiceImpl implements MainService {
 	private MainDao mainDao;
 
 	@Override
-	public List<Map<String, Object>> loginMainGather(Map<String, Object> map, HttpSession session,
+	public List<Map<String, Object>> mainGather(Map<String, Object> map, HttpSession session,
 			CommandMap commandMap) throws Exception {
 		// TODO Auto-generated method stub
 
 		if (session.getAttribute("USER_NUMB") != null) {
 
 			commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
+			commandMap.put("USER_IMAG", session.getAttribute("USER_IMAG"));
+			commandMap.put("USER_NICK", session.getAttribute("USER_NICK"));
 		}
 		
-		return mainDao.loginMainGather(map, commandMap, session);
+		return mainDao.mainGather(map, commandMap, session);
 	}
 
 	@Override
@@ -39,6 +41,8 @@ public class MainServiceImpl implements MainService {
 		if (session.getAttribute("USER_NUMB") != null) {
 
 			commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
+			commandMap.put("USER_IMAG", session.getAttribute("USER_IMAG"));
+			commandMap.put("USER_NICK", session.getAttribute("USER_NICK"));
 		} else {
 			
 			commandMap.put("USER_NUMB", "null");

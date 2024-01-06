@@ -15,12 +15,12 @@ public class MainDao extends AbstractDao {
 	
 	// 로그인시 메인
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> loginMainGather(Map<String, Object> map, CommandMap commandMap, HttpSession session)
+	public List<Map<String, Object>> mainGather(Map<String, Object> map, CommandMap commandMap, HttpSession session)
 			throws Exception {
 
-		List<Map<String, Object>> loginMainGather = (List<Map<String, Object>>) selectList("mainPage.mainLoginGather", map);
+		List<Map<String, Object>> mainGather = (List<Map<String, Object>>) selectList("mainPage.mainGather", map);
 
-		return loginMainGather;
+		return mainGather;
 	}
 	
 	// 로그인시 메인
