@@ -1,5 +1,20 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // 로그인시 이메일 유효성 검사
+    const userIdForm = document.getElementById('USER_IDXX'); // id 입력 input
+    const userPwForm = document.getElementById('PASS_WORD'); // pw 입력 input
+    const appendArea = document.getElementById('append'); // 안내문구 띄울 공간
+    
+    /*
+      안내문구 띄우는 함수
+      parameter: (text: 띄울 문구)
+    */ 
+    function appendWarning(text) {
+        const appendArea = document.getElementById('append');
+        appendArea.style.display = 'block';
+        appendArea.innerHTML = text; 
+        appendArea.style.marginBottom = '10px';
+    }
+    
+    // 이메일 입력값 유효성 검사 함수
     function checkId(email) {
         var pattern = /^[0-9a-zA-Z가-힣]([-_.]?[0-9a-zA-Z가-힣])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
         if(!pattern.test(email)) {
@@ -8,14 +23,10 @@ document.addEventListener('DOMContentLoaded', function () {
         return true;
     }
 
-    const userIdForm = document.getElementById('USER_IDXX');
-    const appendArea = document.getElementById('append');
-
+    // 아이디(이메일) 입력 검사
     userIdForm.addEventListener("change", function(num){
         if(checkId(userIdForm.value) == false){ 
-            appendArea.style.display = 'block';
-            appendArea.innerHTML = "올바른 이메일 형식을 입력해주세요."; 
-            appendArea.style.marginBottom = '10px';
+            appendWarning("올바른 이메일 형식을 입력해주세요.");
         } else {
             appendArea.style.display = 'none';
         }
@@ -25,13 +36,23 @@ document.addEventListener('DOMContentLoaded', function () {
     // 로그인 폼 처리    
     $("#loginForm").submit(function (event) {
         event.preventDefault();
-        const USER_IDXX = $('#USER_IDXX').val();
-        const PASS_WORD = $('#PASS_WORD').val();
+        const USER_IDXX = userIdForm.value;
+        const PASS_WORD = userPwForm.value;
         const data = {
             "USER_IDXX": USER_IDXX,
             "PASS_WORD": PASS_WORD,
         }
-        
+		
+        // 아이디, 비번 입력 input이 비었는지 검사
+        if(USER_IDXX == '' || null || undefined) {
+            userIdForm.focus();
+            appendWarning("아이디를 입력해주세요.");
+            return false;
+        } else if(PASS_WORD == '' || null || undefined){
+            appendWarning("비밀번호를 입력해주세요.");
+            return false;
+        }
+
         $.ajax({
             type: "POST",
             url: "/gather/loginDo.com",
@@ -45,11 +66,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 	const USER_NICK = result.USER_NICK;
                 	comAlert2(5,"로그인 완료", USER_NICK + "님 반갑습니다!", "let's gather!","/gather.com")
                 } else {
-                  const appendArea = document.getElementById('append');
-                  appendArea.innerHTML = '아이디 또는 비밀번호가 일치하지 않습니다.'
+                  appendWarning("아이디 또는 비밀번호가 일치하지 않습니다.");
                   document.getElementById('USER_IDXX').focus();
-                  appendArea.style.marginBottom = "10px";
-                  appendArea.style.display = 'block';
                 }
             },
             error: function (xhr, status, error) {
