@@ -8,6 +8,8 @@
   --color-gray100 : #D7D7D7;
   --color-red : #FD5631;
   --primary: #FD8731;
+  --color-orange100 : #FFF0E5;
+  --color-orange500 : #F6700E;
  }
 
 * {
@@ -44,8 +46,8 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   -webkit-text-fill-color: #000;
-  -webkit-box-shadow: 0 0 0px 1000px #FFEDDF inset;
-  box-shadow: 0 0 0px 1000px #FFEDDF inset;
+  -webkit-box-shadow: 0 0 0px 1000px var(--color-orange100) inset;
+  box-shadow: 0 0 0px 1000px var(--color-orange100) inset;
   transition: background-color 5000s ease-in-out 0s;
 }
 
@@ -54,7 +56,7 @@ input:autofill:hover,
 input:autofill:focus,
 input:autofill:active {
   -webkit-text-fill-color: #000;
-  -webkit-box-shadow: 0 0 0px 1000px #FFEDDF inset;
-  box-shadow: 0 0 0px 1000px #FFEDDF inset;
+  -webkit-box-shadow: 0 0 0px 1000px var(--color-orange100) inset;
+  box-shadow: 0 0 0px 1000px var(--color-orange100) inset;
   transition: background-color 5000s ease-in-out 0s;
 }
