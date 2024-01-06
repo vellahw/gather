@@ -93,24 +93,24 @@ document.addEventListener('DOMContentLoaded', function () {
 // 로그인/회원가입 폼 전환을 담당하는 JavaScript 함수
 function toggleForm(formId) {
     const loginForm = document.getElementById("loginForm");
-    const signupForm = document.getElementById("signupForm");
     const findIdForm = document.getElementById("findIdForm");
     const findPwForm = document.getElementById("findPwForm");
+    const signupForm = document.getElementById("signupForm");
 
-    if (formId === 'signupForm') {
-   		 signupForm.style.display = "block";
-        loginForm.style.display = "none";
-        findIdForm.style.display = "none";
-        findPwForm.style.display = "none";
-    } else if (formId === 'findIdForm') {
-        loginForm.style.display = "none";
-        signupForm.style.display = "none";
+    if (formId === 'findIdForm') {
         findIdForm.style.display = "block";
-        findPwForm.style.display = "none";
-    } else if(formId === 'findPwForm') {
         loginForm.style.display = "none";
-        findPwForm.style.display = "block";
         signupForm.style.display = "none";
+        findPwForm.style.display = "none";
+    } else if (formId === 'findPwForm') {
+        findPwForm.style.display = "block";
+        loginForm.style.display = "none";
+        signupForm.style.display = "none";
+        findIdForm.style.display = "none";
+    } else if(formId === 'signupForm') {
+        signupForm.style.display = "block";
+        loginForm.style.display = "none";
+        findPwForm.style.display = "none";
         findIdForm.style.display = "none";
     }
 }
