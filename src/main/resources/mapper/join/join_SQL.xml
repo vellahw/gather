@@ -53,48 +53,22 @@
    <!--   ID 중복 확인 -->
    <select id="checkId" resultType="hashmap" parameterType="hashmap">
       <![CDATA[
-        SELECT CASE WHEN COUNT(*) = 1 THEN '이미 사용중인 이메일입니다.'
-                    ELSE '사용가능한 이메일입니다.' END AS CHECK_ID
+        SELECT /*join.checkId*/
+        	   CASE WHEN COUNT(*) = 1 THEN '이미 사용중인 이메일입니다.'
+                    ELSE '사용가능한 이메일입니다.' END AS CHECK_IDXX
     	  FROM TM_USERXM
 		 WHERE USER_IDXX = #{USER_IDXX}
-    ]]>
+      ]]>
    </select>
    
     <!-- 닉네임 중복확인 -->
    <select id="checkNick" resultType="hashmap" parameterType="hashmap">
       <![CDATA[
-         SELECT CASE WHEN COUNT(*) = 1 THEN '이미 사용중인 닉네임입니다.'
-                     ELSE '사용가능한 닉네임입니다.' END AS CHECK_NICKNAME
+         SELECT /*join.checkNick*/
+                CASE WHEN COUNT(*) = 1 THEN '이미 사용중인 닉네임입니다.'
+                     ELSE '사용가능한 닉네임입니다.' END AS CHECK_NICK
     	   FROM TM_USERXM
 		  WHERE USER_NICK = #{USER_NICK}
-    ]]>
-   </select>
-   
-   <!-- 로그인 -->
-   <select id="login" resultType="hashmap" parameterType="hashmap">
-      <![CDATA[
-     SELECT 
-       		USER_NUMB
-     	  , getCodeName('USER_TYPE',SUBSTR(USER_NUMB,1,2)) AS USER_TYPE
-     	  , USER_NAME
-     	  , USER_NICK
-          , CASE WHEN LENGTH(FILE_SVNM) > 32 
-                	  THEN '/resources/img/upload/profile/'|| USER_NUMB ||'/'|| FILE_SVNM 
-               	 	  ELSE '/resources/img/basic/profile/' || FILE_SVNM 
-                  END AS USER_IMAG 							
-     	  , SUBSTR(REGI_NUMB, 1, 6) AS USER_BIRTH
-          , CASE 
-            	 WHEN MOD(TO_NUMBER(SUBSTR(REGI_NUMB, 7, 1)), 2) = 1 THEN 'M'
-            	 ELSE 'W'
-        	 END AS USER_GNDR
-     	  , CASE
-            	 WHEN BANN_DATE IS NULL
-                 THEN 'N'
-            ELSE 'Y'
-        	 END AS BANN_YSNO
-  		    FROM TM_USERXM
- 		   WHERE USER_IDXX = 'user1@example.com'
-   			 AND PASS_WORD = 'password1'
     ]]>
    </select>
   
