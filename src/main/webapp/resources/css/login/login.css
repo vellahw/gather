@@ -89,8 +89,8 @@ input.inputLogin:focus {
 }
 
 .inputLogin.btn:hover {
-  background-color: #F6700E;
-  border: 1px solid #F6700E;
+  background-color: var(--color-orange500);
+  border: 1px solid var(--color-orange500);
 }
 
 .append {
