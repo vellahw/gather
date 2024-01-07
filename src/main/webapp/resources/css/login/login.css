@@ -129,9 +129,9 @@ input.inputLogin:focus {
 
 /* 네이버 로그인 버튼 스타일 */
 .socialButtons .naver {
-  background-color: #1EC800; 
+  background-color: #03c75a; 
   color: #fff; 
-  border: 1px solid #1EC800; 
+  border: 1px solid #03c75a; 
 }
 
 /* 네이버 로그인 버튼 hover 스타일 */
