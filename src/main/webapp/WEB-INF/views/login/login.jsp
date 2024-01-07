@@ -33,17 +33,13 @@
    		</form>
 	
 	  	<div class="socialButtons">
-	  	  <button class="loginButton naver" id="naver_id_login">
-	  			<img class="navericon" src="/resources/img/icon/loginApi/naver.png">
-	  			네이버 로그인
-	  		</button>
-	  		<script type="text/javascript">
-					var naver_id_login = new naver_id_login("imq4BJkILgfjUij4Rw1W", "http://localhost:8080/gather/naverLoginDo.com");
-					naver_id_login.init_naver_id_login();
-					naver_id_login.setPopup();
-  			</script>
-	  		<button class="loginButton kakao">
-	  			<img class="kakaoicon" src="/resources/img/icon/loginApi/kakao.png" alt="Kakao Icon">
+		  <div id="naverIdLogin" style="display:none;"></div>
+	  	  <button id="naverLogin" class="loginButton naver">
+	  	    <img class="navericon" src="/resources/img/icon/loginApi/naver.png">
+	  		네이버 로그인
+	  	  </button>
+	  	  <button class="loginButton kakao">
+	  		<img class="kakaoicon" src="/resources/img/icon/loginApi/kakao.png" alt="Kakao Icon">
 	   			카카오 로그인
 	  		</button>
 	  		<button class="Login google">

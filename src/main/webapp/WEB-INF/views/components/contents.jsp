@@ -6,7 +6,7 @@
   <div class="eachContainer">
     <div class="eachWrap">
       <div class="thumnailContainer">
-      <img src="${list.GATH_IMAG}" class="thumnail" alt="썸네일">
+        <img src="${list.GATH_IMAG}" class="thumnail" alt="썸네일">
       </div>
       <div class="infoContainer">
       <h3 class="title">${list.GATH_TITL}</h3>
