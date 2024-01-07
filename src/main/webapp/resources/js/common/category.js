@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function(){
   
-  
   /**
   * 231224 장한원
   * 동적 슬라이드 버튼 생성
@@ -46,28 +45,6 @@ document.addEventListener("DOMContentLoaded", function(){
     });
   });
 });
-
-// $.ajax({
-//     url: '/cateGory.get', 
-//     type: 'GET', 
-//     dataType: 'json', 
-//     success: function(response) {
-//       const childCateData = response.cCate;
-//       const parentsCateData = response.pCate;
-
-//       const categoryIcon = document.getElementById('categoryIcon');
-//       const categoryIconData = childCateData[i].IMAG_SRCC;
-//       categoryIcon.src = categoryIconData;
-
-//       append.childCateData[i].CATE_CODE
-
-
-
-//     },
-//     error: function(error) {
-//         console.error('데이터를 가져오는데 실패했습니다. >> ', error);
-//     }
-// });
 
   /*
    * 240103 장한원

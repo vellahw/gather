@@ -39,6 +39,7 @@ public class MainController {
 		mv.addObject("cCate", cCate);
 		
 		if (session.getAttribute("USER_NUMB") != null) {
+			
 			mv.addObject("sUSER_NUMB", session.getAttribute("USER_NUMB"));
 			mv.addObject("sUSER_IMAG", session.getAttribute("USER_IMAG"));
 			mv.addObject("sUSER_NICK", session.getAttribute("USER_NICK"));
@@ -46,7 +47,8 @@ public class MainController {
 
     if (LIST_TYPE == null && CATE_IDXX == null) {
     	
-			mv.addObject("mainGather", mainService.mainGather(commandMap.getMap(), session, commandMap)); //게더 메인
+    	mv.addObject("moimType", "게더"); //모임타입
+    	mv.addObject("main", mainService.mainGather(commandMap.getMap(), session, commandMap)); //게더 메인
       
 		} else if (LIST_TYPE == null && CATE_IDXX != null) {
 			ModelAndView mv2 = new ModelAndView("/listPage/list");
