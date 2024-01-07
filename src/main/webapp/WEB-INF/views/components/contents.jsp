@@ -10,7 +10,7 @@
     <a href="#">
     <div class="eachWrap">
       <div class="thumnailContainer">
-      <img src="/resources/img/sp/thumnail.png" class="thumnail" alt="썸네일">
+      	<img src="/resources/img/sp/thumnail.png" class="thumnail" alt="썸네일">
       </div>
       <div class="infoContainer">
       <h3 class="title">아야코록카쿠 전시보러가요</h3>
