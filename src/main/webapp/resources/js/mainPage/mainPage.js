@@ -45,7 +45,7 @@
       slides.style.transform = 'translateX(150px)';
     }
   }
-   
+  
    
 /*
 admin : Hwai
@@ -73,11 +73,7 @@ navigator.geolocation.getCurrentPosition(function(pos) {
 		var weather = (data.weather[0].icon).substr(0, 2);
 		var temp = (data.main.temp).toFixed(1);
 
-	    alert("날씨코드: " + weather + "\n" +
-	          "현재온도: " + temp  + "\n" +
-	          "도시이름: " + city)
-
-	    if(temp <30){//30도 이하일 때
+	    if(temp < 30){ //30도 이하일 때
 	
 	          if(weather == '01' || weather == '02'){ //기분 좋은 맑은 날
                 weatherType = "sunny";
@@ -91,20 +87,17 @@ navigator.geolocation.getCurrentPosition(function(pos) {
                 weatherType = "snowy";
 	          }
 	          
-	      } else if(temp <30 && weather == '01'){//오늘 같이 더운날
+	      } else if(temp >= 30 && weather == '01'){//오늘 같이 더운날
 	              alert("오늘 같이 더운날");
                 weatherType = "hot";
 	      }
 	      
-	      alert(weatherType);
-
         $.ajax({
           url : "/getWeather.com",
           data: JSON.stringify({ weatherType: weatherType }),
           type : "post",
           contentType: "application/json", 
           success : function(data) {
-              alert("성공!!!!!");
               console.log(data);
           },
           error: function(res, req) {

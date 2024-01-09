@@ -12,14 +12,8 @@
 					 class="areaTitleIcon" alt="타이틀 아이콘">
 	  </c:if> 
 	</h1>
-    <button type="button" class="arrowBtn left" id="leftBtn" onclick="prevSlide()">
-	  <img src="/resources/img/icon/arrowL.png"
-		   class="arrowLIcon" alt="left arrow">
-	</button>
-	<button type="button" class="arrowBtn right">
-	  <img src="/resources/img/icon/arrowR.png"
-		     class="arrowLIcon" alt="right arrow" id="rightBtn" onclick="nextSlide()">
-    </button>
+    <button type="button" class="arrowBtn left" id="leftBtn"></button>
+	<button type="button" class="arrowBtn right" id="rigthBtn"></button>
 	
 	<div class="slideContainer">
 	<div class="slideList">
