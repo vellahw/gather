@@ -31,6 +31,15 @@
   </c:import>
 </c:if>
 
+<div class="contentsContainer">
+  <div class="contentsWrap">
+    <div id="weatherSection">
+  	  <h1 id="weatherTitle" class="areaTitle">
+  	  </h1>
+	</div>
+  </div>
+</div>
+
 <c:import url="../components/contents.jsp">
   <c:param name="type" value="Hot" />
   <c:param name="title" value="마감이 얼마 남지 않았어요!" />
@@ -42,5 +51,4 @@
   <c:param name="title" value="좋아요가 많은 ${moimType}" />
   <c:param name="titleIcon" value="hotTitleIcon" />
 </c:import>
-
 </body>
