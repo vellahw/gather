@@ -61,7 +61,7 @@
 	<c:if test = "${sUSER_NUMB != null}" >
 		<div class="contentsContainer">
 			<h1 class="areaTitle">
-				<c:out value="${sUSER_NICK}" />	님의 취향 저격 <c:out value="${moimType}"/>
+				<c:out value="${sUSER_NICK}" />	님 근처의<c:out value="${moimType}"/>
 				<!-- 타이틀 -->
 				<img src="/resources/img/icon/tasteTilteIcon.png"class="areaTitleIcon" alt="타이틀 아이콘">
 			</h1>
@@ -76,7 +76,7 @@
 				</c:if>
 			</c:forEach>
 				<button type="submit" class="arrowBtn right">
-	   				 <img src="/resources/img/icon/arrowR.png" class="arrowLIcon" alt="right arrow">
+	   				 <img src="/resources/img/icon/arrowR.png" class="arrowLIcon""C:/Users/SAMSUNG/Desktop/STS.exe.lnk" alt="right arrow">
 	  			</button>
 			</div>
 		</div>
