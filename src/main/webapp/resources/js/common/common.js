@@ -1,5 +1,45 @@
 /* 
 admin:Hwai
+name:comApplyNumFmt
+parameter:(num: 숫자)
+*/ 
+function comApplyNumFmt(num) {
+	if(!$.isNumeric(num)) {
+		if(num == null || num == undefined || num == '') {
+			return 0;
+		}
+		return num;
+	}
+	
+	var isMinus = false;
+	if(num == 0 || num == '0') {
+		return 0;
+	}
+	if(num < 0) {
+		num *= -1;
+		isMinus = true;
+	}
+	num = ''+num;
+	var rult = '';
+	while(num.length>3) {
+		var temp = num.substring(num.length-3);
+		num = num.substring(0, num.length-3);
+		rult = temp + rult;
+		rult = ',' + rult;
+	}
+	rult = num + rult;
+	if(isMinus) rult = '-'+rult;
+	return rult;
+}
+
+// 회계(통화) 포맷 제거
+function removeNumFmt(num) {
+	return parseInt(num.replace(/,/g, ''));
+}
+
+
+/* 
+admin:Hwai
 name:comAlert
 parameter:(content: 내용)
 */ 
