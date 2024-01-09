@@ -16,8 +16,8 @@
                 , TYPE                				/* 게더 타입 ('Taste': 취항 , 'Hot': 핫한게더 , 'Like':좋아요 많은 순 'Region': 지역) */
                 , GATH_IDXX	AS MOIM_IDXX			/* 게더 ID */
                 , GATH_TITL AS MOIM_TITL			/* 게더 제목 */
-                , GATH_CNTT	AS GATH_CNTT			/* 게더 내용 */
-                , GATH_IMAG	AS GATH_IMAG			/* 게더 대표이미지 */
+                , GATH_CNTT	AS MOIM_CNTT			/* 게더 내용 */
+                , GATH_IMAG	AS MOIM_IMAG			/* 게더 대표이미지 */
                 , CATE_IDXX							/* 카테고리 코드 */
                 , PARENTS_CATE						/* 상위 카테고리 */
                 , CHILD_CATE						/* 하위 카테고리 */
@@ -205,7 +205,7 @@
                 , GATH_TITL AS MOIM_TITL
                 , GATH_CNTT AS MOIM_CNTT
                 , GATH_IMAG AS MOIM_IMAG
-                , CATE_IDXX AS CATE_IDXX
+                , CATE_IDXX
                 , PARENTS_CATE
                 , CHILD_CATE
                 , PRES_PEOP
