@@ -80,15 +80,17 @@ public class MainController {
 		return mv;
 	}
 
-	@RequestMapping(value = "/getWeather.com", method = RequestMethod.POST)
+	@RequestMapping(value = "/getWeatherMoim.com", method = RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView getWeatherGather(@RequestBody Map<String, String> requestBody, CommandMap commandMap, HttpSession session)
+	public ModelAndView getWeatherMoim(@RequestBody Map<String, String> requestBody, CommandMap commandMap, HttpSession session)
 			throws Exception {
 
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("jsonView"); // 결과 페이지의 뷰 이름
 		
 		String weatherType = requestBody.get("weatherType");
+		String moimType = requestBody.get("moimType");
+		System.out.println("moimType" + moimType);
 		
 		List<String> dataList = new ArrayList<>();
 
@@ -150,7 +152,17 @@ public class MainController {
 		        break;
 		}
 		
-		mv.addObject("data", mainService.getGather(commandMap.getMap(), session, commandMap));
+		if(moimType == null) {
+			
+			mv.addObject("data", mainService.getGather(commandMap.getMap(), session, commandMap));
+		
+		} else if(moimType == "cb"){
+			
+			
+		} else if(moimType == "ch"){
+			
+			
+		}
 
 		return mv;
 	}

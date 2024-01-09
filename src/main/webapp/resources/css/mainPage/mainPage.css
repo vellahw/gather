@@ -18,7 +18,7 @@
 .areaTitle {
   display: flex;
   align-items: center;
-  width: 450px;
+  width: fit-content;
   margin-left: 46px;
   /* background: rgb(2,0,36);
   background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(253,135,49,1) 0%, rgba(202,216,91,1) 100%);

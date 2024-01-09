@@ -13,25 +13,25 @@
       <![CDATA[
          SELECT /*mainPage.mainGather*/
          		  RNUM
-                , TYPE                	/* 게더 타입 ('Taste': 취항 , 'Hot': 핫한게더 , 'Like':좋아요 많은 순 'Region': 지역) */
-                , GATH_IDXX				/* 게더 ID */
-                , GATH_TITL				/* 게더 제목 */
-                , GATH_CNTT				/* 게더 내용 */
-                , GATH_IMAG				/* 게더 대표이미지 */
-                , CATE_IDXX				/* 카테고리 코드 */
-                , PARENTS_CATE			/* 상위 카테고리 */
-                , CHILD_CATE			/* 하위 카테고리 */
-                , PRES_PEOP				/* 현재 인원: (현재인원/최대인원)*/
-                , APPR_YSNO				/* 승인여부 */
-                , MOIM_AGEE				/* 모임 나이제한 */
-                , APPR_GNDR				/* 모임 성별제한 */
-                , REGI_NAME				/* 지역명 */
-                , USER_NICK				/* 방장 닉네임 */
-                , USER_IMAG				/* 방장 프로필사진 */
-                , SMAL_DATE				/* 날짜 형식 MM.dd(day) 오전/오후 HH:mm */
-                , FULL_DATE				/* 날짜 형식 YYYY년 M월 오전/오후 HH:mm */
-                , LIKE_COUNT			/* 좋아요 수 */
-                , REGG_DATE				/* 개설일 */
+                , TYPE                				/* 게더 타입 ('Taste': 취항 , 'Hot': 핫한게더 , 'Like':좋아요 많은 순 'Region': 지역) */
+                , GATH_IDXX	AS MOIM_IDXX			/* 게더 ID */
+                , GATH_TITL AS MOIM_TITL			/* 게더 제목 */
+                , GATH_CNTT	AS GATH_CNTT			/* 게더 내용 */
+                , GATH_IMAG	AS GATH_IMAG			/* 게더 대표이미지 */
+                , CATE_IDXX							/* 카테고리 코드 */
+                , PARENTS_CATE						/* 상위 카테고리 */
+                , CHILD_CATE						/* 하위 카테고리 */
+                , PRES_PEOP							/* 현재 인원: (현재인원/최대인원)*/
+                , APPR_YSNO							/* 승인여부 */
+                , MOIM_AGEE							/* 모임 나이제한 */
+                , APPR_GNDR							/* 모임 성별제한 */
+                , REGI_NAME							/* 지역명 */
+                , USER_NICK							/* 방장 닉네임 */
+                , USER_IMAG							/* 방장 프로필사진 */
+                , SMAL_DATE							/* 날짜 형식 MM.dd(day) 오전/오후 HH:mm */
+                , FULL_DATE							/* 날짜 형식 YYYY년 M월 오전/오후 HH:mm */
+                , LIKE_COUNT						/* 좋아요 수 */
+                , REGG_DATE							/* 개설일 */
                 ]]>
                  <if test="USER_NUMB != null">
       			 	<![CDATA[
@@ -201,11 +201,11 @@
       resultType="hashmap">
       <![CDATA[
        	  SELECT /*mainPage.getGather*/              
-                  GATH_IDXX
-                , GATH_TITL
-                , GATH_CNTT
-                , GATH_IMAG
-                , CATE_IDXX
+                  GATH_IDXX AS MOIM_IDXX
+                , GATH_TITL AS MOIM_TITL
+                , GATH_CNTT AS MOIM_CNTT
+                , GATH_IMAG AS MOIM_IMAG
+                , CATE_IDXX AS CATE_IDXX
                 , PARENTS_CATE
                 , CHILD_CATE
                 , PRES_PEOP
