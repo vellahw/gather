@@ -3,13 +3,16 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <link rel="stylesheet" href="/resources/css/mainPage/mainPage.css">
 <script src="/resources/js/common/category.js"></script>
 <script src="/resources/js/common/naver.js"></script>
+<script src="/resources/js/mainPage/mainPage.js"></script>
 
 <div class="bannerContainer">
 	<img src="/resources/img/banner/banner.png" class="bannerImg">
 </div>
+
 
 <%@ include file="../components/category.jsp"%>
 
@@ -36,6 +39,7 @@
 			</div>
 		</div>
 	</c:if>
+
 
 		<div class="contentsContainer">
 			<h1 class="areaTitle">
