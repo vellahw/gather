@@ -1,24 +1,52 @@
-//   const categoryContainer = document.getElementById('categoryContainer');
-  
-//   //새로 생성되는 카테고리 li
-//   let categoryItem = document.createElement('li');
-//   categoryItem.className = 'categoryItem';
-//   categoryItem.style = 'color:red;';
-  
-//   //새로 생성되는 카테고리 a 태그 
-//   let categoryLink = document.createElement('a');
-//   categoryLink.className = 'categoryLink';
-//   categoryLink.textContent = '전체';
-//   // newDeleteFileInputBtn.dataset.fileName = fileName;
-  
-//   let categoryList = document.createElement('ul');
-//   categoryList.className = 'categoryList';
-//   categoryList.appendChild(categoryItem);
-//   categoryList.appendChild(categoryLink);
-  
-//   //추가해주기
-//   categoryContainer.appendChild(categoryList);
+ document.addEventListener("DOMContentLoaded", function(){
+  /**
+   * 240109 장한원
+   * 날씨에 따른 추천 타이틀 동적 생성 
+   */
+  const weatherTitleArea = document.getElementById('weatherTitle');
+  weatherTitleArea.innerHTML = "구름 많은 흐린날";
 
+ /**
+  * 231224 장한원
+  * 동적 슬라이드 버튼 생성
+  */
+  // const contentsContainer = document.querySelector('.slideList');
+  // const hiddenArrowBtn = document.querySelectorAll('.arrowBtn');
+ 
+  // contentsContainer.addEventListener('mouseenter', () => {
+  //   for (let i = 0; i < hiddenArrowBtn.length; i++) {
+  //     hiddenArrowBtn[i].classList.add('btnHover');
+  //   }
+  // })
+  
+  // contentsContainer.addEventListener('mouseleave', () => {
+  //   for (let i = 0; i < hiddenArrowBtn.length; i++) {
+  //     hiddenArrowBtn[i].classList.remove('btnHover');
+  //   }
+  // })
+
+
+  
+  const leftArrowBtn = document.getElementById('leftBtn');
+  const rightArrowBtn = document.getElementById('rightBtn');
+   
+   // 왼쪽 버튼 클릭 시
+  function prevSlide() {
+    if (currentIndex > 0) {
+      currentIndex--;
+      slides.style.transform = 'translateX(-150px)';
+    }
+  }
+  
+  // 오른쪽 버튼 클릭 시
+  function nextSlide() {
+    if (currentIndex < slideItems.length - 4) {
+      currentIndex++;
+      slides.style.transform = 'translateX(150px)';
+    }
+  }
+   
+   
 /*
 admin : Hwai
 날씨에 따른 게더
@@ -89,4 +117,7 @@ navigator.geolocation.getCurrentPosition(function(pos) {
 	console.log("error : " + res, req);
 	}})
 	
+});
+   
+   
 });
