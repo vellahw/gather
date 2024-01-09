@@ -108,6 +108,52 @@
                  )
         UNION ALL
                  (
+                 		 SELECT 
+	                             ROWNUM RNUM
+	                           , 'Like' AS TYPE
+	                           , GATH_IDXX
+	                           , GATH_TITL
+	                           , GATH_CNTT
+	                           , GATH_IMAG
+	                           , CATE_IDXX
+	                           , PARENTS_CATE
+	                           , CHILD_CATE
+	                           , PRES_PEOP
+	                           , APPR_YSNO
+	                           , MOIM_AGEE
+	                           , APPR_GNDR
+	                           , REGI_NAME
+	                           , USER_NICK
+	                           , USER_IMAG
+	                           , SMAL_DATE
+	                           , FULL_DATE
+	                           , LIKE_COUNT
+	                           , REGG_DATE
+	                       FROM ( SELECT 
+	                                     GATH_IDXX
+	                                   , GATH_TITL
+	                                   , GATH_CNTT
+	                                   , GATH_IMAG
+	                                   , CATE_IDXX
+	                                   , PARENTS_CATE
+	                                   , CHILD_CATE
+	                                   , PRES_PEOP
+	                                   , APPR_YSNO
+	                                   , MOIM_AGEE
+	                                   , APPR_GNDR
+	                                   , REGI_NAME
+	                                   , USER_NICK
+	                                   , USER_IMAG
+	                                   , SMAL_DATE
+	                                   , FULL_DATE
+	                                   , LIKE_COUNT
+	                                   , REGG_DATE
+	                                FROM VW_GATHER
+	                               ORDER BY LIKE_COUNT DESC
+                      			)
+                 )
+        UNION ALL
+                 (
                   			SELECT ROW_NUMBER() OVER (ORDER BY REGG_DATE DESC) RNUM
 			                     , 'Region' AS TYPE
 			                     , GATH_IDXX
