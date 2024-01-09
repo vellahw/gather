@@ -25,99 +25,99 @@
   //   }
   // })
 
+  /**
+  * 240110 장한원
+  * 컨텐츠 슬라이드
+  */
+  const slideContainer = document.querySelectorAll('.slideContainer');
+  const slideContents = document.querySelectorAll('.slideContents');
+  const slideWidth = 1056;
 
-  
-  const leftArrowBtn = document.getElementById('leftBtn');
-  const rightArrowBtn = document.getElementById('rightBtn');
-   
-   // 왼쪽 버튼 클릭 시
-  function prevSlide() {
-    if (currentIndex > 0) {
-      currentIndex--;
-      slides.style.transform = 'translateX(-150px)';
-    }
-  }
-  
-  // 오른쪽 버튼 클릭 시
-  function nextSlide() {
-    if (currentIndex < slideItems.length - 4) {
-      currentIndex++;
-      slides.style.transform = 'translateX(150px)';
-    }
-  }
-   
-   
-/*
-admin : Hwai
-날씨에 따른 게더
-*/
-navigator.geolocation.getCurrentPosition(function(pos) {
+  let currentIndex = 0;
+  let slideContentCount = slideContents.length;
 
-  console.log(pos);
-  var latitude= pos.coords.latitude;
-  var longitude = pos.coords.longitude;
+  slideContainer.forEach(slideContainer => {
+    const btn = slideContainer.querySelectorAll('.arrowBtn');
+    const slideList = slideContainer.querySelectorAll('.slideList');
 
-  var apiURI = "http://api.openweathermap.org/data/2.5/weather?lat="
-              + latitude + "&lon=" + longitude
-              + "&lang=kr&appid=12984781cde1466744c656c07b5a583c&units=metric";
-
-  $.ajax({
-    url : apiURI,
-    dataType : "json",
-    type : "GET",
-    async : "false",
-    success : function(data) {
-		
-		var weatherType = "";
-		var city = data.name;
-		var weather = (data.weather[0].icon).substr(0, 2);
-		var temp = (data.main.temp).toFixed(1);
-
-	    alert("날씨코드: " + weather + "\n" +
-	          "현재온도: " + temp  + "\n" +
-	          "도시이름: " + city)
-
-	    if(temp <30){//30도 이하일 때
-	
-	          if(weather == '01' || weather == '02'){ //기분 좋은 맑은 날
-                weatherType = "sunny";
-	          }else if(weather == '03' || weather == '04' || weather == '50'){//구름 많은 흐린 날
-                weatherType = "cloudy";
-	          }else if(weather == '09' || weather == '10'){//비 오는 날
-                weatherType = "rainy";
-	          }else if(weather == '11'){ //천둥 번개 치는 날
-                weatherType = "thunder";
-	          }else if(weather == '13'){//눈 오는 날
-                weatherType = "snowy";
-	          }
-	          
-	      } else if(temp <30 && weather == '01'){//오늘 같이 더운날
-	              alert("오늘 같이 더운날");
-                weatherType = "hot";
-	      }
-	      
-	      alert(weatherType);
-
-        $.ajax({
-          url : "/getWeather.com",
-          data: JSON.stringify({ weatherType: weatherType }),
-          type : "post",
-          contentType: "application/json", 
-          success : function(data) {
-              alert("성공!!!!!");
-              console.log(data);
-          },
-          error: function(res, req) {
-            console.log("error : " + res, req);
+    slideList.forEach((slideList)=>{
+      btn.forEach(btn => {
+        btn.addEventListener('click', ()=>{
+          if(btn.classList.contains("left")){
+            slideList.style.transition = "all 400ms";
+            slideList.style.transform = "translateX("+ -slideWidth +"px)";
+          } else {
+            slideList.style.transition = "all 400ms";
+            slideList.style.transform = "translateX("+ -slideWidth +"px)";
           }
         })
-	      
-	    },
-	error:function(res, req) {
-	console.log("error : " + res, req);
-	}})
-	
-});
-   
-   
+      })
+    })
+  })
+
+
+
+
+  /*
+  admin : Hwai
+  날씨에 따른 게더
+  */
+  navigator.geolocation.getCurrentPosition(function(pos) {
+
+    var latitude= pos.coords.latitude;
+    var longitude = pos.coords.longitude;
+
+    var apiURI = "http://api.openweathermap.org/data/2.5/weather?lat="
+                + latitude + "&lon=" + longitude
+                + "&lang=kr&appid=12984781cde1466744c656c07b5a583c&units=metric";
+
+    $.ajax({
+      url : apiURI,
+      dataType : "json",
+      type : "GET",
+      async : "false",
+      success : function(data) {
+      
+      var weatherType = "";
+      var city = data.name;
+      var weather = (data.weather[0].icon).substr(0, 2);
+      var temp = (data.main.temp).toFixed(1);
+
+        if(temp < 30){ //30도 이하일 때
+    
+              if(weather == '01' || weather == '02'){ //기분 좋은 맑은 날
+                  weatherType = "sunny";
+              }else if(weather == '03' || weather == '04' || weather == '50'){//구름 많은 흐린 날
+                  weatherType = "cloudy";
+              }else if(weather == '09' || weather == '10'){//비 오는 날
+                  weatherType = "rainy";
+              }else if(weather == '11'){ //천둥 번개 치는 날
+                  weatherType = "thunder";
+              }else if(weather == '13'){//눈 오는 날
+                  weatherType = "snowy";
+              }
+              
+          } else if(temp >= 30 && weather == '01'){//오늘 같이 더운날
+                  alert("오늘 같이 더운날");
+                  weatherType = "hot";
+          }
+          
+          $.ajax({
+            url : "/getWeather.com",
+            data: JSON.stringify({ weatherType: weatherType }),
+            type : "post",
+            contentType: "application/json", 
+            success : function(data) {
+            },
+            error: function(res, req) {
+              console.log("error : " + res, req);
+            }
+          })
+          
+        },
+    error:function(res, req) {
+    console.log("error : " + res, req);
+    }})
+    
+  });
 });
