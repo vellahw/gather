@@ -13,51 +13,65 @@
   display: flex;
   height: 458px;
   flex-direction: column;
-  margin-top: 76px;
-  padding: 0 400px;
+  margin: 76px 442px 76px 442px;
+  justify-content: center;
+  align-items: center;
+}
+
+.contentsWrap {
+  width: 1220px;
 }
 
 .areaTitle {
   display: flex;
   align-items: center;
-  background: rgb(2,0,36);
+  width: 450px;
+  margin-left: 42px;
+  /* background: rgb(2,0,36);
   background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(253,135,49,1) 0%, rgba(202,216,91,1) 100%);
   color: transparent;
-  -webkit-background-clip: text;
-  width: 450px;
+  -webkit-background-clip: text; */
 }
 
 .areaTitleIcon {
   padding-left: 6px;
 }
 
-.slideContentsWrap {
+.slideList {
   margin-top: 32px;
   display: flex;
   align-items: center;
   width: auto;
 }
 
-.eachContainer {
-  padding: 0 12px;
+.slideContents {
+  padding: 0 9px;
 }
 
 .eachWrap {
-  width: 254px;
-  height: auto;
+  width: 244px;
+  height: 390px;
   overflow: hidden;
   border: 1px solid var(--color-gray100);
   border-radius: 10px;
   background-color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+}
+
+.thumnailContainer {
+  width: 100%;
+  height: 244px;
 }
 
 .thumnail {
   width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
 .infoContainer {
-  padding: 7px 11px 7px 11px;
+  padding: 11px;
 }
 
 .hashtagContainer {
@@ -159,7 +173,7 @@
   justify-content: center;
   align-items: center;
   width: 30px;
-  height: 400px;
+  height: 390px;
   border-radius: 8px;
   transition: all 0.2s linear 0s;
   opacity: 0;
