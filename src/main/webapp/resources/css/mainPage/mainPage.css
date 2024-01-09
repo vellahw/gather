@@ -32,12 +32,12 @@
 
 .slideContainer {
   margin: 0 38px 0 38px; 
+  overflow: hidden;
 }
 
 .slideList {
   margin: 19px auto;
   display: flex;
-  overflow: hidden;
   width: 100%;
 }
 
@@ -175,7 +175,7 @@
   transition: all 0.2s linear 0s;
   opacity: 1;
   position: absolute;
-  bottom: 1px;
+  bottom: 20px;
 }
 
 .btnHover {
@@ -186,6 +186,7 @@
   background: url('../../img/icon/arrowL.png') no-repeat,
               linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(221,221,221,1) 0%, rgba(236,236,236,1) 100%);
   background-position: center center;
+  left: 0;
 }
 
 

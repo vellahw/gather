@@ -10,7 +10,7 @@
       <ul class="menu">
         <li class="menuItem" onclick="menuOnClick('gt')">게더</li>
         <li class="menuItem" onclick="menuOnClick('cb')">클럽</li>
-        <li class="menuItem" onclick="menuOnClick('cg')">챌린지</li>
+        <li class="menuItem" onclick="menuOnClick('ch')">챌린지</li>
         <li class="menuItem" onclick="menuOnClick('fd')">피드</li>
       </ul>
     </div>
