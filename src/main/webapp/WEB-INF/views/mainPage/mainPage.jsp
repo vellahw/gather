@@ -8,6 +8,7 @@
 <script src="/resources/js/common/category.js"></script>
 <script src="/resources/js/common/naver.js"></script>
 <script src="/resources/js/mainPage/mainPage.js"></script>
+<script src="/resources/js/mainPage/weather.js"></script>
 
 <div class="bannerContainer">
   <img src="/resources/img/banner/banner.png" class="bannerImg">

@@ -1,24 +1,15 @@
- document.addEventListener("DOMContentLoaded", function(){
-  /**
-   * 240109 장한원
-   * 날씨에 따른 추천 타이틀 동적 생성 
-   */
-  const weatherTitleArea = document.getElementById('weatherTitle');
-  weatherTitleArea.innerHTML = "구름 많은 흐린날";
-
+document.addEventListener("DOMContentLoaded", function(){
  /**
   * 231224 장한원
   * 동적 슬라이드 버튼 생성
   */
   // const contentsContainer = document.querySelector('.slideList');
   // const hiddenArrowBtn = document.querySelectorAll('.arrowBtn');
- 
   // contentsContainer.addEventListener('mouseenter', () => {
   //   for (let i = 0; i < hiddenArrowBtn.length; i++) {
   //     hiddenArrowBtn[i].classList.add('btnHover');
   //   }
   // })
-  
   // contentsContainer.addEventListener('mouseleave', () => {
   //   for (let i = 0; i < hiddenArrowBtn.length; i++) {
   //     hiddenArrowBtn[i].classList.remove('btnHover');
@@ -54,9 +45,6 @@
       })
     })
   })
-
-
-
 
   /*
   admin : Hwai

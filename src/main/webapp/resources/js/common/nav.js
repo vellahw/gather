@@ -12,8 +12,8 @@ function menuOnClick(val) {
       location.href = '/gather.com?type=cb';
       break;
     
-    case 'cg':
-      location.href = '/gather.com?type=cg';
+    case 'ch':
+      location.href = '/gather.com?type=ch';
       break;
     
     case 'fd':
