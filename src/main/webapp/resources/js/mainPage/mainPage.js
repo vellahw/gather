@@ -1,111 +1,80 @@
 document.addEventListener("DOMContentLoaded", function(){
- /**
-  * 231224 장한원
-  * 동적 슬라이드 버튼 생성
-  */
-  // const contentsContainer = document.querySelector('.slideList');
-  // const hiddenArrowBtn = document.querySelectorAll('.arrowBtn');
-  // contentsContainer.addEventListener('mouseenter', () => {
-  //   for (let i = 0; i < hiddenArrowBtn.length; i++) {
-  //     hiddenArrowBtn[i].classList.add('btnHover');
-  //   }
-  // })
-  // contentsContainer.addEventListener('mouseleave', () => {
-  //   for (let i = 0; i < hiddenArrowBtn.length; i++) {
-  //     hiddenArrowBtn[i].classList.remove('btnHover');
-  //   }
-  // })
 
   /**
-  * 240110 장한원
+  * 240111 장한원
   * 컨텐츠 슬라이드
   */
-  const slideContainer = document.querySelectorAll('.slideContainer');
-  const slideContents = document.querySelectorAll('.slideContents');
-  const slideWidth = 1056;
+  const slideContainer = document.querySelectorAll('.slideContainer'); // 리스트를 감싸는 부모
+  let movePixel = 0;
+  let currentListIndex = 0;
+  
+  slideContainer.forEach((slideContainer) => {
 
-  let currentIndex = 0;
-  let slideContentCount = slideContents.length;
-
-  slideContainer.forEach(slideContainer => {
-    const btn = slideContainer.querySelectorAll('.arrowBtn');
-    const slideList = slideContainer.querySelectorAll('.slideList');
-
-    slideList.forEach((slideList)=>{
-      btn.forEach(btn => {
-        btn.addEventListener('click', ()=>{
-          if(btn.classList.contains("left")){
-            slideList.style.transition = "all 400ms";
-            slideList.style.transform = "translateX("+ -slideWidth +"px)";
-          } else {
-            slideList.style.transition = "all 400ms";
-            slideList.style.transform = "translateX("+ -slideWidth +"px)";
-          }
-        })
-      })
-    })
-  })
-
-  /*
-  admin : Hwai
-  날씨에 따른 게더
-  */
-  navigator.geolocation.getCurrentPosition(function(pos) {
-
-    var latitude= pos.coords.latitude;
-    var longitude = pos.coords.longitude;
-
-    var apiURI = "http://api.openweathermap.org/data/2.5/weather?lat="
-                + latitude + "&lon=" + longitude
-                + "&lang=kr&appid=12984781cde1466744c656c07b5a583c&units=metric";
-
-    $.ajax({
-      url : apiURI,
-      dataType : "json",
-      type : "GET",
-      async : "false",
-      success : function(data) {
-      
-      var weatherType = "";
-      var city = data.name;
-      var weather = (data.weather[0].icon).substr(0, 2);
-      var temp = (data.main.temp).toFixed(1);
-
-        if(temp < 30){ //30도 이하일 때
+    const slideList = slideContainer.querySelectorAll('.slideList'); // 컨텐츠를 감싸는 리스트
     
-              if(weather == '01' || weather == '02'){ //기분 좋은 맑은 날
-                  weatherType = "sunny";
-              }else if(weather == '03' || weather == '04' || weather == '50'){//구름 많은 흐린 날
-                  weatherType = "cloudy";
-              }else if(weather == '09' || weather == '10'){//비 오는 날
-                  weatherType = "rainy";
-              }else if(weather == '11'){ //천둥 번개 치는 날
-                  weatherType = "thunder";
-              }else if(weather == '13'){//눈 오는 날
-                  weatherType = "snowy";
-              }
-              
-          } else if(temp >= 30 && weather == '01'){//오늘 같이 더운날
-                  alert("오늘 같이 더운날");
-                  weatherType = "hot";
-          }
+    slideList.forEach((slideList)=>{
+
+      function doSlide(currentIndex) {
+
+        movePixel = 1056 * currentIndex;
+        slideList.style.transform = `translateX(${movePixel}px)`; 
+        slideList.style.transition = "all 400ms ease";
+      
+      }
+
+      const slideContents = slideList.querySelectorAll('.slideContents'); // 컨텐츠
+      let slideContentCount = slideContents.length;
+      
+      if(slideContentCount > 4) {
+
+        for (let i=0; i < 4; i++) {
+
+          const cloneSlide = slideContents[i].cloneNode(true);
+          cloneSlide.dataset.clone = 'f';
+          slideList.appendChild(cloneSlide);
+        
+        }
+
+        const btn = slideContainer.querySelectorAll('.arrowBtn');
           
-          $.ajax({
-            url : "/getWeather.com",
-            data: JSON.stringify({ weatherType: weatherType }),
-            type : "post",
-            contentType: "application/json", 
-            success : function(data) {
-            },
-            error: function(res, req) {
-              console.log("error : " + res, req);
+        btn.forEach(btn => {
+
+          // 마우스 올리면 버튼 등장
+          slideContainer.addEventListener('mouseenter', () => {
+  
+              btn.classList.add('btnHover');
+            
+          })
+  
+          // 마우스 떠나면 버튼 사라짐
+          slideContainer.addEventListener('mouseleave', () => {
+  
+              btn.classList.remove('btnHover');
+  
+          })
+
+          btn.addEventListener('click', ()=>{
+
+            if(btn.classList.contains("left")){
+
+              doSlide(-1);
+
+            } else {
+
+              doSlide(1);
+
             }
           })
-          
-        },
-    error:function(res, req) {
-    console.log("error : " + res, req);
-    }})
-    
-  });
-});
+
+        }) // END btn.forEach
+
+
+      } // END  if(slideContentCount > 4)
+
+    }) // END slideList.forEach
+
+  }) // END slideContainer.forEach  
+
+
+
+})
