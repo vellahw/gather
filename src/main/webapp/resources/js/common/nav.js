@@ -66,10 +66,6 @@ function loginOnClick() {
   location.href = '/gather/login.com';
  }
  
- function logOutClick() {
-  location.href = '/gather/logoutDo.com';
- }
-
 document.addEventListener("DOMContentLoaded", function(){
   /**
    * 240103 장한원
