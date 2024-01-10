@@ -86,13 +86,13 @@
   width: 223px;
   height: auto;
   margin-top: 10px;
-  transition: all .3s;
+  transition: all .3s ease;
 }
 
 .childCateItem {
   margin: 6px;
   display: inline-block;
-  padding: 5px 8px 5px 8px;
+  padding: 4px 8px 4px 8px;
   overflow: hidden;
   background-image: linear-gradient(var(--color-white), var(--color-white));
   background-size: 100% 0;
@@ -103,7 +103,6 @@
 }
 
 .childCateItem:hover {
-  font-weight: 600;
   background-size: 100% 100%;
   color: var(--primary);
 }
