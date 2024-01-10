@@ -106,7 +106,6 @@ navigator.geolocation.getCurrentPosition(function(pos) {
                                          + ' 이런 ' + moimTypeKr +" 어때요?"
 
 	      }
-	    console.log(moimType);
 
         $.ajax({
           url : "/getWeatherMoim.com",
@@ -115,8 +114,6 @@ navigator.geolocation.getCurrentPosition(function(pos) {
           type : "post",
           contentType: "application/json",
           success : function(data) {
-              console.log(data);
-              console.log(data.data[0].GATH_IDXX);
               //weatherTitleArea.innerHTML = data.data[0].GATH_IDXX;
           },
           error: function(res, req) {
