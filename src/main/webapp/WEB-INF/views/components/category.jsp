@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script src="/resources/js/common/category.js"></script>
+<link rel="stylesheet" href="/resources/css/common/category.css">
 
 <div class="categoryContainer" id="categoryContainer">
   <div class="categoryList">

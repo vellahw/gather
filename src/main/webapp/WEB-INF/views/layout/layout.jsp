@@ -10,7 +10,6 @@
 <title>GATHER | 투게더? 게더!</title>
 <link rel="stylesheet" href="/resources/css/common/nav.css">
 <link rel="stylesheet" href="/resources/css/common/variable.css">
-<link rel="stylesheet" href="/resources/css/common/category.css">
 <link rel="stylesheet" href="/resources/css/common/swal.css">
 <script src="/resources/js/common/nav.js"></script>
 <script src="/resources/js/common/common.js"></script>
