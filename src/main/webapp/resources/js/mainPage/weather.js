@@ -4,6 +4,8 @@
 */
 document.addEventListener("DOMContentLoaded", function(){
 
+    var USER_NUMB = sessionStorage.getItem('USER_NUMB');
+    
     navigator.geolocation.getCurrentPosition(function(pos) {
 
     const weatherTitleArea = document.getElementById('weatherTitle');
@@ -36,7 +38,8 @@ document.addEventListener("DOMContentLoaded", function(){
                 + "lat="+ latitude + "&lon=" + longitude
                 + "&lang=kr&appid=12984781cde1466744c656c07b5a583c&units=metric";
 
-    $.ajax({
+    $.ajax({  //(날씨)openweathermapApi ajax 시작부분
+
         url : apiURI,
         dataType : "json",
         type : "GET",
@@ -45,12 +48,12 @@ document.addEventListener("DOMContentLoaded", function(){
             
             var weatherType = "";
             var city = data.name;
-            var weather = (data.weather[0].icon).substr(0, 2);
+            var weather = (data.weather[0].icon).substr(0, 2); //날씨코드
             var temp = (data.main.temp).toFixed(1);
 
-            if(temp < 30){ //30도 이하일 때
+            if(temp < 30){  //날씨data 결과에 따른 title
         
-                if(weather == '01' || weather == '02'){ //기분 좋은 맑은 날
+                if(weather == '01' || weather == '02'){ 
                     
                     weatherType = "sunny";
                     var weatherImg = ""
@@ -108,28 +111,31 @@ document.addEventListener("DOMContentLoaded", function(){
                                             + ' 이런 ' + moimTypeKr +" 어때요?"
 
             }
-            console.log(moimType);
 
-            $.ajax({
-            url : "/getWeatherMoim.com",
-            data: JSON.stringify({ weatherType: weatherType ,
-                                   moimType: moimType }),
-            type : "post",
-            dataType: "json",
-            contentType: "application/json",
-            success : function(data) {
-                console.log(data);
-                console.log(data.data[0].GATH_IDXX);
-                //weatherTitleArea.innerHTML = data.data[0].GATH_IDXX;
-            },
-            error: function(res, req) {
-                console.log("error : " + res, req);
-            }
+            $.ajax({ //날씨 정보전달
+
+                url : "/getWeatherMoim.com",
+                data: JSON.stringify({ weatherType: weatherType ,
+                                    moimType: moimType }),
+                type : "post",
+                dataType: "json",
+                contentType: "application/json",
+                success : function(data) {
+                    console.log(data);
+                    console.log(data.data[0].GATH_IDXX);
+                    //weatherTitleArea.innerHTML = data.data[0].GATH_IDXX;
+                },
+                error: function(res, req) {
+                    console.log("error : " + res, req);
+                }
+
             })
             
-            },
+            },//(날씨)openweathermapApi ajax success
+
         error:function(res, req) {
         console.log("error : " + res, req);
+
         }})
         
     })

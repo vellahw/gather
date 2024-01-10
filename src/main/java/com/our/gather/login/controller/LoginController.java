@@ -1,6 +1,8 @@
 package com.our.gather.login.controller;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -87,22 +89,11 @@ public class LoginController {
 
 			Map<String, Object> map = loginService.login(param);
 
-			session.setAttribute("USER_NUMB", map.get("USER_NUMB"));
-			session.setAttribute("USER_TYPE", map.get("USER_TYPE"));
-			session.setAttribute("USER_NAME", map.get("USER_NAME"));
-			session.setAttribute("USER_NICK", map.get("USER_NICK"));
-			session.setAttribute("USER_IMAG", map.get("USER_IMAG"));
-			session.setAttribute("USER_BIRTH", map.get("USER_BIRTH"));
-			session.setAttribute("USER_JUMIN2", map.get("USER_JUMIN2"));
-			session.setAttribute("REGI_NUMB", map.get("REGI_NUMB"));
-			session.setAttribute("USER_GNDR", map.get("USER_GNDR"));
-			session.setAttribute("BANN_YSNO", map.get("BANN_YSNO"));
-
 			LocalDate today = LocalDate.now();
 			int todayYear = today.getYear();
 
-			String Jumin1 = (String) session.getAttribute("USER_BIRTH");
-			int Jumin2 = Integer.parseInt(String.valueOf(session.getAttribute("USER_JUMIN2")));
+			String Jumin1 = (String) map.get("USER_BIRTH");
+			int Jumin2 = Integer.parseInt(String.valueOf(map.get("USER_JUMIN2")));
 
 			int userYear = Integer.parseInt(String.valueOf(Jumin1.substring(0, 2)));
 
@@ -116,12 +107,46 @@ public class LoginController {
 			}
 
 			int tmpAge = todayYear - userYear + 1;
-
-			session.setAttribute("USER_AGEE", tmpAge);
-
-			mv.addObject("result", "success");
-			mv.addObject("USER_NICK", session.getAttribute("USER_NICK"));
-
+			
+			if(map.get("BANN_YSNO").equals("Y")) {		//정지된 사용자
+				
+				mv.addObject("USER_NICK", map.get("USER_NICK"));
+				mv.addObject("BANN_STRT", map.get("BANN_STRT"));		//정지 시작일
+				mv.addObject("BANN_ENDD", map.get("BANN_ENDD"));		//정지 종료일
+				mv.addObject("BANN_CNTT", map.get("BANN_CNTT"));		//정지 사유
+				
+				mv.addObject("result", "fail");
+				
+			} else {
+				
+				session.setAttribute("USER_NUMB", map.get("USER_NUMB"));			//회원번호
+				session.setAttribute("USER_TYPE", map.get("USER_TYPE"));			//회원타입(사용자, 개발자, 운영자)
+				session.setAttribute("TYPE_CODE", map.get("TYPE_CODE"));			//회원타입코드(UR: 사용자, DV:개발자, AD:운영자)
+				session.setAttribute("USER_NAME", map.get("USER_NAME"));			//회원이름
+				session.setAttribute("USER_NICK", map.get("USER_NICK"));			//회원 닉네임
+				session.setAttribute("USER_IMAG", map.get("USER_IMAG"));			//회원 프로필사진
+				session.setAttribute("USER_BIRTH", map.get("USER_BIRTH"));			//회원생일
+				session.setAttribute("USER_JUMIN2", map.get("USER_JUMIN2"));		//회원 주민번호 뒷자리
+				session.setAttribute("USER_AGEE", tmpAge);							//회원나이
+				session.setAttribute("REGI_NUMB", map.get("REGI_NUMB"));			//회원 주민등록번호
+				session.setAttribute("USER_GNDR", map.get("USER_GNDR"));			//회원성별
+				
+				mv.addObject("USER_NUMB", session.getAttribute("USER_NUMB"));		
+				mv.addObject("USER_TYPE", session.getAttribute("USER_TYPE"));		
+				mv.addObject("TYPE_CODE", session.getAttribute("TYPE_CODE"));		
+				mv.addObject("USER_NAME", session.getAttribute("USER_NAME"));		
+				mv.addObject("USER_NICK", session.getAttribute("USER_NICK"));		
+				mv.addObject("USER_IMAG", session.getAttribute("USER_IMAG"));		
+				mv.addObject("USER_BIRTH", session.getAttribute("USER_BIRTH"));		
+				mv.addObject("USER_JUMIN2", session.getAttribute("USER_JUMIN2"));	
+				mv.addObject("USER_AGEE", session.getAttribute("USER_AGEE"));		
+				mv.addObject("REGI_NUMB", session.getAttribute("REGI_NUMB"));		
+				mv.addObject("USER_GNDR", session.getAttribute("USER_GNDR"));		
+				
+				mv.addObject("result", "success");
+			}
+				
+			
 			LocalDateTime now = LocalDateTime.now();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 			System.out.println("<------------------Login Success!!!!!------------------>");
@@ -143,6 +168,10 @@ public class LoginController {
 	public ModelAndView naverLogin(@RequestParam String code, @RequestParam String state, HttpSession session)
 			throws IOException {
 		ModelAndView mv = new ModelAndView();
+		
+		String naverAuthUrl = naverLoginVO.getAuthorizationUrl(session);
+		
+		System.out.println("urlNaver :" + naverAuthUrl);
 
 		OAuth2AccessToken oauthToken;
 		oauthToken = naverLoginVO.getAccessToken(session, code, state);

@@ -32,29 +32,47 @@
    <!-- 로그인 -->
    <select id="login" resultType="hashmap" parameterType="hashmap">
       <![CDATA[
-     SELECT /*login.login*/
-       		USER_NUMB
-     	  , getCodeName('USER_TYPE',SUBSTR(USER_NUMB,1,2)) AS USER_TYPE
-     	  , USER_NAME
-     	  , USER_NICK
-          , CASE WHEN LENGTH(FILE_SVNM) > 32 
-                	  THEN '/resources/img/upload/profile/'|| USER_NUMB ||'/'|| FILE_SVNM 
-               	 	  ELSE '/resources/img/basic/profile/' || FILE_SVNM 
-                  END AS USER_IMAG 							
-     	  , SUBSTR(REGI_NUMB, 1, 6) AS USER_BIRTH
-     	  , SUBSTR(REGI_NUMB, 7) AS USER_JUMIN2
-          , CASE 
-            	 WHEN MOD(TO_NUMBER(SUBSTR(REGI_NUMB, 7, 1)), 2) = 1 THEN 'M'
-            	 ELSE 'W'
-        	 END AS USER_GNDR
-     	  , CASE
-            	 WHEN BANN_DATE IS NULL
-                 THEN 'N'
-            ELSE 'Y'
-        	 END AS BANN_YSNO
-  		    FROM TM_USERXM
- 		   WHERE USER_IDXX = #{USER_IDXX}
-   			 AND PASS_WORD = #{PASS_WORD}
+	   SELECT /*login.login*/
+	       		A.USER_NUMB																			/* 회원번호 */
+	     	  , getCodeName('USER_TYPE',SUBSTR(A.USER_NUMB,1,2)) AS USER_TYPE						/* 회원타입(사용자, 개발자, 관리자) */
+	     	  , SUBSTR(A.USER_NUMB,1,2) AS TYPE_CODE												/* 회원타입(UR, DV, AD) */
+	     	  , A.USER_NAME																			/* 회원 이름 */
+	     	  , A.USER_NICK																			/* 회원 닉네임 */
+	          , CASE WHEN LENGTH(A.FILE_SVNM) > 32 
+	                	  THEN '/resources/img/upload/profile/'|| A.USER_NUMB ||'/'|| A.FILE_SVNM 
+	               	 ELSE '/resources/img/basic/profile/' || A.FILE_SVNM 
+	             END AS USER_IMAG 																	/* 회원 프로필 사진 */
+	     	  , SUBSTR(A.REGI_NUMB, 1, 6) AS USER_BIRTH												/* 회원 생일 */
+	     	  , SUBSTR(A.REGI_NUMB, 7) AS USER_JUMIN2												/* 회원 주민번호 뒷자리 */
+	     	  , A.REGI_NUMB																			/* 회원 주민번호 */
+	          , CASE 
+	            	 WHEN MOD(TO_NUMBER(SUBSTR(A.REGI_NUMB, 7, 1)), 2) = 1 THEN 'M'
+	            	 ELSE 'W'
+	        	 END AS USER_GNDR																	/* 회원 성별 */
+	     	  , CASE
+	            	 WHEN B.BANN_ENDD > SYSDATE
+	                 THEN 'Y'
+	            ELSE 'N'																			
+	        	 END AS BANN_YSNO																	/* 회원 정지 여부 */
+	          , CASE
+	            	 WHEN B.BANN_ENDD > SYSDATE
+	                 THEN formatDate(B.BANN_STRT)
+	            ELSE 'N'																			
+	        	 END AS BANN_STRT																    /* 회원 정지 시작일 */
+	          , CASE
+	            	 WHEN B.BANN_ENDD > SYSDATE
+	                 THEN formatDate(B.BANN_ENDD)
+	            ELSE NULL																			
+	        	 END AS BANN_ENDD																	/* 회원 정지 종료일 */
+	          , C.CODE_OPT1 AS BANN_CNTT															/* 회원 정지 사유 */
+	  	   FROM TM_USERXM A																			
+	  LEFT JOIN TB_BANNED B
+	         ON A.USER_NUMB = B.USER_NUMB
+	  LEFT JOIN TB_CODEXD C
+	         ON C.COMM_CODE = 'REPT_CODE'
+	        AND B.REPT_CODE = C.COMD_CODE
+	      WHERE A.USER_IDXX = #{USER_IDXX}
+	      	AND A.PASS_WORD = #{PASS_WORD}
     ]]>
    </select>
   

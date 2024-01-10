@@ -27,7 +27,10 @@ function menuOnClick(val) {
   * 로그아웃 클릭 이벤트
   */
  function logoutOnclick() {
+ 	
+   sessionStorage.clear();
    location.href = "/gather/logoutDo.com";
+   
  }
 
  /**
@@ -63,11 +66,15 @@ function hideHoverIcon(container) {
    * 로그인 클릭 이벤트
   */
 function loginOnClick() {
+
   location.href = '/gather/login.com';
+  
  }
  
- function logOutClick() {
+function logOutClick() {
+  
   location.href = '/gather/logoutDo.com';
+  
  }
 
 document.addEventListener("DOMContentLoaded", function(){

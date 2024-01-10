@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 로그인 폼 처리    
     $("#loginForm").submit(function (event) {
+
         event.preventDefault();
         const USER_IDXX = userIdForm.value;
         const PASS_WORD = userPwForm.value;
@@ -95,16 +96,78 @@ document.addEventListener('DOMContentLoaded', function () {
             data: JSON.stringify(data),
             contentType: "application/json",
             success: function (result) {
-                const resultData = result.result;
-                const inputId = $('#USER_IDXX').val();
 
-                if(resultData == "success") {
-                	const USER_NICK = result.USER_NICK;
-                	comAlert2(5,"로그인 완료", USER_NICK + "님 반갑습니다!", "let's gather!","/gather.com")
+                if(result.result == "success") {    
+
+                    //자바스크립트 세션값 저장
+                    sessionStorage.setItem('USER_NUMB',result.USER_NUMB);       //회원번호
+                    sessionStorage.setItem('USER_TYPE',result.USER_TYPE);       //회원타입(사용자, 개발자, 운영자)
+                    sessionStorage.setItem('TYPE_CODE',result.TYPE_CODE);       //회원타입코드(UR: 사용자, DV:개발자, AD:운영자)
+                    sessionStorage.setItem('USER_NAME',result.USER_NAME);       //회원이름
+                    sessionStorage.setItem('USER_NICK', result.USER_NICK);      //회원 닉네임
+                    sessionStorage.setItem('USER_IMAG',result.USER_IMAG);       //회원 프로필사진
+                    sessionStorage.setItem('USER_BIRTH',result.USER_BIRTH);     //회원생일
+                    sessionStorage.setItem('USER_JUMIN2',result.USER_JUMIN2);   //회원 주민번호 뒷자리
+                    sessionStorage.setItem('USER_AGEE',result.USER_AGEE);       //회원나이
+                    sessionStorage.setItem('REGI_NUMB',result.REGI_NUMB);       //회원 주민등록번호
+                    sessionStorage.setItem('USER_GNDR',result.USER_GNDR);       //회원성별
+
+                    if(result.TYPE_CODE == "UR" ){  //일반 사용자
+
+                	    comAlert2(5,"로그인 완료", result.USER_NICK + "님 반갑습니다!", "let's gather!", "/gather.com");
+
+                    } else if (result.TYPE_CODE == "DV" || result.TYPE_CODE == "AD") {  //관리자 또는 개발자.
+
+                        // comConfirm( "관리자 페이지로 이동하시겠습니까?"
+                        //           , "success"
+                        //           , result.USER_NICK + "님의 계정은" + result.USER_TYPE+ "계정입니다."
+                        //           , "관리자 페이지로 이동합니다."
+                        //           , location.href = "/gather.com"
+                        //           , "홈페이지로 이동합니다."
+                        //           , location.href = "/gather.com");
+
+                            swal({
+                            title: "관리자 페이지로 이동하시겠습니까?",
+                            text: result.USER_NICK + "님의 계정은 " + result.USER_TYPE+ "계정입니다.",
+                            icon: "success",
+                            buttons: [
+                                '아니오',
+                                '네'
+                            ],
+                            }).then(function(isConfirm) {
+                            if (isConfirm) {
+                                swal({
+                                title: "관리자 페이지로 이동합니다.",
+                                icon: "success"
+                                }).then(function() {
+                                location.href = "/gather.com"
+                                });
+                            } else {
+                                swal({
+                                    title: "홈페이지로 이동합니다.",
+                                    icon: "success"
+                                }).then(function() {
+                                    location.href = "/gather.com"
+                                    });
+                            }
+                            })
+
+                    }
+
+                } else if (result.result == "fail"){    //정지된 사용자
+
+                    comAlert3("정지된 계정입니다.", "error" 
+                              , result.USER_NICK + "님의 계정은 현재 정지상태입니다.\n 정지사유:  " 
+                              + result.BANN_CNTT 
+                              + "\n 정지기간:  " + result.BANN_STRT + " ~ " + result.BANN_ENDD, "확인", null);
+
                 } else {
+
                   appendWarning("아이디 또는 비밀번호가 일치하지 않습니다.");
                   document.getElementById('USER_IDXX').focus();
+
                 }
+
             },
             error: function (xhr, status, error) {
     		    console.log(xhr.responseText); // 서버에서 받은 응답 내용 확인

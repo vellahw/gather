@@ -28,7 +28,7 @@ public class MainDao extends AbstractDao {
 		public List<Map<String, Object>> getGather(Map<String, Object> map, CommandMap commandMap, HttpSession session)
 				throws Exception {
 
-			List<Map<String, Object>> getGather = (List<Map<String, Object>>) selectList("mainPage.getGather", map);
+			List<Map<String, Object>> getGather = (List<Map<String, Object>>) selectList("gather.getGather", map);
 
 			return getGather;
 		}
