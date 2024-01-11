@@ -5,7 +5,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <link rel="stylesheet" href="/resources/css/mainPage/mainPage.css">
-<script src="/resources/js/common/category.js"></script>
 <script src="/resources/js/common/naver.js"></script>
 <script src="/resources/js/mainPage/mainPage.js"></script>
 <script src="/resources/js/mainPage/weather.js"></script>
