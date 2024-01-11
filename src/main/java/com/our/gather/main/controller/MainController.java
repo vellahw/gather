@@ -86,21 +86,18 @@ public class MainController {
 			throws Exception {
 
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("jsonView"); // 결과 페이지의 뷰 이름
+		mv.setViewName("jsonView");
 		
 		String weatherType = requestBody.get("weatherType");
 		String moimType = requestBody.get("moimType");
-		System.out.println("moimType" + moimType);
 		
 		List<String> dataList = new ArrayList<>();
 
-		System.out.println("날씨 상태: " + weatherType);
 
 		switch (weatherType) {
 		
 		    case "sunny":
 		    	
-		        System.out.println("sunny 케이스 진입");
 		        // dataList = List.of("B01", "B04", "B06", "B17", "B20", "B22", "F07", "F04", "F06");
 		        dataList = List.of("A01", "A02", "A03", "A04", "A05");
 		        commandMap.put("WEATH_CATE", dataList);
@@ -109,17 +106,14 @@ public class MainController {
 	
 		    case "cloudy":
 		    	
-		        System.out.println("cloudy 케이스 진입");
 		        // dataList = List.of("C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10", "C11", "C12");
 		        dataList = List.of("A01", "A02", "A03", "A04", "A05");
-		        System.out.println("데이타리스트    :" + dataList);
 		        commandMap.put("WEATH_CATE", dataList);
 		        
 		        break;
 	
 		    case "rainy":
 		    	
-		        System.out.println("rainy 케이스 진입");
 		        // dataList = List.of("A01", "A02", "A07", "A09", "B05", "B10", "B16", "D02", "D03", "D04", "D05", "D06", "D11", "D12", "D13", "D14", "D15", "D16");
 		        dataList = List.of("A01", "A02", "A03", "A04", "A05");
 		        commandMap.put("WEATH_CATE", dataList);
@@ -128,7 +122,6 @@ public class MainController {
 	
 		    case "thunder":
 		    	
-		        System.out.println("thunder 케이스 진입");
 		        // dataList = List.of("D10", "G01", "G02", "G03", "G04", "G05", "G06", "G07", "I01", "I02", "I03", "I04", "I05", "J01", "J02", "J03", "J04");
 		        dataList = List.of("A01", "A02", "A03", "A04", "A05");
 		        commandMap.put("WEATH_CATE", dataList);
@@ -137,7 +130,6 @@ public class MainController {
 	
 		    case "snowy":
 		    	
-		        System.out.println("snowy 케이스 진입");
 		        dataList = List.of("A01", "A02", "A03", "A04", "A05"); // "test끝나면 지우기"
 		        commandMap.put("WEATH_CATE", dataList); // "B03"
 		        
@@ -145,21 +137,20 @@ public class MainController {
 	
 		    case "hot":
 		    	
-		        System.out.println("hot 케이스 진입");
 		        dataList = List.of("A01", "A02", "A03", "A04", "A05"); // "test끝나면 지우기"
 		        commandMap.put("WEATH_CATE", dataList); // B14
 		        
 		        break;
 		}
 		
-		if(moimType == null) {
+		if(moimType.equals("gt")) {
 			
 			mv.addObject("data", mainService.getGather(commandMap.getMap(), session, commandMap));
 		
-		} else if(moimType == "cb"){
+		} else if(moimType.equals("cb")){
 			
 			
-		} else if(moimType == "ch"){
+		} else if(moimType.equals("ch")){
 			
 			
 		}

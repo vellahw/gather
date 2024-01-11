@@ -68,13 +68,11 @@ document.addEventListener("DOMContentLoaded", function(){
 
         }) // END btn.forEach
 
-
       } // END  if(slideContentCount > 4)
 
     }) // END slideList.forEach
 
   }) // END slideContainer.forEach  
-
 
 
 })

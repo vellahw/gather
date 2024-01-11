@@ -23,14 +23,6 @@ function menuOnClick(val) {
 }
 
  /**
-  * 240106 장한원
-  * 로그아웃 클릭 이벤트
-  */
- function logoutOnclick() {
-   location.href = "/gather/logoutDo.com";
- }
-
- /**
   * 240104 장한원
   * 마우스오버/아웃시 로그아웃, 고객센터 아이콘 컬러 바뀜
   */
@@ -63,7 +55,20 @@ function hideHoverIcon(container) {
    * 로그인 클릭 이벤트
   */
 function loginOnClick() {
+
   location.href = '/gather/login.com';
+  
+ }
+
+ /**
+  * 240106 장한원
+  * 로그아웃 클릭 이벤트
+  */
+ function logoutOnclick() {
+ 	
+   sessionStorage.clear();
+   location.href = "/gather/logoutDo.com";
+   
  }
  
 document.addEventListener("DOMContentLoaded", function(){

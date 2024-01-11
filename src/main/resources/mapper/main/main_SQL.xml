@@ -152,6 +152,10 @@
 	                               ORDER BY LIKE_COUNT DESC
                       			)
                  )
+        
+        ]]>
+		<if test="USER_NUMB != null">
+      		<![CDATA[
         UNION ALL
                  (
                   			SELECT ROW_NUMBER() OVER (ORDER BY REGG_DATE DESC) RNUM
@@ -176,80 +180,18 @@
 			                     , REGG_DATE
 			                  FROM VW_GATHER
 			                 WHERE REGI_CODE IN (
-			                					 ]]>
-			                 					<if test="USER_NUMB != null">
-      			 									<![CDATA[
 			                                     SELECT REGI_CODE
 			                                       FROM TB_URREGI
 			                                      WHERE USER_NUMB = #{USER_NUMB}
-			                                      	]]>
-     			 								</if>
-     			 								<if test="USER_NUMB == null">
-      			 									<![CDATA[
-			                                     	'A01'
-			                                      	]]>
-     			 								</if>
-     			 								<![CDATA[
-			                                      )
+			                                     
+			                                     )
 			                 )
+			]]>
+		</if>
+      	    <![CDATA[
                  		)
                  WHERE RNUM <= 8
-      ]]>
+      		]]>
    </select>
    
-   <select id="getGather" parameterType='hashmap'
-      resultType="hashmap">
-      <![CDATA[
-       	  SELECT /*mainPage.getGather*/              
-                  GATH_IDXX AS MOIM_IDXX
-                , GATH_TITL AS MOIM_TITL
-                , GATH_CNTT AS MOIM_CNTT
-                , GATH_IMAG AS MOIM_IMAG
-                , CATE_IDXX
-                , PARENTS_CATE
-                , CHILD_CATE
-                , PRES_PEOP
-                , APPR_YSNO
-                , MOIM_AGEE
-                , APPR_GNDR
-                , REGI_NAME
-                , USER_NICK
-                , USER_IMAG
-                , SMAL_DATE
-                , FULL_DATE
-                , LIKE_COUNT
-                , REGG_DATE
-                 ]]>
-                 <if test="USER_NUMB != null">
-      			 	<![CDATA[
-                , getAmILike (GATH_IDXX, #{USER_NUMB}) AS LIKE_YSNO					/* 로그인유저 좋아요 유무 */
-                , getAmIBkmk (GATH_IDXX, #{USER_NUMB}) AS BKMK_YSNO					/* 로그인유저 북마크 유무 */
-                  	]]>
-     			 </if>
-     			  <if test="USER_NUMB == null">
-      			 	<![CDATA[
-                , getAmILike (GATH_IDXX, null) AS LIKE_YSNO							/* 좋아요 유무 없음 0 리턴 */
-                , getAmIBkmk (GATH_IDXX, null) AS BKMK_YSNO							/* 북마크 유무 없음 0 리턴 */
-                  	]]>
-     			 </if>
-     			 <![CDATA[
-			FROM VW_GATHER
-		   WHERE 1=1
-      ]]>
-      <if test="CATE_IDXX != null">
-      	 <![CDATA[
-         	 AND CATE_IDXX LIKE '%'||#{CATE_IDXX}||'%'
-         ]]>
-      </if>
-      <if test="WEATH_CATE != null">
-      	 <![CDATA[
-         	 AND CATE_IDXX IN ]]>
-         	  <foreach collection="WEATH_CATE" item="WEATH_CATE" open="(" separator="," close=")">
-       			 #{WEATH_CATE}
-    		  </foreach>
-      </if>
-      	<![CDATA[
-      	ORDER BY REGG_DATE
-      	]]>
-   </select>
 </mapper>
