@@ -33,9 +33,12 @@
 									</div>
 									<div class="locationDateContainer">
 										<div class="locationContainer">
-											<img src="/resources/img/icon/locationIcon.png"
-													class="locationIcon" alt="장소 아이콘">
-											<span class="location">${list.REGI_NAME}</span>
+											<div class="tooltip">
+												<img src="/resources/img/icon/locationIcon.png"
+														class="locationIcon" alt="장소 아이콘">
+												<span class="location">${list.REGI_NAME}</span>
+												<div class="tooltiptext">${list.PREGI_NAME}</div>
+											</div>
 										</div>
 										<span class="dateContainer">
 											${list.SMAL_DATE}

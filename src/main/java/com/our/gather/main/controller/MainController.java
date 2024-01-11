@@ -41,14 +41,7 @@ public class MainController {
 		List<Map<String, Object>> cCate = commonService.cCate(commandMap.getMap(), commandMap);
 		mv.addObject("pCate", pCate);
 		mv.addObject("cCate", cCate);
-
-		if (session.getAttribute("USER_NUMB") != null) {
-
-			mv.addObject("sUSER_NUMB", session.getAttribute("USER_NUMB"));
-			mv.addObject("sUSER_IMAG", session.getAttribute("USER_IMAG"));
-			mv.addObject("sUSER_NICK", session.getAttribute("USER_NICK"));
-		}
-
+	
 		if (LIST_TYPE == null && CATE_IDXX == null) {
 
 			mv.addObject("moimType", "게더"); // 모임타입

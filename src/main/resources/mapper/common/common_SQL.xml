@@ -76,6 +76,27 @@
         
 	 ]]>
    </select>
+   
+   <!-- 자식 카테고리 -->
+   <select id="getCategory" parameterType='hashmap'
+      resultType="hashmap">
+      <![CDATA[
+		   SELECT /*common.getCategory*/
+                  CASE WHEN LENGTH(COMD_CODE) = 1
+                            THEN 1
+                       ELSE 2
+                   END AS CATE_LEVL                                                     /* 카테고리 레벨 */
+                , SUBSTR(COMD_CODE,'1','1')  AS PARENTS_CODE							/* 부모 카테고리 코드 */
+                , COMD_CODE AS CATE_CODE												/* 부모 카테고리 코드 */
+	     		, COMD_NAME AS CATE_NAME   											    /* 부모 카테고리 이름 */
+	     		, CODE_OPT1 AS CATE_PATH												/*  카테고리 경로 */
+	     		, CODE_OPT2 AS IMAG_SRCC												/*  카테고리 이미지 경로 */
+	 		FROM TB_CODEXD
+		   WHERE COMM_CODE = 'CATE_IDXX'
+		ORDER BY COMD_CODE
+        
+	 ]]>
+   </select>
 	
 	
 	
@@ -100,7 +121,5 @@
 			AAA.RNUM BETWEEN #{START} AND #{END}
 		]]>
 	</sql>
-
-	<!--############################################################################################################################## -->
 
 </mapper>

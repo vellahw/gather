@@ -116,14 +116,13 @@ document.addEventListener("DOMContentLoaded", function(){
 
                 url : "/getWeatherMoim.com",
                 data: JSON.stringify({ weatherType: weatherType ,
-                                    moimType: moimType }),
+                                       moimType: moimType }),
                 type : "post",
                 dataType: "json",
                 contentType: "application/json",
                 success : function(data) {
-                    console.log(data);
-                    console.log(data.data[0].GATH_IDXX);
-                    //weatherTitleArea.innerHTML = data.data[0].GATH_IDXX;
+                 
+                    console.log(data.data.length);
                 },
                 error: function(res, req) {
                     console.log("error : " + res, req);

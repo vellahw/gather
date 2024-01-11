@@ -22,6 +22,7 @@
                 , APPR_YSNO
                 , MOIM_AGEE
                 , APPR_GNDR
+                , PREGI_NAME
                 , REGI_NAME
                 , USER_NICK
                 , USER_IMAG
