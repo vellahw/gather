@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
       if (childList) {
         childList.style.opacity = '1';
-        childList.style.zIndex = '1';
+        childList.style.zIndex = '999';
       }
     });
 

@@ -62,7 +62,6 @@
   padding-bottom: 12px;
 }
 
-
 .categoryIcon {
   padding-right: 22px;
   width: 20px;
@@ -87,16 +86,23 @@
   width: 223px;
   height: auto;
   margin-top: 10px;
-  transition: all .3s;
+  transition: all .3s ease;
 }
 
 .childCateItem {
-  padding: 0px 10px 0px 10px;
+  margin: 6px;
   display: inline-block;
-  line-height: 2.5;
+  padding: 4px 8px 4px 8px;
+  overflow: hidden;
+  background-image: linear-gradient(var(--color-white), var(--color-white));
+  background-size: 100% 0;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: all 0.3s ease;
+  border-radius: 8px;
 }
 
 .childCateItem:hover {
-  font-weight: 600;
-  color: var(--color-black)
+  background-size: 100% 100%;
+  color: var(--primary);
 }
