@@ -121,8 +121,6 @@ document.addEventListener("DOMContentLoaded", function(){
                 dataType: "json",
                 contentType: "application/json",
                 success : function(data) {
-                    console.log(data);
-                    console.log(data.data[0].GATH_IDXX);
                     //weatherTitleArea.innerHTML = data.data[0].GATH_IDXX;
                 },
                 error: function(res, req) {
