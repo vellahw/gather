@@ -6,7 +6,9 @@ function contentsSlider(){
   */
   const slideContainer = document.querySelectorAll('.slideContainer'); // 리스트를 감싸는 부모
   let movePixel = 0;
-  let currentListIndex = 0;
+  let currentIdx = 0;
+  let translate = 0;
+  const speedTime = 500;
   
   slideContainer.forEach((slideContainer) => {
 
@@ -27,13 +29,23 @@ function contentsSlider(){
       
       if(slideContentCount > 4) {
 
-        for (let i=0; i < 4; i++) {
+          slideContents.forEach((slideContents, i)=>{
 
-          const cloneSlide = slideContents[i].cloneNode(true);
-          cloneSlide.dataset.clone = 'f';
-          slideList.appendChild(cloneSlide);
-        
-        }
+            slideContents.dataset.index = i;
+              if(slideContents.dataset.index < 4){
+                const cloneSlide = slideContents.cloneNode(true);
+                cloneSlide.dataset.clone = 'b';
+                cloneSlide.dataset.index = i + slideContentCount;
+                slideList.appendChild(cloneSlide);
+              } else {
+                const cloneSlide = slideContents.cloneNode(true);
+                cloneSlide.dataset.clone = 'f';
+                cloneSlide.dataset.index = '';
+                const firstSlide = slideList.querySelector("[data-index='0']")
+                slideList.insertBefore(cloneSlide, firstSlide);
+              }
+
+          })
 
         const btn = slideContainer.querySelectorAll('.arrowBtn');
           
@@ -41,31 +53,52 @@ function contentsSlider(){
 
           // 마우스 올리면 버튼 등장
           slideContainer.addEventListener('mouseenter', () => {
-  
-              btn.classList.add('btnHover');
-            
+              btn.classList.add('_hover');
           })
   
           // 마우스 떠나면 버튼 사라짐
           slideContainer.addEventListener('mouseleave', () => {
-  
-              btn.classList.remove('btnHover');
-  
+              btn.classList.remove('_hover');
           })
 
-          btn.addEventListener('click', ()=>{
+          btn.addEventListener('click', moveSlide);
 
-            if(btn.classList.contains("left")){
+          /* 슬라이드 실행 */
+          function move(D) {
+            currentIdx += (-1 * D);
+            translate += 1056 * D;
+            slideList.style.transform = `translateX(${translate}px)`;
+            slideList.style.transition = `all ${speedTime}ms ease`
+          }
 
-              doSlide(-1);
-
+          /* 클릭 버튼 */
+          function moveSlide(event) {
+            event.preventDefault();
+            if (event.target.classList.contains("left")) {
+              move(-1);
+              if (currentIdx === 2)
+                setTimeout(() => {
+                  slideList.style.transition = 'none';
+                  currentIdx = 1;
+                  translate = -1056;
+                  slideList.style.transform = `translateX(${translate}px)`;
+                }, speedTime);
+                console.log(currentIdx)
             } else {
+                move(1);
+                if (currentIdx === 0) {
+                  setTimeout(() => {
+                    slideList.style.transition = 'none';
+                    currentIdx = 2;
+                    translate = -(1056 * currentIdx);
+                    slideList.style.transform = `translateX(${translate}px)`;
+                  }, speedTime);
+                }
+                console.log(currentIdx)
+              }
+          }
 
-              doSlide(1);
-
-            }
-          })
-
+          console.log(currentIdx)
         }) // END btn.forEach
 
       } // END  if(slideContentCount > 4)
