@@ -16,14 +16,6 @@ function contentsSlider(){
     
     slideList.forEach((slideList)=>{
 
-      function doSlide(currentIndex) {
-
-        movePixel = 1056 * currentIndex;
-        slideList.style.transform = `translateX(${movePixel}px)`; 
-        slideList.style.transition = "all 400ms ease";
-      
-      }
-
       const slideContents = slideList.querySelectorAll('.slideContents'); // 컨텐츠
       let slideContentCount = slideContents.length;
       
@@ -33,16 +25,20 @@ function contentsSlider(){
 
             slideContents.dataset.index = i;
               if(slideContents.dataset.index < 4){
+
                 const cloneSlide = slideContents.cloneNode(true);
                 cloneSlide.dataset.clone = 'b';
                 cloneSlide.dataset.index = i + slideContentCount;
                 slideList.appendChild(cloneSlide);
+
               } else {
+
                 const cloneSlide = slideContents.cloneNode(true);
                 cloneSlide.dataset.clone = 'f';
                 cloneSlide.dataset.index = '';
                 const firstSlide = slideList.querySelector("[data-index='0']")
                 slideList.insertBefore(cloneSlide, firstSlide);
+
               }
 
           })
@@ -99,6 +95,7 @@ function contentsSlider(){
           }
 
           console.log(currentIdx)
+
         }) // END btn.forEach
 
       } // END  if(slideContentCount > 4)

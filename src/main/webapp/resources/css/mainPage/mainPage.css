@@ -10,8 +10,8 @@
 }
 
 .contentsContainer {
-  margin: 44px auto;
-  padding: 30px 0 30px 0;
+  margin: 51px auto;
+  padding: 4px 0 10px 0;
   width: 1132px;
   position: relative;
 }
@@ -28,7 +28,7 @@
 }
 
 .areaTitleIcon {
-  padding-left: 6px;
+  padding: 0 6px 0 6px;
 }
 
 .slideContainer {
@@ -62,12 +62,14 @@
 .thumnailContainer {
   width: 100%;
   height: 244px;
+  position: relative;
 }
 
 .thumnail {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  position: absolute;
 }
 
 .infoContainer {
@@ -154,7 +156,7 @@
 }
 
 .heartIcon {
-  width: 40px;
+  width: 38px;
   /* margin-right: 13px; */
 }
 
@@ -177,7 +179,7 @@
   transition: all 0.2s linear 0s;
   opacity: 0;
   position: absolute;
-  bottom: 50px;
+  bottom: 30px;
 }
 
 ._hover {
