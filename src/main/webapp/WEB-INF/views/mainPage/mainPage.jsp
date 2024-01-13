@@ -31,9 +31,7 @@
   	  <div class="slideContainer">
 			<button type="button" class="arrowBtn left" id="leftBtn"></button>
 			<button type="button" class="arrowBtn right" id="rigthBtn"></button>
-			<div class="slideList">
-			<div class="slideContents" id="weatherList">
-			</div>
+			<div class="slideList"  id="weatherList">
 			</div>
 		</div>
 	</div>
@@ -49,9 +47,7 @@
 	  	  <div class="slideContainer">
 				<button type="button" class="arrowBtn left" id="leftBtn"></button>
 				<button type="button" class="arrowBtn right" id="rigthBtn"></button>
-				<div class="slideList">
-				<div class="slideContents" id="regionList">
-				</div>
+				<div class="slideList" id="regionList">
 				</div>
 			</div>
 		</div>

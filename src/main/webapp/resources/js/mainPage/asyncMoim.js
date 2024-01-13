@@ -155,10 +155,10 @@ document.addEventListener("DOMContentLoaded", function(){
                        var wmoim = data[i];
                    
                        // DocumentFragment에 각 반복에서 생성된 노드를 추가
-                       const eachWrap1 = document.createElement('div');
-                       eachWrap1.className = 'eachWrap';
-                       eachWrap1.innerHTML = 
-                             '<div class="thumnailContainer">'
+                       const slideContents = document.createElement('div');
+                       slideContents.className = 'slideContents';
+                       slideContents.innerHTML = '<div class="eachWrap">'
+                           + '<div class="thumnailContainer">'
                            + '    <img src="' + wmoim.MOIM_IMAG + '" class="thumnail" alt="썸네일">'
                            + '</div>'
                            + '<div class="infoContainer">'
@@ -189,10 +189,10 @@ document.addEventListener("DOMContentLoaded", function(){
                            + '            <span class="heartCount">'+ wmoim.LIKE_COUNT +'</span>'
                            + '        </div>'
                            + '    </div>'
+                           + '</div>'
                            + '</div>';
-
                    
-                       fragment.appendChild(eachWrap1);
+                       fragment.appendChild(slideContents);
                    }
                    
                    // 한 번에 삽입
@@ -229,10 +229,10 @@ document.addEventListener("DOMContentLoaded", function(){
                         for (var i = 0; i < data.length; i++) {
                             var rmoim = data[i];
                         
-                            const eachWrap2 = document.createElement('div');
-                            eachWrap2.className = 'eachWrap';
-                            eachWrap2.innerHTML =
-                                  '<div class="thumnailContainer">'
+                            const slideContents = document.createElement('div');
+                            slideContents.className = 'slideContents';
+                            slideContents.innerHTML = '<div class="eachWrap">'
+                                + '<div class="thumnailContainer">'
                                 + '    <img src="' + rmoim.MOIM_IMAG + '" class="thumnail" alt="썸네일">'
                                 + '</div>'
                                 + '<div class="infoContainer">'
@@ -263,9 +263,10 @@ document.addEventListener("DOMContentLoaded", function(){
                                 + '            <span class="heartCount">'+ rmoim.LIKE_COUNT +'</span>'
                                 + '        </div>'
                                 + '    </div>'
+                                + '</div>'
                                 + '</div>';
                         
-                            fragment.appendChild(eachWrap2);
+                            fragment.appendChild(slideContents);
                         }
                         
                         // 한 번에 삽입
@@ -286,5 +287,7 @@ document.addEventListener("DOMContentLoaded", function(){
         }})
         
     })
+    
+    contentsSlider();
 
 });
