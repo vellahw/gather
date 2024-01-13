@@ -150,5 +150,33 @@ public class MainController {
 
 		return mv;
 	}
+	
+	@RequestMapping(value = "/getCurrentRegionMoim.com", method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView getCurrentRegionMoim(@RequestBody Map<String, String> requestBody, CommandMap commandMap, HttpSession session)
+			throws Exception {
+
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("jsonView");
+		
+		String cityCode = requestBody.get("cityCode");
+		String moimType = requestBody.get("moimType");
+
+	    commandMap.put("CITY_CODE", cityCode);
+		
+		if(moimType.equals("gt")) {
+			
+			mv.addObject("data", mainService.getGather(commandMap.getMap(), session, commandMap));
+		
+		} else if(moimType.equals("cb")){
+			
+			
+		} else if(moimType.equals("ch")){
+			
+			
+		}
+
+		return mv;
+	}
 
 }

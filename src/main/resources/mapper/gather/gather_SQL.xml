@@ -10,57 +10,70 @@
    <select id="getGather" parameterType='hashmap'
       resultType="hashmap">
       <![CDATA[
-       	  SELECT /*mainPage.getGather*/              
-                  GATH_IDXX AS MOIM_IDXX
-                , GATH_TITL AS MOIM_TITL
-                , GATH_CNTT AS MOIM_CNTT
-                , GATH_IMAG AS MOIM_IMAG
-                , CATE_IDXX
-                , PARENTS_CATE
-                , CHILD_CATE
-                , PRES_PEOP
-                , APPR_YSNO
-                , MOIM_AGEE
-                , APPR_GNDR
-                , PREGI_NAME
-                , REGI_NAME
-                , USER_NICK
-                , USER_IMAG
-                , SMAL_DATE
-                , FULL_DATE
-                , LIKE_COUNT
-                , REGG_DATE
-                 ]]>
-                 <if test="USER_NUMB != null">
-      			 	<![CDATA[
-                , getAmILike (GATH_IDXX, #{USER_NUMB}) AS LIKE_YSNO					/* 로그인유저 좋아요 유무 */
-                , getAmIBkmk (GATH_IDXX, #{USER_NUMB}) AS BKMK_YSNO					/* 로그인유저 북마크 유무 */
-                  	]]>
-     			 </if>
-     			  <if test="USER_NUMB == null">
-      			 	<![CDATA[
-                , getAmILike (GATH_IDXX, null) AS LIKE_YSNO							/* 좋아요 유무 없음 0 리턴 */
-                , getAmIBkmk (GATH_IDXX, null) AS BKMK_YSNO							/* 북마크 유무 없음 0 리턴 */
-                  	]]>
-     			 </if>
-     			 <![CDATA[
-			FROM VW_GATHER
-		   WHERE 1=1
-      ]]>
-      <if test="CATE_IDXX != null" >
-      	 <![CDATA[
-         	 AND CATE_IDXX LIKE '%'||#{CATE_IDXX}||'%'
-         ]]>
-      </if>
-      <if test="WEATH_CATE != null">
-      	 <![CDATA[
-         	 AND CATE_IDXX IN ]]>
-         	  <foreach collection="WEATH_CATE" item="WEATH_CATE" open="(" separator="," close=")">
-       			 #{WEATH_CATE}
-    		  </foreach>
-      </if>
-      	<![CDATA[
-      	ORDER BY REGG_DATE
+       	SELECT *
+		  FROM (  
+		       	  SELECT /*mainPage.getGather*/              
+		                  GATH_IDXX AS MOIM_IDXX
+		                , GATH_TITL AS MOIM_TITL
+		                , GATH_CNTT AS MOIM_CNTT
+		                , GATH_IMAG AS MOIM_IMAG
+		                , CATE_IDXX
+		                , PARENTS_CATE
+		                , CHILD_CATE
+		                , PRES_PEOP
+		                , APPR_YSNO
+		                , MOIM_AGEE
+		                , APPR_GNDR
+		                , PREGI_NAME
+		                , REGI_NAME
+		                , USER_NICK
+		                , USER_IMAG
+		                , SMAL_DATE
+		                , FULL_DATE
+		                , LIKE_COUNT
+		                , REGG_DATE
+		                 ]]>
+		                 <if test="USER_NUMB != null">
+		      			 	<![CDATA[
+		                , getAmILike (GATH_IDXX, #{USER_NUMB}) AS LIKE_YSNO					/* 로그인유저 좋아요 유무 */
+		                , getAmIBkmk (GATH_IDXX, #{USER_NUMB}) AS BKMK_YSNO					/* 로그인유저 북마크 유무 */
+		                  	]]>
+		     			 </if>
+		     			  <if test="USER_NUMB == null">
+		      			 	<![CDATA[
+		                , getAmILike (GATH_IDXX, null) AS LIKE_YSNO							/* 좋아요 유무 없음 0 리턴 */
+		                , getAmIBkmk (GATH_IDXX, null) AS BKMK_YSNO							/* 북마크 유무 없음 0 리턴 */
+		                  	]]>
+		     			 </if>
+		     			 <![CDATA[
+					FROM VW_GATHER
+				   WHERE 1=1
+		      ]]>
+		      <if test="CATE_IDXX != null" >
+		      	 <![CDATA[
+		         	 AND CATE_IDXX LIKE '%'||#{CATE_IDXX}||'%'
+		         ]]>
+		      </if>
+		      <if test="WEATH_CATE != null">
+		      	 <![CDATA[
+		         	 AND CATE_IDXX IN ]]>
+		         	  <foreach collection="WEATH_CATE" item="WEATH_CATE" open="(" separator="," close=")">
+		       			 #{WEATH_CATE}
+		    		  </foreach>
+		      </if>
+		      <if test="CITY_CODE != null">
+		      	 <![CDATA[
+		         	 AND REGI_CODE LIKE '%'||#{CITY_CODE}||'%'
+		         ]]>
+		      </if>
+		      	<![CDATA[
+		      	ORDER BY REGG_DATE
+		      	)
+		      	]]>
+      <if test="WEATH_CATE != null || CITY_CODE != null">
+       <![CDATA[
+      	   WHERE ROWNUM <= 8
       	]]>
+      </if>
    </select>
 </mapper>
