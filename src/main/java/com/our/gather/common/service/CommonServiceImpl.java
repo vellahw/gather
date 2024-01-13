@@ -29,6 +29,13 @@ public class CommonServiceImpl implements CommonService {
 
 		return commonDao.cCate(map, commandMap);
 	}
+	
+	@Override
+	public List<Map<String, Object>> getCategory(Map<String, Object> map, CommandMap commandMap) throws Exception {
+		// TODO Auto-generated method stub
+
+		return commonDao.getCategory(map, commandMap);
+	}
 
 
 }

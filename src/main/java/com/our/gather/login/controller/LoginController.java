@@ -115,6 +115,8 @@ public class LoginController {
 				mv.addObject("BANN_ENDD", map.get("BANN_ENDD"));		//정지 종료일
 				mv.addObject("BANN_CNTT", map.get("BANN_CNTT"));		//정지 사유
 				
+				System.out.println("<------------USERNUMB:"+ map.get("USER_NUMB")+" is banned------------------>");
+				
 				mv.addObject("result", "fail");
 				
 			} else {
@@ -141,22 +143,23 @@ public class LoginController {
 				mv.addObject("USER_JUMIN2", session.getAttribute("USER_JUMIN2"));	
 				mv.addObject("USER_AGEE", session.getAttribute("USER_AGEE"));		
 				mv.addObject("REGI_NUMB", session.getAttribute("REGI_NUMB"));		
-				mv.addObject("USER_GNDR", session.getAttribute("USER_GNDR"));		
+				mv.addObject("USER_GNDR", session.getAttribute("USER_GNDR"));
+				
+				LocalDateTime now = LocalDateTime.now();
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+				System.out.println("<------------------------------Login Success!!!!!-------------------------->");
+				System.out
+						.println("DateTime:" + now.format(formatter) + "\nUSER_NUMB :" + session.getAttribute("USER_NUMB"));
+				System.out.println("<-------------------------------------------------------------------------->");
 				
 				mv.addObject("result", "success");
 			}
-				
 			
-			LocalDateTime now = LocalDateTime.now();
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-			System.out.println("<------------------Login Success!!!!!------------------>");
-			System.out
-					.println("DateTime:" + now.format(formatter) + "\nUSER_NUMB :" + session.getAttribute("USER_NUMB"));
-			System.out.println("<------------------------------------------------------>");
-
 		} else {
+			
 			mv.addObject("result", null);
-			System.out.println("<------------------Login Fail...------------------>");
+			System.out.println("<--------------------------------Login Fail...----------------------------->");
+			
 		}
 
 		return mv;

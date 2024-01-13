@@ -41,14 +41,7 @@ public class MainController {
 		List<Map<String, Object>> cCate = commonService.cCate(commandMap.getMap(), commandMap);
 		mv.addObject("pCate", pCate);
 		mv.addObject("cCate", cCate);
-
-		if (session.getAttribute("USER_NUMB") != null) {
-
-			mv.addObject("sUSER_NUMB", session.getAttribute("USER_NUMB"));
-			mv.addObject("sUSER_IMAG", session.getAttribute("USER_IMAG"));
-			mv.addObject("sUSER_NICK", session.getAttribute("USER_NICK"));
-		}
-
+	
 		if (LIST_TYPE == null && CATE_IDXX == null) {
 
 			mv.addObject("moimType", "게더"); // 모임타입
@@ -142,6 +135,34 @@ public class MainController {
 		        
 		        break;
 		}
+		
+		if(moimType.equals("gt")) {
+			
+			mv.addObject("data", mainService.getGather(commandMap.getMap(), session, commandMap));
+		
+		} else if(moimType.equals("cb")){
+			
+			
+		} else if(moimType.equals("ch")){
+			
+			
+		}
+
+		return mv;
+	}
+	
+	@RequestMapping(value = "/getCurrentRegionMoim.com", method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView getCurrentRegionMoim(@RequestBody Map<String, String> requestBody, CommandMap commandMap, HttpSession session)
+			throws Exception {
+
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("jsonView");
+		
+		String cityCode = requestBody.get("cityCode");
+		String moimType = requestBody.get("moimType");
+
+	    commandMap.put("CITY_CODE", cityCode);
 		
 		if(moimType.equals("gt")) {
 			

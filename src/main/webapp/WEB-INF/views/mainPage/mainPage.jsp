@@ -6,8 +6,8 @@
 
 <link rel="stylesheet" href="/resources/css/mainPage/mainPage.css">
 <script src="/resources/js/common/naver.js"></script>
+<script src="/resources/js/mainPage/asyncMoim.js"></script>
 <script src="/resources/js/mainPage/mainPage.js"></script>
-<script src="/resources/js/mainPage/weather.js"></script>
 
 <div class="bannerContainer">
   <img src="/resources/img/banner/banner.png" class="bannerImg">
@@ -28,9 +28,32 @@
     <div id="weatherSection">
   	  <h1 id="weatherTitle" class="areaTitle">
   	  </h1>
+  	  <div class="slideContainer">
+			<button type="button" class="arrowBtn left" id="leftBtn"></button>
+			<button type="button" class="arrowBtn right" id="rigthBtn"></button>
+			<div class="slideList"  id="weatherList">
+			</div>
+		</div>
 	</div>
   </div>
 </div>
+
+<c:if test="${sUSER_NUMB == null}">
+	<div class="contentsContainer">
+	  <div class="contentsWrap">
+	    <div id="weatherSection">
+	  	  <h1 id="regionTitle" class="areaTitle">
+	  	  </h1>
+	  	  <div class="slideContainer">
+				<button type="button" class="arrowBtn left" id="leftBtn"></button>
+				<button type="button" class="arrowBtn right" id="rigthBtn"></button>
+				<div class="slideList" id="regionList">
+				</div>
+			</div>
+		</div>
+	  </div>
+	</div>
+</c:if>
 
 <c:import url="../components/contents.jsp">
   <c:param name="type" value="Hot" />

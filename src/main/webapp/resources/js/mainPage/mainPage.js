@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function(){
+function contentsSlider(){
 
   /**
   * 240111 장한원
@@ -75,4 +75,4 @@ document.addEventListener("DOMContentLoaded", function(){
   }) // END slideContainer.forEach  
 
 
-})
+}

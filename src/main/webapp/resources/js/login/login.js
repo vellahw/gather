@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if(result.result == "success") {    
 
-                    //자바스크립트 세션값 저장
+                    //로그인 성공 시 자바스크립트 세션값 저장
                     sessionStorage.setItem('USER_NUMB',result.USER_NUMB);       //회원번호
                     sessionStorage.setItem('USER_TYPE',result.USER_TYPE);       //회원타입(사용자, 개발자, 운영자)
                     sessionStorage.setItem('TYPE_CODE',result.TYPE_CODE);       //회원타입코드(UR: 사용자, DV:개발자, AD:운영자)

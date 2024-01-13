@@ -23,17 +23,17 @@
       </button>
     </div>
     <div class="userWrap">
-      <c:if test="${sUSER_NUMB != null }">
+      <c:if test="${USER_NUMB != null }">
         <div class="iconContainer mypage">
           <div class="profileImgWrap">
-            <img src="${sUSER_IMAG}" class="profileImg" alt="프로필사진">
+            <img src="${USER_IMAG}" class="profileImg" alt="프로필사진">
           </div>
         </div>
         <div class="iconContainer">
           <div onclick="logoutOnclick()" class="textWrap">로그아웃</div>
         </div>
       </c:if>
-      <c:if test="${sUSER_NUMB == null }">
+      <c:if test="${USER_NUMB == null }">
         <div class="iconContainer login">
           <div class="textWrap" onclick="loginOnClick()">로그인</div>
         </div>

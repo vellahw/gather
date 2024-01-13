@@ -34,6 +34,15 @@ public class CommonDao extends AbstractDao {
 
 		return cCate;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> getCategory(Map<String, Object> map, CommandMap commandMap)
+			throws Exception {
+
+		List<Map<String, Object>> getCategory = (List<Map<String, Object>>) selectList("common.getCategory", map);
+
+		return getCategory;
+	}
 
 
 }
