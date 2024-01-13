@@ -6,8 +6,9 @@ document.addEventListener("DOMContentLoaded", function(){
   */
   const slideContainer = document.querySelectorAll('.slideContainer'); // 리스트를 감싸는 부모
   let movePixel = 0;
-  let currentListIndex = 0;
-  console.log("현재 currentListIndex " + currentListIndex);
+  let currentIdx = 0;
+  let translate = 0;
+  const speedTime = 500;
   
   slideContainer.forEach((slideContainer) => {
 
@@ -60,34 +61,44 @@ document.addEventListener("DOMContentLoaded", function(){
               btn.classList.remove('_hover');
           })
 
-          btn.addEventListener('click', ()=>{
-            // 왼쪽(이전) 클릭
-            if(btn.classList.contains("left")){
+          btn.addEventListener('click', moveSlide);
 
-              if (currentListIndex != 0) {
-                currentListIndex--;
-              } else {
-                currentListIndex = 2;
-                slideList.style.transform = `translateX(-${1056 * currentListIndex}px)`;
-              }
-            
-              slideList.style.transform = `translateX(-${1056 * currentListIndex}px)`;
-              slideList.style.transition = "all 400ms ease";
+          /* 슬라이드 실행 */
+          function move(D) {
+            currentIdx += (-1 * D);
+            translate += 1056 * D;
+            slideList.style.transform = `translateX(${translate}px)`;
+            slideList.style.transition = `all ${speedTime}ms ease`
+          }
 
-              // 오른쪽(다음) 클릭
+          /* 클릭 버튼 */
+          function moveSlide(event) {
+            event.preventDefault();
+            if (event.target.classList.contains("left")) {
+              move(-1);
+              if (currentIdx === 2)
+                setTimeout(() => {
+                  slideList.style.transition = 'none';
+                  currentIdx = 1;
+                  translate = -1056;
+                  slideList.style.transform = `translateX(${translate}px)`;
+                }, speedTime);
+                console.log(currentIdx)
             } else {
-              if (currentListIndex < 2) {
-                currentListIndex++;
-              } else {
-                currentListIndex = 0;
+                move(1);
+                if (currentIdx === 0) {
+                  setTimeout(() => {
+                    slideList.style.transition = 'none';
+                    currentIdx = 2;
+                    translate = -(1056 * currentIdx);
+                    slideList.style.transform = `translateX(${translate}px)`;
+                  }, speedTime);
+                }
+                console.log(currentIdx)
               }
+          }
 
-              slideList.style.transform = `translateX(-${1056 * currentListIndex}px)`;
-              slideList.style.transition = "all 400ms ease";
-
-            }
-          })
-
+          console.log(currentIdx)
         }) // END btn.forEach
 
       } // END  if(slideContentCount > 4)
