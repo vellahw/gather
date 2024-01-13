@@ -197,6 +197,7 @@ document.addEventListener("DOMContentLoaded", function(){
                    
                    // 한 번에 삽입
                    weatherList.appendChild(fragment);
+                   contentsSlider();
 
                 },
                 error: function(res, req) {
@@ -271,6 +272,7 @@ document.addEventListener("DOMContentLoaded", function(){
                         
                         // 한 번에 삽입
                         regionList.appendChild(fragment);
+                        contentsSlider();
                     },
                     error: function(res, req) {
                         console.log("error : " + res, req);
@@ -288,6 +290,4 @@ document.addEventListener("DOMContentLoaded", function(){
         
     })
     
-    contentsSlider();
-
 });
