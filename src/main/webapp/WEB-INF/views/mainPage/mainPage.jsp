@@ -15,12 +15,19 @@
 
 <%@ include file="../components/category.jsp"%>
 
-<c:if test="${sUSER_NUMB != null}">
-  <c:import url="../components/contents.jsp">
-    <c:param name="type" value="Taste" />
-    <c:param name="title" value="${sUSER_NICK}님의 취향 저격 ${moimType}" />
-    <c:param name="titleIcon" value="tasteTitleIcon" />
-  </c:import>
+<c:if test="${USER_NUMB != null}">
+	<c:import url="../components/contents.jsp">
+	    <c:param name="type" value="Taste" />
+	    <c:param name="title" value="${USER_NICK}님의 취향 저격 ${moimType}" />
+	    <c:param name="titleIcon" value="tasteTitleIcon" />
+	</c:import>
+
+	<c:import url="../components/contents.jsp">
+	    <c:param name="type" value="Region" />
+	    <c:param name="title" value="${USER_NICK}님 근처의  ${moimType}" />
+	    <c:param name="titleIcon" value="tasteTitleIcon" />
+  	</c:import>
+
 </c:if>
 
 <div class="contentsContainer">
@@ -38,7 +45,7 @@
   </div>
 </div>
 
-<c:if test="${sUSER_NUMB == null}">
+<c:if test="${USER_NUMB == null}">
 	<div class="contentsContainer">
 	  <div class="contentsWrap">
 	    <div id="weatherSection">
