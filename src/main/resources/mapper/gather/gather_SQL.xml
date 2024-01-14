@@ -72,7 +72,7 @@
 		      	]]>
       <if test="WEATH_CATE != null || CITY_CODE != null">
        <![CDATA[
-      	   WHERE ROWNUM <= 8
+      	   WHERE ROWNUM <= 12
       	]]>
       </if>
    </select>

@@ -196,7 +196,7 @@
 		</if>
       	    <![CDATA[
                  		)
-                 WHERE RNUM <= 8
+                 WHERE RNUM <= 12
       		]]>
    </select>
    
