@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,25 +19,29 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.service.CommonService;
+import com.our.gather.gather.service.GatherService;
 import com.our.gather.main.service.MainService;
 
 @Controller
 public class MainController {
 
-	@Resource(name = "MainService")
-	private MainService mainService;
-
 	@Resource(name = "CommonService")
 	private CommonService commonService;
+	
+	@Resource(name = "MainService")
+	private MainService mainService;
+	
+	@Resource(name = "GatherService")
+	private GatherService gatherService;
 
 	@RequestMapping(value = "/gather.com")
 	public ModelAndView main(@RequestParam(value = "type", required = false) String LIST_TYPE,
 			@RequestParam(value = "cate", required = false) String CATE_IDXX, HttpSession session,
 			CommandMap commandMap, Model model) throws Exception {
-
+		
 		ModelAndView mv = new ModelAndView("/mainPage/mainPage");
 		mv.setViewName("mainPage");
-
+		
 		List<Map<String, Object>> pCate = commonService.pCate(commandMap.getMap(), commandMap);
 		List<Map<String, Object>> cCate = commonService.cCate(commandMap.getMap(), commandMap);
 		mv.addObject("pCate", pCate);
@@ -48,26 +53,38 @@ public class MainController {
 			mv.addObject("main", mainService.mainGather(commandMap.getMap(), session, commandMap)); // 게더 메인
 
 		} else if (LIST_TYPE == null && CATE_IDXX != null) {
-			ModelAndView mv2 = new ModelAndView("/listPage/list");
-			mv2.setViewName("list");
-			mv2.addObject("list", mainService.getGather(commandMap.getMap(), session, commandMap)); // 게더
+			
+			if(!CATE_IDXX.equals("all")) {
+				
+				commandMap.put("CATE_IDXX", CATE_IDXX);				
+				
+			} 
+			
+				ModelAndView mv2 = new ModelAndView("/listPage/listPage");
+				mv2.setViewName("listPage");
+				mv2.addObject("pCate", pCate);
+				mv2.addObject("cCate", cCate);
+				mv2.addObject("list", gatherService.getGather(commandMap.getMap(), session, commandMap)); // 게더
 
 			return mv2;
 
 		}
-
-		if (LIST_TYPE == "CB") {
-
-			ModelAndView cbmv = new ModelAndView("redirect:/gather.com/club");
-			return cbmv;
-
-		}
-
-		if (LIST_TYPE == "CH") {
-
-			ModelAndView chmv = new ModelAndView("redirect:/gather.com/challenge");
-			return chmv;
-
+		
+		if(LIST_TYPE != null) {
+			
+			if (LIST_TYPE.equals("CB")) {
+	
+				ModelAndView cbmv = new ModelAndView("redirect:/gather.com/club");
+				return cbmv;
+	
+			}
+	
+			if (LIST_TYPE.equals("CH")) {
+	
+				ModelAndView chmv = new ModelAndView("redirect:/gather.com/challenge");
+				return chmv;
+	
+			}
 		}
 
 		return mv;
@@ -138,7 +155,7 @@ public class MainController {
 		
 		if(moimType.equals("gt")) {
 			
-			mv.addObject("data", mainService.getGather(commandMap.getMap(), session, commandMap));
+			mv.addObject("data", gatherService.getGather(commandMap.getMap(), session, commandMap));
 		
 		} else if(moimType.equals("cb")){
 			
@@ -166,7 +183,7 @@ public class MainController {
 		
 		if(moimType.equals("gt")) {
 			
-			mv.addObject("data", mainService.getGather(commandMap.getMap(), session, commandMap));
+			mv.addObject("data", gatherService.getGather(commandMap.getMap(), session, commandMap));
 		
 		} else if(moimType.equals("cb")){
 			

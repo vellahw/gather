@@ -90,13 +90,14 @@ document.addEventListener("DOMContentLoaded", function(){
   /*
    * 240103 장한원
    * 카테고리바 '전체' 클릭 이벤트
+   * 240115 Hwai
   */
   function cateAllOnclick() {
-    const currentURL = location.href;
-    const params = new URL(location.href).searchParams;
-    const type = params.type;
 
-    if (type != null) {
+    const currentURL = location.href;    
+
+    if (comWhereIam().moimType != "gt") {
+
       makeCateAllParam(currentURL, '&');
     } else {
       makeCateAllParam(currentURL, '?');

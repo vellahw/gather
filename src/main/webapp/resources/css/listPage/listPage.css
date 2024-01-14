@@ -10,41 +10,22 @@
 }
 
 .contentsContainer {
-  margin: 44px auto;
   padding: 30px 0 30px 0;
   width: 1132px;
   position: relative;
+  margin: 51px auto;
 }
 
-.areaTitle {
-  display: flex;
-  align-items: center;
-  width: fit-content;
-  margin-left: 46px;
-  /* background: rgb(2,0,36);
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(253,135,49,1) 0%, rgba(202,216,91,1) 100%);
-  color: transparent;
-  -webkit-background-clip: text; */
-}
 
-.areaTitleIcon {
-  padding-left: 6px;
-}
-
-.slideContainer {
-  margin: 0 38px 0 38px; 
-  overflow: hidden;
-}
-
-.slideList {
+.contentsList {
   margin: 19px auto;
   display: flex;
   width: 100%;
-  transform: translateX(-1056px);
+  flex-wrap: wrap;	
 }
 
-.slideContents {
-  padding: 0 9px;
+.Contents {
+  padding: 20px 12px 14px 15px;
   flex: 0 0 21%;
 }
 
@@ -182,18 +163,3 @@
 
 ._hover {
   opacity: 1;
-}
-
-.left {
-  background: url('../../img/icon/arrowL.png') no-repeat,
-              linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(221,221,221,1) 0%, rgba(236,236,236,1) 100%);
-  background-position: center center;
-  left: 0;
-}
-
-.right {
-  right: 0;
-  background: url('../../img/icon/arrowR.png') no-repeat,
-              linear-gradient(-90deg, rgba(2,0,36,1) 0%, rgba(221,221,221,1) 0%, rgba(236,236,236,1) 100%);
-  background-position: center center;
-}

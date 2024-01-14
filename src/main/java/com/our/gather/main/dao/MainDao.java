@@ -12,7 +12,7 @@ import com.our.gather.common.dao.AbstractDao;
 
 @Repository("MainDao")
 public class MainDao extends AbstractDao {
-	
+
 	// 로그인시 메인
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> mainGather(Map<String, Object> map, CommandMap commandMap, HttpSession session)
@@ -22,14 +22,5 @@ public class MainDao extends AbstractDao {
 
 		return mainGather;
 	}
-	
-	// 로그인시 메인
-		@SuppressWarnings("unchecked")
-		public List<Map<String, Object>> getGather(Map<String, Object> map, CommandMap commandMap, HttpSession session)
-				throws Exception {
 
-			List<Map<String, Object>> getGather = (List<Map<String, Object>>) selectList("gather.getGather", map);
-
-			return getGather;
-		}
 }

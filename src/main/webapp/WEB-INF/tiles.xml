@@ -4,7 +4,6 @@
   "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<!-- ·¹ÀÌ¾Æ¿ô -->
 	<definition name="mainPage" template="/WEB-INF/views/layout/layout.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
 		<put-attribute name="body" value="/WEB-INF/views/mainPage/mainPage.jsp" />
@@ -13,5 +12,8 @@
 
   <definition name="login" extends="mainPage">
     <put-attribute name="body" value="/WEB-INF/views/login/login.jsp"/>
+  </definition>
+  <definition name="listPage" extends="mainPage">
+    <put-attribute name="body" value="/WEB-INF/views/listPage/listPage.jsp"/>
   </definition>
 </tiles-definitions>
