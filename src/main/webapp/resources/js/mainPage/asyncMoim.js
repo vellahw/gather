@@ -133,54 +133,57 @@ document.addEventListener("DOMContentLoaded", function(){
                    const weatherList = document.getElementById('weatherList');
                    const fragment = document.createDocumentFragment();  // DocumentFragment 생성
                    
-                   for (var i = 0; i < data.length; i++) {
-                       var wmoim = data[i];
+                   if(moimType == "gt") {
                    
-                       // DocumentFragment에 각 반복에서 생성된 노드를 추가
-                       const slideContents = document.createElement('div');
-                       slideContents.className = 'slideContents';
-                       slideContents.innerHTML = '<div class="eachWrap">'
-                           + '<div class="thumnailContainer">'
-                           + '    <img src="' + wmoim.MOIM_IMAG + '" class="thumnail" alt="썸네일">'
-                           + '</div>'
-                           + '<div class="infoContainer">'
-                           + '    <h3 class="title">'+ wmoim.MOIM_TITL +'</h3>'
-                           + '    <div class="hashtagContainer">'
-                           + '        <button type="button" class="hashtag">#전시회</button>'
-                           + '        <button type="button" class="hashtag">#같이가요</button>'
-                           + '    </div>'
-                           + '    <div class="locationDateContainer">'
-                           + '        <div class="locationContainer">'
-                           + '            <div class="tooltip">'
-                           + '                <img src="/resources/img/icon/locationIcon.png" class="locationIcon" alt="장소 아이콘">'
-                           + '                <span class="location">'+ wmoim.REGI_NAME +'</span>'
-                           + '                <div class="tooltiptext">'+ wmoim.PREGI_NAME +'</div>'
-                           + '            </div>'
-                           + '        </div>'
-                           + '        <span class="dateContainer">'+  wmoim.SMAL_DATE +'</span>'
-                           + '    </div>'
-                           + '    <div class="userContainer">'
-                           + '        <div class="userProfileWrap">'
-                           + '            <div class="profileImgWrap">'
-                           + '                <img src="'+ wmoim.USER_IMAG +'" class="profileImg" alt="프로필사진">'
-                           + '            </div>'
-                           + '            <span class="nickname">'+ wmoim.USER_NICK +'</span>'
-                           + '        </div>'
-                           + '        <div class="heartWrap">'
-                           + '            <img src="/resources/img/icon/heartIcon.png" class="heartIcon" alt="좋아요 아이콘">'
-                           + '            <span class="heartCount">'+ wmoim.LIKE_COUNT +'</span>'
-                           + '        </div>'
-                           + '    </div>'
-                           + '</div>'
-                           + '</div>';
-                   
-                       fragment.appendChild(slideContents);
-                   }
-                   
-                   // 한 번에 삽입
-                   weatherList.appendChild(fragment);
-                   contentsSlider();
+                        for (var i = 0; i < data.length; i++) {
+                            var wmoim = data[i];
+                        
+                            // DocumentFragment에 각 반복에서 생성된 노드를 추가
+                            const slideContents = document.createElement('div');
+                            slideContents.className = 'slideContents';
+                            slideContents.innerHTML = '<div class="eachWrap">'
+                                + '<div class="thumnailContainer">'
+                                + '    <img src="' + wmoim.MOIM_IMAG + '" class="thumnail" alt="썸네일">'
+                                + '</div>'
+                                + '<div class="infoContainer">'
+                                + '    <h3 class="title">'+ wmoim.MOIM_TITL +'</h3>'
+                                + '    <div class="hashtagContainer">'
+                                + '        <button type="button" class="hashtag">#전시회</button>'
+                                + '        <button type="button" class="hashtag">#같이가요</button>'
+                                + '    </div>'
+                                + '    <div class="locationDateContainer">'
+                                + '        <div class="locationContainer">'
+                                + '            <div class="tooltip">'
+                                + '                <img src="/resources/img/icon/locationIcon.png" class="locationIcon" alt="장소 아이콘">'
+                                + '                <span class="location">'+ wmoim.REGI_NAME +'</span>'
+                                + '                <div class="tooltiptext">'+ wmoim.PREGI_NAME +'</div>'
+                                + '            </div>'
+                                + '        </div>'
+                                + '        <span class="dateContainer">'+  wmoim.SMAL_DATE +'</span>'
+                                + '    </div>'
+                                + '    <div class="userContainer">'
+                                + '        <div class="userProfileWrap">'
+                                + '            <div class="profileImgWrap">'
+                                + '                <img src="'+ wmoim.USER_IMAG +'" class="profileImg" alt="프로필사진">'
+                                + '            </div>'
+                                + '            <span class="nickname">'+ wmoim.USER_NICK +'</span>'
+                                + '        </div>'
+                                + '        <div class="heartWrap">'
+                                + '            <img src="/resources/img/icon/heartIcon.png" class="heartIcon" alt="좋아요 아이콘">'
+                                + '            <span class="heartCount">'+ wmoim.LIKE_COUNT +'</span>'
+                                + '        </div>'
+                                + '    </div>'
+                                + '</div>'
+                                + '</div>';
+                        
+                            fragment.appendChild(slideContents);
+                        }
+                        
+                        // 한 번에 삽입
+                        weatherList.appendChild(fragment);
+                        contentsSlider();
 
+                        }
                 },
                 error: function(res, req) {
                     console.log("error : " + res, req);
@@ -209,52 +212,55 @@ document.addEventListener("DOMContentLoaded", function(){
                         const regionList = document.getElementById('regionList');
                         const fragment = document.createDocumentFragment(); 
                         
-                        for (var i = 0; i < data.length; i++) {
-                            var rmoim = data[i];
-                        
-                            const slideContents = document.createElement('div');
-                            slideContents.className = 'slideContents';
-                            slideContents.innerHTML = '<div class="eachWrap">'
-                                + '<div class="thumnailContainer">'
-                                + '    <img src="' + rmoim.MOIM_IMAG + '" class="thumnail" alt="썸네일">'
-                                + '</div>'
-                                + '<div class="infoContainer">'
-                                + '    <h3 class="title">'+ rmoim.MOIM_TITL +'</h3>'
-                                + '    <div class="hashtagContainer">'
-                                + '        <button type="button" class="hashtag">#전시회</button>'
-                                + '        <button type="button" class="hashtag">#같이가요</button>'
-                                + '    </div>'
-                                + '    <div class="locationDateContainer">'
-                                + '        <div class="locationContainer">'
-                                + '            <div class="tooltip">'
-                                + '                <img src="/resources/img/icon/locationIcon.png" class="locationIcon" alt="장소 아이콘">'
-                                + '                <span class="location">'+ rmoim.REGI_NAME +'</span>'
-                                + '                <div class="tooltiptext">'+ rmoim.PREGI_NAME +'</div>'
-                                + '            </div>'
-                                + '        </div>'
-                                + '        <span class="dateContainer">'+  rmoim.SMAL_DATE +'</span>'
-                                + '    </div>'
-                                + '    <div class="userContainer">'
-                                + '        <div class="userProfileWrap">'
-                                + '            <div class="profileImgWrap">'
-                                + '                <img src="'+ rmoim.USER_IMAG +'" class="profileImg" alt="프로필사진">'
-                                + '            </div>'
-                                + '            <span class="nickname">'+ rmoim.USER_NICK +'</span>'
-                                + '        </div>'
-                                + '        <div class="heartWrap">'
-                                + '            <img src="/resources/img/icon/heartIcon.png" class="heartIcon" alt="좋아요 아이콘">'
-                                + '            <span class="heartCount">'+ rmoim.LIKE_COUNT +'</span>'
-                                + '        </div>'
-                                + '    </div>'
-                                + '</div>'
-                                + '</div>';
-                        
-                            fragment.appendChild(slideContents);
-                        }
+                        if(moimType == "gt") {
+                            
+                            for (var i = 0; i < data.length; i++) {
+                                var rmoim = data[i];
+                            
+                                const slideContents = document.createElement('div');
+                                slideContents.className = 'slideContents';
+                                slideContents.innerHTML = '<div class="eachWrap">'
+                                    + '<div class="thumnailContainer">'
+                                    + '    <img src="' + rmoim.MOIM_IMAG + '" class="thumnail" alt="썸네일">'
+                                    + '</div>'
+                                    + '<div class="infoContainer">'
+                                    + '    <h3 class="title">'+ rmoim.MOIM_TITL +'</h3>'
+                                    + '    <div class="hashtagContainer">'
+                                    + '        <button type="button" class="hashtag">#전시회</button>'
+                                    + '        <button type="button" class="hashtag">#같이가요</button>'
+                                    + '    </div>'
+                                    + '    <div class="locationDateContainer">'
+                                    + '        <div class="locationContainer">'
+                                    + '            <div class="tooltip">'
+                                    + '                <img src="/resources/img/icon/locationIcon.png" class="locationIcon" alt="장소 아이콘">'
+                                    + '                <span class="location">'+ rmoim.REGI_NAME +'</span>'
+                                    + '                <div class="tooltiptext">'+ rmoim.PREGI_NAME +'</div>'
+                                    + '            </div>'
+                                    + '        </div>'
+                                    + '        <span class="dateContainer">'+  rmoim.SMAL_DATE +'</span>'
+                                    + '    </div>'
+                                    + '    <div class="userContainer">'
+                                    + '        <div class="userProfileWrap">'
+                                    + '            <div class="profileImgWrap">'
+                                    + '                <img src="'+ rmoim.USER_IMAG +'" class="profileImg" alt="프로필사진">'
+                                    + '            </div>'
+                                    + '            <span class="nickname">'+ rmoim.USER_NICK +'</span>'
+                                    + '        </div>'
+                                    + '        <div class="heartWrap">'
+                                    + '            <img src="/resources/img/icon/heartIcon.png" class="heartIcon" alt="좋아요 아이콘">'
+                                    + '            <span class="heartCount">'+ rmoim.LIKE_COUNT +'</span>'
+                                    + '        </div>'
+                                    + '    </div>'
+                                    + '</div>'
+                                    + '</div>';
+                            
+                                fragment.appendChild(slideContents);
+                            }
                         
                         // 한 번에 삽입
                         regionList.appendChild(fragment);
                         contentsSlider();
+                        }
                     },
                     error: function(res, req) {
                         console.log("error : " + res, req);

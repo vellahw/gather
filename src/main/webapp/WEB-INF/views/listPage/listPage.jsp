@@ -3,8 +3,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
 <link rel="stylesheet" href="/resources/css/listPage/listPage.css">
+<script src="/resources/js/listPage/listPage.js"></script>
 
 <div class="bannerContainer">
   <img src="/resources/img/banner/banner.png" class="bannerImg">
@@ -14,6 +14,13 @@
 
 <div class="contentsContainer">
   <div class="contentsWrap">
+	  <h1 class="areaTitle">
+	  <c:out value="${CATE_NAME}" />
+	  <span class="moimMakeArea"><button type="button" class="hashtag"><c:out value="${moimType}" /> 만들기</button></span>	  
+	  </h1>
+	  </div>
+	  <c:choose>
+            <c:when test="${fn:length(list) > 0 }">
 			<div class="contentsList">
 				<c:forEach var="list" items="${list}">
 						<div class="Contents">
@@ -60,6 +67,11 @@
 						</div>
 				</c:forEach>
 			</div>
+			</c:when>
+			<c:otherwise>
+			 	<div class="none">조회된 결과가 없습니다.</div>
+			</c:otherwise>
+			</c:choose>
 		</div>
   </div>
 

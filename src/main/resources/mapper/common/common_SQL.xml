@@ -77,7 +77,7 @@
 	 ]]>
    </select>
    
-   <!-- 자식 카테고리 -->
+   <!-- 카테고리검색 -->
    <select id="getCategory" parameterType='hashmap'
       resultType="hashmap">
       <![CDATA[
