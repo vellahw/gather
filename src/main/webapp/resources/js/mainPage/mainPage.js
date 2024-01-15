@@ -21,25 +21,47 @@ function contentsSlider(){
 
         const btn = slideContainer.querySelectorAll('.arrowBtn'); // 화살표 버튼
 
-        let currentIdx = 0; // 슬라이드 현재 번호
+        let currentIdx = 0; // 현재 슬라이드 번호
         let translate = 0; // 슬라이드 위치 값
         
         btn.forEach((btn) => {
+          const rigthBtn = slideContainer.querySelector('#rigthBtn');
+          const leftBtn = slideContainer.querySelector('#leftBtn');
+          const lastPage = Math.round((slideContentCount / 4) - 1); 
+          console.log(lastPage);
           
-          const targetB = slideContainer.querySelector('#rigthBtn');
-          const targetleftB = slideContainer.querySelector('#leftBtn');
-          
-          slideContainer.addEventListener('mouseenter', () => {
-            if(currentIdx > 0) {
-              targetleftB.classList.add('_hover');
+          slideContainer.addEventListener('mouseenter', (e) => {
+
+            if(currentIdx >= 0 && currentIdx !== lastPage) {
+              addBtnHover(rigthBtn);
             }
-              targetB.classList.add('_hover');
+            
+            if(currentIdx !== 0) {
+              addBtnHover(leftBtn);
+            } 
           })
           
-          // 마우스 떠나면 버튼 사라짐
           slideContainer.addEventListener('mouseleave', () => {
-            targetB.classList.remove('_hover');
+            if(currentIdx === lastPage) {
+              removeBtnHover(rigthBtn);
+            }
+            
+            if(currentIdx === 0) {
+              removeBtnHover(leftBtn);
+            }
+
+            removeBtnHover(leftBtn);
+            removeBtnHover(rigthBtn);
+
           })
+
+          function addBtnHover(targetBtn) {
+            targetBtn.classList.add('_hover');
+          }
+          
+          function removeBtnHover(targetBtn) {
+            targetBtn.classList.remove('_hover');
+          }
           
           /* 이벤트 등록 */
           btn.addEventListener('click', moveSlide);
@@ -50,26 +72,29 @@ function contentsSlider(){
             
             // 오른쪽 버튼 클릭시
             if(event.target.classList.contains("right")) {
-              if (currentIdx !== 2) {
+              if (currentIdx !== lastPage) {
                 currentIdx += 1;
                 translate = 1056 * currentIdx;
                 slideList.style.transform = `translateX(-${translate}px)`;
                 slideList.style.transition = `all 400ms ease`
               }
 
-              // 마지막 슬라이드라면 오른쪽 버튼 안 보이게함
-              // if(currentIdx === 2) {
-              //   event.target.style.opacity = '0';
-              //   event.target.style.zIndex = '1';
-              // }
-
+              //마지막 슬라이드라면 오른쪽 버튼 안 보이게함
+              if(currentIdx === lastPage) {
+                event.target.classList.remove('_hover');
+              }
 
             // 왼쪽 버튼 클릭시
             } else if(event.target.classList.contains("left")) {
                 if (currentIdx !== 0) {
-                  currentIdx -= 1; // 1 0
+                  currentIdx -= 1;
                   translate = 1056 * -currentIdx;
                   slideList.style.transform = `translateX(${translate}px)`;
+                }
+
+                //첫번째 슬라이드라면 왼쪽 버튼 안 보이게함
+                if(currentIdx === 0) {
+                  event.target.classList.remove('_hover');
                 }
               }
           }
