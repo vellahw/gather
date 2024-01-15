@@ -55,7 +55,6 @@ public class MainController {
 		} else if (LIST_TYPE == null && CATE_IDXX != null) {
 			    
 			String result = OracleFunction.getCodeName("CATE_IDXX", CATE_IDXX);
-			System.out.println("catecatecate" + result);
 			commandMap.put("CATE_IDXX", CATE_IDXX);
 			ModelAndView mv2 = new ModelAndView("/listPage/listPage");
 			mv2.setViewName("listPage");

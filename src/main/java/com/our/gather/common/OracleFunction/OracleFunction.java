@@ -6,18 +6,17 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Types;
 
+
 public class OracleFunction {
 
     private static Connection connection = null;
-
-    static {
+    private static Properties properties;
+    
+	static {
         try {
             // 클래스 로딩 시 한 번만 실행되도록 정적 블록에서 연결을 생성
-            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:XE";
-            String user = "GATHER";
-            // 직접 비밀번호 입력
-            String password = "get4everything";
-            connection = DriverManager.getConnection(jdbcUrl, user, password);
+            connection = DriverManager.getConnection(Properties.url, Properties.username, Properties.password);
+            
         } catch (SQLException e) {
             throw new RuntimeException("Failed to initialize database connection", e);
         }
