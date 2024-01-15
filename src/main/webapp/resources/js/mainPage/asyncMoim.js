@@ -71,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function(){
                 var weatherType = "";
                 var cityName = data.name;
                 var cityCode = city[cityName];
-                console.log(cityCode);
             var weather = (data.weather[0].icon).substr(0, 2); //날씨코드
             var temp = (data.main.temp).toFixed(1);
 
