@@ -12,8 +12,7 @@
       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
       http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
-      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
-      >
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 	<!-- 전송된 데이터를 자바빈이 아닌 맵으로 받기 위한 설정 -->
     <mvc:annotation-driven>

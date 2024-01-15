@@ -58,18 +58,14 @@ function contentsSlider(){
           const slideCurrentIdx = slideList.getAttribute('data-cur-idx');
           currentIndex++;
           
-          if(currentIndex <= slideCurrentIdx) {
+          if(currentIndex <= slideCurrentIdx) { // currentIndex <= 3
             translate = 1056 * currentIndex;
             slideList.style.transform = `translateX(-${translate}px)`;
             slideList.style.transition = `all 400ms ease`
-          } else if(currentIndex > slideCurrentIdx) {
-            currentIndex = 0;
-            translate = 1056 * currentIndex;
-            slideList.style.transform = 0;
-            slideList.style.transition = 'none';
           }
-        }
 
+        }
+        
         // if(currentIndex != 0){
         //   leftBtn.forEach(leftBtn =>{
         //     // 마우스 올리면  쪽 버튼 등장
