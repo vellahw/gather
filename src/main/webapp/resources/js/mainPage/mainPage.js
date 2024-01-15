@@ -63,10 +63,10 @@ function contentsSlider(){
             slideList.style.transform = `translateX(-${translate}px)`;
             slideList.style.transition = `all 400ms ease`
           } else if(currentIndex > slideCurrentIdx) {
-            currentIndex=0;
+            currentIndex = 0;
             translate = 1056 * currentIndex;
-            slideList.style.transform = `translateX(-${translate}px)`;
-            slideList.style.transition = `all 400ms ease`
+            slideList.style.transform = 0;
+            slideList.style.transition = 'none';
           }
         }
 
