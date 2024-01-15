@@ -38,48 +38,133 @@ public class MainController {
 	public ModelAndView main(@RequestParam(value = "type", required = false) String LIST_TYPE,
 			@RequestParam(value = "cate", required = false) String CATE_IDXX, HttpSession session,
 			CommandMap commandMap, Model model) throws Exception {
-		
+
 		ModelAndView mv = new ModelAndView("/mainPage/mainPage");
 		mv.setViewName("mainPage");
+
+		ModelAndView mv2 = new ModelAndView("/listPage/listPage");
+		mv2.setViewName("listPage");
 
 		List<Map<String, Object>> pCate = commonService.pCate(commandMap.getMap(), commandMap);
 		List<Map<String, Object>> cCate = commonService.cCate(commandMap.getMap(), commandMap);
 		mv.addObject("pCate", pCate);
 		mv.addObject("cCate", cCate);
+		mv2.addObject("pCate", pCate);
+		mv2.addObject("cCate", cCate);
+		
 
-		if (LIST_TYPE == null && CATE_IDXX == null) {
+		if (LIST_TYPE == null) {
 
-			mv.addObject("moimType", "게더"); // 모임타입
-			mv.addObject("main", mainService.mainGather(commandMap.getMap(), session, commandMap)); // 게더 메인
+			if (CATE_IDXX == null) {
 
-		} else if (LIST_TYPE == null && CATE_IDXX != null) {
-			    
-			String result = OracleFunction.getCodeName("CATE_IDXX", CATE_IDXX);
-			commandMap.put("CATE_IDXX", CATE_IDXX);
-			ModelAndView mv2 = new ModelAndView("/listPage/listPage");
-			mv2.setViewName("listPage");
-			mv2.addObject("CATE_NAME", result);
-			mv2.addObject("pCate", pCate);
-			mv2.addObject("cCate", cCate);
-			mv2.addObject("list", gatherService.getGather(commandMap.getMap(), session, commandMap)); // 게더
+				mv.addObject("moimType", "게더"); // 모임타입
+				mv.addObject("main", mainService.mainGather(commandMap.getMap(), session, commandMap)); // 게더 메인
 
-			return mv2;
+			} else {
 
-		}
+				mv2.addObject("moimType", "게더");
+				commandMap.put("CATE_IDXX", CATE_IDXX);
 
-		if (LIST_TYPE != null) {
+				if (CATE_IDXX.equals("all")) {
 
-			if (LIST_TYPE.equals("CB")) {
+					mv2.addObject("CATE_NAME", "전체");
 
-				ModelAndView cbmv = new ModelAndView("redirect:/gather.com/club");
-				return cbmv;
+				} else {
+
+					String result = OracleFunction.getCodeName("CATE_IDXX", CATE_IDXX);
+					mv2.addObject("CATE_NAME", result);
+
+				}
+
+				mv2.addObject("list", gatherService.getGather(commandMap.getMap(), session, commandMap)); // 게더
+				return mv2;
 
 			}
+		}
+		
+		if (LIST_TYPE == null) {
 
-			if (LIST_TYPE.equals("CH")) {
+			if (CATE_IDXX == null) {
 
-				ModelAndView chmv = new ModelAndView("redirect:/gather.com/challenge");
-				return chmv;
+				mv.addObject("moimType", "게더"); // 모임타입
+				mv.addObject("main", mainService.mainGather(commandMap.getMap(), session, commandMap)); // 게더 메인
+
+			} else {
+
+				mv2.addObject("moimType", "게더");
+				commandMap.put("CATE_IDXX", CATE_IDXX);
+
+				if (CATE_IDXX.equals("all")) {
+
+					mv2.addObject("CATE_NAME", "전체");
+
+				} else {
+
+					String result = OracleFunction.getCodeName("CATE_IDXX", CATE_IDXX);
+					mv2.addObject("CATE_NAME", result);
+
+				}
+
+				mv2.addObject("list", gatherService.getGather(commandMap.getMap(), session, commandMap)); // 게더
+				return mv2;
+
+			}
+		}
+		
+		if (LIST_TYPE != null && LIST_TYPE.equals("cb")) {
+
+			if (CATE_IDXX == null) {
+
+				mv.addObject("moimType", "클럽"); // 모임타입
+				mv.addObject("main", mainService.mainGather(commandMap.getMap(), session, commandMap)); // 게더 메인
+
+			} else {
+
+				mv2.addObject("moimType", "클럽");
+				commandMap.put("CATE_IDXX", CATE_IDXX);
+
+				if (CATE_IDXX.equals("all")) {
+
+					mv2.addObject("CATE_NAME", "전체");
+
+				} else {
+
+					String result = OracleFunction.getCodeName("CATE_IDXX", CATE_IDXX);
+					mv2.addObject("CATE_NAME", result);
+
+				}
+
+				mv2.addObject("list", gatherService.getGather(commandMap.getMap(), session, commandMap)); // 게더
+				return mv2;
+
+			}
+		}
+		
+		if (LIST_TYPE != null && LIST_TYPE.equals("ch")) {
+
+			if (CATE_IDXX == null) {
+
+				mv.addObject("moimType", "챌린지"); // 모임타입
+				mv.addObject("main", mainService.mainGather(commandMap.getMap(), session, commandMap)); // 게더 메인
+
+			} else {
+
+				mv2.addObject("moimType", "챌린지");
+				commandMap.put("CATE_IDXX", CATE_IDXX);
+
+				if (CATE_IDXX.equals("all")) {
+
+					mv2.addObject("CATE_NAME", "전체");
+
+				} else {
+
+					String result = OracleFunction.getCodeName("CATE_IDXX", CATE_IDXX);
+					mv2.addObject("CATE_NAME", result);
+
+				}
+
+				mv2.addObject("list", gatherService.getGather(commandMap.getMap(), session, commandMap)); // 게더
+				return mv2;
 
 			}
 		}

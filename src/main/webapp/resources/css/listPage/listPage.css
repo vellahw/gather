@@ -16,6 +16,16 @@
   margin: 51px auto;
 }
 
+.areaTitle {
+  position: relative;
+  padding: 0px 17px 0px 20px;
+}
+
+.moimMakeArea{
+	
+  position: absolute;
+  right: 14px;
+}
 
 .contentsList {
   margin: 19px auto;
@@ -25,8 +35,7 @@
 }
 
 .Contents {
-  padding: 20px 12px 14px 15px;
-  flex: 0 0 21%;
+  padding: 25px 13px 25px 23px;
 }
 
 .eachWrap {
@@ -146,6 +155,11 @@
   bottom: 2px;
   letter-spacing: -0.7px;
   font-weight: 600;
+}
+.none {
+  text-align: center;
+  padding-top: 90px;
+  padding-bottom: 66px
 }
 
 .arrowBtn {
