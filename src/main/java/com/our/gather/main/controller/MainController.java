@@ -38,7 +38,7 @@ public class MainController {
 	public ModelAndView main(@RequestParam(value = "type", required = false) String LIST_TYPE,
 			@RequestParam(value = "cate", required = false) String CATE_IDXX, HttpSession session,
 			CommandMap commandMap, Model model) throws Exception {
-
+		
 		ModelAndView mv = new ModelAndView("/mainPage/mainPage");
 		mv.setViewName("mainPage");
 
