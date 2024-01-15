@@ -1,10 +1,39 @@
 /* 
 240111 Hwai
+name:whereIam
+Purpose: 현재 사용자가 위치한 모임타입
+parameter: null
+*/		     
+function comWhereIam() {
+
+    var location = window.location.search;
+    var moimType = location.substring(6, 8); // 현재 모임타입
+    var moimTypeKr = "";
+
+    if (moimType == "" || "gt") {
+
+        moimType = 'gt';
+        moimTypeKr = '게더';
+
+    } else if (moimType == "cb") {
+
+        moimTypeKr = '클럽';
+
+    } else if (moimType == "ch") {
+
+        moimTypeKr = '챌린지';
+        
+    }
+
+    return { moimType: moimType, moimTypeKr: moimTypeKr };
+}
+
+/* 
+240111 Hwai
 name:ComIsEmpty
 Purpose: null, "" 값 체크
 parameter:obj
 */ 
-
 function ComIsEmpty(obj){
 	if(obj == null || obj == ""){
 		return true;

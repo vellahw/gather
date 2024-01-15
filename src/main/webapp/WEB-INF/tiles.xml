@@ -13,4 +13,7 @@
   <definition name="login" extends="mainPage">
     <put-attribute name="body" value="/WEB-INF/views/login/login.jsp"/>
   </definition>
+  <definition name="listPage" extends="mainPage">
+    <put-attribute name="body" value="/WEB-INF/views/listPage/listPage.jsp"/>
+  </definition>
 </tiles-definitions>

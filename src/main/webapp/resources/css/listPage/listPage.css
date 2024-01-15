@@ -10,40 +10,22 @@
 }
 
 .contentsContainer {
-  margin: 51px auto;
-  padding: 4px 0 10px 0;
+  padding: 30px 0 30px 0;
   width: 1132px;
   position: relative;
+  margin: 51px auto;
 }
 
-.areaTitle {
-  display: flex;
-  align-items: center;
-  width: fit-content;
-  margin-left: 46px;
-  /* background: rgb(2,0,36);
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(253,135,49,1) 0%, rgba(202,216,91,1) 100%);
-  color: transparent;
-  -webkit-background-clip: text; */
-}
 
-.areaTitleIcon {
-  padding: 0 6px 0 6px;
-}
-
-.slideContainer {
-  margin: 0 38px 0 38px; 
-  overflow: hidden;
-}
-
-.slideList {
+.contentsList {
   margin: 19px auto;
   display: flex;
   width: 100%;
+  flex-wrap: wrap;	
 }
 
-.slideContents {
-  padding: 0 9px;
+.Contents {
+  padding: 20px 12px 14px 15px;
   flex: 0 0 21%;
 }
 
@@ -61,14 +43,12 @@
 .thumnailContainer {
   width: 100%;
   height: 244px;
-  position: relative;
 }
 
 .thumnail {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  position: absolute;
 }
 
 .infoContainer {
@@ -155,7 +135,7 @@
 }
 
 .heartIcon {
-  width: 38px;
+  width: 40px;
   /* margin-right: 13px; */
 }
 
@@ -178,23 +158,8 @@
   transition: all 0.2s linear 0s;
   opacity: 0;
   position: absolute;
-  bottom: 30px;
+  bottom: 50px;
 }
 
 ._hover {
   opacity: 1;
-}
-
-.left {
-  background: url('../../img/icon/arrowL.png') no-repeat,
-              linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(221,221,221,1) 0%, rgba(236,236,236,1) 100%);
-  background-position: center center;
-  left: 0;
-}
-
-.right {
-  right: 0;
-  background: url('../../img/icon/arrowR.png') no-repeat,
-              linear-gradient(-90deg, rgba(2,0,36,1) 0%, rgba(221,221,221,1) 0%, rgba(236,236,236,1) 100%);
-  background-position: center center;
-}
