@@ -54,7 +54,7 @@
 					FROM VW_GATHER
 				   WHERE 1=1
 		      ]]>
-		      <if test="CATE_IDXX != null" >
+		      <if test="CATE_IDXX != null and CATE_IDXX != 'all'">
 		      	 <![CDATA[
 		         	 AND CATE_IDXX LIKE '%'||#{CATE_IDXX}||'%'
 		         ]]>

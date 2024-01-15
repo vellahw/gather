@@ -90,5 +90,8 @@
     <task:scheduler id="GatherScheduler" pool-size="10" />
 
     <bean id="GatherScheduler" class="com.our.gather.gather.scheduler.GatherScheduler" />
+    
+    <!-- config.properties 스캔 -->
+   <context:property-placeholder location="/WEB-INF/config/config.properties" /> 
 
 </beans>

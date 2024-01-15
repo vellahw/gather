@@ -413,7 +413,9 @@
 			<artifactId>ojdbc8</artifactId>
 			<version>21.1.0.0</version>
 		</dependency>
+	
 	</dependencies>
+
 
 	<!-- 프로젝트의 빌드방법을 지정 -->
 	<build>

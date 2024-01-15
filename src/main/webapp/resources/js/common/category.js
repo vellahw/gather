@@ -87,23 +87,42 @@ document.addEventListener("DOMContentLoaded", function(){
   });
 });
 
-  /*
-   * 240103 장한원
-   * 카테고리바 '전체' 클릭 이벤트
-   * 240115 Hwai
-  */
-  function cateAllOnclick() {
+/*
+  * 240103 장한원
+  * 카테고리바 클릭 이벤트
+  * 240115 Hwai
+*/
+function cateOnclick(cateCode) {
+  
+  const currentURL = location.href;
 
-    const currentURL = location.href;    
+  // URL에서 모든 cate 파라미터를 제거
+  const newURL = currentURL.replace(/(\?|&)cate=[^&]*/g, '');
 
-    if (comWhereIam().moimType != "gt") {
+  // 현재 URL에 cate 파라미터가 이미 존재하는지 확인
+  const hasCateParam = newURL.includes('?');
 
-      makeCateAllParam(currentURL, '&');
-    } else {
-      makeCateAllParam(currentURL, '?');
-    }
+  // cate 파라미터가 이미 존재하면 업데이트, 없으면 추가
+  if (comWhereIam().moimType != "gt") {
+
+      makeCateParam(newURL, '&', cateCode, hasCateParam);
+  } else {
+
+      makeCateParam(newURL, '?', cateCode, hasCateParam);
+
+  }
+}
+
+function makeCateParam(currentURL, char, cateCode, hasCateParam) {
+  let newURL = currentURL;
+
+  // cate 파라미터가 이미 존재하면 업데이트, 없으면 추가
+  if (hasCateParam) {
+      // 정규 표현식을 사용하여 기존의 cate 파라미터를 대체
+      newURL = currentURL.replace(/(\?|&)cate=[^&]*/, char + 'cate=' + encodeURIComponent(cateCode));
+  } else {
+      newURL += char + 'cate=' + encodeURIComponent(cateCode);
   }
 
-  function makeCateAllParam(currentURL, char) {
-    location.href = currentURL + char +'cate=all'
-  }
+  location.href = newURL;
+}
