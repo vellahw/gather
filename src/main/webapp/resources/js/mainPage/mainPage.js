@@ -76,7 +76,8 @@ function contentsSlider(){
                 currentIdx += 1;
                 translate = 1056 * currentIdx;
                 slideList.style.transform = `translateX(-${translate}px)`;
-                slideList.style.transition = `all 400ms ease`
+                slideList.style.transition = `all 400ms ease`;
+                leftBtn.classList.add('_hover');
               }
 
               //마지막 슬라이드라면 오른쪽 버튼 안 보이게함
@@ -90,6 +91,7 @@ function contentsSlider(){
                   currentIdx -= 1;
                   translate = 1056 * -currentIdx;
                   slideList.style.transform = `translateX(${translate}px)`;
+                  rigthBtn.classList.add('_hover');
                 }
 
                 //첫번째 슬라이드라면 왼쪽 버튼 안 보이게함
