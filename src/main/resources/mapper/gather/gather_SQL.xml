@@ -28,7 +28,9 @@
 		                , PRES_PEOP
 		                , APPR_YSNO
 		                , MOIM_AGEE
+		                , MOIM_COST
 		                , APPR_GNDR
+		                , GNDR_CODE
 		                , PREGI_NAME
 		                , REGI_NAME
 		                , USER_NICK
@@ -54,9 +56,9 @@
 					FROM VW_GATHER
 				   WHERE 1=1
 		      ]]>
-		      <if test="GATH_IDXX != null">
+		      <if test="MOIM_IDXX != null">
 		      	 <![CDATA[
-		         	 AND GATH_IDXX = #{GATH_IDXX}
+		         	 AND GATH_IDXX = #{MOIM_IDXX}
 		         ]]>
 		      </if>
 		      <if test="CATE_IDXX != null and CATE_IDXX != 'all'">
@@ -92,32 +94,35 @@
     작성일:23.12.19
     (게더 맴버 추출, 로그인 회원 마스터 유무.)
     -->
-	<select id="getGahterMember" resultType="hashmap">
+	<select id="getGatherMember" resultType="hashmap">
     <![CDATA[
-          SELECT /*gather.getGahterMember*/
-	             A.MOIM_IDXX								/* 모임번호 */		
+        SELECT /*gather.getGahterMember*/
+	             A.MOIM_IDXX														/* 모임번호 */		
 	           , CASE WHEN A.USER_NUMB = C.USER_NUMB 			
                            THEN 'Y'
                       ELSE 'N'
-                  END AS MAST_YSNO							/* 방장유무 */
-	           , A.USER_NUMB								/* 회원번호 */
-	           , B.USER_NICK								/* 회원닉네임 */
-	           , B.FILE_SVNM								/* 회원 프로필 사진 */
-	           , A.BANN_YSNO								/* 모임번호 */
-	           , A.WAIT_YSNO								/* 모임번호 */
+                  END AS MAST_YSNO										/* 방장유무 */
+	           , A.USER_NUMB														/* 회원번호 */
+	           , B.USER_NICK														/* 회원닉네임 */
+	           , CASE WHEN LENGTH(B.FILE_SVNM) > 32 
+	                  		 THEN '/resources/img/upload/profile/'|| A.USER_NUMB ||'/'|| B.FILE_SVNM  
+	               	  ELSE '/resources/img/basic/profile/' || B.FILE_SVNM 
+	             END AS USER_IMAG 											/* 회원프사 */
+	           , A.BANN_YSNO														/* 강퇴유무 */
+	           , A.WAIT_YSNO														/* 대기유무 */
 	           , A.PART_DATE
 	           , CASE WHEN D.REVW_IDXX IS NOT NULL			
                            THEN 'Y'
                       ELSE 'N'
-                  END AS REVW_YSNO							/* 리뷰유무 */
+                  END AS REVW_YSNO										/* 리뷰유무 */
 	        FROM TB_MEMBER A
 	   LEFT JOIN TM_USERXM B
 	          ON A.USER_NUMB = B.USER_NUMB
 	   LEFT JOIN TM_GATHER C
 	          ON A.MOIM_IDXX = C.GATH_IDXX
-	    LEFT JOIN TB_REVIEW D 
-              ON A.MOIM_IDXX = D.MOIM_IDXX        
-	       WHERE A.MOIM_IDXX = #{USER_NUMB}
+	   LEFT JOIN TB_REVIEW D 
+            ON A.MOIM_IDXX = D.MOIM_IDXX        
+	       WHERE A.MOIM_IDXX = #{MOIM_IDXX}
 	         ]]>
 	         <if test="USER_NUMB != null">
 		     <![CDATA[

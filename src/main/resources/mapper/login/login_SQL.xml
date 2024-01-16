@@ -38,7 +38,7 @@
 	     	  , SUBSTR(A.USER_NUMB,1,2) AS TYPE_CODE												/* 회원타입(UR, DV, AD) */
 	     	  , A.USER_NAME																			/* 회원 이름 */
 	     	  , A.USER_NICK																			/* 회원 닉네임 */
-	          , CASE WHEN LENGTH(A.FILE_SVNM) > 32 
+	        , CASE WHEN LENGTH(A.FILE_SVNM) > 32 
 	                	  THEN '/resources/img/upload/profile/'|| A.USER_NUMB ||'/'|| A.FILE_SVNM 
 	               	 ELSE '/resources/img/basic/profile/' || A.FILE_SVNM 
 	             END AS USER_IMAG 																	/* 회원 프로필 사진 */
