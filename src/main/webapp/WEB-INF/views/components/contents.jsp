@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <div class="contentsContainer">
   <div class="contentsWrap">
@@ -19,7 +18,7 @@
 			<div class="slideList">
 				<c:forEach var="list" items="${main}">
 					<c:if test="${list.TYPE == param.type}">
-						<div class="slideContents">
+						<div class="slideContents" onclick="goDetail('${list.MOIM_IDXX}')">
 							<div class="eachWrap">
 								<div class="thumnailContainer">
 									<img src="${list.MOIM_IMAG}" class="thumnail" alt="썸네일">
