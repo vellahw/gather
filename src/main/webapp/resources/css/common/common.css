@@ -2,12 +2,12 @@
 
 /* 베이직 버튼 */
 .basicBtn {
-  width: 134px;
-  height: 50px;
-  padding: 28px 11px 28px 11px;
+  width: 94px;
+  height: 40px;
   border-radius: 15px;
   background-color: var(--primary);
   color: var(--color-white);
+  font-size: 16px;
 }
 
 /* 프사 둥글게 

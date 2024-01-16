@@ -1,13 +1,7 @@
 @charset "UTF-8";
 
-
-.backImgWrap {
-  height: auto;
-  position: relative;
-}
-
 .backgroundImg {
-  filter: blur(50px);
+  filter: blur(100px);
   position: absolute;
   width: 100%;
   height: 100%;
@@ -16,10 +10,8 @@
 }
 
 .detailContainer {
-  margin: 20px auto;
-  width: 1056px;
-  
-  background-color: #ddd;
+  margin: 40px auto;
+  width: 834px;
 }
 
 .slideContainer {
@@ -29,7 +21,7 @@
 .detail {
 	opacity: 1;
   position: absolute;
-  top: 10px;
+  top: 12px;
   height: 94%;
 }
 
@@ -41,9 +33,14 @@
 	right: -44px;
 }
 
+.imgSlideList{
+	overflow: hidden;
+}
+
 .imgWrap {
-	width: 1056px;
-  height: 415px; 
+	width: 834px;
+  height: 398px;
+  display: flex;
 }
 
 .img {
@@ -51,15 +48,17 @@
   height: 100%; 
   object-fit: cover;
   border-radius: 20px;
+  
+  flex-shrink: 0;
 }
 
-.background {
-  width: 1056px; 
+.detailInfoContainer {
+  width: 834px; 
   margin-top: 28px;
   padding: 60px 60px 30px 60px;
   background: var(--color-white); 
-  border-top-left-radius: 50px; 
-  border-top-right-radius: 50px;
+  border-top-left-radius: 40px; 
+  border-top-right-radius: 40px;
   box-sizing: border-box;
 }
 
@@ -71,24 +70,24 @@
 }
 
 .detailTitle {
-  font-size: 30px;
+  font-size: 28px;
   word-wrap: break-word;
 }
 
 .category {
   color: var(--color-gray500); 
-  font-size: 16px; 
+  font-size: 14px; 
   font-weight: 500;
-  line-height: 38px; 
+  line-height: 28px; 
   word-wrap: break-word;
 }
 
 .intro {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500; 
   line-height: 38px; 
   word-wrap: break-word;
-  padding: 40px 0 40px 0;
+  padding: 30px 0 40px 0;
 }
 
 .icons {
@@ -96,18 +95,19 @@
   align-items: center;
 }
 
-.bookmarkIcon {
-  margin-left: 26px;
-}
-
 .d {
-  width: 45px;
+  width: 40px;
 }
 
 .dc {
 	bottom: 8px;
   font-size: 12px;
   left: 38px;
+}
+
+.bookmarkIcon {
+	width: 40px;
+  margin-left: 26px;
 }
 
 .eachInfoWrap {
@@ -117,13 +117,13 @@
 .infoTitle {
   color: var(--primary); 
   line-height: 38px;
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .each {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 500;
-  line-height: 40px;
+  line-height: 38px;
   display: flex;
   align-items: center;
 }
@@ -143,14 +143,14 @@
 	padding-right: 6px;
 }
 
-.infoTextContainer {
-	display: flex;
-  flex-direction: column;
+.loca {
+	width: 16px;
 }
 
-.eachText {
-	padding: 4px 0 4px 0;	
+.infoText {
+	padding: 4px 0 0 0;
 }
+
 
 .masterProfile {
   display: flex;
@@ -159,14 +159,8 @@
 }
 
 .dp {
-  width: 80px;
-  height: 80px;
-}
-
-.memberImg {
-  width: 80px; 
-  height: 80px; 
-  border-radius: 9999px;
+  width: 60px;
+  height: 60px;
 }
 
 .masterName {

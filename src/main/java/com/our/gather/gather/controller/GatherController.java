@@ -23,13 +23,13 @@ public class GatherController {
 	private GatherService gatherService;
 
 	@RequestMapping(value = "/gatherDetail.com")
-	public ModelAndView main(@RequestParam(value = "idx", required = false) String GATH_IDXX, HttpSession session,
+	public ModelAndView main(@RequestParam(value = "idx", required = false) String MOIM_IDXX, HttpSession session,
 			CommandMap commandMap, Model model) throws Exception {
 
 		ModelAndView mv = new ModelAndView("/detailPage/detailPage");
 		mv.setViewName("detailPage");
 
-		commandMap.put("GATH_IDXX", GATH_IDXX);
+		commandMap.put("MOIM_IDXX", MOIM_IDXX);
 		mv.addObject("detail", gatherService.getGather(commandMap.getMap(), session, commandMap)); // 게더
 		mv.addObject("member", gatherService.getGatherMember(commandMap.getMap(), session, commandMap)); // 게더맴버
 		mv.addObject("img", commonService.getMoimImg(commandMap.getMap(), commandMap)); // 게더 이미지
