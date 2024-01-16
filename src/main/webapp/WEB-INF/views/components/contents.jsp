@@ -55,7 +55,7 @@
 										<div class="heartWrap">
 											<img src="/resources/img/icon/heartIcon.png"
 													 class="heartIcon" alt="좋아요 아이콘">
-											<span class="heartCount">${list.LIKE_COUNT}</span>
+											<span class="heartCount main">${list.LIKE_COUNT}</span>
 										</div>
 									</div>
 								</div>

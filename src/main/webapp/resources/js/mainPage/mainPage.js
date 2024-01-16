@@ -16,6 +16,12 @@ function contentsSlider(){
       const slideContents = slideList.querySelectorAll('.slideContents'); // 컨텐츠
       let slideContentCount = slideContents.length;
 
+      slideContents.forEach(slideContents=>{
+        slideContents.addEventListener('click', ()=>{
+          location.href="/gather.com/detail";
+        })
+      })
+
       // 컨텐츠가 4개 초과일 때
       if(slideContentCount > 4) {
 
