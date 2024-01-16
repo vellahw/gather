@@ -79,28 +79,6 @@
   margin-top: 6px;
 }
 
-.hashtag {
-  padding: 4px 8px 4px 8px;
-  border: 1px solid var(--primary);
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--primary);
-  margin-right: 4px;
-  margin-bottom: 5px;
-  overflow: hidden;
-  background-image: linear-gradient(var(--primary), var(--primary));
-  background-size: 100% 0;
-  background-repeat: no-repeat;
-  background-position: 0 100%;
-  transition: all 0.3s ease;
-}
-
-.hashtag:hover {
-  background-size: 100% 100%;
-  color: var(--color-white);
-}
-
 .locationDateContainer {
   display: flex;
   justify-content: space-between;
@@ -166,19 +144,6 @@
   bottom: 2px;
   letter-spacing: -0.7px;
   font-weight: 600;
-}
-
-.arrowBtn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 30px;
-  height: 390px;
-  border-radius: 8px;
-  transition: all 0.2s linear 0s;
-  opacity: 0;
-  position: absolute;
-  bottom: 30px;
 }
 
 ._hover {
