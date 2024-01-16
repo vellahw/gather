@@ -51,7 +51,6 @@ public class MainController {
 		mv.addObject("cCate", cCate);
 		mv2.addObject("pCate", pCate);
 		mv2.addObject("cCate", cCate);
-		
 
 		if (LIST_TYPE == null) {
 
@@ -82,34 +81,6 @@ public class MainController {
 			}
 		}
 		
-		if (LIST_TYPE == null) {
-
-			if (CATE_IDXX == null) {
-
-				mv.addObject("moimType", "게더"); // 모임타입
-				mv.addObject("main", mainService.mainGather(commandMap.getMap(), session, commandMap)); // 게더 메인
-
-			} else {
-
-				mv2.addObject("moimType", "게더");
-				commandMap.put("CATE_IDXX", CATE_IDXX);
-
-				if (CATE_IDXX.equals("all")) {
-
-					mv2.addObject("CATE_NAME", "전체");
-
-				} else {
-
-					String result = OracleFunction.getCodeName("CATE_IDXX", CATE_IDXX);
-					mv2.addObject("CATE_NAME", result);
-
-				}
-
-				mv2.addObject("list", gatherService.getGather(commandMap.getMap(), session, commandMap)); // 게더
-				return mv2;
-
-			}
-		}
 		
 		if (LIST_TYPE != null && LIST_TYPE.equals("cb")) {
 

@@ -54,6 +54,11 @@
 					FROM VW_GATHER
 				   WHERE 1=1
 		      ]]>
+		      <if test="GATH_IDXX != null">
+		      	 <![CDATA[
+		         	 AND GATH_IDXX = #{GATH_IDXX}
+		         ]]>
+		      </if>
 		      <if test="CATE_IDXX != null and CATE_IDXX != 'all'">
 		      	 <![CDATA[
 		         	 AND CATE_IDXX LIKE '%'||#{CATE_IDXX}||'%'
@@ -85,9 +90,51 @@
    	<!-- 
 	작성자:Hwai
     작성일:23.12.19
+    (게더 맴버 추출, 로그인 회원 마스터 유무.)
+    -->
+	<select id="getGahterMember" resultType="hashmap">
+    <![CDATA[
+          SELECT /*gather.getGahterMember*/
+	             A.MOIM_IDXX								/* 모임번호 */		
+	           , CASE WHEN A.USER_NUMB = C.USER_NUMB 			
+                           THEN 'Y'
+                      ELSE 'N'
+                  END AS MAST_YSNO							/* 방장유무 */
+	           , A.USER_NUMB								/* 회원번호 */
+	           , B.USER_NICK								/* 회원닉네임 */
+	           , B.FILE_SVNM								/* 회원 프로필 사진 */
+	           , A.BANN_YSNO								/* 모임번호 */
+	           , A.WAIT_YSNO								/* 모임번호 */
+	           , A.PART_DATE
+	           , CASE WHEN D.REVW_IDXX IS NOT NULL			
+                           THEN 'Y'
+                      ELSE 'N'
+                  END AS REVW_YSNO							/* 리뷰유무 */
+	        FROM TB_MEMBER A
+	   LEFT JOIN TM_USERXM B
+	          ON A.USER_NUMB = B.USER_NUMB
+	   LEFT JOIN TM_GATHER C
+	          ON A.MOIM_IDXX = C.GATH_IDXX
+	    LEFT JOIN TB_REVIEW D 
+              ON A.MOIM_IDXX = D.MOIM_IDXX        
+	       WHERE A.MOIM_IDXX = #{USER_NUMB}
+	         ]]>
+	         <if test="USER_NUMB != null">
+		     <![CDATA[
+	         AND A.USER_NUMB = #{USER_NUMB}
+	         ]]>
+	         </if>
+	         <![CDATA[
+	       ORDER BY A.PART_DATE
+	      	]]>
+    </select>
+
+   	<!-- 
+	작성자:Hwai
+    작성일:23.12.19
     (모임일정이 지난 게더 추출)
     -->
-    <select id="getEnddedGahter" resultType="hashmap">
+	<select id="getEnddedGahter" resultType="hashmap">
     <![CDATA[
         SELECT /*gather.getEnddedGahter*/
         	   GATH_IDXX

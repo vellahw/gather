@@ -2,24 +2,15 @@
  * 240103 장한원
  * navbar 메뉴들 클릭이벤트
 */
-function menuOnClick(val) {
-  switch (val) {
-    case 'gt':
-      location.href = '/gather.com';
-      break;
-   
-    case 'cb':
-      location.href = '/gather.com?type=cb';
-      break;
-    
-    case 'ch':
-      location.href = '/gather.com?type=ch';
-      break;
-    
-    case 'fd':
-      location.href = '/gather.com?type=fd';
-      break;
+function menuOnClick(type) {
+  let url = '/gather.com';
+
+  // 모임 종류에 따라 파라미터를 추가
+  if (type && type !== 'gt') {
+    url += `?type=${type.toLowerCase().substring(0, 2)}`;
   }
+
+  location.href = url;
 }
 
  /**
@@ -96,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function(){
       addActiveClass(2)
       break;
 
-    case 'cg':
+    case 'ch':
       addActiveClass(3)
       break;
     

@@ -93,36 +93,28 @@ document.addEventListener("DOMContentLoaded", function(){
   * 240115 Hwai
 */
 function cateOnclick(cateCode) {
-  
+
   const currentURL = location.href;
+  const comType = comWhereIam().moimType || ""; // 기본값으로 빈 문자열 사용
 
-  // URL에서 모든 cate 파라미터를 제거
-  const newURL = currentURL.replace(/(\?|&)cate=[^&]*/g, '');
+  // URL에서 모든 type 및 cate 파라미터를 제거
+  const newURL = currentURL.replace(/(\?|&)type=[^&]*/g, '').replace(/(\?|&)cate=[^&]*/g, '');
 
-  // 현재 URL에 cate 파라미터가 이미 존재하는지 확인
-  const hasCateParam = newURL.includes('?');
-
-  // cate 파라미터가 이미 존재하면 업데이트, 없으면 추가
-  if (comWhereIam().moimType != "gt") {
-
-      makeCateParam(newURL, '&', cateCode, hasCateParam);
+  // type 및 cate 파라미터가 함께 추가되도록 조작
+  if (comType !== "gt") {
+    makeParam(newURL, '&', 'type=' + encodeURIComponent(comType) + '&cate=' + encodeURIComponent(cateCode));
   } else {
-
-      makeCateParam(newURL, '?', cateCode, hasCateParam);
-
+    makeParam(newURL, '?', 'cate=' + encodeURIComponent(cateCode));
   }
 }
 
-function makeCateParam(currentURL, char, cateCode, hasCateParam) {
+function makeParam(currentURL, char, paramStr) {
+
   let newURL = currentURL;
 
-  // cate 파라미터가 이미 존재하면 업데이트, 없으면 추가
-  if (hasCateParam) {
-      // 정규 표현식을 사용하여 기존의 cate 파라미터를 대체
-      newURL = currentURL.replace(/(\?|&)cate=[^&]*/, char + 'cate=' + encodeURIComponent(cateCode));
-  } else {
-      newURL += char + 'cate=' + encodeURIComponent(cateCode);
-  }
+  // URL에 파라미터가 이미 존재하면 추가, 없으면 새로운 파라미터 생성
+  newURL += (newURL.includes('?') ? '&' : '?') + paramStr;
 
   location.href = newURL;
+
 }
