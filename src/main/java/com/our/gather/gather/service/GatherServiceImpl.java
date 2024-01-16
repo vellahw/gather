@@ -26,14 +26,26 @@ public class GatherServiceImpl implements GatherService {
 		if (session.getAttribute("USER_NUMB") != null) {
 
 			commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
-			commandMap.put("USER_IMAG", session.getAttribute("USER_IMAG"));
-			commandMap.put("USER_NICK", session.getAttribute("USER_NICK"));
-		} else {
-
-			commandMap.put("USER_NUMB", "null");
-		}
+			
+		} 
 
 		return gatherDao.getGather(map, commandMap, session);
+	}
+	
+	@Override
+	public List<Map<String, Object>> getGatherMember(Map<String, Object> map, HttpSession session, CommandMap commandMap)
+			throws Exception {
+		// TODO Auto-generated method stub
+
+		return gatherDao.getGatherMember(map, commandMap, session);
+	}
+	
+	@Override
+	public Map<String, Object> getGatherYourState(Map<String, Object> map, HttpSession session, CommandMap commandMap)
+			throws Exception {
+		// TODO Auto-generated method stub
+
+		return gatherDao.getGatherYourState(map, commandMap, session);
 	}
 
 	//일정이 지난 게더

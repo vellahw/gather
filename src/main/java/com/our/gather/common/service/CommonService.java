@@ -12,4 +12,6 @@ public interface CommonService {
 	List<Map<String, Object>> cCate(Map<String, Object> map, CommandMap commandMap) throws Exception;
 	
 	List<Map<String, Object>> getCategory(Map<String, Object> map, CommandMap commandMap) throws Exception;
+	
+	List<Map<String, Object>> getMoimImg(Map<String, Object> map, CommandMap commandMap) throws Exception;
 }

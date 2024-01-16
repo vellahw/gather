@@ -66,6 +66,7 @@ public class FileUtils {
 					multipartFile.transferTo(file); // 게더폴더에 업로드 처리
 					
 					listMap.put("FILE_IDXX", map.get("GATH_IDXX"));
+					listMap.put("FILE_PATH", file);
 
 				} else if (map.get("CLUB_IDXX") != null) {
 					
