@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+/* 베이직 버튼 */
 .basicBtn {
   width: 134px;
   height: 50px;
@@ -9,6 +10,39 @@
   color: var(--color-white);
 }
 
+/* 프사 둥글게 
+   1. 감싸는 div */
+	.profileImgWrap {
+	  width: 40px;
+	  height: 40px;
+	  border-radius: 50%;
+	  overflow: hidden;
+	}
+	
+/* 2. img 태그 */
+	.profileImg {
+	  width: 100%;
+	  height: 100%;
+	  object-fit: cover;
+	}
+	
+	
+/* 좋아요 아이콘 */
+.heartIcon {
+  width: 38px;
+  /* margin-right: 13px; */
+}
+
+.heartCount {
+  color: var(--color-red);
+  font-size: 10px;
+  position: absolute;
+  letter-spacing: -0.7px;
+  font-weight: 600;
+}
+
+
+/* 툴팁 스타일 */
 .tooltip {
   position: relative;
   display: inline-block;
@@ -46,6 +80,20 @@
   opacity: 0;
   position: absolute;
   bottom: 30px;
+}
+
+.left {
+  background: url('../../img/icon/arrowL.png') no-repeat,
+              linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(221,221,221,1) 0%, rgba(236,236,236,1) 100%);
+  background-position: center center;
+  left: 0;
+}
+
+.right {
+  right: 0;
+  background: url('../../img/icon/arrowR.png') no-repeat,
+              linear-gradient(-90deg, rgba(2,0,36,1) 0%, rgba(221,221,221,1) 0%, rgba(236,236,236,1) 100%);
+  background-position: center center;
 }
 
 /* 해시태그 + 호버하면 바탕색 올라감 */

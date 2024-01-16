@@ -106,19 +106,6 @@
   align-items: center;
 }
 
-.profileImgWrap {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.profileImg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 .nickname {
   padding-left: 5px;
   font-size: 14px;
@@ -132,34 +119,10 @@
   justify-content: right;
 }
 
-.heartIcon {
-  width: 38px;
-  /* margin-right: 13px; */
-}
-
-.heartCount {
-  color: var(--color-red);
-  font-size: 10px;
-  position: absolute;
-  bottom: 2px;
-  letter-spacing: -0.7px;
-  font-weight: 600;
+.main {
+	bottom: 2px;
 }
 
 ._hover {
   opacity: 1;
-}
-
-.left {
-  background: url('../../img/icon/arrowL.png') no-repeat,
-              linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(221,221,221,1) 0%, rgba(236,236,236,1) 100%);
-  background-position: center center;
-  left: 0;
-}
-
-.right {
-  right: 0;
-  background: url('../../img/icon/arrowR.png') no-repeat,
-              linear-gradient(-90deg, rgba(2,0,36,1) 0%, rgba(221,221,221,1) 0%, rgba(236,236,236,1) 100%);
-  background-position: center center;
 }

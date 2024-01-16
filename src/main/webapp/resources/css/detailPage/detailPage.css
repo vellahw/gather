@@ -1,0 +1,199 @@
+@charset "UTF-8";
+
+
+.backImgWrap {
+  height: auto;
+  position: relative;
+}
+
+.backgroundImg {
+  filter: blur(50px);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.detailContainer {
+  margin: 20px auto;
+  width: 1056px;
+  
+  background-color: #ddd;
+}
+
+.slideContainer {
+	position: relative;
+}
+
+.detail {
+	opacity: 1;
+  position: absolute;
+  top: 10px;
+  height: 94%;
+}
+
+.dl {
+	left: -44px;
+}
+
+.dr {
+	right: -44px;
+}
+
+.imgWrap {
+	width: 1056px;
+  height: 415px; 
+}
+
+.img {
+  width: 100%;
+  height: 100%; 
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.background {
+  width: 1056px; 
+  margin-top: 28px;
+  padding: 60px 60px 30px 60px;
+  background: var(--color-white); 
+  border-top-left-radius: 50px; 
+  border-top-right-radius: 50px;
+  box-sizing: border-box;
+}
+
+.headArea {
+	display: flex;
+	justify-content: space-between;
+	padding-bottom: 10px;
+	border-bottom: 1px var(--color-black) solid;
+}
+
+.detailTitle {
+  font-size: 30px;
+  word-wrap: break-word;
+}
+
+.category {
+  color: var(--color-gray500); 
+  font-size: 16px; 
+  font-weight: 500;
+  line-height: 38px; 
+  word-wrap: break-word;
+}
+
+.intro {
+  font-size: 18px;
+  font-weight: 500; 
+  line-height: 38px; 
+  word-wrap: break-word;
+  padding: 40px 0 40px 0;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+}
+
+.bookmarkIcon {
+  margin-left: 26px;
+}
+
+.d {
+  width: 45px;
+}
+
+.dc {
+	bottom: 8px;
+  font-size: 12px;
+  left: 38px;
+}
+
+.eachInfoWrap {
+  padding: 40px 0 40px 0;
+}
+
+.infoTitle {
+  color: var(--primary); 
+  line-height: 38px;
+  font-size: 22px;
+}
+
+.each {
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.infomation {
+	display: flex;
+	flex-direction: column;
+}
+
+.infoIconWrap {
+  width: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.infoIcon {
+	padding-right: 6px;
+}
+
+.infoTextContainer {
+	display: flex;
+  flex-direction: column;
+}
+
+.eachText {
+	padding: 4px 0 4px 0;	
+}
+
+.masterProfile {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.dp {
+  width: 80px;
+  height: 80px;
+}
+
+.memberImg {
+  width: 80px; 
+  height: 80px; 
+  border-radius: 9999px;
+}
+
+.masterName {
+	margin-left: 14px;
+  font-size: 18px; 
+  font-weight: 500; 
+  word-wrap: break-word;
+}
+
+.memeberProfiles {
+	margin-top: 8px;
+	display: flex;
+  position: relative;
+  height: 80px;
+}
+
+.members {
+  position: absolute;
+  top: 0; 
+}	
+
+.move {
+	left: 44px;
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
