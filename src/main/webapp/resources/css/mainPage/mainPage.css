@@ -43,8 +43,9 @@
 }
 
 .slideContents {
-  padding: 0 9px;
+  margin: 0 9px;
   flex: 0 0 21%;
+  cursor: pointer;
 }
 
 .eachWrap {
@@ -121,8 +122,4 @@
 
 .main {
 	bottom: 2px;
-}
-
-._hover {
-  opacity: 1;
 }

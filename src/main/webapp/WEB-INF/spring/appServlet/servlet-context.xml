@@ -83,9 +83,6 @@
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 	
-	<!-- config.properties 스캔 -->
-	<context:property-placeholder location="/WEB-INF/config/config.properties" /> 
-	
 	<task:annotation-driven />
 
     <!-- 스케줄러 설정 -->

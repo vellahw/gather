@@ -43,7 +43,7 @@ public class FileUtils {
 				originalFileName = multipartFile.getOriginalFilename();
 				originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
 				storedFileName = CommonUtils.getRandomString() + originalFileExtension;
-
+				
 				listMap = new HashMap<String, Object>();
 				
 				if (map.get("USER_NUMB") != null) {

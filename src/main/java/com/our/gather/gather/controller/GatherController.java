@@ -1,5 +1,6 @@
 package com.our.gather.gather.controller;
 
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.service.CommonService;
+import com.our.gather.common.utils.CommonUtils;
 import com.our.gather.gather.service.GatherService;
 
 @Controller
@@ -40,7 +42,7 @@ public class GatherController {
 			mv.addObject("yourState", gatherService.getGatherYourState(commandMap.getMap(), session, commandMap)); //로그인시 회원의 현재 모임 참여상태.
 			
 		}
-
+		
 		return mv;
 	}
 

@@ -1,10 +1,5 @@
 @charset "UTF-8";
 
-.backgroundContainer {
-	height: auto;
-  width: 100%;
-}
-
 .backgroundImg {
   z-index: -1;
   filter: blur(100px);
@@ -28,17 +23,20 @@
   top: 0px;
   height: 100%;
   border-radius: 10px;
-	opacity: 1;
 }
 
 .dl {
 	left: -44px;
-  background: linear-gradient(90deg, rgba(62,62,62,0.19) 0%, rgba(89,89,89,0.18531162464985995) 100%);
+  background: url('../../img/icon/arrowL.png') no-repeat,
+  					  linear-gradient(90deg, rgba(62,62,62,0.19) 0%, rgba(89,89,89,0.18531162464985995) 100%);
+	background-position: center center;
 }
 
 .dr {
 	right: -44px;
-  background: linear-gradient(-90deg, rgba(62,62,62,0.19) 0%, rgba(89,89,89,0.18531162464985995) 100%);
+  background: url('../../img/icon/arrowR.png') no-repeat,
+  					  linear-gradient(-90deg, rgba(62,62,62,0.19) 0%, rgba(89,89,89,0.18531162464985995) 100%);
+	background-position: center center;
 }
 
 .imgSlideList{
@@ -49,6 +47,7 @@
 	width: 834px;
   height: 398px;
   display: flex;
+  cursor: pointer;
 }
 
 .img {
@@ -59,10 +58,31 @@
   flex-shrink: 0;
 }
 
+.dotsContainer {
+	display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.dot {
+	width: 10px;
+  height: 10px;
+  margin: 5px;
+  border-radius: 50%;
+  background-color: var(--color-white);
+  transition: all 0.4s ease-out;
+  cursor: pointer;
+}
+
+.active {
+  width: 19px;
+  border-radius: 32px;
+}
+
 .detailInfoContainer {
   width: 834px; 
   margin-top: 28px;
-  padding: 60px 60px 30px 60px;
+  padding: 60px 60px 60px 60px;
   background: var(--color-white); 
   border-radius: 40px;
   box-sizing: border-box;
@@ -73,7 +93,7 @@
 	display: flex;
 	justify-content: space-between;
 	padding-bottom: 10px;
-	border-bottom: 1px var(--color-black) solid;
+	border-bottom: 1px var(--color-gray500) solid;
 }
 
 .detailTitle {
@@ -178,7 +198,7 @@
 }
 
 .memeberProfiles {
-	margin-top: 8px;
+	margin-top: 4px;
 	display: flex;
   position: relative;
   height: 80px;
@@ -186,15 +206,17 @@
 
 .members {
   position: absolute;
-  top: 0; 
+  top: 0;
+  border: 5px solid var(--color-white);
 }	
 
-.move {
-	left: 44px;
+.noMember {
+	font-weight: 500;
+	line-height: 29px;
 }
 
 .btnContainer {
   display: flex;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 60px;
 }
