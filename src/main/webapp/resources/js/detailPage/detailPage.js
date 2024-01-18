@@ -1,69 +1,172 @@
-/**
- * 
- */
 document.addEventListener("DOMContentLoaded", function(){
-  const slideContainer =  document.querySelector('.slideContainer');
-  const imgSlideList = slideContainer.querySelector('.imgSlideList');
-  const imgWrap = slideContainer.querySelector('.imgWrap');
-  const img = imgWrap.querySelectorAll('img');
-  const imgLength = img.length;
-  const moveButton = slideContainer.querySelectorAll('.arrowBtn');
 
-  /* 클론 */
-  const clone1 = img[0].cloneNode(true);
-  const cloneLast = img[imgLength - 1].cloneNode(true);
-  imgWrap.appendChild(clone1);
-  imgWrap.insertBefore(cloneLast, img[0]);
+  /**
+  * 240118 장한원
+  * 이미지 슬라이더
+  */
+  const slideContainer = document.querySelector('.slideContainer'); // 리스트를 감싸는 부모
+  const slideList = slideContainer.querySelector('.imgWrap'); // 이미지 감싸는 리스트
+  const img = slideList.querySelectorAll('img');
+  const btn = slideContainer.querySelectorAll('.arrowBtn'); // 화살표 버튼
+  
+  const slideContentCount = img.length; // 이미지 갯수
+  const liWidth = slideList.clientWidth; // 이미지 너비
+      
+      // 컨텐츠가 1개 초과일 때
+      if(slideContentCount > 1) {
 
-  /* 주요 변수 초기화 */  
-  let currentIdx = 0;
-  let translate = 0;
-  const speedTime = 400;
+        let currentIdx = 0; // 현재 슬라이드 index
+        let translate = 0; // 슬라이드 이동값
 
-  /* CSSOM 셋업 */
-  const imgSlideListCloneLis = imgSlideList.querySelectorAll('imgWrap');
-  const liWidth = img[0].clientWidth;
-  const sliderWidth = liWidth * imgSlideListCloneLis.length;
-  // imgWrap.style.width = `${sliderWidth}px`;
-  currentIdx = 1;
-  translate = -liWidth;
-  imgWrap.style.transform = `translateX(${translate}px)`
+        // dot 생성
+        const dotsContainer = document.querySelector('.dotsContainer');
+        
+        for (let i = 0; i < slideContentCount; i++) {
+          const maxIdx = slideContentCount;
+          const minIdx = 0;
+          const dot = document.createElement('span');
+          dot.className = 'dot';
+          dot.dataset.index = i;
+          dot.onclick = function() {
+            if(currentIdx > i) {
+              currentIdx = Math.min(currentIdx - i, minIdx);
+            } else if(currentIdx < i) {
+              currentIdx = Math.min(currentIdx + i, maxIdx);
 
-  /* 리스너 설치하기 */
-  moveButton.forEach(moveButton=>{
-    moveButton.addEventListener('click', moveSlide);
-  })
-
-  /* 슬라이드 실행 */
-  function move(D) {
-    currentIdx += (-1 * D);
-    translate += liWidth * D;
-    imgWrap.style.transform = `translateX(${translate}px)`;
-    imgWrap.style.transition = `all ${speedTime}ms ease`
-  }
-
-  /* 클릭 버튼 */
-  function moveSlide(event) {
-    event.preventDefault();
-    if (event.target.classList.contains('right')) {
-      move(-1);
-      if (currentIdx === imgSlideListCloneLis.length -1)
-        setTimeout(() => {
-            imgWrap.style.transition = 'none';
-            currentIdx = 1;
-            translate = -liWidth;
-            imgWrap.style.transform = `translateX(${translate}px)`;
-          }, speedTime);
-      } else {
-        move(1);
-        if (currentIdx === 0) {
-          setTimeout(() => {
-            imgWrap.style.transition = 'none';
-            currentIdx = imgSlideListCloneLis.length -2;
-            translate = -(liWidth * currentIdx);
-            imgWrap.style.transform = `translateX(${translate}px)`;
-          }, speedTime);
+            } 
+            console.log(currentIdx)
+          }
+          dotsContainer.appendChild(dot);
         }
-    }
+
+        
+        
+        // 현재 currentIdx - dot위치
+        // 0 - 0 = 0
+        // 0 - 3 = -3 
+
+        
+        // 버튼 제어
+        btn.forEach((btn) => {
+          const rigthBtn = slideContainer.querySelector('#rigthBtn');
+          const leftBtn = slideContainer.querySelector('#leftBtn');
+                    
+          slideContainer.addEventListener('mouseenter', () => {
+
+            if(currentIdx >= 0 && currentIdx !== slideContentCount-1) {
+              addBtnHover(rigthBtn);
+            }
+            
+            if(currentIdx !== 0) {
+              addBtnHover(leftBtn);
+            } 
+          })
+          
+          slideContainer.addEventListener('mouseleave', () => {
+
+            if(currentIdx === slideContentCount-1) {
+              removeBtnHover(rigthBtn);
+            }
+            
+            if(currentIdx === 0) {
+              removeBtnHover(leftBtn);
+            }
+
+            removeBtnHover(leftBtn);
+            removeBtnHover(rigthBtn);
+
+          })
+
+          function addBtnHover(targetBtn) {
+            targetBtn.classList.add('_hover');
+          }
+          
+          function removeBtnHover(targetBtn) {
+            targetBtn.classList.remove('_hover');
+          }
+          
+          /* 이벤트 등록 */
+          btn.addEventListener('click', moveSlide);
+        
+          /* 버튼 클릭 이벤트 콜백 함수 */
+          function moveSlide(event) {
+            event.preventDefault();
+            
+            // 오른쪽 버튼 클릭시
+            if(event.target.classList.contains("dr")) {
+              if (currentIdx !== slideContentCount-1) {
+                currentIdx++;
+                translate = liWidth * currentIdx;
+                slideList.style.transform = `translateX(-${translate}px)`;
+                slideList.style.transition = `all 400ms ease`;
+                leftBtn.classList.add('_hover');
+              }
+
+              //마지막 슬라이드라면 오른쪽 버튼 안 보이게함
+              if(currentIdx === slideContentCount-1) {
+                event.target.classList.remove('_hover');
+              }
+
+            // 왼쪽 버튼 클릭시
+            } else if(event.target.classList.contains("dl")) {
+              if (currentIdx !== 0) {
+                currentIdx--;
+                translate = liWidth * -currentIdx;
+                slideList.style.transform = `translateX(${translate}px)`;
+                rigthBtn.classList.add('_hover');
+              }
+
+              //첫번째 슬라이드라면 왼쪽 버튼 안 보이게함
+              if(currentIdx === 0) {
+                event.target.classList.remove('_hover');
+              }
+            }
+
+            updateDot(currentIdx);
+
+          }
+          
+        }) // END btn.forEach
+      } // END  if(slideContentCount > 1)
+
+      else {
+        btn.forEach((btn) => {
+          btn.style.display = 'none';
+        })
+      }
+
+  
+  /**
+   * 240119 장한원
+   * dot 스타일 적용
+   */
+  function updateDot(currentIdx) {
+    const dots = document.querySelectorAll('.dot');
+
+    dots.forEach((target, index) => {
+      if(index == currentIdx) {
+        target.classList.add('active');
+      } else {
+        target.classList.remove('active');
+      }
+    })
   }
+  
+  /**
+   * 240118 장한원
+   * 멤버 프로필 오른쪽으로 이동
+   */
+  const countNode = document.getElementById('count');
+  const count = countNode.getAttribute('data-count');
+
+  if(count != 0) {
+    
+    const memeberItem = countNode.querySelectorAll('.profileImgWrap')
+
+    memeberItem.forEach((item, i) => {
+      item.style.left = 44 * i + 'px';
+    })
+
+  }
+  
 })

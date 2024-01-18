@@ -1,32 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="/resources/css/detailPage/detailPage.css">
 <script src="/resources/js/detailPage/detailPage.js"></script>
 
-<div class="backgroundContainer">
-  <img class="backgroundImg" src="${img[0].MOIM_IMAG}">
-  
+<img class="backgroundImg" src="${img[0].MOIM_IMAG}">
 
 <div class="detailContainer">
   <div class="slideContainer">
-		<button type="button" class="arrowBtn detail dl" id="leftBtn">
-			<img class="arrowImg" src="/resources/img/icon/arrowL.png">
-		</button>
-		<button type="button" class="arrowBtn detail dr" id="rigthBtn">
-			<img class="arrowImg" src="/resources/img/icon/arrowR.png">
-		</button>
+		<button type="button" class="arrowBtn detail dl" id="leftBtn"></button>
+		<button type="button" class="arrowBtn detail dr" id="rigthBtn"></button>
 		<div class="imgSlideContainer">
 			<div class="imgSlideList">
 				<div class="imgWrap">
-				  <c:forEach var="i" items="${img}">
-				    <img src="${i.MOIM_IMAG}" class="img" alt="모임 이미지">
+				  <c:forEach var="i" items="${img}" varStatus="status">
+				    <img src="${i.MOIM_IMAG}" class="img" alt="모임 이미지" data-iindex="${status.index}">
 				  </c:forEach>
 				</div>
 			</div>
 		</div>
   </div>
-  
+	<div class="dotsContainer">
+	</div>  
 	<div class="detailInfoContainer">
 	  <div class="headArea">
       <div class="headLeft">
@@ -103,30 +99,38 @@
       <h3 class="infoTitle">방장 정보</h3>
       <div class="masterProfile">
         <div class="profileImgWrap dp">
-          <img class="profileImg" src="${detail.USER_IMAG}" />
+          <img class="profileImg" src="${detail.USER_IMAG}"/>
         </div>
         <div class="masterName">${detail.USER_NICK}</div>
       </div>
     </div>
     <div class="eachInfoWrap">
-      <h3 class="infoTitle member">함께하는 멤버들</h3>
-      <div class="memeberProfiles">
+ 			<h3 class="infoTitle member">함께하는 멤버들</h3>
       <%-- 데이터 불러와 forEach로 프사 띄우고
       		자바스크립트로 left 연산 해줘야함
        --%>
-			<c:forEach var="m" items="${member}">
-			 <c:if test="${m.BANN_YSNO == 'N' && m.WAIT_YSNO == 'N' && m.MAST_YSNO == 'N'}">
-         <div class="profileImgWrap dp members">
-           <img class="profileImg" src="${m.USER_IMAG}" />
-         </div>
-			 </c:if>
-			</c:forEach>
-      </div>
+			<c:choose>
+		    <c:when test="${fn:length(member) > 0 }">
+		      <div class="memeberProfiles" data-count="${fn:length(member)}" id="count">
+						<c:forEach var="m" items="${member}">
+						  <c:if test="${m.BANN_YSNO == 'N' && m.WAIT_YSNO == 'N' && m.MAST_YSNO == 'N'}">
+						      <div class="profileImgWrap dp members">
+						      	<img class="profileImg" src="${m.USER_IMAG}" />
+						      </div>
+							</c:if>
+						</c:forEach>
+      		</div>
+				 </c:when>
+				 <c:otherwise>
+					 <p class="noMember" data-count="0" id="count">
+				     참여한 멤버가 없습니다.	첫 번째 멤버가 되어보세요!
+					 </p>  
+				 </c:otherwise>
+	  </c:choose>
     </div>
     <div class="btnContainer">
       <button type="button" class="basicBtn">참여하기</button>
     </div>
 	</div>
 	
-	</div>
 </div>

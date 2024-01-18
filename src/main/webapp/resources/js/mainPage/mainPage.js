@@ -70,6 +70,7 @@ function contentsSlider(){
         
           /* 버튼 클릭 이벤트 콜백 함수 */
           function moveSlide(event) {
+          
             event.preventDefault();
             
             // 오른쪽 버튼 클릭시

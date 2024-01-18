@@ -8,6 +8,11 @@
   background-color: var(--primary);
   color: var(--color-white);
   font-size: 16px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.basicBtn:hover {
+  background-color: var(--color-orange500);
 }
 
 /* 프사 둥글게 
@@ -80,20 +85,26 @@
   opacity: 0;
   position: absolute;
   bottom: 30px;
+  z-index: -1;
 }
 
 .left {
   background: url('../../img/icon/arrowL.png') no-repeat,
               linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(221,221,221,1) 0%, rgba(236,236,236,1) 100%);
   background-position: center center;
-  left: 0;
+  left: 4px;
 }
 
 .right {
-  right: 0;
+  right: 4px;
   background: url('../../img/icon/arrowR.png') no-repeat,
               linear-gradient(-90deg, rgba(2,0,36,1) 0%, rgba(221,221,221,1) 0%, rgba(236,236,236,1) 100%);
   background-position: center center;
+}
+
+._hover {
+	opacity: 1;
+	z-index: 1;
 }
 
 /* 해시태그 + 호버하면 바탕색 올라감 */
