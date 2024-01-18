@@ -143,6 +143,7 @@ document.addEventListener("DOMContentLoaded", function(){
                            slideContents.onclick = function goDetaill() { 
                                 location.href = `/gatherDetail.com?idx=${wmoim.MOIM_IDXX}`
                             };
+
                             slideContents.innerHTML = '<div class="eachWrap">'
                                 + '<div class="thumnailContainer">'
                                 + '    <img src="' + wmoim.MOIM_IMAG + '" class="thumnail" alt="썸네일">'

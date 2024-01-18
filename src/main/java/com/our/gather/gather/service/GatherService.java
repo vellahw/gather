@@ -12,6 +12,9 @@ public interface GatherService {
 	List<Map<String, Object>> getGather(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception;
 	
+	Map<String, Object> getGatherDetail(Map<String, Object> map, HttpSession session, CommandMap commandMap)
+			throws Exception;
+	
 	List<Map<String, Object>> getGatherMember(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception;
 	
