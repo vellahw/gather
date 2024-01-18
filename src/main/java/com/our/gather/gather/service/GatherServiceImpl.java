@@ -26,20 +26,34 @@ public class GatherServiceImpl implements GatherService {
 		if (session.getAttribute("USER_NUMB") != null) {
 
 			commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
-			
-		} 
+
+		}
 
 		return gatherDao.getGather(map, commandMap, session);
 	}
-	
+
 	@Override
-	public List<Map<String, Object>> getGatherMember(Map<String, Object> map, HttpSession session, CommandMap commandMap)
+	public Map<String, Object> getGatherDetail(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception {
+		// TODO Auto-generated method stub
+
+		if (session.getAttribute("USER_NUMB") != null) {
+
+			commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
+
+		}
+
+		return gatherDao.getGatherDetail(map, commandMap, session);
+	}
+
+	@Override
+	public List<Map<String, Object>> getGatherMember(Map<String, Object> map, HttpSession session,
+			CommandMap commandMap) throws Exception {
 		// TODO Auto-generated method stub
 
 		return gatherDao.getGatherMember(map, commandMap, session);
 	}
-	
+
 	@Override
 	public Map<String, Object> getGatherYourState(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception {
@@ -48,15 +62,15 @@ public class GatherServiceImpl implements GatherService {
 		return gatherDao.getGatherYourState(map, commandMap, session);
 	}
 
-	//일정이 지난 게더
+	// 일정이 지난 게더
 	@Override
 	public List<Map<String, Object>> getEndedGahter(String currentDateString) throws Exception {
 		// TODO Auto-generated method stub
 
 		return gatherDao.getEndedGahter(currentDateString);
-	}	
+	}
 
-	//게더 마감
+	// 게더 마감
 	@Override
 	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public void setGatherEnd(Map<String, Object> map) throws Exception {

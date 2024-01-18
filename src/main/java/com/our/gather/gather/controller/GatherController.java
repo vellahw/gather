@@ -30,7 +30,7 @@ public class GatherController {
 		mv.setViewName("detailPage");
 
 		commandMap.put("MOIM_IDXX", MOIM_IDXX);
-		mv.addObject("detail", gatherService.getGather(commandMap.getMap(), session, commandMap)); // 게더
+		mv.addObject("detail", gatherService.getGatherDetail(commandMap.getMap(), session, commandMap)); // 게더
 		mv.addObject("member", gatherService.getGatherMember(commandMap.getMap(), session, commandMap)); // 게더맴버
 		mv.addObject("img", commonService.getMoimImg(commandMap.getMap(), commandMap)); // 게더 이미지
 		

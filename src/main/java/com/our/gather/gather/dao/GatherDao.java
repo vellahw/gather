@@ -17,10 +17,20 @@ public class GatherDao extends AbstractDao {
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getGather(Map<String, Object> map, CommandMap commandMap, HttpSession session)
 			throws Exception {
-		
+
 		List<Map<String, Object>> getGather = (List<Map<String, Object>>) selectList("gather.getGather", map);
 
 		return getGather;
+	}
+
+	// 게더추출
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> getGatherDetail(Map<String, Object> map, CommandMap commandMap, HttpSession session)
+			throws Exception {
+
+		Map<String, Object> getGatherDetail = (Map<String, Object>) selectOne("gather.getGather", map);
+
+		return getGatherDetail;
 	}
 
 	// 게더맴버
@@ -36,11 +46,10 @@ public class GatherDao extends AbstractDao {
 
 	// 로그인 맴버 현재 상태
 	@SuppressWarnings("unchecked")
-	public Map<String, Object> getGatherYourState(Map<String, Object> map, CommandMap commandMap,
-			HttpSession session) throws Exception {
+	public Map<String, Object> getGatherYourState(Map<String, Object> map, CommandMap commandMap, HttpSession session)
+			throws Exception {
 
-		Map<String, Object> getGatherYourState = (Map<String, Object>) selectOne("gather.getGatherMember",
-				map);
+		Map<String, Object> getGatherYourState = (Map<String, Object>) selectOne("gather.getGatherMember", map);
 
 		return getGatherYourState;
 	}

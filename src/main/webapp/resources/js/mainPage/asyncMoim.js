@@ -135,8 +135,8 @@ document.addEventListener("DOMContentLoaded", function(){
                    
                    if(moimType == "gt") {
                    
-                        for (var i = 0; i < data.length; i++) {
-                            var wmoim = data[i];
+                        for (let i = 0; i < data.length; i++) {
+                            let wmoim = data[i];
                         
                             // DocumentFragment에 각 반복에서 생성된 노드를 추가
                             const slideContents = document.createElement('div');
@@ -215,8 +215,8 @@ document.addEventListener("DOMContentLoaded", function(){
                         
                         if(moimType == "gt") {
                             
-                            for (var i = 0; i < data.length; i++) {
-                                var rmoim = data[i];
+                            for (let i = 0; i < data.length; i++) {
+                                let rmoim = data[i];
                             
                                 const slideContents = document.createElement('div');
                                 slideContents.onclick = function goDetaill() { location.href = `/gatherDetail.com?idx=${rmoim.MOIM_IDXX}`};

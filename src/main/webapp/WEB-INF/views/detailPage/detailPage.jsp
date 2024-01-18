@@ -25,8 +25,8 @@
 	<div class="detailInfoContainer">
 	  <div class="headArea">
       <div class="headLeft">
-        <h2 class="detailTitle">${detail[0].MOIM_TITL}</h2>
-        <div class="category">${detail[0].PARENTS_CATE}  |  ${detail[0].CHILD_CATE}</div>
+        <h2 class="detailTitle">${detail.MOIM_TITL}</h2>
+        <div class="category">${detail.PARENTS_CATE}  |  ${detail.CHILD_CATE}</div>
       </div>
 	    
 	    <div class="icons">
@@ -34,7 +34,7 @@
           <img src="/resources/img/icon/heartIcon.png"
           		 class="heartIcon d" alt="좋아요 아이콘">
 	        <span class="heartCount dc">
-						<c:out value="${detail[0].LIKE_COUNT}" />
+						<c:out value="${detail.LIKE_COUNT}" />
 					</span>
 	      </div>
         <div class="bookmarkWarp">
@@ -55,8 +55,8 @@
 		          <img class="infoIcon loca" src="/resources/img/icon/detail/location_detail.png" alt="위치 아이콘" />
           	</div>
           	<span class="infoText">
-	            <c:out value="${detail[0].PREGI_NAME}" />
-	            <c:out value="${detail[0].REGI_NAME}" />
+	            <c:out value="${detail.PREGI_NAME}" />
+	            <c:out value="${detail.REGI_NAME}" />
           	</span>
           </div>
           <div class="each">
@@ -64,7 +64,7 @@
   	          <img class="infoIcon" src="/resources/img/icon/detail/clockIcon.png" alt="시간 아이콘" />
 	          </div>
 	          <span class="infoText">
-            	<c:out value="${detail[0].FULL_DATE}" />
+            	<c:out value="${detail.FULL_DATE}" />
           	</span>
           </div>
           <div class="each">
@@ -72,7 +72,7 @@
   	          <img class="infoIcon" src="/resources/img/icon/detail/costIcon.png" alt="비용 아이콘" />
 	          </div>
 	          <span class="infoText">
-            	<c:out value="${detail[0].MOIM_COST}" />
+            	<c:out value="${detail.MOIM_COST}" />
             </span>
           </div>
           <div class="each">
@@ -80,8 +80,8 @@
   	          <img class="infoIcon" src="/resources/img/icon/detail/smileIcon.png" alt="연령성별 아이콘" />
 	          </div>
 	          <span class="infoText">
-            	<c:out value="${detail[0].MOIM_AGEE}" />
-            	<c:out value="${detail[0].APPR_GNDR}" />
+            	<c:out value="${detail.MOIM_AGEE}" />
+            	<c:out value="${detail.APPR_GNDR}" />
           	</span>
           </div>
           <div class="each">
@@ -89,7 +89,7 @@
   	          <img class="infoIcon" src="/resources/img/icon/detail/peopleIcon.png" alt="인원 제한 아이콘" />
 	          </div>
 	          <span class="infoText">
-            	<c:out value="${detail[0].PRES_PEOP}" />
+            	<c:out value="${detail.PRES_PEOP}" />
             </span>
           </div>
         </div>
@@ -98,9 +98,9 @@
       <h3 class="infoTitle">방장 정보</h3>
       <div class="masterProfile">
         <div class="profileImgWrap dp">
-          <img class="profileImg" src="${detail[0].USER_IMAG}" />
+          <img class="profileImg" src="${detail.USER_IMAG}" />
         </div>
-        <div class="masterName">${detail[0].USER_NICK}</div>
+        <div class="masterName">${detail.USER_NICK}</div>
       </div>
     </div>
     <div class="eachInfoWrap">
