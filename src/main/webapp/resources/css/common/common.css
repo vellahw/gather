@@ -2,9 +2,9 @@
 
 /* 베이직 버튼 */
 .basicBtn {
-  width: 94px;
-  height: 40px;
-  border-radius: 15px;
+  width: 90px;
+  height: 36px;
+  border-radius: 12px;
   background-color: var(--primary);
   color: var(--color-white);
   font-size: 16px;

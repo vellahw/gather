@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+.footer {
+	height: fit-content;
+  background-color: var(--color-white);
+  padding: 0 10rem;
+}

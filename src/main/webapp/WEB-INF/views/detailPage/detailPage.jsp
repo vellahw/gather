@@ -4,13 +4,18 @@
 <link rel="stylesheet" href="/resources/css/detailPage/detailPage.css">
 <script src="/resources/js/detailPage/detailPage.js"></script>
 
-<div>
+<div class="backgroundContainer">
   <img class="backgroundImg" src="${img[0].MOIM_IMAG}">
-</div>
+  
+
 <div class="detailContainer">
   <div class="slideContainer">
-		<button type="button" class="arrowBtn left detail dl" id="leftBtn"></button>
-		<button type="button" class="arrowBtn right detail dr" id="rigthBtn"></button>
+		<button type="button" class="arrowBtn detail dl" id="leftBtn">
+			<img class="arrowImg" src="/resources/img/icon/arrowL.png">
+		</button>
+		<button type="button" class="arrowBtn detail dr" id="rigthBtn">
+			<img class="arrowImg" src="/resources/img/icon/arrowR.png">
+		</button>
 		<div class="imgSlideContainer">
 			<div class="imgSlideList">
 				<div class="imgWrap">
@@ -121,5 +126,7 @@
     <div class="btnContainer">
       <button type="button" class="basicBtn">참여하기</button>
     </div>
+	</div>
+	
 	</div>
 </div>
