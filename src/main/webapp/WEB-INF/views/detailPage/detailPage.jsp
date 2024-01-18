@@ -49,7 +49,7 @@
 	  </div>
 
     <div class="intro">
-    	<c:out value="${detail[0].MOIM_CNTT}" />
+    	<c:out value="${detail.MOIM_CNTT}" />
     </div>
 
     <div class="eachInfoWrap">

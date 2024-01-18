@@ -76,15 +76,12 @@
    </bean> 
    
    <!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
-	<bean id="NaverLoginVO" class="com.our.gather.login.dao.NaverLoginVO" />
+	<bean id="NaverLoginVO" class="com.our.gather.loginPage.dao.NaverLoginVO" />
    
 	<!-- bean 스캔 -->
 	<context:component-scan base-package="com.our.gather" >
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
-	
-	<!-- config.properties 스캔 -->
-	<context:property-placeholder location="/WEB-INF/config/config.properties" /> 
 	
 	<task:annotation-driven />
 

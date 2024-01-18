@@ -7,6 +7,199 @@
 -->
 <mapper namespace="gather">
 	
+	<!-- 로그인 메인화면 -->
+   <select id="mainGather" parameterType='hashmap'
+      resultType="hashmap">
+      <![CDATA[
+         SELECT /*mainPage.mainGather*/
+         		  RNUM
+                , TYPE                				/* 게더 타입 ('Taste': 취항 , 'Hot': 핫한게더 , 'Like':좋아요 많은 순 'Region': 지역) */
+                , GATH_IDXX	AS MOIM_IDXX			/* 게더 ID */
+                , GATH_TITL AS MOIM_TITL			/* 게더 제목 */
+                , GATH_CNTT	AS MOIM_CNTT			/* 게더 내용 */
+                , GATH_IMAG	AS MOIM_IMAG			/* 게더 대표이미지 */
+                , CATE_IDXX							/* 카테고리 코드 */
+                , PARENTS_CATE						/* 상위 카테고리 */
+                , CHILD_CATE						/* 하위 카테고리 */
+                , PRES_PEOP							/* 현재 인원: (현재인원/최대인원)*/
+                , APPR_YSNO							/* 승인여부 */
+                , MOIM_AGEE							/* 모임 나이제한 */
+                , APPR_GNDR							/* 모임 성별제한 */
+                , PREGI_NAME						/* 부모지역명 */
+                , REGI_NAME							/* 지역명 */
+                , USER_NICK							/* 방장 닉네임 */
+                , USER_IMAG							/* 방장 프로필사진 */
+                , SMAL_DATE							/* 날짜 형식 MM.dd(day) 오전/오후 HH:mm */
+                , FULL_DATE							/* 날짜 형식 YYYY년 M월 오전/오후 HH:mm */
+                , LIKE_COUNT						/* 좋아요 수 */
+                , REGG_DATE							/* 개설일 */
+                ]]>
+                 <if test="USER_NUMB != null">
+      			 	<![CDATA[
+                , getAmILike (GATH_IDXX, #{USER_NUMB}) AS LIKE_YSNO					/* 로그인유저 좋아요 유무 */
+                , getAmIBkmk (GATH_IDXX, #{USER_NUMB}) AS BKMK_YSNO					/* 로그인유저 북마크 유무 */
+                  	]]>
+     			 </if>
+     			 <if test="USER_NUMB == null">
+      			 	<![CDATA[
+                , getAmILike (GATH_IDXX, null) AS LIKE_YSNO							/* 비로그인 시 좋아요 유무 없음 0 리턴 */
+                , getAmIBkmk (GATH_IDXX, null) AS BKMK_YSNO							/* 비로그인 시 북마크 유무 없음 0 리턴 */
+                  	]]>
+     			 </if>
+     			 <![CDATA[
+             FROM (
+             		]]>
+                  	<if test="USER_NUMB != null">
+      			 	<![CDATA[
+                  	(
+                  
+                    	SELECT  ROW_NUMBER() OVER (ORDER BY REGG_DATE DESC) RNUM
+                              , 'Taste' AS TYPE
+                    		  , GATH_IDXX
+                    		  , GATH_TITL
+                    		  , GATH_CNTT
+		                      , GATH_IMAG
+		                      , CATE_IDXX
+		                      , PARENTS_CATE
+		                      , CHILD_CATE
+		                      , PRES_PEOP
+		                      , APPR_YSNO
+		                      , MOIM_AGEE
+		                      , APPR_GNDR
+		                      , PREGI_NAME
+		                      , REGI_NAME
+		                      , USER_NICK
+		                      , USER_IMAG
+		                      , SMAL_DATE
+		                      , FULL_DATE
+		                      , LIKE_COUNT
+		                      , REGG_DATE
+		                   FROM VW_GATHER
+		                  WHERE CATE_IDXX IN ( 
+                                    		  SELECT CATE_IDXX
+                                       			FROM TB_URCATE
+                                      		   WHERE USER_NUMB = #{USER_NUMB})
+                 )
+        UNION ALL
+        		]]>
+     			 </if>
+     			 <![CDATA[
+                (
+		        			SELECT ROW_NUMBER() OVER (ORDER BY REGG_DATE DESC) RNUM
+			                     ,'Hot' AS TYPE
+			                     , GATH_IDXX
+			                     , GATH_TITL
+			                     , GATH_CNTT
+			                     , GATH_IMAG
+			                     , CATE_IDXX
+			                     , PARENTS_CATE
+			                     , CHILD_CATE
+			                     , PRES_PEOP
+			                     , APPR_YSNO
+			                     , MOIM_AGEE
+			                     , APPR_GNDR
+			                     , PREGI_NAME
+			                     , REGI_NAME
+			                     , USER_NICK
+			                     , USER_IMAG
+			                     , SMAL_DATE
+			                     , FULL_DATE
+			                     , LIKE_COUNT
+			                     , REGG_DATE
+			                  FROM VW_GATHER
+			                 WHERE (MEMB_COUNT/MAXX_PEOP)*100 > 70
+                 )
+        UNION ALL
+                 (
+                 		 SELECT 
+	                             ROWNUM RNUM
+	                           , 'Like' AS TYPE
+	                           , GATH_IDXX
+	                           , GATH_TITL
+	                           , GATH_CNTT
+	                           , GATH_IMAG
+	                           , CATE_IDXX
+	                           , PARENTS_CATE
+	                           , CHILD_CATE
+	                           , PRES_PEOP
+	                           , APPR_YSNO
+	                           , MOIM_AGEE
+	                           , APPR_GNDR
+	                           , PREGI_NAME
+	                           , REGI_NAME
+	                           , USER_NICK
+	                           , USER_IMAG
+	                           , SMAL_DATE
+	                           , FULL_DATE
+	                           , LIKE_COUNT
+	                           , REGG_DATE
+	                       FROM ( SELECT 
+	                                     GATH_IDXX
+	                                   , GATH_TITL
+	                                   , GATH_CNTT
+	                                   , GATH_IMAG
+	                                   , CATE_IDXX
+	                                   , PARENTS_CATE
+	                                   , CHILD_CATE
+	                                   , PRES_PEOP
+	                                   , APPR_YSNO
+	                                   , MOIM_AGEE
+	                                   , APPR_GNDR
+	                                   , PREGI_NAME
+	                                   , REGI_NAME
+	                                   , USER_NICK
+	                                   , USER_IMAG
+	                                   , SMAL_DATE
+	                                   , FULL_DATE
+	                                   , LIKE_COUNT
+	                                   , REGG_DATE
+	                                FROM VW_GATHER
+	                               ORDER BY LIKE_COUNT DESC
+                      			)
+                 )
+        
+        ]]>
+		<if test="USER_NUMB != null">
+      		<![CDATA[
+        UNION ALL
+                 (
+                  			SELECT ROW_NUMBER() OVER (ORDER BY REGG_DATE DESC) RNUM
+			                     , 'Region' AS TYPE
+			                     , GATH_IDXX
+			                     , GATH_TITL
+			                     , GATH_CNTT
+			                     , GATH_IMAG
+			                     , CATE_IDXX
+			                     , PARENTS_CATE
+			                     , CHILD_CATE
+			                     , PRES_PEOP
+			                     , APPR_YSNO
+			                     , MOIM_AGEE
+			                     , APPR_GNDR
+			                     , PREGI_NAME
+			                     , REGI_NAME
+			                     , USER_NICK
+			                     , USER_IMAG
+			                     , SMAL_DATE
+			                     , FULL_DATE
+			                     , LIKE_COUNT
+			                     , REGG_DATE
+			                  FROM VW_GATHER
+			                 WHERE REGI_CODE IN (
+			                                     SELECT REGI_CODE
+			                                       FROM TB_URREGI
+			                                      WHERE USER_NUMB = #{USER_NUMB}
+			                                     
+			                                     )
+			                 )
+			]]>
+		</if>
+      	    <![CDATA[
+                 		)
+                 WHERE RNUM <= 12
+      		]]>
+   </select>
+	
 	<!-- 
 	작성자:Hwai
     작성일:23.12.19
@@ -101,20 +294,26 @@
 	           , CASE WHEN A.USER_NUMB = C.USER_NUMB 			
                            THEN 'Y'
                       ELSE 'N'
-                  END AS MAST_YSNO										/* 방장유무 */
+                  END AS MAST_YSNO													/* 방장유무 */
 	           , A.USER_NUMB														/* 회원번호 */
 	           , B.USER_NICK														/* 회원닉네임 */
 	           , CASE WHEN LENGTH(B.FILE_SVNM) > 32 
 	                  		 THEN '/resources/img/upload/profile/'|| A.USER_NUMB ||'/'|| B.FILE_SVNM  
 	               	  ELSE '/resources/img/basic/profile/' || B.FILE_SVNM 
-	             END AS USER_IMAG 											/* 회원프사 */
+	             END AS USER_IMAG 													/* 회원프사 */
 	           , A.BANN_YSNO														/* 강퇴유무 */
 	           , A.WAIT_YSNO														/* 대기유무 */
 	           , A.PART_DATE
-	           , CASE WHEN D.REVW_IDXX IS NOT NULL			
+	           ]]>
+	           <if test="USER_NUMB != null">
+		       <![CDATA[
+	           , CASE WHEN A.BANN_YSNO = 'N' AND A.WAIT_YSNO = 'N' AND C.ENDD_YSNO = 'Y' AND D.REVW_IDXX IS NULL
                            THEN 'Y'
                       ELSE 'N'
-                  END AS REVW_YSNO										/* 리뷰유무 */
+                  END AS REVW_YSNO													/* 리뷰자격 */
+               ]]>
+               </if>
+               <![CDATA[
 	        FROM TB_MEMBER A
 	   LEFT JOIN TM_USERXM B
 	          ON A.USER_NUMB = B.USER_NUMB
@@ -133,6 +332,26 @@
 	       ORDER BY A.PART_DATE
 	      	]]>
     </select>
+    
+    <!-- 모임 이미지 -->
+	<select id="getGatherImg" parameterType='hashmap'
+      resultType="hashmap">
+      <![CDATA[
+		  SELECT MOIM_IMAG
+        FROM (
+        	    SELECT GATH_IMAG AS MOIM_IMAG
+                FROM VW_GATHER
+               WHERE GATH_IDXX = #{MOIM_IDXX}
+
+               UNION ALL
+
+              SELECT FILE_PATH AS MOIM_IMAG
+                FROM TM_FILEXM
+               WHERE FILE_IDXX = #{MOIM_IDXX}
+                 AND DELT_YSNO = 'N'
+             )
+	 		]]>
+   </select>	
 
    	<!-- 
 	작성자:Hwai

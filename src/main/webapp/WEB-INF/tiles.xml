@@ -11,7 +11,7 @@
 	</definition>
 
   <definition name="login" extends="mainPage">
-    <put-attribute name="body" value="/WEB-INF/views/login/login.jsp"/>
+    <put-attribute name="body" value="/WEB-INF/views/loginPage/login.jsp"/>
   </definition>
   
   <definition name="listPage" extends="mainPage">
