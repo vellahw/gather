@@ -43,7 +43,7 @@
 }
 
 .slideContents {
-  padding: 0 9px;
+  margin: 0 9px;
   flex: 0 0 21%;
 }
 
@@ -121,8 +121,4 @@
 
 .main {
 	bottom: 2px;
-}
-
-._hover {
-  opacity: 1;
 }

@@ -2,14 +2,14 @@ function contentsSlider(){
 
   /**
   * 240111 장한원
-  * 컨텐츠 슬라이드
+  * 컨텐츠 슬라이더
   */
   const slideContainer = document.querySelectorAll('.slideContainer'); // 리스트를 감싸는 부모
   
   slideContainer.forEach((slideContainer) => {
 
     const slideList = slideContainer.querySelectorAll('.slideList'); // 컨텐츠를 감싸는 리스트
-    
+
     /* 리스트 제어 */
     slideList.forEach(slideList =>{
 
@@ -24,44 +24,46 @@ function contentsSlider(){
 
         let currentIdx = 0; // 현재 슬라이드 번호
         let translate = 0; // 슬라이드 위치 값
+
+        const rigthBtn = slideContainer.querySelector('#rigthBtn');
+    
+        const leftBtn = slideContainer.querySelector('#leftBtn');
+        const lastPage = Math.round((slideContentCount / 4) - 1); 
+        
+        slideContainer.addEventListener('mouseenter', (e) => {
+
+          if(currentIdx >= 0 && currentIdx !== lastPage) {
+            addBtnHover(rigthBtn);
+          }
+          
+          if(currentIdx !== 0) {
+            addBtnHover(leftBtn);
+          } 
+        })
+        
+        slideContainer.addEventListener('mouseleave', () => {
+          if(currentIdx === lastPage) {
+            removeBtnHover(rigthBtn);
+          }
+          
+          if(currentIdx === 0) {
+            removeBtnHover(leftBtn);
+          }
+
+          removeBtnHover(leftBtn);
+          removeBtnHover(rigthBtn);
+
+        })
+
+        function addBtnHover(targetBtn) {
+          targetBtn.classList.add('_hover');
+        }
+        
+        function removeBtnHover(targetBtn) {
+          targetBtn.classList.remove('_hover');
+        }
         
         btn.forEach((btn) => {
-          const rigthBtn = slideContainer.querySelector('#rigthBtn');
-          const leftBtn = slideContainer.querySelector('#leftBtn');
-          const lastPage = Math.round((slideContentCount / 4) - 1); 
-          
-          slideContainer.addEventListener('mouseenter', (e) => {
-
-            if(currentIdx >= 0 && currentIdx !== lastPage) {
-              addBtnHover(rigthBtn);
-            }
-            
-            if(currentIdx !== 0) {
-              addBtnHover(leftBtn);
-            } 
-          })
-          
-          slideContainer.addEventListener('mouseleave', () => {
-            if(currentIdx === lastPage) {
-              removeBtnHover(rigthBtn);
-            }
-            
-            if(currentIdx === 0) {
-              removeBtnHover(leftBtn);
-            }
-
-            removeBtnHover(leftBtn);
-            removeBtnHover(rigthBtn);
-
-          })
-
-          function addBtnHover(targetBtn) {
-            targetBtn.classList.add('_hover');
-          }
-          
-          function removeBtnHover(targetBtn) {
-            targetBtn.classList.remove('_hover');
-          }
           
           /* 이벤트 등록 */
           btn.addEventListener('click', moveSlide);
