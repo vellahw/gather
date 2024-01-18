@@ -29,7 +29,6 @@ function contentsSlider(){
           const rigthBtn = slideContainer.querySelector('#rigthBtn');
           const leftBtn = slideContainer.querySelector('#leftBtn');
           const lastPage = Math.round((slideContentCount / 4) - 1); 
-          console.log(lastPage);
           
           slideContainer.addEventListener('mouseenter', (e) => {
 
@@ -110,8 +109,4 @@ function contentsSlider(){
 
   }) // END slideContainer.forEach  
 
-}
-
-function goDetail(params) {
-  location.href = `/gatherDetail.com?idx=${params}`;
 }

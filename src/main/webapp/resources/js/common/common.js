@@ -1,4 +1,4 @@
-	     /* 
+/* 
 240111 Hwai
 name:whereIam
 Purpose: 현재 사용자가 위치한 모임타입
@@ -244,4 +244,13 @@ function comConfirm(title, icon, content, okContent, okFn, ccContent, ccFn){
       })
 
   }
-	
+
+/* 
+admin:Hanwon
+name:goDetail
+Purpose:디테일 페이지로 이동
+parameter:(params : MOIM_IDXX 파라미터)
+*/ 
+function goDetail(params) {
+  location.href = `/gatherDetail.com?idx=${params}`;
+}

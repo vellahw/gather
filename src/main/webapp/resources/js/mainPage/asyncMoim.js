@@ -134,14 +134,15 @@ document.addEventListener("DOMContentLoaded", function(){
                    const fragment = document.createDocumentFragment();  // DocumentFragment 생성
                    
                    if(moimType == "gt") {
-                   
-                        for (var i = 0; i < data.length; i++) {
-                            var wmoim = data[i];
-                        
-                            // DocumentFragment에 각 반복에서 생성된 노드를 추가
-                            const slideContents = document.createElement('div');
-                            slideContents.className = 'slideContents';
-                            slideContents.onclick = function goDetaill() { location.href = `/gatherDetail.com?idx=${wmoim.MOIM_IDXX}`};
+                       for (let i = 0; i < data.length; i++) {
+                           let wmoim = data[i];
+
+                           // DocumentFragment에 각 반복에서 생성된 노드를 추가
+                           const slideContents = document.createElement('div');
+                           slideContents.className = 'slideContents';
+                           slideContents.onclick = function goDetaill() { 
+                                location.href = `/gatherDetail.com?idx=${wmoim.MOIM_IDXX}`
+                            };
                             slideContents.innerHTML = '<div class="eachWrap">'
                                 + '<div class="thumnailContainer">'
                                 + '    <img src="' + wmoim.MOIM_IMAG + '" class="thumnail" alt="썸네일">'
@@ -215,11 +216,13 @@ document.addEventListener("DOMContentLoaded", function(){
                         
                         if(moimType == "gt") {
                             
-                            for (var i = 0; i < data.length; i++) {
-                                var rmoim = data[i];
+                            for (let i = 0; i < data.length; i++) {
+                                let rmoim = data[i];
                             
                                 const slideContents = document.createElement('div');
-                                slideContents.onclick = function goDetaill() { location.href = `/gatherDetail.com?idx=${rmoim.MOIM_IDXX}`};
+                                slideContents.onclick = function goDetaill() { 
+                                    location.href = `/gatherDetail.com?idx=${rmoim.MOIM_IDXX}`
+                                };
                                 slideContents.className = 'slideContents';
                                 slideContents.innerHTML = '<div class="eachWrap">'
                                     + '<div class="thumnailContainer">'

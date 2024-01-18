@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="/resources/css/common/nav.css">
 <link rel="stylesheet" href="/resources/css/common/variable.css">
 <link rel="stylesheet" href="/resources/css/common/common.css">
+<link rel="stylesheet" href="/resources/css/common/footer.css">
 <script src="/resources/js/common/nav.js"></script>
 <script src="/resources/js/common/common.js"></script>
 <script src="/resources/js/common/sweetalert.min.js"></script>
@@ -25,7 +26,7 @@
 	
 <tiles:insertAttribute name="body"/>
 
-<footer>
+<footer class="footer">
   <tiles:insertAttribute name="footer"/>
 </footer>	
 </body>
