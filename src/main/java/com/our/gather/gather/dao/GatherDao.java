@@ -13,17 +13,27 @@ import com.our.gather.common.dao.AbstractDao;
 @Repository("GatherDao")
 public class GatherDao extends AbstractDao {
 
-	// 게더추출
+	// 로그인시 메인 게더
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> getGather(Map<String, Object> map, CommandMap commandMap, HttpSession session)
+	public List<Map<String, Object>> mainGather(Map<String, Object> map, CommandMap commandMap, HttpSession session)
 			throws Exception {
 
-		List<Map<String, Object>> getGather = (List<Map<String, Object>>) selectList("gather.getGather", map);
+		List<Map<String, Object>> mainGather = (List<Map<String, Object>>) selectList("gather.mainGather", map);
 
-		return getGather;
+		return mainGather;
 	}
 
 	// 게더추출
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> getGatherList(Map<String, Object> map, CommandMap commandMap, HttpSession session)
+			throws Exception {
+
+		List<Map<String, Object>> getGatherList = (List<Map<String, Object>>) selectList("gather.getGather", map);
+
+		return getGatherList;
+	}
+	
+	// 게더 상세보기
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> getGatherDetail(Map<String, Object> map, CommandMap commandMap, HttpSession session)
 			throws Exception {
@@ -42,6 +52,14 @@ public class GatherDao extends AbstractDao {
 				map);
 
 		return getGatherMember;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> getGatherImg(Map<String, Object> map, CommandMap commandMap) throws Exception {
+
+		List<Map<String, Object>> getGatherImg = (List<Map<String, Object>>) selectList("gather.getGatherImg", map);
+
+		return getGatherImg;
 	}
 
 	// 로그인 맴버 현재 상태

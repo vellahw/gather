@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+	작성자:Hwai
+    작성일:23.01.18
+-->
+<mapper namespace="detail">
+	
+   <!-- 맴버에 가입 -->
+   <insert id="moimJoin" parameterType='hashmap'>
+      <![CDATA[
+      	 /* detail.moimJoin */
+         INSERT INTO TB_MEMBER (
+                MOIM_IDXX
+              , USER_NUMB
+              , BANN_YSNO
+              , WAIT_YSNO
+              , PART_DATE
+     ) VALUES (
+                #{MOIM_IDXX}
+              , #{USER_NUMB}
+              , 'N'
+              , #{WAIT_YSNO}
+              , SYSDATE
+              );
+      		]]>
+   </insert>
+   
+   <update id="moimStateUpdate" parameterType='hashmap'>
+      <![CDATA[
+      	 /* detail.moimStateUpdate */
+         UPDATE TB_MEMBER 
+            SET BANN_YSNO = #{BANN_YSNO}
+              , WAIT_YSNO = #{WAIT_YSNO}
+          WHERE MOIM_IDXX = #{MOIM_IDXX}
+                USER_IDXX = #{USER_NUMB}
+      		]]>
+   </update>
+	
+	
+</mapper>

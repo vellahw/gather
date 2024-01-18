@@ -74,13 +74,15 @@ public class FileUtils {
 					multipartFile.transferTo(file); // 게더폴더에 업로드 처리
 					
 					listMap.put("FILE_IDXX", map.get("CLUB_IDXX"));
+					listMap.put("FILE_PATH", file);
 					
 				} else if (map.get("CHAL_IDXX") != null) {
 									
 					File file = new File(realPath + "upload/challenge/" + map.get("CHAL_IDXX") + "/" + storedFileName);
 					multipartFile.transferTo(file); // 게더폴더에 업로드 처리
 					
-					listMap.put("FILE_IDXX", map.get("GATH_IDXX"));
+					listMap.put("FILE_IDXX", map.get("CHAL_IDXX"));
+					listMap.put("FILE_PATH", file);
 				
 				} 
 				

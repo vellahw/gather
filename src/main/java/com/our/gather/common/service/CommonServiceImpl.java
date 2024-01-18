@@ -37,12 +37,5 @@ public class CommonServiceImpl implements CommonService {
 		return commonDao.getCategory(map, commandMap);
 	}
 	
-	@Override
-	public List<Map<String, Object>> getMoimImg(Map<String, Object> map, CommandMap commandMap) throws Exception {
-		// TODO Auto-generated method stub
-		
-		return commonDao.getMoimImg(map, commandMap);
-	}
-
 
 }

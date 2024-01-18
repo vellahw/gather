@@ -44,14 +44,6 @@ public class CommonDao extends AbstractDao {
 		return getCategory;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> getMoimImg(Map<String, Object> map, CommandMap commandMap)
-			throws Exception {
-
-		List<Map<String, Object>> getMoimImg = (List<Map<String, Object>>) selectList("common.getMoimImg", map);
-
-		return getMoimImg;
-	}
 
 
 }

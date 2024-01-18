@@ -23,7 +23,7 @@
             <c:when test="${fn:length(list) > 0 }">
 			<div class="contentsList">
 				<c:forEach var="list" items="${list}">
-						<div class="Contents">
+						<div class="Contents" onclick="goDetail('${list.MOIM_IDXX}')">
 							<div class="eachWrap">
 								<div class="thumnailContainer">
 									<img src="${list.MOIM_IMAG}" class="thumnail" alt="썸네일">
