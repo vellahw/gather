@@ -1,17 +1,21 @@
 document.addEventListener("DOMContentLoaded", function(){
-
-  /**
-  * 240118 장한원
-  * 이미지 슬라이더
-  */
-  const slideContainer = document.querySelector('.slideContainer'); // 리스트를 감싸는 부모
-  const slideList = slideContainer.querySelector('.imgWrap'); // 이미지 감싸는 리스트
-  const img = slideList.querySelectorAll('img');
-  const btn = slideContainer.querySelectorAll('.arrowBtn'); // 화살표 버튼
   
-  const slideContentCount = img.length; // 이미지 갯수
-  const liWidth = slideList.clientWidth; // 이미지 너비
-      
+  /**
+   * 240118 장한원
+   * 이미지 슬라이더
+  */
+ const slideContainer = document.querySelector('.slideContainer'); // 리스트를 감싸는 부모
+ const slideList = slideContainer.querySelector('.imgWrap'); // 이미지 감싸는 리스트
+ const img = slideList.querySelectorAll('img');
+ const btn = slideContainer.querySelectorAll('.arrowBtn'); // 화살표 버튼
+ 
+ const slideContentCount = img.length; // 이미지 갯수
+ const liWidth = slideList.clientWidth; // 이미지 너비
+ 
+ /* 백그라운드 이미지 초기화 */
+ const backgroundImg = document.querySelector('.backgroundImg'); 
+ backgroundImg.src = img[0].src;
+
       // 컨텐츠가 1개 초과일 때
       if(slideContentCount > 1) {
 
@@ -22,29 +26,44 @@ document.addEventListener("DOMContentLoaded", function(){
         const dotsContainer = document.querySelector('.dotsContainer');
         
         for (let i = 0; i < slideContentCount; i++) {
-          const maxIdx = slideContentCount;
-          const minIdx = 0;
+
           const dot = document.createElement('span');
           dot.className = 'dot';
           dot.dataset.index = i;
           dot.onclick = function() {
-            if(currentIdx > i) {
-              currentIdx = Math.min(currentIdx - i, minIdx);
-            } else if(currentIdx < i) {
-              currentIdx = Math.min(currentIdx + i, maxIdx);
+            if(i > currentIdx) {
 
-            } 
-            console.log(currentIdx)
+              currentIdx = i
+
+              translate = liWidth * currentIdx;
+              slideList.style.transform = `translateX(-${translate}px)`;
+              slideList.style.transition = `all 400ms ease`;
+
+              updateDot(currentIdx)
+
+            }
+
+            if(i < currentIdx) {
+
+              currentIdx = i
+
+              translate = liWidth * -currentIdx;
+              slideList.style.transform = `translateX(${translate}px)`;
+              slideList.style.transition = `all 400ms ease`;
+
+              updateDot(currentIdx)
+
+            }
+
+            backgroundImg.src = img[i].src;
+
           }
+
           dotsContainer.appendChild(dot);
+
         }
 
-        
-        
-        // 현재 currentIdx - dot위치
-        // 0 - 0 = 0
-        // 0 - 3 = -3 
-
+        updateDot(currentIdx);
         
         // 버튼 제어
         btn.forEach((btn) => {
@@ -96,10 +115,7 @@ document.addEventListener("DOMContentLoaded", function(){
             if(event.target.classList.contains("dr")) {
               if (currentIdx !== slideContentCount-1) {
                 currentIdx++;
-                translate = liWidth * currentIdx;
-                slideList.style.transform = `translateX(-${translate}px)`;
-                slideList.style.transition = `all 400ms ease`;
-                leftBtn.classList.add('_hover');
+                transform(currentIdx, leftBtn);
               }
 
               //마지막 슬라이드라면 오른쪽 버튼 안 보이게함
@@ -125,7 +141,6 @@ document.addEventListener("DOMContentLoaded", function(){
             updateDot(currentIdx);
 
           }
-          
         }) // END btn.forEach
       } // END  if(slideContentCount > 1)
 
@@ -134,6 +149,13 @@ document.addEventListener("DOMContentLoaded", function(){
           btn.style.display = 'none';
         })
       }
+      
+      function transform(currentIdx, btnDirection) {
+            translate = liWidth * currentIdx;
+            slideList.style.transform = `translateX(-${translate}px)`;
+            slideList.style.transition = `all 400ms ease`;
+            btnDirection.classList.add('_hover');
+          }
 
   
   /**
@@ -145,9 +167,9 @@ document.addEventListener("DOMContentLoaded", function(){
 
     dots.forEach((target, index) => {
       if(index == currentIdx) {
-        target.classList.add('active');
+        target.classList.add('_active');
       } else {
-        target.classList.remove('active');
+        target.classList.remove('_active');
       }
     })
   }

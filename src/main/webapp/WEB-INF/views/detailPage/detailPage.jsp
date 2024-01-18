@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="/resources/css/detailPage/detailPage.css">
 <script src="/resources/js/detailPage/detailPage.js"></script>
 
-<img class="backgroundImg" src="${img[0].MOIM_IMAG}">
+<img class="backgroundImg">
 
 <div class="detailContainer">
   <div class="slideContainer">

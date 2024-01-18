@@ -92,11 +92,11 @@
   background: url('../../img/icon/arrowL.png') no-repeat,
               linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(221,221,221,1) 0%, rgba(236,236,236,1) 100%);
   background-position: center center;
-  left: 4px;
+  left: 2px;
 }
 
 .right {
-  right: 4px;
+  right: 2px;
   background: url('../../img/icon/arrowR.png') no-repeat,
               linear-gradient(-90deg, rgba(2,0,36,1) 0%, rgba(221,221,221,1) 0%, rgba(236,236,236,1) 100%);
   background-position: center center;
