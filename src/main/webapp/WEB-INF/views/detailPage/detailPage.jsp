@@ -128,7 +128,6 @@
 	  </c:choose>
     </div>
     
-		${yourState}
 	  <div class="btnContainer">
 	    <button class="basicBtn loginPlz" onclick="loginOnClick()">로그인하고 참여하기</button>
 	    <input type="hidden" value="${yourState}" id="yourState" />
