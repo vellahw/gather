@@ -105,8 +105,8 @@
 	     		      LIKE_IDXX
 	     		    , USER_NUMB
 	     		    , DELT_YSNO
-	       ) VALUES (
-	                , #{LIKE_IDXX}
+	      ) VALUES (
+	                  #{LIKE_IDXX}
 	                , #{USER_NUMB}
 	                , 'N' 
 	                )

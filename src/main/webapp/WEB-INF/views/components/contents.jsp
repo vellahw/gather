@@ -18,13 +18,13 @@
 			<div class="slideList">
 				<c:forEach var="list" items="${main}">
 					<c:if test="${list.TYPE == param.type}">
-						<div class="slideContents" onclick="goDetail('${list.MOIM_IDXX}')">
+						<div class="slideContents">
 							<div class="eachWrap">
-								<div class="thumnailContainer">
+								<div class="thumnailContainer" onclick="goDetail('${list.MOIM_IDXX}')">
 									<img src="${list.MOIM_IMAG}" class="thumnail" alt="썸네일">
 								</div>
 								<div class="infoContainer">
-									<h3 class="title">${list.MOIM_TITL}</h3>
+									<h3 class="title" onclick="goDetail('${list.MOIM_IDXX}')">${list.MOIM_TITL}</h3>
 									<div class="hashtagContainer">
 										<!-- 해시태그 -->
 										<button type="button" class="hashtag">#전시회</button>
@@ -52,9 +52,14 @@
 											<span class="nickname">${list.USER_NICK}</span>
 										</div>
 										<div class="heartWrap">
-										<c:if test = "${list.LIKE_YSNO eq N}">
-										<button type="button" class="hhhbtn" onclick="return likeInsert(${list.MOIM_IDXX})">
+										<c:if test = "${list.LIKE_YSNO eq '0'}">
+										<button type="button" class="hhhbtn" data-moim-id="${list.MOIM_IDXX}" onclick="likeInsert(this)">
 											<img src="/resources/img/icon/heartIcon.png" class="heartIcon" alt="좋아요 아이콘">
+										</button>
+										</c:if>
+										<c:if test = "${list.LIKE_YSNO eq '1'}">
+										<button type="button" class="hhhbtn" data-moim-id="${list.MOIM_IDXX}" onclick="likeDelete(this)">
+											<img src="/resources/img/icon/heartFillIcon.png" class="heartIcon" alt="좋아요 아이콘">
 										</button>
 										</c:if>
 											<span class="heartCount main">${list.LIKE_COUNT}</span>

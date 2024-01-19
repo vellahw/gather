@@ -1,11 +1,12 @@
 /* 
 240111 Hwai
 name: 좋아요 구동
-Purpose: 모든 게시물 좋아요 구동
+Purpose: 게시물 좋아요 구동
 parameter: LIKE_IDXX
 */		     
-function likeInsert(LIKE_IDXX){
+function likeInsert(button) {
 
+    var LIKE_IDXX = $(button).data('moim-id')
     var USER_NUMB = sessionStorage.getItem('USER_NUMB');
 
     if(USER_NUMB != null) {
@@ -13,37 +14,30 @@ function likeInsert(LIKE_IDXX){
        $.ajax({
               url : "/likeInert.com",
               type : "post",
-              data : {USER_NUMB : USER_NUMB, LIKE_IDXX : LIKE_IDXX},
+              data : {LIKE_IDXX : LIKE_IDXX},
               success : function(result){
-              location.reload();}
+                location.reload(true); 
+              }
           }); 
        }  else {
-       
-      alert("로그인이 필요한 서비스입니다. \n로그인페이지로 이동합니다.");
-      location.href = 'http://localhost:8080/members/loginform.sosu';
+        
+        comConfirm("로그인이 필요한 서비스입니다.", "로그인 페이지로 이동하시겠습니까?", "warning" , "/gather/login.com")
        
         }
     }
-    
   
-  function ModeleteHeart(mo){
-    
-    if(sess != null) {
-      
-       $.ajax({
-              url : "/sosu/zzimDelete.do",
-              type : "post",
-              data : { M_IDX : sess, MO_IDX : mo},
-              success : function(result){
-              location.reload();}
-          }); 
-       }
-  }
-  
-
-
-
-
+function likeDelete(button) {
+    var LIKE_IDXX = $(button).data('moim-id')
+        
+    $.ajax({
+            url : "/likeDelete.com",
+            type : "post",
+            data : {LIKE_IDXX : LIKE_IDXX},
+            success : function(result){
+                location.reload(true); 
+            }
+        }); 
+}
 
 /* 
 240111 Hwai
@@ -242,53 +236,48 @@ name:comAlert3
 Purpose:알럿창
 parameter:(title : 제목, icon:아이콘 , content: 내용 , button: 버튼 , okFn : 확인 후 함수)
 */ 
-function comAlert3(title, icon, content, button, okFn){
+function comAlert3(title, content, icon,  okFn){
     
     swal({
-        title : title,
-        icon : icon,
+        title: title,
         text: content,
-        button: button,
-        closeOnClickOutside: false
-      })
-      .then(function(){
-        okFn;
-        });
+        icon: icon,
+        buttons: [
+            '아니오',
+            '네'
+        ],
+        }).then(function(isConfirm) {
+        if (isConfirm) {
+            okFn
+        } else {
+
+        }
+        })
 }
 
 /* 
 admin:Hwai
 name:comConfirm
 Purpose:컨펌창
-parameter:(title : 제목, icon : 아이콘, content: 내용 , okContent: 확인 시 나올 문구, okFn : 확인 후 함수, ccContent:취소 후 나올 문구)
+parameter:(title : 제목, content: 내용 , icon : 아이콘 , okPath:확인 후 경로 )
 */ 
-function comConfirm(title, icon, content, okContent, okFn, ccContent, ccFn){ 
+function comConfirm(title, content, icon, okPath){ 
 
     swal({
         title: title,
         text: content,
         icon: icon,
         buttons: [
-          '아니오',
-          '네'
+            '아니오',
+            '네'
         ],
-        dangerMode: true,
-      }).then(function(isConfirm) {
+        }).then(function(isConfirm) {
         if (isConfirm) {
-          swal({
-            title: okContent,
-            icon: 'success'
-          }).then(function() {
-            okFn
-          });
+            location.href = okPath
         } else {
-            swal({
-                title: ccContent
-            }).then(function() {
-                ccFn
-              });
+
         }
-      })
+        })
 
   }
 
