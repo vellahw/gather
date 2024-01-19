@@ -23,8 +23,7 @@
                 , CHILD_CATE						/* 하위 카테고리 */
                 , PRES_PEOP							/* 현재 인원: (현재인원/최대인원)*/
                 , APPR_YSNO							/* 승인여부 */
-                , MOIM_AGEE							/* 모임 나이제한 */
-                , APPR_GNDR							/* 모임 성별제한 */
+                , APPR_LMIT							/* 모임 제한 */
                 , PREGI_NAME						/* 부모지역명 */
                 , REGI_NAME							/* 지역명 */
                 , USER_NICK							/* 방장 닉네임 */
@@ -64,8 +63,7 @@
 		                      , CHILD_CATE
 		                      , PRES_PEOP
 		                      , APPR_YSNO
-		                      , MOIM_AGEE
-		                      , APPR_GNDR
+							  , APPR_LMIT
 		                      , PREGI_NAME
 		                      , REGI_NAME
 		                      , USER_NICK
@@ -96,8 +94,7 @@
 			                     , CHILD_CATE
 			                     , PRES_PEOP
 			                     , APPR_YSNO
-			                     , MOIM_AGEE
-			                     , APPR_GNDR
+								 , APPR_LMIT
 			                     , PREGI_NAME
 			                     , REGI_NAME
 			                     , USER_NICK
@@ -123,8 +120,7 @@
 	                           , CHILD_CATE
 	                           , PRES_PEOP
 	                           , APPR_YSNO
-	                           , MOIM_AGEE
-	                           , APPR_GNDR
+							   , APPR_LMIT
 	                           , PREGI_NAME
 	                           , REGI_NAME
 	                           , USER_NICK
@@ -143,8 +139,7 @@
 	                                   , CHILD_CATE
 	                                   , PRES_PEOP
 	                                   , APPR_YSNO
-	                                   , MOIM_AGEE
-	                                   , APPR_GNDR
+									   , APPR_LMIT
 	                                   , PREGI_NAME
 	                                   , REGI_NAME
 	                                   , USER_NICK
@@ -174,8 +169,7 @@
 			                     , CHILD_CATE
 			                     , PRES_PEOP
 			                     , APPR_YSNO
-			                     , MOIM_AGEE
-			                     , APPR_GNDR
+								 , APPR_LMIT
 			                     , PREGI_NAME
 			                     , REGI_NAME
 			                     , USER_NICK
@@ -211,27 +205,27 @@
        			*
 		  FROM (  
 		       	  SELECT /*mainPage.getGather*/              
-		                  GATH_IDXX AS MOIM_IDXX
-		                , GATH_TITL AS MOIM_TITL
-		                , GATH_CNTT AS MOIM_CNTT
-		                , GATH_IMAG AS MOIM_IMAG
-		                , CATE_IDXX
-		                , PARENTS_CATE
-		                , CHILD_CATE
-		                , PRES_PEOP
-		                , APPR_YSNO
-		                , MOIM_AGEE
-		                , MOIM_COST
-		                , APPR_GNDR
-		                , GNDR_CODE
-		                , PREGI_NAME
-		                , REGI_NAME
-		                , USER_NICK
-		                , USER_IMAG
-		                , SMAL_DATE
-		                , FULL_DATE
-		                , LIKE_COUNT
-		                , REGG_DATE
+		                  GATH_IDXX AS MOIM_IDXX											/* 게더아이디 */
+		                , GATH_TITL AS MOIM_TITL											/* 게더 제목 */
+		                , GATH_CNTT AS MOIM_CNTT											/* 게더 내용 */
+		                , GATH_IMAG AS MOIM_IMAG											/* 게더 대표 이미지 */
+		                , CATE_IDXX															/* 카테고리 코드 */
+		                , PARENTS_CATE														/* 부모 카테고리 */
+		                , CHILD_CATE														/* 자식 카테고리 */
+		                , PRES_PEOP															/* 현재 인원  n/n */
+		                , MEMB_COUNT														/* 현재 인원 */
+		                , MOIM_COST															/* 참가 비용 */
+		                , APPR_YSNO															/* 승인 여부 */
+						, APPR_LMIT															/* 모임 제한 KR */
+		                , GNDR_CODE															/* 모임 성별 코드 */											
+		                , PREGI_NAME														/* 부모 지역명 */
+		                , REGI_NAME															/* 자식 지역명 */
+		                , USER_NICK															/* 방장 닉네임 */
+		                , USER_IMAG															/* 방장 프로필 사진 */
+		                , SMAL_DATE															/* 날짜 형식 MM.dd(day) 오전/오후 HH:mm */
+		                , FULL_DATE															/* 날짜 형식 YYYY년 M월 오전/오후 HH:mm */
+		                , LIKE_COUNT														/* 좋아요 수 */
+		                , REGG_DATE															/* 모임 개설일 */
 		                 ]]>
 		                 <if test="USER_NUMB != null">
 		      			 	<![CDATA[

@@ -22,21 +22,39 @@ document.addEventListener("DOMContentLoaded", function(){
         const dotsContainer = document.querySelector('.dotsContainer');
         
         for (let i = 0; i < slideContentCount; i++) {
-          const maxIdx = slideContentCount;
-          const minIdx = 0;
+
           const dot = document.createElement('span');
           dot.className = 'dot';
           dot.dataset.index = i;
           dot.onclick = function() {
-            if(currentIdx > i) {
-              currentIdx = Math.min(currentIdx - i, minIdx);
-            } else if(currentIdx < i) {
-              currentIdx = Math.min(currentIdx + i, maxIdx);
+            if(i > currentIdx) {
 
-            } 
-            console.log(currentIdx)
+              currentIdx = i;
+
+              translate = liWidth * currentIdx;
+              slideList.style.transform = `translateX(-${translate}px)`;
+              slideList.style.transition = `all 400ms ease`;
+
+              updateDot(currentIdx);
+
+            }
+
+            if(i < currentIdx) {
+
+              currentIdx = i;
+
+              translate = liWidth * -currentIdx;
+              slideList.style.transform = `translateX(${translate}px)`;
+              slideList.style.transition = `all 400ms ease`;
+
+              updateDot(currentIdx);
+
+            }
+
           }
+          
           dotsContainer.appendChild(dot);
+          
         }
 
         
@@ -145,9 +163,9 @@ document.addEventListener("DOMContentLoaded", function(){
 
     dots.forEach((target, index) => {
       if(index == currentIdx) {
-        target.classList.add('active');
+        target.classList.add('_active');
       } else {
-        target.classList.remove('active');
+        target.classList.remove('_active');
       }
     })
   }

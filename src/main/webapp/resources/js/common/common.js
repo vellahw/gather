@@ -1,5 +1,52 @@
 /* 
 240111 Hwai
+name: 좋아요 구동
+Purpose: 모든 게시물 좋아요 구동
+parameter: LIKE_IDXX
+*/		     
+function likeInsert(LIKE_IDXX){
+
+    var USER_NUMB = sessionStorage.getItem('USER_NUMB');
+
+    if(USER_NUMB != null) {
+      
+       $.ajax({
+              url : "/likeInert.com",
+              type : "post",
+              data : {USER_NUMB : USER_NUMB, LIKE_IDXX : LIKE_IDXX},
+              success : function(result){
+              location.reload();}
+          }); 
+       }  else {
+       
+      alert("로그인이 필요한 서비스입니다. \n로그인페이지로 이동합니다.");
+      location.href = 'http://localhost:8080/members/loginform.sosu';
+       
+        }
+    }
+    
+  
+  function ModeleteHeart(mo){
+    
+    if(sess != null) {
+      
+       $.ajax({
+              url : "/sosu/zzimDelete.do",
+              type : "post",
+              data : { M_IDX : sess, MO_IDX : mo},
+              success : function(result){
+              location.reload();}
+          }); 
+       }
+  }
+  
+
+
+
+
+
+/* 
+240111 Hwai
 name:whereIam
 Purpose: 현재 사용자가 위치한 모임타입
 parameter: null
