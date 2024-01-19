@@ -254,3 +254,25 @@ parameter:(params : MOIM_IDXX 파라미터)
 function goDetail(params) {
   location.href = `/gatherDetail.com?idx=${params}`;
 }
+
+
+/* 
+admin:Hanwon
+name:parseString
+Purpose: input value의 값을 JSON으로 파싱
+parameter: (targetValue: 파싱할 타겟의 value)
+*/	
+function parseString(targetValue) {
+
+  // 1. 중괄호와 공백 제거
+  const cleanedString = targetValue.replace(/[{} ]/g, '');
+    
+  // 등호를 콜론으로 대체, 키와 값을 큰따옴표로 감쌈
+  const jsonString = cleanedString.replace(/([^,=]+)=([^,=]+)/g, '"$1":"$2"');
+    
+  // JSON 타입으로 파싱
+  const result = JSON.parse(`{${jsonString}}`);
+
+  return { result: result };
+
+}
