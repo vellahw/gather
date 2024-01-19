@@ -4,8 +4,6 @@ name: 좋아요 구동
 Purpose: 게시물 좋아요 구동
 parameter: LIKE_IDXX
 */		     
-
-
 function likeInsert(button) {
 
     var LIKE_IDXX = $(button).data('moim-id')
@@ -304,14 +302,92 @@ parameter: (targetValue: 파싱할 타겟의 value)
 */	
 function parseString(targetValue) {
 
-    // 1. 중괄호와 공백 제거
-    const cleanedString = targetValue.replace(/[{} ]/g, '');
+  // 1. 중괄호와 공백 제거
+  const cleanedString = targetValue.replace(/[{} ]/g, '');
           
-    // 등호를 콜론으로 대체, 키와 값을 큰따옴표로 감쌈
-    const jsonString = cleanedString.replace(/([^,=]+)=([^,=]+)/g, '"$1":"$2"');
+  // 등호를 콜론으로 대체, 키와 값을 큰따옴표로 감쌈
+  const jsonString = cleanedString.replace(/([^,=]+)=([^,=]+)/g, '"$1":"$2"');
           
-    // JSON 타입으로 파싱
-    const result = JSON.parse(`{${jsonString}}`);
+  // JSON 타입으로 파싱
+  const result = JSON.parse(`{${jsonString}}`);
       
-    return { result: result };
+  return { result: result };
+
+}
+
+/**
+ * admin: hanwon
+ * Purpose: LIKE_YSNO 값에 따른 하트 아이콘 변경 
+*/
+document.addEventListener('DOMContentLoaded', ()=>{
+  const heartCheckbox = document.querySelectorAll('input[type="checkbox"]'); // 체크박스
+  const heartCheckboxCount = heartCheckbox.length;
+  const heartYN = document.querySelectorAll('#heartYN'); // LIKE_YN을 가지고 있는 요소
+  
+  for (let i = 0; i < heartCheckboxCount; i++) {
+  
+      const likeYsNoValue = heartYN[i].value; //LIKE_YN value 
+  
+      if(likeYsNoValue == '1') { 
+        heartCheckbox[i].checked = true; // 체크박스의 상태를 true로 설정
+        handleCheckboxChange(heartCheckbox[i]);
+      }  
+  
+  }
+  
+})
+
+/* 
+admin:Hanwon
+name:handleCheckboxChange
+Purpose: 체크박스 상태를 관리
+parameter: (checkbox: 타켓 checkbox)
+*/	
+function handleCheckboxChange(checkbox) {
+  // 선택된 체크박스의 ID를 가져옴
+  const checkboxId = checkbox.id;
+  
+  // 선택된 체크박스의 상태를 가져옴
+  const isChecked = checkbox.checked;
+  
+  // 체크박스 스타일 업데이트
+  updateResult(checkboxId, isChecked);
+  
+}
+  
+/* 
+admin:Hanwon
+name:updateResult
+Purpose: 체크박스 스타일 업데이트
+parameter: (checkboxId: 타켓 checkbox 아이디, isChecked: 체크박스의 체크 상태)
+*/
+function updateResult(checkboxId, isChecked) {
+  
+  const targetCheckBox = document.querySelectorAll(`label[for="${checkboxId}"]`); // 체크박스 하트 아이콘
+  const targetCount = targetCheckBox.length;
+  const likeCount = document.querySelectorAll(`span[data-count-id="${checkboxId}"`); // LIKE_COUNT
+  
+  if(isChecked) {
+
+    for (let i = 0; i < targetCount; i++) {
+  
+      targetCheckBox[i].classList.add('checked');
+      let getLikeCount = Number(likeCount[i].innerText); // 기존의 LIKE_COUNT 값을 가져옴
+      getLikeCount += 1;
+  
+      likeCount[i].innerHTML = getLikeCount;
+  
+    }
+  } else {
+  
+    for (let i = 0; i < targetCount; i++) {
+  
+      targetCheckBox[i].classList.remove('checked');
+      let getLikeCount = Number(likeCount[i].innerText);  // 기존의 LIKE_COUNT 값을 가져옴
+      getLikeCount -= 1;
+        
+      likeCount[i].innerHTML = getLikeCount;
+  
+    }
+  }
 }
