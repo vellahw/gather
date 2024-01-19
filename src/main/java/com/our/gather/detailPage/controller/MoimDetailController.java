@@ -53,6 +53,10 @@ public class MoimDetailController {
 				commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 				mv.addObject("yourState", gatherService.getGatherYourState(commandMap.getMap(), session, commandMap)); // 로그인시 로그인 회원의 해당 게더 참여상태
 
+			} else {
+				
+				mv.addObject("yourState", null);
+				
 			}
 		}
 

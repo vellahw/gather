@@ -38,7 +38,7 @@ public class CommonController {
 			HttpServletRequest request, CommandMap commandMap) throws Exception {
 
 		commandMap.put("LIKE_IDXX", LIKE_IDXX);
-		commandMap.put("USER_IDXX", session.getAttribute("USER_IDXX"));
+		commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 
 		commonService.likeInsert(commandMap.getMap(), commandMap);
 
@@ -48,12 +48,12 @@ public class CommonController {
 	}
 
 	//좋아요 Delete
-	@RequestMapping("/likeDelete.do")
+	@RequestMapping("/likeDelete.com")
 	public String likeDelete(@RequestParam(value = "LIKE_IDXX", required = false) String LIKE_IDXX, HttpSession session,
 			HttpServletRequest request, CommandMap commandMap) throws Exception {
 
 		commandMap.put("LIKE_IDXX", LIKE_IDXX);
-		commandMap.put("USER_IDXX", session.getAttribute("USER_IDXX"));
+		commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 
 		commonService.likeDelete(commandMap.getMap(), commandMap);
 

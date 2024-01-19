@@ -118,14 +118,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     } else if (result.TYPE_CODE == "DV" || result.TYPE_CODE == "AD") {  //관리자 또는 개발자.
 
-                        // comConfirm( "관리자 페이지로 이동하시겠습니까?"
-                        //           , "success"
-                        //           , result.USER_NICK + "님의 계정은" + result.USER_TYPE+ "계정입니다."
-                        //           , "관리자 페이지로 이동합니다."
-                        //           , location.href = "/gather.com"
-                        //           , "홈페이지로 이동합니다."
-                        //           , location.href = "/gather.com");
-
                             swal({
                             title: "관리자 페이지로 이동하시겠습니까?",
                             text: result.USER_NICK + "님의 계정은 " + result.USER_TYPE+ "계정입니다.",
