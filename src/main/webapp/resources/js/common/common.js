@@ -311,15 +311,14 @@ parameter: (targetValue: 파싱할 타겟의 value)
 */	
 function parseString(targetValue) {
 
-  // 1. 중괄호와 공백 제거
-  const cleanedString = targetValue.replace(/[{} ]/g, '');
-    
-  // 등호를 콜론으로 대체, 키와 값을 큰따옴표로 감쌈
-  const jsonString = cleanedString.replace(/([^,=]+)=([^,=]+)/g, '"$1":"$2"');
-    
-  // JSON 타입으로 파싱
-  const result = JSON.parse(`{${jsonString}}`);
-
-  return { result: result };
-
+        // 1. 중괄호와 공백 제거
+        const cleanedString = targetValue.replace(/[{} ]/g, '');
+          
+        // 등호를 콜론으로 대체, 키와 값을 큰따옴표로 감쌈
+        const jsonString = cleanedString.replace(/([^,=]+)=([^,=]+)/g, '"$1":"$2"');
+          
+        // JSON 타입으로 파싱
+        const result = JSON.parse(`{${jsonString}}`);
+      
+        return { result: result };
 }
