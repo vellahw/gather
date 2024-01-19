@@ -4,6 +4,8 @@ name: 좋아요 구동
 Purpose: 게시물 좋아요 구동
 parameter: LIKE_IDXX
 */		     
+
+
 function likeInsert(button) {
 
     var LIKE_IDXX = $(button).data('moim-id')
@@ -16,7 +18,9 @@ function likeInsert(button) {
               type : "post",
               data : {LIKE_IDXX : LIKE_IDXX},
               success : function(result){
+
                 location.reload(true); 
+
               }
           }); 
        }  else {
@@ -300,14 +304,14 @@ parameter: (targetValue: 파싱할 타겟의 value)
 */	
 function parseString(targetValue) {
 
-        // 1. 중괄호와 공백 제거
-        const cleanedString = targetValue.replace(/[{} ]/g, '');
+    // 1. 중괄호와 공백 제거
+    const cleanedString = targetValue.replace(/[{} ]/g, '');
           
-        // 등호를 콜론으로 대체, 키와 값을 큰따옴표로 감쌈
-        const jsonString = cleanedString.replace(/([^,=]+)=([^,=]+)/g, '"$1":"$2"');
+    // 등호를 콜론으로 대체, 키와 값을 큰따옴표로 감쌈
+    const jsonString = cleanedString.replace(/([^,=]+)=([^,=]+)/g, '"$1":"$2"');
           
-        // JSON 타입으로 파싱
-        const result = JSON.parse(`{${jsonString}}`);
+    // JSON 타입으로 파싱
+    const result = JSON.parse(`{${jsonString}}`);
       
-        return { result: result };
+    return { result: result };
 }

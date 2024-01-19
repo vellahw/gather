@@ -113,3 +113,71 @@ function contentsSlider(){
   }) // END slideContainer.forEach  
 
 }
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  /**
+   * 좋아요 유무에 따른 아이콘 변경
+   */
+  const heartCheckbox = document.querySelectorAll('input[type="checkbox"]');
+  const heartCheckboxCount = heartCheckbox.length;
+  const heartYN = document.querySelectorAll('#heartYN');
+
+  for (let i = 0; i < heartCheckboxCount; i++) {
+
+    const likeYsNoValue = heartYN[i].value;
+
+    if(likeYsNoValue == '1') {
+      heartCheckbox[i].checked = true;
+      handleCheckboxChange(heartCheckbox[i]);
+    }  
+
+  }
+
+})
+
+// 체크박스 상태를 관리하는 함수
+function handleCheckboxChange(checkbox) {
+  // 선택된 체크박스의 ID를 가져옴
+  const checkboxId = checkbox.id;
+
+  // 선택된 체크박스의 상태를 가져옴
+  const isChecked = checkbox.checked;
+
+  // 체크박스 스타일 업데이트
+  updateResult(checkboxId, isChecked);
+
+}
+
+// 스타일 업데이트하는 함수
+function updateResult(checkboxId, isChecked) {
+
+  const targetCheckBox = document.querySelectorAll(`label[for="${checkboxId}"]`);
+  const targetCount = targetCheckBox.length;
+  const likeCount = document.querySelectorAll(`span[data-count-id="${checkboxId}"`);
+  
+  if(isChecked) {
+
+    for (let i = 0; i < targetCount; i++) {
+
+      targetCheckBox[i].classList.add('checked'); // CSS 클래스 추가
+      let getLikeCount = Number(likeCount[i].innerText);
+      getLikeCount += 1;
+
+      likeCount[i].innerHTML = getLikeCount;
+
+    }
+    
+  } else {
+
+    for (let i = 0; i < targetCount; i++) {
+
+      targetCheckBox[i].classList.remove('checked'); // CSS 클래스 추가
+      let getLikeCount = Number(likeCount[i].innerText);
+      getLikeCount -= 1;
+      
+      likeCount[i].innerHTML = getLikeCount;
+
+    }
+
+  }
+}
