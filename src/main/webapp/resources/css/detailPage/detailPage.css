@@ -8,6 +8,7 @@
   height: 100%;
   object-fit: cover;
   transition: opacity 0.4s ease;
+  opacity: 1;
 }
 
 .detailContainer {
@@ -226,4 +227,14 @@
   display: flex;
   justify-content: center;
   margin-top: 60px;
+}
+
+.loginPlz {
+  display: none;
+  font-weight: 500;
+  width: 100%;
+}
+
+#joinMoimBtn, #reviewBtn, #updateBtn, #joinCancle {
+	display: none;
 }

@@ -9,6 +9,7 @@
   color: var(--color-white);
   font-size: 16px;
   transition: background-color 0.3s, color 0.3s;
+	margin: 0 6px;
 }
 
 .basicBtn:hover {

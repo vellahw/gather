@@ -81,8 +81,7 @@
   	          <img class="infoIcon" src="/resources/img/icon/detail/smileIcon.png" alt="연령성별 아이콘" />
 	          </div>
 	          <span class="infoText">
-            	<c:out value="${detail.MOIM_AGEE}" />
-            	<c:out value="${detail.APPR_GNDR}" />
+	            <c:out value="${detail.APPR_LMIT}" />
           	</span>
           </div>
           <div class="each">
@@ -128,9 +127,21 @@
 				 </c:otherwise>
 	  </c:choose>
     </div>
-    <div class="btnContainer">
-      <button type="button" class="basicBtn">참여하기</button>
-    </div>
+    
+		${yourState}
+	  <div class="btnContainer">
+	    <button class="basicBtn loginPlz" onclick="loginOnClick()">로그인하고 참여하기</button>
+	    <input type="hidden" value="${yourState}" id="yourState" />
+	    <input type="hidden" value="${detail}" id="detail"/> 
+	    
+  	  <button type="button" class="basicBtn" id="joinMoimBtn"></button>
+    	  
+		  <button type="button" class="basicBtn" id="reviewBtn">리뷰쓰기</button>
+		    
+		  <button type="button" class="basicBtn" id="updateBtn">수정하기</button>
+     
+      <button type="button" class="basicBtn" id="joinCancle">참여취소</button>
+	  </div>
 	</div>
 	
 </div>
