@@ -96,6 +96,32 @@
 		ORDER BY COMD_CODE
 	 ]]>
 	 </select>
+	 
+	 <!--모임 찜 insert -->
+	<insert id="likeInsert" parameterType="hashmap">
+     <![CDATA[
+	     /*common.likdeInsert*/
+	     INSERT INTO TM_HEARTS (
+	     		      LIKE_IDXX
+	     		    , USER_NUMB
+	     		    , DELT_YSNO
+	       ) VALUES (
+	                , #{LIKE_IDXX}
+	                , #{USER_NUMB}
+	                , 'N' 
+	                )
+            ]]>
+	</insert>
+
+	<!--모임 찜 Delete -->
+	<delete id="likeDelete" parameterType="hashmap">
+    <![CDATA[
+	    /*common.likeDelete*/
+	    DELETE TM_HEARTS 
+	     WHERE LIKE_IDXX = #{LIKE_IDXX}  
+	       AND USER_NUMB = #{USER_NUMB}  
+            ]]>
+	</delete>
 	
 	<!-- 전자정부 페이징 -->
 	<sql id="pagingPre">

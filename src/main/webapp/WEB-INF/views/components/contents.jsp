@@ -52,8 +52,11 @@
 											<span class="nickname">${list.USER_NICK}</span>
 										</div>
 										<div class="heartWrap">
-											<img src="/resources/img/icon/heartIcon.png"
-													 class="heartIcon" alt="좋아요 아이콘">
+										<c:if test = "${list.LIKE_YSNO eq N}">
+										<button type="button" class="hhhbtn" onclick="return likeInsert(${list.MOIM_IDXX})">
+											<img src="/resources/img/icon/heartIcon.png" class="heartIcon" alt="좋아요 아이콘">
+										</button>
+										</c:if>
 											<span class="heartCount main">${list.LIKE_COUNT}</span>
 										</div>
 									</div>

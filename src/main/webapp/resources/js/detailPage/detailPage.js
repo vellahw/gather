@@ -34,25 +34,26 @@ document.addEventListener("DOMContentLoaded", function(){
           dot.onclick = function() {
             if(i > currentIdx) {
 
-              currentIdx = i
-
+              currentIdx = i;
+              
               translate = liWidth * currentIdx;
               slideList.style.transform = `translateX(-${translate}px)`;
               slideList.style.transition = `all 400ms ease`;
 
-              updateDot(currentIdx)
+
+              updateDot(currentIdx);
 
             }
 
             if(i < currentIdx) {
 
-              currentIdx = i
+              currentIdx = i;
 
               translate = liWidth * -currentIdx;
               slideList.style.transform = `translateX(${translate}px)`;
               slideList.style.transition = `all 400ms ease`;
 
-              updateDot(currentIdx)
+              updateDot(currentIdx);
 
             }
             
