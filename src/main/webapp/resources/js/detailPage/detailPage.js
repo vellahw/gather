@@ -221,45 +221,64 @@ document.addEventListener("DOMContentLoaded", function(){
    * 240119 장한원
    * 버튼 제어
    */
+  
+  
   if(sessionStorage.getItem("USER_NUMB") == null) { // 로그인X
-
     document.querySelector('.loginPlz').style.display = 'block';
     
   } else { //로그인 했다면
+  	
     const yourStateValue = document.getElementById('yourState').value;
-    const yourState = parseString(yourStateValue).result;
     
     const detailValue = document.getElementById('detail').value;
     const detail = parseString(detailValue).result;
-
+    
     // 참여 버튼 block
     const joinMoimBtn = document.getElementById('joinMoimBtn');
     joinMoimBtn.style.display = 'block';
+    
 
-    // 참여 '하기/요청/취소' 텍스트 제어
-    if(yourState.MAST_YSNO == 'N') { // 방장X
-      if(detail.APPR_YSNO == 'N' &&
-         yourState.WAIT_YSNO == 'N') {
-
-        joinMoimBtn.innerHTML = '참여하기';
-
-      } else if(detail.APPR_YSNO == 'Y') {
-
-        joinMoimBtn.innerHTML = '참여요청';
-
-      } else if(
-
-          yourState.BANN_YSNO == 'N' && 
-          yourState.WAIT_YSNO == 'Y' &&
-          detail.ENDD_YSNO == 'N') {
-          joinMoimBtn.innerHTML = '참여취소';
-
+    if(yourStateValue != 'null') {
+      
+      const yourState = parseString(yourStateValue).result;
+      
+      // 참여 '하기/요청/취소' 텍스트 제어
+      if(yourState.MAST_YSNO == 'N') { // 방장X
+        if(detail.APPR_YSNO == 'N' &&
+           yourState.WAIT_YSNO == 'N') {
+  
+          joinMoimBtn.innerHTML = '참여하기';
+  
+        } else if(detail.APPR_YSNO == 'Y') {
+  
+          joinMoimBtn.innerHTML = '참여요청';
+  
+        } else if(
+  
+            yourState.BANN_YSNO == 'N' && 
+            yourState.WAIT_YSNO == 'Y' &&
+            detail.ENDD_YSNO == 'N') {
+            joinMoimBtn.innerHTML = '참여취소';
+  
+        }
+  
+      } else if(yourState.MAST_YSNO == 'Y') {
+        document.getElementById('updateBtn').style.display = 'block';
       }
 
-    } else if(yourState.MAST_YSNO == 'Y') {
-      document.getElementById('updateBtn').style.display = 'block';
+    } else if(yourStateValue == 'null'){
+      if(detail.APPR_YSNO == 'N') {
+  
+        joinMoimBtn.innerHTML = '참여하기';
+  
+      } else if(detail.APPR_YSNO == 'Y') {
+  
+        joinMoimBtn.innerHTML = '참여요청';
+  
+      }
     }
 
+  
 
     // $.ajax({
     //   type: "POST",
