@@ -140,44 +140,42 @@ document.addEventListener("DOMContentLoaded", function(){
                            // DocumentFragment에 각 반복에서 생성된 노드를 추가
                            const slideContents = document.createElement('div');
                            slideContents.className = 'slideContents';
-                           slideContents.onclick = function goDetaill() { 
-                                location.href = `/gatherDetail.com?idx=${wmoim.MOIM_IDXX}`
-                            };
-
-                            slideContents.innerHTML = '<div class="eachWrap">'
-                                + '<div class="thumnailContainer">'
-                                + '    <img src="' + wmoim.MOIM_IMAG + '" class="thumnail" alt="썸네일">'
-                                + '</div>'
-                                + '<div class="infoContainer">'
-                                + '    <h3 class="title">'+ wmoim.MOIM_TITL +'</h3>'
-                                + '    <div class="hashtagContainer">'
-                                + '        <button type="button" class="hashtag">#전시회</button>'
-                                + '        <button type="button" class="hashtag">#같이가요</button>'
-                                + '    </div>'
-                                + '    <div class="locationDateContainer">'
-                                + '        <div class="locationContainer">'
-                                + '            <div class="tooltip">'
-                                + '                <img src="/resources/img/icon/locationIcon.png" class="locationIcon" alt="장소 아이콘">'
-                                + '                <span class="location">'+ wmoim.REGI_NAME +'</span>'
-                                + '                <div class="tooltiptext">'+ wmoim.PREGI_NAME +'</div>'
-                                + '            </div>'
-                                + '        </div>'
-                                + '        <span class="dateContainer">'+  wmoim.SMAL_DATE +'</span>'
-                                + '    </div>'
-                                + '    <div class="userContainer">'
-                                + '        <div class="userProfileWrap">'
-                                + '            <div class="profileImgWrap">'
-                                + '                <img src="'+ wmoim.USER_IMAG +'" class="profileImg" alt="프로필사진">'
-                                + '            </div>'
-                                + '            <span class="nickname">'+ wmoim.USER_NICK +'</span>'
-                                + '        </div>'
-                                + '        <div class="heartWrap">'
-                                + '            <img src="/resources/img/icon/heartIcon.png" class="heartIcon" alt="좋아요 아이콘">'
-                                + '            <span class="heartCount main">'+ wmoim.LIKE_COUNT +'</span>'
-                                + '        </div>'
-                                + '    </div>'
-                                + '</div>'
-                                + '</div>';
+                           slideContents.innerHTML = `<div class="eachWrap">
+                                <div class="thumnailContainer" onclick="goDetail('${wmoim.MOIM_IDXX}')">
+                                  <img src="${wmoim.MOIM_IMAG}" class="thumnail" alt="썸네일">
+                                </div>
+                                <div class="infoContainer">
+                                  <h3 class="title" onclick="goDetail('${wmoim.MOIM_IDXX}')">${wmoim.MOIM_TITL}</h3>
+                                    <div class="hashtagContainer">
+                                        <button type="button" class="hashtag">#전시회</button>
+                                        <button type="button" class="hashtag">#같이가요</button>
+                                    </div>
+                                    <div class="locationDateContainer">
+                                        <div class="locationContainer">
+                                            <div class="tooltip">
+                                                <img src="/resources/img/icon/locationIcon.png" class="locationIcon" alt="장소 아이콘">
+                                                <span class="location">${wmoim.REGI_NAME}</span>
+                                                <div class="tooltiptext">${wmoim.PREGI_NAME}</div>
+                                            </div>
+                                        </div>
+                                        <span class="dateContainer">${wmoim.SMAL_DATE}</span>
+                                    </div>
+                                    <div class="userContainer">
+                                        <div class="userProfileWrap">
+                                            <div class="profileImgWrap">
+                                                <img src="${wmoim.USER_IMAG}" class="profileImg" alt="프로필사진">
+                                            </div>
+                                            <span class="nickname">${wmoim.USER_NICK}</span>
+                                        </div>
+                                        <div class="heartWrap">
+										  <input type="hidden" value="${wmoim.LIKE_YSNO}" id="heartYN"/>
+										  <input type="checkbox" id="${wmoim.MOIM_IDXX}" onclick="handleCheckboxChange(this)">
+										  <label for="${wmoim.MOIM_IDXX}"></label>
+										  <span class="heartCount main" data-count-id="${wmoim.MOIM_IDXX}">${wmoim.LIKE_COUNT}</span>
+								        </div>
+                                    </div>
+                                  </div>
+                                </div>`;
                         
                             fragment.appendChild(slideContents);
                         }
@@ -221,44 +219,43 @@ document.addEventListener("DOMContentLoaded", function(){
                                 let rmoim = data[i];
                             
                                 const slideContents = document.createElement('div');
-                                slideContents.onclick = function goDetaill() { 
-                                    location.href = `/gatherDetail.com?idx=${rmoim.MOIM_IDXX}`
-                                };
                                 slideContents.className = 'slideContents';
-                                slideContents.innerHTML = '<div class="eachWrap">'
-                                    + '<div class="thumnailContainer">'
-                                    + '    <img src="' + rmoim.MOIM_IMAG + '" class="thumnail" alt="썸네일">'
-                                    + '</div>'
-                                    + '<div class="infoContainer">'
-                                    + '    <h3 class="title">'+ rmoim.MOIM_TITL +'</h3>'
-                                    + '    <div class="hashtagContainer">'
-                                    + '        <button type="button" class="hashtag">#전시회</button>'
-                                    + '        <button type="button" class="hashtag">#같이가요</button>'
-                                    + '    </div>'
-                                    + '    <div class="locationDateContainer">'
-                                    + '        <div class="locationContainer">'
-                                    + '            <div class="tooltip">'
-                                    + '                <img src="/resources/img/icon/locationIcon.png" class="locationIcon" alt="장소 아이콘">'
-                                    + '                <span class="location">'+ rmoim.REGI_NAME +'</span>'
-                                    + '                <div class="tooltiptext">'+ rmoim.PREGI_NAME +'</div>'
-                                    + '            </div>'
-                                    + '        </div>'
-                                    + '        <span class="dateContainer">'+  rmoim.SMAL_DATE +'</span>'
-                                    + '    </div>'
-                                    + '    <div class="userContainer">'
-                                    + '        <div class="userProfileWrap">'
-                                    + '            <div class="profileImgWrap">'
-                                    + '                <img src="'+ rmoim.USER_IMAG +'" class="profileImg" alt="프로필사진">'
-                                    + '            </div>'
-                                    + '            <span class="nickname">'+ rmoim.USER_NICK +'</span>'
-                                    + '        </div>'
-                                    + '        <div class="heartWrap">'
-                                    + '            <img src="/resources/img/icon/heartIcon.png" class="heartIcon" alt="좋아요 아이콘">'
-                                    + '            <span class="heartCount main">'+ rmoim.LIKE_COUNT +'</span>'
-                                    + '        </div>'
-                                    + '    </div>'
-                                    + '</div>'
-                                    + '</div>';
+                                slideContents.innerHTML = `<div class="eachWrap">
+                                    <div class="thumnailContainer" onclick="goDetail('${rmoim.MOIM_IDXX}')">
+                                        <img src="${rmoim.MOIM_IMAG}" class="thumnail" alt="썸네일">
+                                    </div>
+                                    <div class="infoContainer">
+                                        <h3 class="title" onclick="goDetail('${rmoim.MOIM_IDXX}')">${rmoim.MOIM_TITL}</h3>
+                                        <div class="hashtagContainer">
+                                            <button type="button" class="hashtag">#전시회</button>
+                                            <button type="button" class="hashtag">#같이가요</button>
+                                        </div>
+                                        <div class="locationDateContainer">
+                                            <div class="locationContainer">
+                                                <div class="tooltip">
+                                                    <img src="/resources/img/icon/locationIcon.png" class="locationIcon" alt="장소 아이콘">
+                                                    <span class="location">${rmoim.REGI_NAME}</span>
+                                                    <div class="tooltiptext">${rmoim.PREGI_NAME}</div>
+                                                </div>
+                                            </div>
+                                            <span class="dateContainer">${rmoim.SMAL_DATE}</span>
+                                        </div>
+                                        <div class="userContainer">
+                                            <div class="userProfileWrap">
+                                                <div class="profileImgWrap">
+                                                    <img src="${rmoim.USER_IMAG}" class="profileImg" alt="프로필사진">
+                                                </div>
+                                                <span class="nickname">${rmoim.USER_NICK}</span>
+                                            </div>
+                                            <div class="heartWrap">
+										      <input type="hidden" value="${rmoim.LIKE_YSNO}" id="heartYN"/>
+										      <input type="checkbox" id="${rmoim.MOIM_IDXX}" onclick="handleCheckboxChange(this)">
+										       <label for="${rmoim.MOIM_IDXX}"></label>
+										      <span class="heartCount main" data-count-id="${rmoim.MOIM_IDXX}">${rmoim.LIKE_COUNT}</span>
+								            </div>
+                                        </div>
+                                    </div>
+                                    </div>`;
                             
                                 fragment.appendChild(slideContents);
                             }

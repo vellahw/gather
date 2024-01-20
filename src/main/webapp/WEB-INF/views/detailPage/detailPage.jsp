@@ -129,9 +129,10 @@
     </div>
     
 	  <div class="btnContainer">
-	    <button class="basicBtn loginPlz" onclick="loginOnClick()">로그인하고 참여하기</button>
 	    <input type="hidden" value="${yourState}" id="yourState" />
 	    <input type="hidden" value="${detail}" id="detail"/> 
+	    
+	    <button class="basicBtn loginPlz" onclick="loginOnClick()">로그인하고 참여하기</button>
 	    
   	  <button type="button" class="basicBtn" id="joinMoimBtn"></button>
     	  

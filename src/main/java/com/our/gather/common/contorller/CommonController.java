@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.service.CommonService;
@@ -33,9 +34,9 @@ public class CommonController {
 	}
 
 	//좋아요 insert
-	@RequestMapping("/likeInert.com")
+    @RequestMapping("/likeInert.com")
 	public String likeInert(@RequestParam(value = "LIKE_IDXX", required = false) String LIKE_IDXX, HttpSession session,
-			HttpServletRequest request, CommandMap commandMap) throws Exception {
+				HttpServletRequest request, CommandMap commandMap) throws Exception {
 
 		commandMap.put("LIKE_IDXX", LIKE_IDXX);
 		commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
@@ -43,8 +44,8 @@ public class CommonController {
 		commonService.likeInsert(commandMap.getMap(), commandMap);
 
 		String referer = request.getHeader("Referer");
+	
 		return "redirect:" + referer;
-
 	}
 
 	//좋아요 Delete

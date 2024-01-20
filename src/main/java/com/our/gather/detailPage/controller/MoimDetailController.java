@@ -55,9 +55,9 @@ public class MoimDetailController {
 
 			} else {
 
-        mv.addObject("yourState", "null");
+				mv.addObject("yourState", "null");
 
-      }
+			}
 		}
 
 		return mv;

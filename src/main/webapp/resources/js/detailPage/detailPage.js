@@ -227,18 +227,17 @@ document.addEventListener("DOMContentLoaded", function(){
     document.querySelector('.loginPlz').style.display = 'block';
     
   } else { //로그인 했다면
-  	
     const yourStateValue = document.getElementById('yourState').value;
     
     const detailValue = document.getElementById('detail').value;
     const detail = parseString(detailValue).result;
-    
+
     // 참여 버튼 block
     const joinMoimBtn = document.getElementById('joinMoimBtn');
     joinMoimBtn.style.display = 'block';
     
 
-    if(yourStateValue != 'null') {
+    if(yourStateValue != 'null' || yourStateValue != "") {
       
       const yourState = parseString(yourStateValue).result;
       
