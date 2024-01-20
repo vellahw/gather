@@ -53,12 +53,12 @@
 										</div>
 										<div class="heartWrap">
 										<c:if test = "${list.LIKE_YSNO eq '0'}">
-										<button type="button" class="hhhbtn" data-moim-id="${list.MOIM_IDXX}" onclick="likeInsert(this)">
+										<button type="button" data-moim-id="${list.MOIM_IDXX}" onclick="return likeInsert('${list.MOIM_IDXX}')">
 											<img src="/resources/img/icon/heartIcon.png" class="heartIcon" alt="좋아요 아이콘">
 										</button>
 										</c:if>
 										<c:if test = "${list.LIKE_YSNO eq '1'}">
-										<button type="button" class="hhhbtn" data-moim-id="${list.MOIM_IDXX}" onclick="likeDelete(this)">
+										<button type="button" data-moim-id="${list.MOIM_IDXX}" onclick="return likeDelete('${list.MOIM_IDXX}')">
 											<img src="/resources/img/icon/heartFillIcon.png" class="heartIcon" alt="좋아요 아이콘">
 										</button>
 										</c:if>
