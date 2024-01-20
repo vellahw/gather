@@ -52,17 +52,10 @@
 											<span class="nickname">${list.USER_NICK}</span>
 										</div>
 										<div class="heartWrap">
-										<c:if test = "${list.LIKE_YSNO eq '0'}">
-										<button type="button" data-moim-id="${list.MOIM_IDXX}" onclick="return likeInsert('${list.MOIM_IDXX}')">
-											<img src="/resources/img/icon/heartIcon.png" class="heartIcon" alt="좋아요 아이콘">
-										</button>
-										</c:if>
-										<c:if test = "${list.LIKE_YSNO eq '1'}">
-										<button type="button" data-moim-id="${list.MOIM_IDXX}" onclick="return likeDelete('${list.MOIM_IDXX}')">
-											<img src="/resources/img/icon/heartFillIcon.png" class="heartIcon" alt="좋아요 아이콘">
-										</button>
-										</c:if>
-											<span class="heartCount main">${list.LIKE_COUNT}</span>
+											<input type="hidden" value="${list.LIKE_YSNO}" id="heartYN"/>
+											<input type="checkbox" id="${list.MOIM_IDXX}" onclick="handleCheckboxChange(this)">
+											<label for="${list.MOIM_IDXX}"></label>
+											<span class="heartCount main" data-count-id="${list.MOIM_IDXX}">${list.LIKE_COUNT}</span>
 										</div>
 									</div>
 								</div>
@@ -74,4 +67,3 @@
 		</div>
   </div>
 </div>
-</body>

@@ -25,7 +25,7 @@
 	    <c:param name="type" value="Region" />
 	    <c:param name="title" value="${USER_NICK}님 근처의  ${moimType}" />
 	    <c:param name="titleIcon" value="tasteTitleIcon" />
-  	</c:import>
+ 	</c:import>
 
 </c:if>
 

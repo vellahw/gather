@@ -47,6 +47,10 @@
   font-weight: 600;
 }
 
+#heart, #heartFill {
+	display: none;
+}
+
 
 /* 툴팁 스타일 */
 .tooltip {
