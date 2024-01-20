@@ -150,7 +150,7 @@ function comApplyNumFmt(num) {
 
 /* 
 240111 Hwai
-name:comAlert
+name:ComRemoveNumFmt
 Purpose: 통화포멧제거
 parameter:num
 */ 
@@ -289,8 +289,10 @@ name:goDetail
 Purpose:디테일 페이지로 이동
 parameter:(params : MOIM_IDXX 파라미터)
 */ 
-function goDetail(params) {
+function goDetail(params, event) {
+
   location.href = `/gatherDetail.com?idx=${params}`;
+  
 }
 
 
@@ -326,13 +328,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
   
   for (let i = 0; i < heartCheckboxCount; i++) {
   
-      const likeYsNoValue = heartYN[i].value; //LIKE_YN value 
+    const likeYsNoValue = heartYN[i].value; //LIKE_YN value 
   
-      if(likeYsNoValue == '1') { 
-        heartCheckbox[i].checked = true; // 체크박스의 상태를 true로 설정
-        handleCheckboxChange(heartCheckbox[i]);
-      }  
-  
+    if(likeYsNoValue == '1') { 
+      heartCheckbox[i].checked = true; // 체크박스의 상태를 true로 설정
+    }  
+    
+    //handleCheckboxChange(heartCheckbox[i]);
   }
   
 })
@@ -344,15 +346,22 @@ Purpose: 체크박스 상태를 관리
 parameter: (checkbox: 타켓 checkbox)
 */	
 function handleCheckboxChange(checkbox) {
-  // 선택된 체크박스의 ID를 가져옴
-  const checkboxId = checkbox.id;
+
+  if(sessionStorage.getItem("USER_NUMB") == null) {
+
+    comAlert2(5, "로그인이 필요한 서비스입니다.", "로그인 하고 게더를 즐겨보세요!", "로그인", "/gather/login.com");
   
-  // 선택된 체크박스의 상태를 가져옴
-  const isChecked = checkbox.checked;
-  
-  // 체크박스 스타일 업데이트
-  updateResult(checkboxId, isChecked);
-  
+  } else {
+
+    // 선택된 체크박스의 ID를 가져옴
+    const checkboxId = checkbox.id;
+      
+    // 선택된 체크박스의 상태를 가져옴
+    const isChecked = checkbox.checked;
+      
+    // 체크박스 스타일 업데이트
+    updateResult(checkboxId, isChecked);
+  }
 }
   
 /* 
@@ -362,7 +371,6 @@ Purpose: 체크박스 스타일 업데이트
 parameter: (checkboxId: 타켓 checkbox 아이디, isChecked: 체크박스의 체크 상태)
 */
 function updateResult(checkboxId, isChecked) {
-  
   const targetCheckBox = document.querySelectorAll(`label[for="${checkboxId}"]`); // 체크박스 하트 아이콘
   const targetCount = targetCheckBox.length;
   const likeCount = document.querySelectorAll(`span[data-count-id="${checkboxId}"`); // LIKE_COUNT
