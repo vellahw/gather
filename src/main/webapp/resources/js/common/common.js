@@ -4,21 +4,26 @@ name: 좋아요 구동
 Purpose: 게시물 좋아요 구동
 parameter: LIKE_IDXX
 */		     
-function likeInsert(button) {
+function likeInsert(LIKE_IDXX) {
 
-    var LIKE_IDXX = $(button).data('moim-id')
+    debugger;
+
     var USER_NUMB = sessionStorage.getItem('USER_NUMB');
 
     if(USER_NUMB != null) {
+
+        var likeIdArray = new Array();
+        likeIdArray = {LIKE_IDXX};
       
        $.ajax({
               url : "/likeInert.com",
-              type : "post",
-              data : {LIKE_IDXX : LIKE_IDXX},
+              type : "POST",
+              data : { likeIdArray : likeIdArray },
+              dataType : 'json',
               success : function(result){
-
-                location.reload(true); 
-
+                
+                location.reload(true);
+                
               }
           }); 
        }  else {
@@ -28,15 +33,20 @@ function likeInsert(button) {
         }
     }
   
-function likeDelete(button) {
-    var LIKE_IDXX = $(button).data('moim-id')
+function likeDelete(LIKE_IDXX) {
+    //var LIKE_IDXX = $(button).data('moim-id')
+    debugger;
+
+    var likeIdArray = new Array();
+    likeIdArray = {LIKE_IDXX};
         
     $.ajax({
             url : "/likeDelete.com",
-            type : "post",
-            data : {LIKE_IDXX : LIKE_IDXX},
+            type : "POST",
+            data : { likeIdArray : likeIdArray },
+            dataType : 'json',
             success : function(result){
-                location.reload(true); 
+                location.reload(); 
             }
         }); 
 }

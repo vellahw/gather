@@ -34,7 +34,7 @@ public class CommonController {
 	}
 
 	//좋아요 insert
-    @RequestMapping("/likeInert.com")
+  @RequestMapping("/likeInert.com")
 	public String likeInert(@RequestParam(value = "LIKE_IDXX", required = false) String LIKE_IDXX, HttpSession session,
 				HttpServletRequest request, CommandMap commandMap) throws Exception {
 
@@ -50,13 +50,17 @@ public class CommonController {
 
 	//좋아요 Delete
 	@RequestMapping("/likeDelete.com")
-	public String likeDelete(@RequestParam(value = "LIKE_IDXX", required = false) String LIKE_IDXX, HttpSession session,
+	public String likeDelete(@RequestParam List<Map<Object, String>> LIKE_IDXX, HttpSession session,
 			HttpServletRequest request, CommandMap commandMap) throws Exception {
-
-		commandMap.put("LIKE_IDXX", LIKE_IDXX);
-		commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
+		
+		for(int i = 0; i < LIKE_IDXX.size(); i++) {
+		
+			commandMap.put("LIKE_IDXX", LIKE_IDXX.get(i).get("LIKE_IDXX"));
+			commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 
 		commonService.likeDelete(commandMap.getMap(), commandMap);
+		
+		}
 
 		String referer = request.getHeader("Referer");
 		return "redirect:" + referer;
