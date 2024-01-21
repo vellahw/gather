@@ -52,8 +52,8 @@
 											<span class="nickname">${list.USER_NICK}</span>
 										</div>
 										<div class="heartWrap">
-											<input type="hidden" value="${list.LIKE_YSNO}" id="heartYN"/>
-											<input type="checkbox" id="${list.MOIM_IDXX}" onclick="handleCheckboxChange(this)">
+											<input type="hidden" data-like-id="${list.MOIM_IDXX}" value="${list.LIKE_YSNO}" id="heartYN"/>
+											<input type="checkbox" id="${list.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
 											<label for="${list.MOIM_IDXX}"></label>
 											<span class="heartCount main" data-count-id="${list.MOIM_IDXX}">${list.LIKE_COUNT}</span>
 										</div>
