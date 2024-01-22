@@ -22,7 +22,6 @@ function likeYsnoUpdate() {
       for (let j = 0; j < targetCheckBox.length; j++) {
 
         targetCheckBox[j].classList.add('checked');
-
       }
     }
   }
