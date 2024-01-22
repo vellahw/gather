@@ -66,10 +66,16 @@ label {
   background-image: url('../../img/icon/heartIcon.png');
   background-size: 100%;
   content: "";
+	transition: background-image 0.2s linear;
 }
 
 label.checked {
   background-image: url('../../img/icon/heartFillIcon.png') !important; /* !important를 사용하여 우선순위를 높입니다. */
+}
+
+label:hover {
+	background-image: url('../../img/icon/heartFillIcon.png');
+	transition: background-image 0.2s linear;
 }
 
 /* 툴팁 스타일 */
