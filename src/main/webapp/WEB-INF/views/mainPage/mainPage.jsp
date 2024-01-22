@@ -31,34 +31,33 @@
 </c:if>
 
 <div class="contentsContainer">
-  <div class="contentsWrap">
-    <div id="weatherSection">
-  	  <h1 id="weatherTitle" class="areaTitle">
-  	  </h1>
+  <div id="weatherSection">
+  	<h1 id="weatherTitle" class="areaTitle">
+  	</h1>
+		<div class="slideWrap">
   	  <div class="slideContainer">
-			<button type="button" class="arrowBtn left" id="leftBtn"></button>
-			<button type="button" class="arrowBtn right" id="rigthBtn"></button>
-			<div class="slideList"  id="weatherList">
-			</div>
-		</div>
+			  <button type="button" class="arrowBtn left" id="leftBtn"></button>
+			  <button type="button" class="arrowBtn right" id="rigthBtn"></button>
+			  <div class="slideList"  id="weatherList">
+			  </div>
+		  </div>
+	  </div>
 	</div>
-  </div>
 </div>
 
 <c:if test="${USER_NUMB == null}">
 	<div class="contentsContainer">
-	  <div class="contentsWrap">
-	    <div id="weatherSection">
-	  	  <h1 id="regionTitle" class="areaTitle">
-	  	  </h1>
-	  	  <div class="slideContainer">
-				<button type="button" class="arrowBtn left" id="leftBtn"></button>
-				<button type="button" class="arrowBtn right" id="rigthBtn"></button>
-				<div class="slideList" id="regionList">
-				</div>
-			</div>
+	  <div id="weatherSection">
+	  	<h1 id="regionTitle" class="areaTitle"></h1>
+				<div class="slideWrap">
+	  	  	<div class="slideContainer">
+				  	<button type="button" class="arrowBtn left" id="leftBtn"></button>
+				  	<button type="button" class="arrowBtn right" id="rigthBtn"></button>
+				  	<div class="slideList" id="regionList">
+				  	</div>
+			  	</div>
+				</div>	
 		</div>
-	  </div>
 	</div>
 </c:if>
 

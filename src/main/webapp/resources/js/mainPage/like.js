@@ -5,9 +5,9 @@ admin: hanwon
 Purpose: LIKE_YSNO 값에 따른 하트 아이콘 변경
 */
 function likeYsnoUpdate() {
-  const heartCheckbox = document.querySelectorAll('input[type="checkbox"]'); // 체크박스
-  const heartCheckboxCount = heartCheckbox.length;
-  const heartYN = document.querySelectorAll('#heartYN'); // LIKE_YN을 가지고 있는 요소
+	const heartCheckbox = document.querySelectorAll('input[type="checkbox"]'); // 체크박스
+	const heartCheckboxCount = heartCheckbox.length;
+	const heartYN = document.querySelectorAll('#heartYN'); // LIKE_YN을 가지고 있는 요소
 
   for (let i = 0; i < heartCheckboxCount; i++) {
 
@@ -53,7 +53,6 @@ function handleCheckboxChange(checkbox) {
     
     // 체크박스 스타일 업데이트
     updateResult(checkboxId, isChecked);
-
   }
 }
   
@@ -104,8 +103,9 @@ function updateResult(checkboxId, isChecked) {
   comUpdateArray(changedValuesArray,{ LIKE_IDXX :checkboxId,  CLIKE_YSNO : currentLikeYsno , PLIKE_YSNO : preLikeValue },'LIKE_IDXX');
   removeItemsWithSameValue(changedValuesArray, 'CLIKE_YSNO', 'PLIKE_YSNO');
   console.log(changedValuesArray);
-
+  
 }
+
 
 /*
 admin: Hwai
@@ -127,35 +127,20 @@ name: 좋아요 구동
 Purpose: 게시물 좋아요 구동
 parameter: LIKE_IDXX
 */		     
-function likeInsert(LIKE_IDXX) {
+function likeInsert() {
 
-    debugger;
+  const list = document.querySelectorAll('.checked');
 
-    var USER_NUMB = sessionStorage.getItem('USER_NUMB');
-
-    if(USER_NUMB != null) {
-
-        var likeIdArray = new Array();
-        likeIdArray = {LIKE_IDXX};
-      
-       $.ajax({
-              url : "/likeInert.com",
-              type : "POST",
-              data : { likeIdArray : likeIdArray },
-              dataType : 'json',
-              success : function(result){
-                
-                location.reload(true);
-                
-              }
-          }); 
-       }  else {
-        
-        comConfirm("로그인이 필요한 서비스입니다.", "로그인 페이지로 이동하시겠습니까?", "warning" , "/gather/login.com")
-       
-        }
+  $.ajax({
+    url : "/likeInert.com",
+    type : "POST",
+    data : { likeIdArray : likeIdArray },
+    dataType : 'json',
+    success : function(result){
     }
-  
+  }); 
+}
+
 function likeDelete(LIKE_IDXX) {
     //var LIKE_IDXX = $(button).data('moim-id')
     debugger;

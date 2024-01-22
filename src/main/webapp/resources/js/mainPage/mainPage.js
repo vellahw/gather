@@ -4,7 +4,7 @@ function contentsSlider(){
   * 240111 장한원
   * 컨텐츠 슬라이더
   */
-  const slideContainer = document.querySelectorAll('.slideContainer'); // 리스트를 감싸는 부모
+  const slideContainer = document.querySelectorAll('.slideWrap'); // 리스트를 감싸는 부모
   
   slideContainer.forEach((slideContainer) => {
 
