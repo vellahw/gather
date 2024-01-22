@@ -61,10 +61,6 @@ input[type='checkbox']+label {
   cursor: pointer;
 }
 
-input:checked+label {
-  background-image: url('../../img/icon/heartFillIcon.png') !important;
-}
-
 label {
   background-repeat: no-repeat;
   background-image: url('../../img/icon/heartIcon.png');
