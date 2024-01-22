@@ -43,13 +43,13 @@ public class CommonController {
             if ("1".equals(clikeYsno)) {
 
             	commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
-            	commandMap.put("LIKE_IDXX", item.get("CLIKE_YSNO"));
+            	commandMap.put("LIKE_IDXX", item.get("LIKE_IDXX"));
             	commonService.likeInsert(commandMap.getMap(), commandMap);
 		
             } else {
                 
             	commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
-            	commandMap.put("LIKE_IDXX", item.get("CLIKE_YSNO"));
+            	commandMap.put("LIKE_IDXX", item.get("LIKE_IDXX"));
             	commonService.likeDelete(commandMap.getMap(), commandMap);
             }
         }
