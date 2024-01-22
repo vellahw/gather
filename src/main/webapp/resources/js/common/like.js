@@ -1,7 +1,44 @@
-let changedValuesArray = [];
-let ajaxTimer;
+document.addEventListener("DOMContentLoaded", function() {
+  // 페이지가 로드되면 실행할 코드
+  likeYsnoUpdate();
 
-/**
+});
+
+let changedValuesArray = []; //ajax로 넘겨줄 배열
+
+window.onbeforeunload = function () {
+	return  likeUpdate(changedValuesArray);
+
+}
+/* 
+240122 hanwon
+name: likeInsert
+Purpose: 게시물 좋아요 처리
+parameter: (dataArray: 좋아요 데이터 배열)
+*/		     
+function likeUpdate(dataArray) {
+  const dataArrayLength = dataArray.length;
+
+  if(dataArrayLength != 0) {
+
+      $.ajax({
+        
+        url : "/likeUpdate.com",
+        type : "POST",
+        data : JSON.stringify(dataArray),
+        dataType : 'json',
+        contentType: "application/json",
+        success : function(result){
+        },
+        error: function (xhr) {
+          console.log(xhr.responseText);
+        }
+        
+      }); 
+  }
+}
+;
+/*
 admin: hanwon
 Purpose: LIKE_YSNO 값에 따른 하트 아이콘 변경
 */
@@ -27,7 +64,6 @@ function likeYsnoUpdate() {
 
       }
     }
-  
   }
 }
 
@@ -64,6 +100,7 @@ Purpose: 체크박스 스타일 업데이트
 parameter: (checkboxId: 타켓 checkbox 아이디, isChecked: 체크박스의 체크 상태)
 */
 function updateResult(checkboxId, isChecked) {
+
   const targetCheckBox = document.querySelectorAll(`label[for="${checkboxId}"]`); // 체크박스 하트 아이콘
   const preLike = document.querySelectorAll(`input[data-like-id="${checkboxId}"]`); 
   const preLikeValue = preLike[0].value; //LIKE_YSNO의 현재 값
@@ -118,33 +155,4 @@ function removeItemsWithSameValue(arr, key1, key2) {
   // 기존 배열을 변경
   arr.length = 0;
   arr.push(...filteredArray);
-}
-
-
-/* 
-240122 hanwon
-name: likeInsert
-Purpose: 게시물 좋아요 처리
-parameter: (dataArray: 좋아요 데이터 배열)
-*/		     
-function likeInsert(dataArray) {
-  const dataArrayLength = dataArray.length;
-
-  if(dataArrayLength != 0) {
-
-      $.ajax({
-        
-        url : "/likeUpdate.com",
-        type : "POST",
-        data : JSON.stringify(dataArray),
-        dataType : 'json',
-        contentType: "application/json",
-        success : function(result){
-        },
-        error: function (xhr) {
-          console.log(xhr.responseText);
-        }
-        
-      }); 
-  }
 }

@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="/resources/css/listPage/listPage.css">
 <script src="/resources/js/listPage/listPage.js"></script>
+<script src="/resources/js/common/like.js"></script>
 
 <div class="bannerContainer">
   <img src="/resources/img/banner/banner.png" class="bannerImg">
@@ -23,13 +24,13 @@
             <c:when test="${fn:length(list) > 0 }">
 			<div class="contentsList">
 				<c:forEach var="list" items="${list}">
-						<div class="Contents" onclick="goDetail('${list.MOIM_IDXX}')">
+						<div class="Contents">
 							<div class="eachWrap">
-								<div class="thumnailContainer">
+								<div class="thumnailContainer" onclick="goDetail('${list.MOIM_IDXX}')">
 									<img src="${list.MOIM_IMAG}" class="thumnail" alt="썸네일">
 								</div>
 								<div class="infoContainer">
-									<h3 class="title">${list.MOIM_TITL}</h3>
+									<h3 class="title" onclick="goDetail('${list.MOIM_IDXX}')">${list.MOIM_TITL}</h3>
 									<div class="hashtagContainer">
 										<!-- 해시태그 -->
 										<button type="button" class="hashtag">#전시회</button>
@@ -57,9 +58,10 @@
 											<span class="nickname">${list.USER_NICK}</span>
 										</div>
 										<div class="heartWrap">
-											<img src="/resources/img/icon/heartIcon.png"
-													 class="heartIcon" alt="좋아요 아이콘">
-											<span class="heartCount">${list.LIKE_COUNT}</span>
+											<input type="hidden" data-like-id="${list.MOIM_IDXX}" value="${list.LIKE_YSNO}" id="heartYN"/>
+											<input type="checkbox" id="${list.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
+											<label for="${list.MOIM_IDXX}"></label>
+											<span class="heartCount main" data-count-id="${list.MOIM_IDXX}">${list.LIKE_COUNT}</span>
 										</div>
 									</div>
 								</div>
