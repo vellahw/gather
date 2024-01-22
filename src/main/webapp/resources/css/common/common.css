@@ -39,6 +39,10 @@
   /* margin-right: 13px; */
 }
 
+#heart, #heartFill {
+	display: none;
+}
+
 .heartCount {
   color: var(--color-red);
   font-size: 10px;
@@ -47,8 +51,25 @@
   font-weight: 600;
 }
 
-#heart, #heartFill {
-	display: none;
+input[type='checkbox'] {
+  display: none;
+}
+
+input[type='checkbox']+label {
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+}
+
+label {
+  background-repeat: no-repeat;
+  background-image: url('../../img/icon/heartIcon.png');
+  background-size: 100%;
+  content: "";
+}
+
+label.checked {
+  background-image: url('../../img/icon/heartFillIcon.png');
 }
 
 

@@ -123,31 +123,6 @@
   justify-content: right;
 }
 
-input[type='checkbox'] {
-  display: none;
-}
-
-input[type='checkbox']+label {
-  width: 38px;
-  height: 38px;
-  cursor: pointer;
-}
-
-input:checked+label {
-  background-image: url('../../img/icon/heartFillIcon.png') !important;
-}
-
-label {
-  background-repeat: no-repeat;
-  background-image: url('../../img/icon/heartIcon.png');
-  background-size: 100%;
-  content: "";
-}
-
-label.checked {
-  background-image: url('../../img/icon/heartFillIcon.png') !important; /* !important를 사용하여 우선순위를 높입니다. */
-}
-
 .main {
 	bottom: 2px;
 }

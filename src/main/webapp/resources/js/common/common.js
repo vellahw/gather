@@ -1,4 +1,3 @@
-
 /**
  * admin: Hwai
  * Purpose: LIKE_YSNO 값에 따른 하트 아이콘 변경 
@@ -7,17 +6,20 @@ function likeYsnoUpdate() {
   const heartCheckbox = document.querySelectorAll('input[type="checkbox"]'); // 체크박스
   const heartCheckboxCount = heartCheckbox.length;
   const heartYN = document.querySelectorAll('#heartYN'); // LIKE_YN을 가지고 있는 요소
-  
+
   for (let i = 0; i < heartCheckboxCount; i++) {
+
     const likeYsNoValue = heartYN[i].value; // LIKE_YN value 
 
     // 체크박스의 상태를 LIKE_YSNO 값에 따라 설정
     heartCheckbox[i].checked = likeYsNoValue === '1';
+
   }
 }
 
 const changedLikesArray = [];
 const changedNotLikesArray = [];
+
 
 /* 
 admin: Hwai
@@ -27,11 +29,9 @@ parameter: (checkbox: 타켓 checkbox)
 */	
 function handleCheckboxChange(checkbox) {
 
-    const changedValues = [];
+   const changedValues = [];
 
-     debugger;
-
-    if (sessionStorage.getItem("USER_NUMB") == null) {
+   if (sessionStorage.getItem("USER_NUMB") == null) {
 
         comConfirm("로그인이 필요한 서비스입니다.", "로그인 하고 게더를 즐겨보세요!", "warning", "/gather/login.com");
         
@@ -73,6 +73,7 @@ function handleCheckboxChange(checkbox) {
 
     likeYsnoUpdate();
   }
+
 }
   
 
