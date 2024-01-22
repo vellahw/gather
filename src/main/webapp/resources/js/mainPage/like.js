@@ -100,16 +100,15 @@ function updateResult(checkboxId, isChecked) {
 
   }
 
-  comUpdateArray(changedValuesArray,{ LIKE_IDXX :checkboxId,  CLIKE_YSNO : currentLikeYsno , PLIKE_YSNO : preLikeValue },'LIKE_IDXX');
+  comUpdateArray(changedValuesArray, { LIKE_IDXX :checkboxId,  CLIKE_YSNO : currentLikeYsno , PLIKE_YSNO : preLikeValue }, 'LIKE_IDXX');
   removeItemsWithSameValue(changedValuesArray, 'CLIKE_YSNO', 'PLIKE_YSNO');
   console.log(changedValuesArray);
-  
 }
 
 
 /*
 admin: Hwai
-Purpose: LIKE_YSNO 값에 따른 하트 아이콘 변경
+Purpose: 현재 좋아요 유무와 orginal 좋아요 유무의 값이 같지 않은 항목만 남기기
 */
 function removeItemsWithSameValue(arr, key1, key2) {
   // CLIKE_YSNO와 PLIKE_YSNO의 값이 같지 않은 항목만 남기기
@@ -122,23 +121,37 @@ function removeItemsWithSameValue(arr, key1, key2) {
 
 
 /* 
-240111 Hwai
-name: 좋아요 구동
-Purpose: 게시물 좋아요 구동
-parameter: LIKE_IDXX
+240122 hanwon
+name: likeInsert
+Purpose: 게시물 좋아요 처리
+parameter: (dataArray: 좋아요 데이터 배열)
 */		     
-function likeInsert() {
+function likeInsert(dataArray) {
+  const dataArrayLength = dataArray.length;
 
-  const list = document.querySelectorAll('.checked');
+  if(dataArrayLength != 0) {
 
-  $.ajax({
-    url : "/likeInert.com",
-    type : "POST",
-    data : { likeIdArray : likeIdArray },
-    dataType : 'json',
-    success : function(result){
-    }
-  }); 
+    // 페이지 새로고침, 다른 페이지로 이동 등 현재 페이지에서 벗어날시 동작함
+    window.onbeforeunload = function(event) {
+      event.preventDefault();
+
+      $.ajax({
+
+        url : "/likeUpdate.com",
+        type : "POST",
+        data : JSON.stringify(dataArray),
+        dataType : 'json',
+        success : function(result){
+
+        },
+        error: function (xhr) {
+          console.log(xhr.responseText);
+        }
+
+      }); 
+
+    };
+  }
 }
 
 function likeDelete(LIKE_IDXX) {
