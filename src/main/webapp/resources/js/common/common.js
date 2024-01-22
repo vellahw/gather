@@ -77,7 +77,7 @@ function updateResult(checkboxId, isChecked) {
   
     }
   } else {
-  
+
     for (let i = 0; i < targetCount; i++) {
   
       targetCheckBox[i].classList.remove('checked');
