@@ -1,4 +1,5 @@
 let changedValuesArray = [];
+let ajaxTimer;
 
 /**
 admin: hanwon
@@ -102,7 +103,7 @@ function updateResult(checkboxId, isChecked) {
 
   comUpdateArray(changedValuesArray, { LIKE_IDXX :checkboxId,  CLIKE_YSNO : currentLikeYsno , PLIKE_YSNO : preLikeValue }, 'LIKE_IDXX');
   removeItemsWithSameValue(changedValuesArray, 'CLIKE_YSNO', 'PLIKE_YSNO');
-  console.log(changedValuesArray);
+  
 }
 
 
@@ -131,43 +132,19 @@ function likeInsert(dataArray) {
 
   if(dataArrayLength != 0) {
 
-    // 페이지 새로고침, 다른 페이지로 이동 등 현재 페이지에서 벗어날시 동작함
-    window.onbeforeunload = function(event) {
-      event.preventDefault();
-
       $.ajax({
-
+        
         url : "/likeUpdate.com",
         type : "POST",
         data : JSON.stringify(dataArray),
         dataType : 'json',
+        contentType: "application/json",
         success : function(result){
-
         },
         error: function (xhr) {
           console.log(xhr.responseText);
         }
-
-      }); 
-
-    };
-  }
-}
-
-function likeDelete(LIKE_IDXX) {
-    //var LIKE_IDXX = $(button).data('moim-id')
-    debugger;
-
-    var likeIdArray = new Array();
-    likeIdArray = {LIKE_IDXX};
         
-    $.ajax({
-            url : "/likeDelete.com",
-            type : "POST",
-            data : { likeIdArray : likeIdArray },
-            dataType : 'json',
-            success : function(result){
-                location.reload(); 
-            }
-        }); 
+      }); 
+  }
 }
