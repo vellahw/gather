@@ -88,7 +88,6 @@ function updateResult(checkboxId, isChecked) {
   
     }
   }
-
 }
 
 
