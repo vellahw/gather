@@ -8,12 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.service.CommonService;
@@ -33,36 +33,28 @@ public class CommonController {
 		return getCategroy;
 	}
 
-	//좋아요 insert
-  @RequestMapping("/likeInert.com")
-	public String likeInert(@RequestParam(value = "LIKE_IDXX", required = false) String LIKE_IDXX, HttpSession session,
+	//좋아요 update
+	@RequestMapping("/likeUpdate.com")
+	public ResponseEntity<String> likeUpdate(@RequestBody List<Map<String, String>> jsonArray, HttpSession session,
 				HttpServletRequest request, CommandMap commandMap) throws Exception {
+		
+		for (Map<String, String> item : jsonArray) {
+            String clikeYsno = item.get("CLIKE_YSNO");
+            if ("1".equals(clikeYsno)) {
 
-		commandMap.put("LIKE_IDXX", LIKE_IDXX);
-		commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
-
-		commonService.likeInsert(commandMap.getMap(), commandMap);
-
-		String referer = request.getHeader("Referer");
+            	commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
+            	commandMap.put("LIKE_IDXX", item.get("CLIKE_YSNO"));
+            	commonService.likeInsert(commandMap.getMap(), commandMap);
+		
+            } else {
+                
+            	commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
+            	commandMap.put("LIKE_IDXX", item.get("CLIKE_YSNO"));
+            	commonService.likeDelete(commandMap.getMap(), commandMap);
+            }
+        }
 	
-		return "redirect:" + referer;
+		return ResponseEntity.ok("Success");
 	}
 
-	//좋아요 Delete
-	@RequestMapping("/likeDelete.com")
-	public String likeDelete(@RequestParam List<Map<Object, String>> LIKE_IDXX, HttpSession session,
-			HttpServletRequest request, CommandMap commandMap) throws Exception {
-		
-		for(int i = 0; i < LIKE_IDXX.size(); i++) {
-		
-			commandMap.put("LIKE_IDXX", LIKE_IDXX.get(i).get("LIKE_IDXX"));
-			commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
-
-		commonService.likeDelete(commandMap.getMap(), commandMap);
-		
-		}
-
-		String referer = request.getHeader("Referer");
-		return "redirect:" + referer;
-	}
 }
