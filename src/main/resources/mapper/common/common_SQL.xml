@@ -104,11 +104,9 @@
 	     INSERT INTO TM_HEARTS (
 	     		      LIKE_IDXX
 	     		    , USER_NUMB
-	     		    , DELT_YSNO
 	      ) VALUES (
 	                  #{LIKE_IDXX}
 	                , #{USER_NUMB}
-	                , 'N' 
 	                )
             ]]>
 	</insert>

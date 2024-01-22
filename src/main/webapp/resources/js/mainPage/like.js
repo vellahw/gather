@@ -122,7 +122,7 @@ function removeItemsWithSameValue(arr, key1, key2) {
 
 /* 
 240122 hanwon
-name: likeInsert
+name: likeUpdate
 Purpose: 게시물 좋아요 처리
 parameter: (dataArray: 좋아요 데이터 배열)
 */		     
