@@ -14,8 +14,21 @@ function contentsSlider(){
     slideList.forEach(slideList =>{
 
       const slideContents = slideList.querySelectorAll('.slideContents'); // 컨텐츠
-      
       let slideContentCount = slideContents.length;
+      
+      // 마우스오버하면 모임 이미지 확대 효과
+      slideContents.forEach(slideContents=>{
+        const thumnailImg = slideContents.querySelector('.thumnail'); // 컨텐츠
+        
+        slideContents.addEventListener('mouseover', function() {
+          thumnailImg.style.transform = 'scale(1.05)';
+        });
+  
+        slideContents.addEventListener('mouseout', function() {
+          thumnailImg.style.transform = 'scale(1)';
+        });
+
+      })
       
       // 컨텐츠가 4개 초과일 때
       if(slideContentCount > 4) {

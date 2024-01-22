@@ -268,7 +268,6 @@ parameter:(params : MOIM_IDXX 파라미터)
 */ 
 function goDetail(params, event) {
 
-  likeInsert(changedValuesArray);
   location.href = `/gatherDetail.com?idx=${params}`;
   
 }
