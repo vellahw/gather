@@ -1,6 +1,6 @@
 /**
-admin: hanwon
-Purpose: LIKE_YSNO 값에 따른 하트 아이콘 변경
+ * admin: Hwai
+ * Purpose: LIKE_YSNO 값에 따른 하트 아이콘 변경 
 */
 function likeYsnoUpdate() {
   const heartCheckbox = document.querySelectorAll('input[type="checkbox"]'); // 체크박스
@@ -9,7 +9,6 @@ function likeYsnoUpdate() {
 
   for (let i = 0; i < heartCheckboxCount; i++) {
 
-    const checkboxId = heartCheckbox[i].id;
     const likeYsNoValue = heartYN[i].value; // LIKE_YN value 
 
     // 체크박스의 상태를 LIKE_YSNO 값에 따라 설정
@@ -27,70 +26,65 @@ function likeYsnoUpdate() {
   }
 }
 
+const changedLikesArray = [];
+const changedNotLikesArray = [];
+
 
 /* 
-admin:Hanwon
+admin: Hwai
 name:handleCheckboxChange
 Purpose: 체크박스 상태를 관리
 parameter: (checkbox: 타켓 checkbox)
 */	
 function handleCheckboxChange(checkbox) {
 
-  if(sessionStorage.getItem("USER_NUMB") == null) {
+   const changedValues = [];
 
-    comConfirm("로그인이 필요한 서비스입니다.", "로그인 하고 게더를 즐겨보세요!", "warning", "/gather/login.com");
-  
-  } else {
+   if (sessionStorage.getItem("USER_NUMB") == null) {
 
-    // 선택된 체크박스의 ID를 가져옴
-    const checkboxId = checkbox.id;
-      
-    // 선택된 체크박스의 상태를 가져옴
-    const isChecked = checkbox.checked; // true or false 반환
-    
-    // 체크박스 스타일 업데이트
-    updateResult(checkboxId, isChecked);
-    
-  }
-}
-  
-/* 
-admin:Hanwon
-name:updateResult
-Purpose: 체크박스 스타일 업데이트
-parameter: (checkboxId: 타켓 checkbox 아이디, isChecked: 체크박스의 체크 상태)
-*/
-function updateResult(checkboxId, isChecked) {
-  const targetCheckBox = document.querySelectorAll(`label[for="${checkboxId}"]`); // 체크박스 하트 아이콘
-  const targetCount = targetCheckBox.length;
-  const likeCount = document.querySelectorAll(`span[data-count-id="${checkboxId}"`); // LIKE_COUNT
-  
-  if(isChecked) {
-
-    for (let i = 0; i < targetCount; i++) {
-  
-      targetCheckBox[i].classList.add('checked');
-      let getLikeCount = Number(likeCount[i].innerText); // 기존의 LIKE_COUNT 값을 가져옴
-      getLikeCount += 1;
-  
-      likeCount[i].innerHTML = getLikeCount;
-  
-    }
-  } else {
-
-    for (let i = 0; i < targetCount; i++) {
-  
-      targetCheckBox[i].classList.remove('checked');
-      let getLikeCount = Number(likeCount[i].innerText);  // 기존의 LIKE_COUNT 값을 가져옴
-      getLikeCount -= 1;
+        comConfirm("로그인이 필요한 서비스입니다.", "로그인 하고 게더를 즐겨보세요!", "warning", "/gather/login.com");
         
-      likeCount[i].innerHTML = getLikeCount;
-  
-    }
+    } else {
+
+        const targetCheckBox = document.querySelectorAll(`label[for="${checkbox.id}"]`);
+        const targetCount = targetCheckBox.length;  
+        const likeCount = document.querySelectorAll(`span[data-count-id="${checkbox.id}"`);
+        
+        const likeYsnoInput = document.querySelectorAll(`input[data-like-id="${checkbox.id}"`);
+        const likeYsnoCount = likeYsnoInput.length;
+        const isChecked = checkbox.checked;
+
+        for (let i = 0; i < targetCount; i++) {
+
+            targetCheckBox[i].checked = isChecked;
+            likeYsnoInput[i].value = isChecked ? '1' : '0'; 
+
+            let getLikeCount = Number(likeCount[i].innerText);
+            getLikeCount += isChecked ? 1 : -1;
+            likeCount[i].innerHTML = getLikeCount;
+
+        }
+
+        for (let i = 0; i < likeYsnoCount; i++) {
+        
+            likeYsnoInput[i].value = isChecked ? '1' : '0'; 
+        }
+
+        if(likeYsnoInput[0].value = "0"){
+
+            changedValues.push({ LIKE_IDXX : checkbox.id});
+            changedLikesArray.push(...changedValues);
+
+        }
+
+
+    console.log(changedLikesArray);
+
+    likeYsnoUpdate();
   }
 
 }
-
+  
 
 /* 
 240111 Hwai
