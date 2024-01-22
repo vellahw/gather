@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function(){
                                             <span class="nickname">${wmoim.USER_NICK}</span>
                                         </div>
                                         <div class="heartWrap">
-										  <input type="hidden" value="${wmoim.LIKE_YSNO}" id="heartYN"/>
+										  <input type="hidden" data-like-id="${wmoim.MOIM_IDXX}" value="${wmoim.LIKE_YSNO}" id="heartYN"/>
 										  <input type="checkbox" id="${wmoim.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
 										  <label for="${wmoim.MOIM_IDXX}"></label>
 										  <span class="heartCount main" data-count-id="${wmoim.MOIM_IDXX}">${wmoim.LIKE_COUNT}</span>
@@ -249,7 +249,7 @@ document.addEventListener("DOMContentLoaded", function(){
                                                 <span class="nickname">${rmoim.USER_NICK}</span>
                                             </div>
                                             <div class="heartWrap">
-										      <input type="hidden" value="${rmoim.LIKE_YSNO}" id="heartYN"/>
+										      <input type="hidden" data-like-id="${rmoim.MOIM_IDXX}" value="${rmoim.LIKE_YSNO}" id="heartYN"/>
 										      <input type="checkbox" id="${rmoim.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
 										       <label for="${rmoim.MOIM_IDXX}"></label>
 										      <span class="heartCount main" data-count-id="${rmoim.MOIM_IDXX}">${rmoim.LIKE_COUNT}</span>
@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", function(){
                         regionList.appendChild(fragment);
                         contentsSlider();
                         likeYsnoUpdate();
-                      }
+                        }
                     },
                     error: function(res, req) {
                         console.log("error : " + res, req);
