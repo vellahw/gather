@@ -1,3 +1,5 @@
+let changedValuesArray = [];
+
 /**
 admin: hanwon
 Purpose: LIKE_YSNO 값에 따른 하트 아이콘 변경
@@ -24,6 +26,7 @@ function likeYsnoUpdate() {
 
       }
     }
+  
   }
 }
 
@@ -63,6 +66,7 @@ function updateResult(checkboxId, isChecked) {
   const targetCheckBox = document.querySelectorAll(`label[for="${checkboxId}"]`); // 체크박스 하트 아이콘
   const targetCount = targetCheckBox.length;
   const likeCount = document.querySelectorAll(`span[data-count-id="${checkboxId}"`); // LIKE_COUNT
+  let currentLikeYsno = "";
   
   if(isChecked) {
 
@@ -72,9 +76,12 @@ function updateResult(checkboxId, isChecked) {
       let getLikeCount = Number(likeCount[i].innerText); // 기존의 LIKE_COUNT 값을 가져옴
       getLikeCount += 1;
   
-      likeCount[i].innerHTML = getLikeCount;
+      likeCount[i].innerHTML = getLikeCount;  
   
     }
+
+    currentLikeYsno ="1";
+
   } else {
 
     for (let i = 0; i < targetCount; i++) {
@@ -86,7 +93,16 @@ function updateResult(checkboxId, isChecked) {
       likeCount[i].innerHTML = getLikeCount;
   
     }
+
+    currentLikeYsno ="0";
+
   }
+
+ 
+  //changedValues.push({ LIKE_IDXX :checkboxId,  LIKE_YSNO : currentLikeYsno});
+  comUpdateArray(changedValuesArray,{ LIKE_IDXX :checkboxId,  LIKE_YSNO : currentLikeYsno },'LIKE_IDXX')
+  console.log(changedValuesArray);
+
 }
 
 
