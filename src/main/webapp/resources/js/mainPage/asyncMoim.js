@@ -62,18 +62,21 @@ document.addEventListener("DOMContentLoaded", function(){
                     if(weather == '01' || weather == '02'){ 
                         
                         weatherType = "sunny";
-                        var weatherImg = ""
+                        var weatherImg = "";
+                        var dayNightKr = "";
 
                         if( hours >= "07" && hours <= "20"){
 
                             weatherImg = '<img src="/resources/img/icon/weather/sunny.png" class="areaTitleIcon"/>'
+                            dayNightKr = "날";
 
                         } else {
 
                             weatherImg = '<img src="/resources/img/icon/weather/moon.png" class="areaTitleIcon"/>' 
+                            dayNightKr = "밤";
                         }
 
-                        weatherTitleArea.innerHTML = '기분 좋은 맑은 날 '                 
+                        weatherTitleArea.innerHTML = '기분 좋은 맑은 ' + dayNightKr                 
                                                 + weatherImg
                                                 + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
 
@@ -183,7 +186,6 @@ document.addEventListener("DOMContentLoaded", function(){
                         // 한 번에 삽입
                         weatherList.appendChild(fragment);
                         contentsSlider();
-                        likeYsnoUpdate();
 
                         }
                 },
@@ -264,7 +266,6 @@ document.addEventListener("DOMContentLoaded", function(){
                         // 한 번에 삽입
                         regionList.appendChild(fragment);
                         contentsSlider();
-                        likeYsnoUpdate();
                         }
                     },
                     error: function(res, req) {

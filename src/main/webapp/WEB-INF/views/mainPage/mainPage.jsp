@@ -5,9 +5,9 @@
 
 <link rel="stylesheet" href="/resources/css/mainPage/mainPage.css">
 <script src="/resources/js/common/naver.js"></script>
+<script src="/resources/js/common/like.js"></script>
 <script src="/resources/js/mainPage/asyncMoim.js"></script>
 <script src="/resources/js/mainPage/mainPage.js"></script>
-<script src="/resources/js/mainPage/like.js"></script>
 
 <div class="bannerContainer">
   <img src="/resources/img/banner/banner.png" class="bannerImg">

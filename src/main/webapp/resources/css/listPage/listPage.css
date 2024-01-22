@@ -52,12 +52,14 @@
 .thumnailContainer {
   width: 100%;
   height: 244px;
+  position: relative;
 }
 
 .thumnail {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  position: absolute;
 }
 
 .infoContainer {
