@@ -1,5 +1,4 @@
 let changedValuesArray = [];
-let ajaxTimer;
 
 /**
 admin: hanwon
@@ -123,28 +122,28 @@ function removeItemsWithSameValue(arr, key1, key2) {
 
 /* 
 240122 hanwon
-name: likeInsert
+name: likeUpdate
 Purpose: 게시물 좋아요 처리
 parameter: (dataArray: 좋아요 데이터 배열)
 */		     
-function likeInsert(dataArray) {
+function likeUpdate(dataArray) {
   const dataArrayLength = dataArray.length;
 
   if(dataArrayLength != 0) {
 
-      $.ajax({
+    $.ajax({
         
-        url : "/likeUpdate.com",
-        type : "POST",
-        data : JSON.stringify(dataArray),
-        dataType : 'json',
-        contentType: "application/json",
-        success : function(result){
-        },
-        error: function (xhr) {
-          console.log(xhr.responseText);
-        }
+      url : "/likeUpdate.com",
+      type : "POST",
+      data : JSON.stringify(dataArray),
+      dataType : 'json',
+      contentType: "application/json",
+      success : function(result){
+      },
+      error: function (xhr) {
+        console.log(xhr.responseText);
+      }
         
-      }); 
+    }); 
   }
 }
