@@ -8,19 +8,20 @@ function likeYsnoUpdate() {
   const heartYN = document.querySelectorAll('#heartYN'); // LIKE_YN을 가지고 있는 요소
 
   for (let i = 0; i < heartCheckboxCount; i++) {
+
     const checkboxId = heartCheckbox[i].id;
     const likeYsNoValue = heartYN[i].value; // LIKE_YN value 
 
     // 체크박스의 상태를 LIKE_YSNO 값에 따라 설정
     heartCheckbox[i].checked = likeYsNoValue === '1';
 
-    
     if(likeYsNoValue == '1'){
       const targetCheckBox = document.querySelectorAll(`label[for="${checkboxId}"]`); // 체크박스 하트 아이콘
+
       for (let j = 0; j < targetCheckBox.length; j++) {
-        
+
         targetCheckBox[j].classList.add('checked');
-        
+
       }
     }
   }
@@ -87,6 +88,7 @@ function updateResult(checkboxId, isChecked) {
   
     }
   }
+
 }
 
 
