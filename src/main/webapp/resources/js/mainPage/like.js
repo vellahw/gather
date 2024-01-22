@@ -102,9 +102,35 @@ function updateResult(checkboxId, isChecked) {
   //changedValues.push({ LIKE_IDXX :checkboxId,  LIKE_YSNO : currentLikeYsno});
   comUpdateArray(changedValuesArray,{ LIKE_IDXX :checkboxId,  LIKE_YSNO : currentLikeYsno },'LIKE_IDXX')
   console.log(changedValuesArray);
+  
+  let newArr = [];
+
+  for (let i = 0; i < changedValuesArray.length; i++) {
+
+    const ogLikeList =  document.querySelectorAll(`[data-like-id="${changedValuesArray[i].LIKE_IDXX}"`);
+
+    for (let j = 0; j < ogLikeList.length; j++) {
+
+      const ogLikeValue = ogLikeList[j].value;
+
+      if(ogLikeValue != changedValuesArray[i].LIKE_IDXX) {
+
+        let likeId = ogLikeList[j].getAttribute('data-like-id');
+
+        // 중복 확인
+        if (newArr.indexOf(likeId) === -1) {
+          newArr.push(likeId);
+        }
+      }
+
+    }
+    
+  }
+
+  console.log(newArr)
+
 
 }
-
 
 /* 
 240111 Hwai

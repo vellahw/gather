@@ -12,6 +12,7 @@
 	    </c:if> 
 	  </h1>
 		
+		<div class="slideWrap">
 		<div class="slideContainer">
 			<button type="button" class="arrowBtn left" id="leftBtn"></button>
 			<button type="button" class="arrowBtn right" id="rigthBtn"></button>
@@ -65,5 +66,6 @@
 				</c:forEach>
 			</div>
 		</div>
+	</div>
   </div>
 </div>
