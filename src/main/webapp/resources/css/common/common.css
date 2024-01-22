@@ -75,7 +75,6 @@ label.checked {
 
 label:hover {
 	background-image: url('../../img/icon/heartFillIcon.png');
-	transition: background-image 0.2s linear;
 }
 
 /* 툴팁 스타일 */
