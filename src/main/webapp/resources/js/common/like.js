@@ -1,11 +1,13 @@
 document.addEventListener("DOMContentLoaded", function() {
   // 페이지가 로드되면 실행할 코드
   likeYsnoUpdate();
+  
 });
 
 let changedValuesArray = []; //ajax로 넘겨줄 배열
 
 window.onbeforeunload = function () {
+
 	return  likeUpdate(changedValuesArray);
 
 }
