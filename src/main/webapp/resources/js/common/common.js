@@ -16,6 +16,7 @@ function likeYsnoUpdate() {
     heartCheckbox[i].checked = likeYsNoValue === '1';
 
     if(likeYsNoValue == '1'){
+    
       const targetCheckBox = document.querySelectorAll(`label[for="${checkboxId}"]`); // 체크박스 하트 아이콘
 
       for (let j = 0; j < targetCheckBox.length; j++) {
