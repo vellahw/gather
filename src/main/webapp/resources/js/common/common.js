@@ -1,4 +1,24 @@
 /* 
+240122 Hwai
+name:comUpdateArray
+Purpose: 배열 최신 객체 저장
+parameter: (arr : 배열명, value: 배열값, key: 비교 키)
+*/	
+function comUpdateArray(arr, value, key) {
+
+  // 배열에서 key와 value가 일치하는 항목 찾기
+  const index = arr.findIndex(item => item[key] === value[key]);
+
+  // key와 value가 일치하는 항목이 있다면 최신 값으로 교체
+  if (index !== -1) {
+    arr[index] = value;
+  } else {
+    // key와 value가 일치하는 항목이 없다면 배열에 추가
+    arr.push(value);
+  }
+}
+
+/* 
 240111 Hwai
 name:whereIam
 Purpose: 현재 사용자가 위치한 모임타입
