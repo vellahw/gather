@@ -19,8 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.oracleFunction.OracleFunction;
 import com.our.gather.common.service.CommonService;
-import com.our.gather.gather.service.GatherService;
 import com.our.gather.mainPage.service.MainService;
+import com.our.gather.moimGather.service.GatherService;
 
 @Controller
 public class MainController {

@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 let changedValuesArray = []; //ajax로 넘겨줄 배열
 
-window.onbeforeunload =  function () {
+window.onbeforeunload = function () {
   
   // 비동기 함수 호출
   likeUpdate(changedValuesArray);
@@ -40,6 +40,7 @@ function likeCountReplace(likeCount) {
 name: likeInsert
 Purpose: 게시물 좋아요 처리
 parameter: (dataArray: 좋아요 데이터 배열)
+*/
 function likeUpdate(dataArray) {
   const dataArrayLength = dataArray.length;
 

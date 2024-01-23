@@ -7,7 +7,7 @@
 -->
 <mapper namespace="gather">
 	
-	<!-- 로그인 메인화면 -->
+   <!-- 게더 메인화면 -->
    <select id="mainGather" parameterType='hashmap'
       resultType="hashmap">
       <![CDATA[
@@ -28,6 +28,7 @@
                 , REGI_NAME							/* 지역명 */
                 , USER_NICK							/* 방장 닉네임 */
                 , USER_IMAG							/* 방장 프로필사진 */
+                , SELF_INTR							/* 방장 자기소개 */
                 , SMAL_DATE							/* 모임시간 (날짜 형식 MM.dd(day) 오전/오후 HH:mm) */
                 , FULL_DATE							/* 날짜 형식 (YYYY년 M월 오전/오후 HH:mm) */
                 , LIKE_COUNT						/* 좋아요 수 */
@@ -69,6 +70,7 @@
 		                      , REGI_NAME
 		                      , USER_NICK
 		                      , USER_IMAG
+		                      , SELF_INTR
 		                      , SMAL_DATE
 		                      , FULL_DATE
 		                      , LIKE_COUNT
@@ -100,6 +102,7 @@
 			                     , PREGI_NAME
 			                     , REGI_NAME
 			                     , USER_NICK
+			                     , SELF_INTR
 			                     , USER_IMAG
 			                     , SMAL_DATE
 			                     , FULL_DATE
@@ -128,6 +131,7 @@
 	                           , REGI_NAME
 	                           , USER_NICK
 	                           , USER_IMAG
+	                           , SELF_INTR
 	                           , SMAL_DATE
 	                           , FULL_DATE
 	                           , LIKE_COUNT
@@ -148,6 +152,7 @@
 	                                   , REGI_NAME
 	                                   , USER_NICK
 	                                   , USER_IMAG
+	                                   , SELF_INTR
 	                                   , SMAL_DATE
 	                                   , FULL_DATE
 	                                   , LIKE_COUNT
@@ -179,6 +184,7 @@
 			                     , REGI_NAME
 			                     , USER_NICK
 			                     , USER_IMAG
+			                     , SELF_INTR
 			                     , SMAL_DATE
 			                     , FULL_DATE
 			                     , LIKE_COUNT
@@ -229,6 +235,7 @@
 		                , REGI_NAME															/* 자식 지역명 */
 		                , USER_NICK															/* 방장 닉네임 */
 		                , USER_IMAG															/* 방장 프로필 사진 */
+		                , SELF_INTR															/* 방장 자기소개 */
 		                , SMAL_DATE															/* 날짜 형식 MM.dd(day) 오전/오후 HH:mm */
 		                , FULL_DATE															/* 날짜 형식 YYYY년 M월 오전/오후 HH:mm */
 		                , LIKE_COUNT														/* 좋아요 수 */
@@ -283,6 +290,26 @@
       </if>
    </select>
    
+    <!-- 게더 이미지 -->
+	<select id="getGatherImg" parameterType='hashmap'
+      resultType="hashmap">
+      <![CDATA[
+		  SELECT MOIM_IMAG
+        FROM (
+        	    SELECT GATH_IMAG AS MOIM_IMAG
+                FROM VW_GATHER
+               WHERE GATH_IDXX = #{MOIM_IDXX}
+
+               UNION ALL
+
+              SELECT FILE_PATH AS MOIM_IMAG
+                FROM TM_FILEXM
+               WHERE FILE_IDXX = #{MOIM_IDXX}
+                 AND DELT_YSNO = 'N'
+             )
+	 		]]>
+	</select>	
+   
    	<!-- 
 	작성자:Hwai
     작성일:23.12.19
@@ -334,26 +361,6 @@
 	      	]]>
     </select>
     
-    <!-- 모임 이미지 -->
-	<select id="getGatherImg" parameterType='hashmap'
-      resultType="hashmap">
-      <![CDATA[
-		  SELECT MOIM_IMAG
-        FROM (
-        	    SELECT GATH_IMAG AS MOIM_IMAG
-                FROM VW_GATHER
-               WHERE GATH_IDXX = #{MOIM_IDXX}
-
-               UNION ALL
-
-              SELECT FILE_PATH AS MOIM_IMAG
-                FROM TM_FILEXM
-               WHERE FILE_IDXX = #{MOIM_IDXX}
-                 AND DELT_YSNO = 'N'
-             )
-	 		]]>
-   </select>	
-
    	<!-- 
 	작성자:Hwai
     작성일:23.12.19

@@ -1,4 +1,4 @@
-package com.our.gather.gather.scheduler;
+package com.our.gather.moimGather.scheduler;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.our.gather.gather.service.GatherService;
+import com.our.gather.moimGather.service.GatherService;
 
 @Component
 public class GatherScheduler {

@@ -56,10 +56,10 @@
 								<div class="userContainer">
 									<div class="userProfileWrap">
 										<div class="profileImgWrap">
-											<img src="${list.USER_IMAG}"
-								  					class="profileImg" alt="프로필사진">
+											<img src="${list.USER_IMAG}" class="profileImg" alt="프로필사진">
 										</div>
 										<span class="nickname">${list.USER_NICK}</span>
+									</div>
 									</div>
 									<div class="heartWrap">
 										<input type="hidden" data-like-id="${list.MOIM_IDXX}" value="${list.LIKE_YSNO}" id="heartYN"/>

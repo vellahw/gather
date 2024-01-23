@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.service.CommonService;
 import com.our.gather.detailPage.service.MoimDetailService;
-import com.our.gather.gather.service.GatherService;
+import com.our.gather.moimGather.service.GatherService;
 
 @Controller
 public class MoimDetailController {
@@ -30,7 +30,8 @@ public class MoimDetailController {
 
 	@Resource(name = "GatherService")
 	private GatherService gatherService;
-
+	
+	//모임 상세보기
 	@RequestMapping(value = "/gatherDetail.com")
 	public ModelAndView main(@RequestParam(value = "idx", required = false) String MOIM_IDXX, HttpSession session,
 			CommandMap commandMap, Model model) throws Exception {
@@ -114,8 +115,16 @@ public class MoimDetailController {
 		Map<Object, String> resultMap = new HashMap<>();
 
 		try {
-
-			commandMap.put("USER_IDXX", USER_IDXX);
+			
+			if(USER_IDXX == null) {
+				
+				commandMap.put("USER_IDXX", session.getAttribute("USER_NUMB"));
+				
+			} else {
+				
+				commandMap.put("USER_IDXX", USER_IDXX);
+			}
+			
 			commandMap.put("MOIM_IDXX", MOIM_IDXX);
 
 			if (WAIT_YSNO != null) {

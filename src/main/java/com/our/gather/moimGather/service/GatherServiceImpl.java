@@ -1,4 +1,4 @@
-package com.our.gather.gather.service;
+package com.our.gather.moimGather.service;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.our.gather.common.common.CommandMap;
-import com.our.gather.gather.dao.GatherDao;
+import com.our.gather.moimGather.dao.GatherDao;
 
 @Service("GatherService")
 public class GatherServiceImpl implements GatherService {
@@ -53,6 +53,11 @@ public class GatherServiceImpl implements GatherService {
 	public Map<String, Object> getGatherDetail(Map<String, Object> map, HttpSession session,
 			CommandMap commandMap) throws Exception {
 		// TODO Auto-generated method stub
+		
+		if (session.getAttribute("USER_NUMB") != null) {
+
+			commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
+		}
 		
 		return gatherDao.getGatherDetail(map, commandMap, session);
 	}

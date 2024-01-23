@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +35,7 @@ public class CommonController {
 	}
 
 	//좋아요 update
+	@Transactional
 	@RequestMapping("/likeUpdate.com")
 	public  ResponseEntity<String> likeUpdate(@RequestBody List<Map<String, String>> jsonArray, HttpSession session,
 				HttpServletRequest request, CommandMap commandMap) throws Exception {
