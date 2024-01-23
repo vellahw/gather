@@ -97,7 +97,7 @@
 	 ]]>
 	 </select>
 	 
-	 <!--모임 찜 insert -->
+	 <!--모임 like insert -->
 	<insert id="likeInsert" parameterType="hashmap">
      <![CDATA[
 	     /*common.likdeInsert*/
@@ -111,7 +111,7 @@
             ]]>
 	</insert>
 
-	<!--모임 찜 Delete -->
+	<!--모임 like Delete -->
 	<delete id="likeDelete" parameterType="hashmap">
     <![CDATA[
 	    /*common.likeDelete*/
