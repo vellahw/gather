@@ -1,9 +1,5 @@
 document.addEventListener("DOMContentLoaded", function(){
 
-  const categoryIcon = document.querySelectorAll('.categoryIcon');
-  const PCATE_NAME = document.querySelectorAll('#PCATE_NAME');
-  const CCATE_NAME = document.querySelectorAll('#CCATE_NAME');
-
   /**
   * 240111 Hwai
   * 카테고리 객체 요청

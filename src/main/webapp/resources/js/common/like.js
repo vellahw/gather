@@ -46,19 +46,12 @@ function likeUpdate(dataArray) {
 
   if(dataArrayLength != 0) {
 
-    $.ajax({
-
-      url : "/likeUpdate.com",
-      type : "POST",
-      data : JSON.stringify(dataArray),
-      dataType : 'json',
-      contentType: "application/json",
-      success : function(result){
-      },
-      error: function (xhr) {
-        console.log(xhr.responseText);
-      }
-    }); 
+    comAjax(
+      "POST"
+      , "/likeUpdate.com"
+      , JSON.stringify(dataArray)
+      , "application/json"
+    );
   }
 }
 

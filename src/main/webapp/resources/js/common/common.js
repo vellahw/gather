@@ -1,4 +1,27 @@
 /* 
+240124 hanwon
+name:comAjax
+Purpose: Ajax 로직
+parameter: (arr : 배열명, value: 배열값, key: 비교 키)
+*/	
+function comAjax(targetType, targetUrl, targetData, targetContentType, targetSuccess) {
+    
+  $.ajax({
+    type: targetType,
+    url: targetUrl,
+    data: targetData,
+    contentType: targetContentType,
+    success: function (result) {
+        targetSuccess
+    },
+    error: function (xhr) {
+        console.log(xhr.responseText);
+      }
+  });
+}
+
+
+/* 
 240122 Hwai
 name:comUpdateArray
 Purpose: 배열 최신 객체 저장
