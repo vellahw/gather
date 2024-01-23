@@ -28,6 +28,10 @@
   padding: 25px 13px 25px 23px;
 }
 
+.eachWrap {
+	cursor: pointer;
+}
+
 .none {
   text-align: center;
   padding-top: 90px;
