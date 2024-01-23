@@ -15,6 +15,7 @@ window.onbeforeunload =  function () {
   return;
 }
 
+
 /* 
 240123 Hwai
 name: likeCountReplace
@@ -33,12 +34,12 @@ function likeCountReplace(likeCount) {
   }
 }
 
+
 /* 
 240122 hanwon
 name: likeInsert
 Purpose: 게시물 좋아요 처리
 parameter: (dataArray: 좋아요 데이터 배열)
-*/
 function likeUpdate(dataArray) {
   const dataArrayLength = dataArray.length;
 
@@ -52,12 +53,10 @@ function likeUpdate(dataArray) {
       dataType : 'json',
       contentType: "application/json",
       success : function(result){
-
       },
       error: function (xhr) {
         console.log(xhr.responseText);
       }
-
     }); 
   }
 }
@@ -105,7 +104,7 @@ admin:Hanwon, Hwai
 name:handleCheckboxChange
 Purpose: 체크박스 상태를 관리
 parameter: (checkbox: 타켓 checkbox)
-*/	
+*/   
 function handleCheckboxChange(checkbox) {
 
   if(sessionStorage.getItem("USER_NUMB") == null) {

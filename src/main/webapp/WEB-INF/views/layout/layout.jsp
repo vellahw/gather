@@ -8,14 +8,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GATHER | 투게더? 게더!</title>
-<link rel="stylesheet" href="/resources/css/common/nav.css">
-<link rel="stylesheet" href="/resources/css/common/variable.css">
+<link rel="stylesheet" href="/resources/css/common/layout/header.css">
+<link rel="stylesheet" href="/resources/css/common/layout/variable.css">
 <link rel="stylesheet" href="/resources/css/common/common.css">
-<link rel="stylesheet" href="/resources/css/common/footer.css">
-<script src="/resources/js/common/nav.js"></script>
+<link rel="stylesheet" href="/resources/css/common/layout/footer.css">
+<script src="/resources/js/common/layout/header.js"></script>
 <script src="/resources/js/common/common.js"></script>
 <script src="/resources/js/common/sweetalert.min.js"></script>
-<script src="/resources/js/common/naveridlogin_js_sdk_2.0.2.js"></script>
 <link rel="icon" href="/resources/img/logo/favicon.ico">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
