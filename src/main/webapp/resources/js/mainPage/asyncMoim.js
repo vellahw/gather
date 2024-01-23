@@ -172,9 +172,11 @@ document.addEventListener("DOMContentLoaded", function(){
                                         </div>
                                         <div class="heartWrap">
 										  <input type="hidden" data-like-id="${wmoim.MOIM_IDXX}" value="${wmoim.LIKE_YSNO}" id="heartYN"/>
-										  <input type="checkbox" id="${wmoim.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
-										  <label for="${wmoim.MOIM_IDXX}"></label>
-										  <span class="heartCount main" data-count-id="${wmoim.MOIM_IDXX}">${wmoim.LIKE_COUNT}</span>
+                                          <div class="heartContainer">
+                                            <input type="checkbox" id="${wmoim.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
+                                            <label for="${wmoim.MOIM_IDXX}"></label>
+                                            <span class="heartCount main" data-count-id="${wmoim.MOIM_IDXX}">${wmoim.LIKE_COUNT}</span>
+								          </div>
 								        </div>
                                     </div>
                                   </div>
@@ -186,6 +188,7 @@ document.addEventListener("DOMContentLoaded", function(){
                         // 한 번에 삽입
                         weatherList.appendChild(fragment);
                         contentsSlider();
+                        likeYsnoUpdate();
 
                         }
                 },
@@ -251,10 +254,12 @@ document.addEventListener("DOMContentLoaded", function(){
                                                 <span class="nickname">${rmoim.USER_NICK}</span>
                                             </div>
                                             <div class="heartWrap">
-										      <input type="hidden" data-like-id="${rmoim.MOIM_IDXX}" value="${rmoim.LIKE_YSNO}" id="heartYN"/>
-										      <input type="checkbox" id="${rmoim.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
-										       <label for="${rmoim.MOIM_IDXX}"></label>
-										      <span class="heartCount main" data-count-id="${rmoim.MOIM_IDXX}">${rmoim.LIKE_COUNT}</span>
+                                              <input type="hidden" data-like-id="${rmoim.MOIM_IDXX}" value="${rmoim.LIKE_YSNO}" id="heartYN"/>
+                                              <div class="heartContainer">
+										        <input type="checkbox" id="${rmoim.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
+										        <label for="${rmoim.MOIM_IDXX}"></label>
+										        <span class="heartCount main" data-count-id="${rmoim.MOIM_IDXX}">${rmoim.LIKE_COUNT}</span>
+								              </div>
 								            </div>
                                         </div>
                                     </div>
@@ -266,6 +271,7 @@ document.addEventListener("DOMContentLoaded", function(){
                         // 한 번에 삽입
                         regionList.appendChild(fragment);
                         contentsSlider();
+                        likeYsnoUpdate();
                         }
                     },
                     error: function(res, req) {

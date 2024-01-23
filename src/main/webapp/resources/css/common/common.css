@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-/* 베이직 버튼 */
+/*========== 기본 버튼 스타일 ==========*/
 .basicBtn {
   width: 90px;
   height: 36px;
@@ -16,98 +16,19 @@
   background-color: var(--color-orange500);
 }
 
-/* 프사 둥글게 
-   1. 감싸는 div */
-	.profileImgWrap {
-	  width: 40px;
-	  height: 40px;
-	  border-radius: 50%;
-	  overflow: hidden;
-	}
-	
-/* 2. img 태그 */
-	.profileImg {
-	  width: 100%;
-	  height: 100%;
-	  object-fit: cover;
-	}
-	
-	
-/* 좋아요 아이콘 */
-.heartIcon {
-  width: 38px;
-  /* margin-right: 13px; */
+
+/*========== 상단 배너 ==========*/
+.bannerContainer {
+  width: calc(100vw - (100vw - 100%));
 }
 
-#heart, #heartFill {
-	display: none;
+.bannerImg {
+  width: 100%;
+  object-fit: cover;
 }
 
-.heartCount {
-  color: var(--color-red);
-  font-size: 10px;
-  position: absolute;
-  letter-spacing: -0.7px;
-  font-weight: 600;
-  /* height: fit-content;
-  margin-top: 23px; */
-}
 
-input[type='checkbox'] {
-  display: none;
-}
-
-input[type='checkbox']+label {
-  width: 38px;
-  height: 38px;
-  cursor: pointer;
-  /* position: absolute;
-  bottom: -20px; */
-}
-
-label {
-  background-repeat: no-repeat;
-  background-image: url('../../img/icon/heartIcon.png');
-  background-size: 100%;
-  content: "";
-	transition: background-image 0.2s linear;
-}
-
-label.checked {
-  background-image: url('../../img/icon/heartFillIcon.png') !important; /* !important를 사용하여 우선순위를 높입니다. */
-}
-
-label:hover {
-	background-image: url('../../img/icon/heartFillIcon.png');
-}
-
-/* 툴팁 스타일 */
-.tooltip {
-  position: relative;
-  display: inline-block;
-  cursor: default;
-}
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 70px;
-  background-color: #555;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px;
-  position: absolute;
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 0.5s;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
-}
-
-/* 슬라이드 화살표 버튼 */
+/*========== 슬라이드 화살표 버튼 ==========*/
 .arrowBtn {
   display: flex;
   justify-content: center;
@@ -141,7 +62,25 @@ label:hover {
 	z-index: 1;
 }
 
-/* 해시태그 + 호버하면 바탕색 올라감 */
+
+/*========== 프사 둥글게 ==========
+   1. 감싸는 div 								*/
+	.profileImgWrap {
+	  width: 40px;
+	  height: 40px;
+	  border-radius: 50%;
+	  overflow: hidden;
+	}
+	
+/* 2. img 태그 									*/
+	.profileImg {
+	  width: 100%;
+	  height: 100%;
+	  object-fit: cover;
+	}
+	
+
+/*========== 해시태그 + 호버하면 바탕색 올라감 ==========*/
 .hashtag {
   padding: 4px 8px 4px 8px;
   border: 1px solid var(--primary);
@@ -162,4 +101,77 @@ label:hover {
 .hashtag:hover {
   background-size: 100% 100%;
   color: var(--color-white);
+}
+
+
+/*========== 툴팁 스타일 ==========*/
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: default;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 70px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+/*========== 좋아요 아이콘 ==========*/
+.heartIcon {
+  width: 38px;
+}
+
+#heart, #heartFill {
+	display: none;
+}
+
+.heartCount {
+  color: var(--color-red);
+  font-size: 10px;
+  letter-spacing: -0.7px;
+  font-weight: 600;
+  margin-top: 23px;
+}
+
+input[type='checkbox'] {
+  display: none;
+}
+
+input[type='checkbox']+label {
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+  position: absolute;
+  right: calc(100% - 7px);
+}
+
+label {
+  background-repeat: no-repeat;
+  background-image: url('../../img/icon/heartIcon.png');
+  background-size: 100%;
+  content: "";
+	transition: transform 0.4s ease;
+}
+
+label.checked {
+  background-image: url('../../img/icon/heartFillIcon.png') !important; /* !important를 사용하여 우선순위를 높입니다. */
+}
+
+label:hover {
+	transform: scale(1.1);
 }

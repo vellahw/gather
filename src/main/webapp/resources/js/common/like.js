@@ -8,45 +8,46 @@ let changedValuesArray = []; //ajax로 넘겨줄 배열
 
 window.onbeforeunload = function () {
 
-	return  likeUpdate(changedValuesArray);
+   return  likeUpdate(changedValuesArray);
 
 }
+
 /* 
 240122 hanwon
 name: likeInsert
 Purpose: 게시물 좋아요 처리
 parameter: (dataArray: 좋아요 데이터 배열)
-*/		     
+*/           
 function likeUpdate(dataArray) {
   const dataArrayLength = dataArray.length;
 
   if(dataArrayLength != 0) {
 
-      $.ajax({
+    $.ajax({
         
-        url : "/likeUpdate.com",
-        type : "POST",
-        data : JSON.stringify(dataArray),
-        dataType : 'json',
-        contentType: "application/json",
-        success : function(result){
-        },
-        error: function (xhr) {
-          console.log(xhr.responseText);
-        }
+      url : "/likeUpdate.com",
+      type : "POST",
+      data : JSON.stringify(dataArray),
+      dataType : 'json',
+      contentType: "application/json",
+      success : function(result){
+      },
+      error: function (xhr) {
+        console.log(xhr.responseText);
+      }
         
-      }); 
+    }); 
   }
 }
-;
+
 /*
 admin: hanwon
 Purpose: LIKE_YSNO 값에 따른 하트 아이콘 변경
 */
 function likeYsnoUpdate() {
-	const heartCheckbox = document.querySelectorAll('input[type="checkbox"]'); // 체크박스
-	const heartCheckboxCount = heartCheckbox.length;
-	const heartYN = document.querySelectorAll('#heartYN'); // LIKE_YN을 가지고 있는 요소
+   const heartCheckbox = document.querySelectorAll('input[type="checkbox"]'); // 체크박스
+   const heartCheckboxCount = heartCheckbox.length;
+   const heartYN = document.querySelectorAll('#heartYN'); // LIKE_YN을 가지고 있는 요소
 
   for (let i = 0; i < heartCheckboxCount; i++) {
 
@@ -74,7 +75,7 @@ admin:Hanwon, Hwai
 name:handleCheckboxChange
 Purpose: 체크박스 상태를 관리
 parameter: (checkbox: 타켓 checkbox)
-*/	
+*/   
 function handleCheckboxChange(checkbox) {
 
   if(sessionStorage.getItem("USER_NUMB") == null) {
