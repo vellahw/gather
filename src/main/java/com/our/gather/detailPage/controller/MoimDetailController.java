@@ -74,8 +74,8 @@ public class MoimDetailController {
 	@RequestMapping("/moimJoin.com")
 	@ResponseBody
 	public Map<Object, String> moimJoin(
-			@RequestParam(value = "MOIM_IDXX", required = false) String MOIM_IDXX,
-			@RequestParam(value = "WAIT_YSNO", required = false) String WAIT_YSNO, 
+			@RequestParam(value = "MOIM_IDXX", required = false) Map<String, Object> MOIM_IDXX,
+			@RequestParam(value = "WAIT_YSNO", required = false) Map<String, Object> WAIT_YSNO, 
 			HttpSession session, HttpServletRequest request, CommandMap commandMap) throws Exception {
 
 		Map<Object, String> resultMap = new HashMap<>();

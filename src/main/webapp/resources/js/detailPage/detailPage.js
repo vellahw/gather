@@ -305,8 +305,8 @@ function onClickHandler() {
     }
 
     const data = {
-        MOIM_IDXX : MOIM_IDXX
-      , WAIT_YSNO : WAIT_YSNO
+        "MOIM_IDXX" : MOIM_IDXX
+      , "WAIT_YSNO" : WAIT_YSNO
     }
 
     comAjax(
