@@ -212,18 +212,20 @@
        			*
 		  FROM (  
 		       	  SELECT /*mainPage.getGather*/              
-		                  GATH_IDXX AS MOIM_IDXX											/* 게더아이디 */
-		                , GATH_TITL AS MOIM_TITL											/* 게더 제목 */
-		                , GATH_CNTT AS MOIM_CNTT											/* 게더 내용 */
-		                , GATH_IMAG AS MOIM_IMAG											/* 게더 대표 이미지 */
+		                  GATH_IDXX AS MOIM_IDXX								/* 게더아이디 */
+		                , GATH_TITL AS MOIM_TITL								/* 게더 제목 */
+		                , GATH_CNTT AS MOIM_CNTT								/* 게더 내용 */
+		                , GATH_IMAG AS MOIM_IMAG								/* 게더 대표 이미지 */
 		                , CATE_IDXX															/* 카테고리 코드 */
-		                , PARENTS_CATE														/* 부모 카테고리 */
+		                , PARENTS_CATE													/* 부모 카테고리 */
 		                , CHILD_CATE														/* 자식 카테고리 */
 		                , PRES_PEOP															/* 현재 인원  n/n */
 		                , MEMB_COUNT														/* 현재 인원 */
 		                , MOIM_COST															/* 참가 비용 */
 		                , APPR_YSNO															/* 승인 여부 */
-						, APPR_LMIT															/* 모임 제한 KR */
+		                , MINN_AGEE						 									/* 최소나이 */
+                		, MAXX_AGEE															/* 최대나이 */
+										, APPR_LMIT															/* 모임 제한 KR */
 		                , GNDR_CODE															/* 모임 성별 코드 */											
 		                , PREGI_NAME														/* 부모 지역명 */
 		                , REGI_NAME															/* 자식 지역명 */
