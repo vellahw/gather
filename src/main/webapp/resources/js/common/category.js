@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function(){
 
-  /*
-  240103 장한원
-  카테고리바 hover시 하위 카테고리 보여짐
+  /**
+  * 240103 장한원
+  * 카테고리바 hover시 하위 카테고리 보여짐
   */
   const categoryItems = document.querySelectorAll('.categoryItem');
 
@@ -25,6 +25,8 @@ document.addEventListener("DOMContentLoaded", function(){
       }
     });
   });
+  
+  
   /*
   240124 강승현
   해당 카테고리 진입시 active
