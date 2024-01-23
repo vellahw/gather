@@ -129,6 +129,13 @@
   justify-content: right;
 }
 
-.main {
-	/* bottom: -20px; */
+.heartContainer{
+  display: flex;
+  position: relative;
+  width: fit-content;
 }
+
+/* .main {
+	bottom: 0;
+	right: 0;
+} */
