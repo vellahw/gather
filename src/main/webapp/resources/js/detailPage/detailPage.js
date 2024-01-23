@@ -210,7 +210,7 @@ document.addEventListener("DOMContentLoaded", function(){
   const countNode = document.getElementById('count');
   const count = countNode.getAttribute('data-count');
 
-  if(count != 1) {
+  if(count != 0) {
     
     const memeberItem = countNode.querySelectorAll('.profileImgWrap')
 
@@ -305,8 +305,8 @@ function onClickHandler() {
     }
 
     const data = {
-        "MOIM_IDXX" : MOIM_IDXX
-      , "WAIT_YSNO" : WAIT_YSNO
+        MOIM_IDXX : MOIM_IDXX
+      , WAIT_YSNO : WAIT_YSNO
     }
 
     comAjax(
@@ -314,9 +314,7 @@ function onClickHandler() {
       , "/moimJoin.com"
       , JSON.stringify(data)
       , "application/json"
-      , alert("흠")
     );
-
   }
 
 }

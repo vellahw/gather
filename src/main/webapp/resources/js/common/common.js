@@ -4,7 +4,7 @@ name:comAjax
 Purpose: Ajax 로직
 parameter: (arr : 배열명, value: 배열값, key: 비교 키)
 */	
-function comAjax(targetType, targetUrl, targetData, targetContentType, targetSuccess) {
+function comAjax(targetType, targetUrl, targetData, targetContentType) {
     
   $.ajax({
     type: targetType,
@@ -12,11 +12,12 @@ function comAjax(targetType, targetUrl, targetData, targetContentType, targetSuc
     data: targetData,
     contentType: targetContentType,
     success: function (result) {
-        targetSuccess
+      const resultData = result.result;
+      console.log(resultData)
     },
     error: function (xhr) {
         console.log(xhr.responseText);
-      }
+    }
   });
 }
 
