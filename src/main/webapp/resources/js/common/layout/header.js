@@ -1,6 +1,6 @@
-/**
- * 240103 장한원
- * navbar 메뉴들 클릭이벤트
+/*
+ 240103 장한원
+ navbar 메뉴들 클릭이벤트
 */
 function menuOnClick(type) {
   let url = '/gather.com';
@@ -13,10 +13,10 @@ function menuOnClick(type) {
   location.href = url;
 }
 
- /**
-  * 240104 장한원
-  * 마우스오버/아웃시 로그아웃, 고객센터 아이콘 컬러 바뀜
-  */
+/*
+ 240104 장한원
+ 마우스오버/아웃시 로그아웃, 고객센터 아이콘 컬러 바뀜
+*/
  function showHoverIcon(container) {
   const hoverIcon = container.querySelector("#hoverIcon");
   const basicIcon = container.querySelector("#basicIcon");
@@ -41,9 +41,9 @@ function hideHoverIcon(container) {
   }
 }
 
-/**
-   * 240105 장한원
-   * 로그인 클릭 이벤트
+/*
+ 240105 장한원
+ 로그인 클릭 이벤트
   */
 function loginOnClick() {
 
@@ -51,9 +51,9 @@ function loginOnClick() {
   
  }
 
- /**
-  * 240106 장한원
-  * 로그아웃 클릭 이벤트
+ /*
+  240106 장한원
+  로그아웃 클릭 이벤트
   */
  function logoutOnclick() {
  	
@@ -63,9 +63,9 @@ function loginOnClick() {
  }
  
 document.addEventListener("DOMContentLoaded", function(){
-  /**
-   * 240103 장한원
-   * 로고 누르면 '/gather.com'으로 이동
+  /*
+   240103 장한원
+   로고 누르면 '/gather.com'으로 이동
   */
   const logoContainer = document.getElementById('logoContainer');
   
@@ -73,9 +73,9 @@ document.addEventListener("DOMContentLoaded", function(){
     this.location.href="/gather.com"
   })
   
- /**
-  * 240103 장한원
-  * 게더/클럽/챌린지/피드 네비게이션바 active 클래스 적용
+ /*
+  240103 장한원
+  게더/클럽/챌린지/피드 네비게이션바 active 클래스 적용
   */
   const currentURL = location.href;
   const params = new URL(location.href).searchParams;

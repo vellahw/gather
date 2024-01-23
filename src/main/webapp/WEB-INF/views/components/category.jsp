@@ -12,6 +12,7 @@
 
         <c:forEach var="parentsCate" items="${pCate}">
             <c:set var="parentsCode" value="${parentsCate.CATE_CODE}" />
+            <input id="pcode" type="hidden" value="${parentsCate.CATE_CODE}"/>
             <div class="categoryItem" data-code="${parentsCode}">
             <div class="categoryLink" onClick="cateOnclick('${parentsCode}');">
                 <img src="${parentsCate.IMAG_SRCC}" class="categoryIcon" alt="카테고리 이미지"/>
@@ -21,6 +22,7 @@
                     <ul class="childCateList">
                         <c:forEach var="childCate" items="${cCate}">
                             <c:set var="childCode" value="${childCate.PARENTS_CODE}" />
+                            <input id="ccode"type="hidden" value="${childCate.CATE_CODE}"/>
                             <c:if test="${parentsCode == childCode}">
                                 <li class="childCateItem" onClick="cateOnclick('${childCate.CATE_CODE}');">
                                     <c:out value="${childCate.CATE_NAME}" />
