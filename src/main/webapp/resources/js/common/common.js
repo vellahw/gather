@@ -11,12 +11,10 @@ function comAjax(targetType, targetUrl, targetData, targetContentType, targetSuc
     url: targetUrl,
     data: targetData,
     contentType: targetContentType,
-    success: function (result) {
-        targetSuccess
-    },
+    success: targetSuccess,
     error: function (xhr) {
         console.log(xhr.responseText);
-      }
+    }
   });
 }
 
@@ -179,7 +177,7 @@ name:comAlert2
 Purpose:알럿창
 parameter:(type : 알럿타입 , title : 제목, content: 내용 , url : 확인 후 전송url
 */ 
-function comAlert2(type, title, content, button ,url){
+function comAlert2(type, title, content, button , okFun){
 
     //타입별 처리 실시 (1=일반/2=성공/3=경고/4=실패/5=확인 후 redirectUrl)
 
@@ -226,8 +224,7 @@ function comAlert2(type, title, content, button ,url){
             icon: "success",
             button: button,
             closeOnClickOutside: false
-        }).then(function(){
-            location.href = url;});
+        }).then(okFun);
 
     }
 };

@@ -109,7 +109,7 @@
     <div class="eachInfoWrap">
  			<h3 class="infoTitle member">함께하는 멤버들</h3>
 			<c:choose>
-		    <c:when test="${fn:length(member) > 1 }">
+		    <c:when test="${fn:length(member) > 0 }">
 		      <div class="memeberProfiles" data-count="${fn:length(member)}" id="count">
 						<c:forEach var="m" items="${member}">
 						  <c:if test="${m.BANN_YSNO == 'N' && m.WAIT_YSNO == 'N' && m.MAST_YSNO == 'N'}">
