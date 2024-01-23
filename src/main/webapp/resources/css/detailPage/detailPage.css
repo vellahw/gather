@@ -88,7 +88,7 @@
 .detailInfoContainer {
   width: 834px; 
   margin-top: 28px;
-  padding: 60px 60px 60px 60px;
+  padding: 60px 60px 40px 60px;
   background: var(--color-white); 
   border-radius: 40px;
   box-sizing: border-box;
@@ -126,6 +126,20 @@
 .icons {
   display: flex;
   align-items: center;
+}
+
+.heartContainer {
+	position: relative;
+}
+
+.detailHeart {
+	display: inline-block !important;
+  position: static  !important;
+}
+
+.detailC {
+	position: absolute;
+	left: calc(100% - 4px);
 }
 
 .d {

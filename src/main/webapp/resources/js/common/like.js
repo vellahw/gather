@@ -40,6 +40,7 @@ function likeCountReplace(likeCount) {
 name: likeInsert
 Purpose: 게시물 좋아요 처리
 parameter: (dataArray: 좋아요 데이터 배열)
+*/
 function likeUpdate(dataArray) {
   const dataArrayLength = dataArray.length;
 

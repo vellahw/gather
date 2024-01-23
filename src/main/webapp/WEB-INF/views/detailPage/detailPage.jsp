@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="/resources/css/detailPage/detailPage.css">
 <script src="/resources/js/detailPage/detailPage.js"></script>
+<script src="/resources/js/common/like.js"></script>
 
 <img class="backgroundImg">
 
@@ -31,13 +32,15 @@
       </div>
 	    
 	    <div class="icons">
-        <div class="heartWrap" style="position: relative;">
-          <img src="/resources/img/icon/heartIcon.png"
-          		 class="heartIcon d" alt="좋아요 아이콘">
-	        <span class="heartCount dc">
-						<c:out value="${detail.LIKE_COUNT}" />
-					</span>
-	      </div>
+	      <div class="heartWrap">
+				  <input type="hidden" data-like-id="${detail.MOIM_IDXX}" value="${detail.LIKE_YSNO}" id="heartYN"/>
+					<div class="heartContainer">
+					  <input type="checkbox" id="${detail.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
+						<label class="detailHeart" for="${detail.MOIM_IDXX}"></label>
+            <input id="realCount" type="hidden" data-realCount-id="${detail.MOIM_IDXX}" value="${detail.LIKE_COUNT}" >
+						<span id="showCount" class="heartCount detailC" data-ShowCount-id="${detail.MOIM_IDXX}"></span>
+					</div>
+			  </div>
         <div class="bookmarkWarp">
           <img class="bookmarkIcon" src="/resources/img/icon/detail/bookmark.png" alt="북마크 아이콘"/>
         </div>
@@ -106,7 +109,7 @@
     <div class="eachInfoWrap">
  			<h3 class="infoTitle member">함께하는 멤버들</h3>
 			<c:choose>
-		    <c:when test="${fn:length(member) > 0 }">
+		    <c:when test="${fn:length(member) > 1 }">
 		      <div class="memeberProfiles" data-count="${fn:length(member)}" id="count">
 						<c:forEach var="m" items="${member}">
 						  <c:if test="${m.BANN_YSNO == 'N' && m.WAIT_YSNO == 'N' && m.MAST_YSNO == 'N'}">
@@ -118,7 +121,7 @@
       		</div>
 				 </c:when>
 				 <c:otherwise>
-					 <p class="noMember" data-count="0" id="count">
+					 <p class="noMember" id="count">
 				     참여한 멤버가 없습니다.	첫 번째 멤버가 되어보세요!
 					 </p>  
 				 </c:otherwise>

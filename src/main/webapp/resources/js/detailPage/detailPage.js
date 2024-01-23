@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", function(){
-  
+  // 모임 정보
+  const detailValue = document.getElementById('detail').value;
+  const detail = parseString(detailValue).result;
+
   /**
    * 240118 장한원
    * 이미지 슬라이더
@@ -8,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function(){
  const slideList = slideContainer.querySelector('.imgWrap'); // 이미지 감싸는 리스트
  const img = slideList.querySelectorAll('img');
  const btn = slideContainer.querySelectorAll('.arrowBtn'); // 화살표 버튼
- 
+
  const slideContentCount = img.length; // 이미지 갯수
  const liWidth = slideList.clientWidth; // 이미지 너비
  
@@ -207,7 +210,7 @@ document.addEventListener("DOMContentLoaded", function(){
   const countNode = document.getElementById('count');
   const count = countNode.getAttribute('data-count');
 
-  if(count != 0) {
+  if(count != 1) {
     
     const memeberItem = countNode.querySelectorAll('.profileImgWrap')
 
@@ -228,59 +231,42 @@ document.addEventListener("DOMContentLoaded", function(){
  
     const yourStateValue = document.getElementById('yourState').value;
 
-    console.log("yourStateValue  " + yourStateValue)
-    console.log(typeof(yourStateValue))
-    
-    const detailValue = document.getElementById('detail').value;
-    const detail = parseString(detailValue).result;
-
     // 참여 버튼 block
     const joinMoimBtn = document.getElementById('joinMoimBtn');
     joinMoimBtn.style.display = 'block';
     
-    // 모임 참여자
+    // 모임 참여자일 때
     if(yourStateValue != 'null') {
       
       const yourState = parseString(yourStateValue).result;
       
-      // 참여 '하기/요청/취소' 텍스트 제어
-      if(yourState.MAST_YSNO == 'N') { 
+       // 방장이 아님
+      if(yourState.MAST_YSNO == 'N') {
 
-        if(detail.APPR_YSNO == 'N' &&
-           yourState.WAIT_YSNO == 'N') {
-  
-        } else if(detail.APPR_YSNO == 'Y') {
-  
-  
-        } else if(
-          yourState.BANN_YSNO == 'N' && 
-          yourState.WAIT_YSNO == 'Y' &&
-          detail.ENDD_YSNO == 'N') {
+        if(yourState.WAIT_YSNO == 'N') {
 
-            joinMoimBtn.innerHTML = '참여취소';
-  
+          updateInnerHTML(joinMoimBtn, '참여취소');
+
         }
 
-      // 방장일때
+        if(yourState.BANN_YSNO == 'Y'){
+
+        }
+
+      // 방장
       } else if(yourState.MAST_YSNO == 'Y') { 
         const updateBtn = document.getElementById('updateBtn');
         updateBtn.style.display = 'block';
-        joinMoimBtn.innerHTML = '마감하기';
+        updateInnerHTML(joinMoimBtn, '마감하기');
 
       }
 
     // 모임 미참여
     } else if(yourStateValue == 'null'){
 
-      if(detail.APPR_YSNO == 'N') {
-  
-        joinMoimBtn.innerHTML = '참여하기';
-  
-      } else if(detail.APPR_YSNO == 'Y') {
-  
-        joinMoimBtn.innerHTML = '참여요청';
-  
-      }
+      // Example usage
+      updateButtonUI(detail.APPR_YSNO);
+      
     }
 
   
@@ -297,5 +283,47 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 
 
+/* element에 innerText을 innerHTML 해주는 함수 */
+function updateInnerHTML(element, innerText) {
+  element.innerHTML = innerText;
+}
+
+// 클릭 이벤트 함수
+function addClickListener(element, callback) {
+  element.addEventListener('click', callback);
+}
+
+// 예제 사용
+function onClickHandler() {
+  const { MINN_AGEE, MAXX_AGEE, GNDER_CODE } = detail;
+  const { USER_AGEE, USER_GNDR, USER_JUMIN2 } = sessionStorage;
+
+  if (isAgeOutOfRange(MINN_AGEE, MAXX_AGEE, USER_AGEE)) {
+    comAlert2(4, null, '회원님의 나이가 모임의 연령대에 맞지 않습니다.');
+  } else if (isGenderMismatch(GNDER_CODE, USER_JUMIN2)) {
+    comAlert2(4, null, getGenderMismatchMessage(GNDER_CODE));
+  }
+}
+
+function isAgeOutOfRange(minAge, maxAge, userAge) {
+  return userAge < minAge || userAge > maxAge;
+}
+
+function isGenderMismatch(moimGender, userJumin2) {
+  return (moimGender === 'M' && userJumin2 === '1' && userJumin2 === '3') ||
+         (moimGender === 'W' && userJumin2 === '2' && userJumin2 === '4');
+}
+
+function getGenderMismatchMessage(moimGender) {
+  return moimGender === 'M' ? '여성회원만 참여가능한 모임입니다' : '남성회원만 참여가능한 모임입니다';
+}
+
+function updateButtonUI(approvalStatus) {
+  const buttonText = approvalStatus === 'N' ? '참여하기' : '참여요청';
+  updateInnerHTML(joinMoimBtn, buttonText);
+  addClickListener(joinMoimBtn, onClickHandler);
+}
 
 })
+
+

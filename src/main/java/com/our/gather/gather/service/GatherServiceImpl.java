@@ -54,6 +54,12 @@ public class GatherServiceImpl implements GatherService {
 			CommandMap commandMap) throws Exception {
 		// TODO Auto-generated method stub
 		
+		if (session.getAttribute("USER_NUMB") != null) {
+
+			commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
+
+		}
+		
 		return gatherDao.getGatherDetail(map, commandMap, session);
 	}
 	
