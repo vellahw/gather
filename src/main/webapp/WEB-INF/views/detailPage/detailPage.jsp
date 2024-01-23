@@ -105,9 +105,6 @@
     </div>
     <div class="eachInfoWrap">
  			<h3 class="infoTitle member">함께하는 멤버들</h3>
-      <%-- 데이터 불러와 forEach로 프사 띄우고
-      		자바스크립트로 left 연산 해줘야함
-       --%>
 			<c:choose>
 		    <c:when test="${fn:length(member) > 0 }">
 		      <div class="memeberProfiles" data-count="${fn:length(member)}" id="count">

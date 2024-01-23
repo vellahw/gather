@@ -221,13 +221,15 @@ document.addEventListener("DOMContentLoaded", function(){
    * 240119 장한원
    * 버튼 제어
    */
-  
-  
   if(sessionStorage.getItem("USER_NUMB") == null) { // 로그인X
     document.querySelector('.loginPlz').style.display = 'block';
-    
+
   } else { //로그인 했다면
+ 
     const yourStateValue = document.getElementById('yourState').value;
+
+    console.log("yourStateValue  " + yourStateValue)
+    console.log(typeof(yourStateValue))
     
     const detailValue = document.getElementById('detail').value;
     const detail = parseString(detailValue).result;
@@ -236,36 +238,40 @@ document.addEventListener("DOMContentLoaded", function(){
     const joinMoimBtn = document.getElementById('joinMoimBtn');
     joinMoimBtn.style.display = 'block';
     
-
-    if(yourStateValue != 'null' || yourStateValue != "") {
+    // 모임 참여자
+    if(yourStateValue != 'null') {
       
       const yourState = parseString(yourStateValue).result;
       
       // 참여 '하기/요청/취소' 텍스트 제어
-      if(yourState.MAST_YSNO == 'N') { // 방장X
+      if(yourState.MAST_YSNO == 'N') { 
+
         if(detail.APPR_YSNO == 'N' &&
            yourState.WAIT_YSNO == 'N') {
   
-          joinMoimBtn.innerHTML = '참여하기';
-  
         } else if(detail.APPR_YSNO == 'Y') {
   
-          joinMoimBtn.innerHTML = '참여요청';
   
         } else if(
-  
-            yourState.BANN_YSNO == 'N' && 
-            yourState.WAIT_YSNO == 'Y' &&
-            detail.ENDD_YSNO == 'N') {
+          yourState.BANN_YSNO == 'N' && 
+          yourState.WAIT_YSNO == 'Y' &&
+          detail.ENDD_YSNO == 'N') {
+
             joinMoimBtn.innerHTML = '참여취소';
   
         }
-  
-      } else if(yourState.MAST_YSNO == 'Y') {
-        document.getElementById('updateBtn').style.display = 'block';
+
+      // 방장일때
+      } else if(yourState.MAST_YSNO == 'Y') { 
+        const updateBtn = document.getElementById('updateBtn');
+        updateBtn.style.display = 'block';
+        joinMoimBtn.innerHTML = '마감하기';
+
       }
 
+    // 모임 미참여
     } else if(yourStateValue == 'null'){
+
       if(detail.APPR_YSNO == 'N') {
   
         joinMoimBtn.innerHTML = '참여하기';
