@@ -314,6 +314,9 @@ function onClickHandler() {
       , "/moimJoin.com"
       , JSON.stringify(data)
       , "application/json"
+      , function(){
+          comAlert2(5, '모임에 참여되었어요!', null, '확인', function(){ location.reload(); });
+        }
     );
   }
 

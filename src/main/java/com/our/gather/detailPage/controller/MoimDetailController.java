@@ -46,8 +46,9 @@ public class MoimDetailController {
 
 		if (moimType.equals("GT")) {
 
-			mv.addObject("detail", gatherService.getGatherDetail(commandMap.getMap(), session, commandMap)); // 게더
 			mv.addObject("member", gatherService.getGatherMember(commandMap.getMap(), session, commandMap)); // 게더맴버
+			mv.addObject("detail", gatherService.getGatherDetail(commandMap.getMap(), session, commandMap)); // 게더
+			
 			mv.addObject("img", gatherService.getGatherImg(commandMap.getMap(), commandMap)); // 게더 이미지
 
 			if (session.getAttribute("USER_NUMB") != null) {
@@ -74,13 +75,15 @@ public class MoimDetailController {
 	// 모임참여
 	@RequestMapping("/moimJoin.com")
 	@ResponseBody
-	public Map<Object, String> moimJoin(@RequestBody Map<String, String> requestBody, HttpSession session, 
+	public ModelAndView moimJoin(@RequestBody Map<String, String> requestBody, HttpSession session, 
 			HttpServletRequest request, CommandMap commandMap) throws Exception {
+		
+		System.out.println("돌긴 도는감?~~~~?    " + requestBody);
+		
+		ModelAndView mv = new ModelAndView("jsonView");
 		
 		String MOIM_IDXX = requestBody.get("MOIM_IDXX");
 		String WAIT_YSNO = requestBody.get("WAIT_YSNO");
-
-		Map<Object, String> resultMap = new HashMap<>();
 
 		try {
 
@@ -90,18 +93,16 @@ public class MoimDetailController {
 
 			moimDetailService.moimJoin(commandMap.getMap(), commandMap);
 
-			resultMap.put("result", "success");
-			resultMap.put("message", "모임 참여에 성공하였습니다.");
+			mv.addObject("result", "success");
 
 		} catch (Exception e) {
 
-			resultMap.put("result", "fail");
-			resultMap.put("message", "모임 참여에 실패하였습니다. 오류 메시지: " + e.getMessage());
+			mv.addObject("result", "fail");
 			System.out.println("error : " + e.getMessage());
 
 		}
 
-		return resultMap;
+		return mv;
 	}
 
 	// 모임참여 상태변경
