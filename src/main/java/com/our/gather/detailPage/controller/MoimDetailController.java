@@ -77,8 +77,6 @@ public class MoimDetailController {
 	public Map<Object, String> moimJoin(@RequestBody Map<String, String> requestBody, HttpSession session, 
 			HttpServletRequest request, CommandMap commandMap) throws Exception {
 		
-		System.out.println("돌긴 도는가?" + requestBody);
-		
 		String MOIM_IDXX = requestBody.get("MOIM_IDXX");
 		String WAIT_YSNO = requestBody.get("WAIT_YSNO");
 
