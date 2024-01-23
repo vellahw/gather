@@ -6,25 +6,47 @@ document.addEventListener("DOMContentLoaded", function() {
 
 let changedValuesArray = []; //ajax로 넘겨줄 배열
 
-window.onbeforeunload = function () {
-
-   return  likeUpdate(changedValuesArray);
-
+window.onbeforeunload =  function () {
+  
+  // 비동기 함수 호출
+  likeUpdate(changedValuesArray);
+  likeYsnoUpdate();
+ 
+  return;
 }
+
+
+/* 
+240123 Hwai
+name: likeCountReplace
+Purpose: 좋아요 수 1000이상 999+로 치환
+parameter: (likeCoumt: Number)
+*/	
+function likeCountReplace(likeCount) {
+  if (typeof likeCount !== 'number' || isNaN(likeCount)) {
+      return console.log('Invalid Input from likeCount');
+  }
+
+  if (likeCount > 1000) {
+      return '999+';
+  } else {
+      return likeCount.toString();
+  }
+}
+
 
 /* 
 240122 hanwon
 name: likeInsert
 Purpose: 게시물 좋아요 처리
 parameter: (dataArray: 좋아요 데이터 배열)
-*/           
 function likeUpdate(dataArray) {
   const dataArrayLength = dataArray.length;
 
   if(dataArrayLength != 0) {
 
     $.ajax({
-        
+
       url : "/likeUpdate.com",
       type : "POST",
       data : JSON.stringify(dataArray),
@@ -35,7 +57,6 @@ function likeUpdate(dataArray) {
       error: function (xhr) {
         console.log(xhr.responseText);
       }
-        
     }); 
   }
 }
@@ -45,19 +66,27 @@ admin: hanwon
 Purpose: LIKE_YSNO 값에 따른 하트 아이콘 변경
 */
 function likeYsnoUpdate() {
-   const heartCheckbox = document.querySelectorAll('input[type="checkbox"]'); // 체크박스
-   const heartCheckboxCount = heartCheckbox.length;
-   const heartYN = document.querySelectorAll('#heartYN'); // LIKE_YN을 가지고 있는 요소
+  const heartCheckbox = document.querySelectorAll('input[type="checkbox"]'); // 체크박스
+  const heartCheckboxCount = heartCheckbox.length;
+  const heartYN = document.querySelectorAll('#heartYN'); // LIKE_YN을 가지고 있는 요소
+  const likeRealCount = document.querySelectorAll('#realCount'); // 실제 LIKE_COUNT 값
+  const likeShowCount = document.querySelectorAll('#showCount'); // 화면상 보여지는 LIKE_COUNT 값
 
   for (let i = 0; i < heartCheckboxCount; i++) {
 
     const checkboxId = heartCheckbox[i].id;
-    const likeYsNoValue = heartYN[i].value; // LIKE_YN value 
+    const likeYsNoValue = heartYN[i].value; // LIKE_YN value
+
+    let getLikeCount = Number(likeRealCount[i].value); // 기존의 LIKE_COUNT 값을 가져옴
+
+    let getShowCount = likeCountReplace(getLikeCount);
+    likeShowCount[i].innerHTML = getShowCount;  
 
     // 체크박스의 상태를 LIKE_YSNO 값에 따라 설정
     heartCheckbox[i].checked = likeYsNoValue === '1';
 
     if(likeYsNoValue == '1'){
+
       const targetCheckBox = document.querySelectorAll(`label[for="${checkboxId}"]`); // 체크박스 하트 아이콘
 
       for (let j = 0; j < targetCheckBox.length; j++) {
@@ -107,7 +136,8 @@ function updateResult(checkboxId, isChecked) {
   const preLike = document.querySelectorAll(`input[data-like-id="${checkboxId}"]`); 
   const preLikeValue = preLike[0].value; //LIKE_YSNO의 현재 값
   const targetCount = targetCheckBox.length;
-  const likeCount = document.querySelectorAll(`span[data-count-id="${checkboxId}"`); // LIKE_COUNT
+  const likeRealCount = document.querySelectorAll(`input[data-realCount-id="${checkboxId}"`); // 실제 LIKE_COUNT 값
+  const likeShowCount = document.querySelectorAll(`span[data-ShowCount-id="${checkboxId}"`);  // 화면상 보여지는 LIKE_COUNT 값
   let currentLikeYsno = "";
   
   if(isChecked) {
@@ -115,11 +145,13 @@ function updateResult(checkboxId, isChecked) {
     for (let i = 0; i < targetCount; i++) {
   
       targetCheckBox[i].classList.add('checked');
-      let getLikeCount = Number(likeCount[i].innerText); // 기존의 LIKE_COUNT 값을 가져옴
+      let getLikeCount = Number(likeRealCount[i].value); // 기존의 LIKE_COUNT 값을 가져옴
       getLikeCount += 1;
-  
-      likeCount[i].innerHTML = getLikeCount;  
-  
+      likeRealCount[i].value = getLikeCount;
+      
+      let getShowCount = likeCountReplace(getLikeCount);
+      likeShowCount[i].innerHTML = getShowCount;  
+      
     }
 
     currentLikeYsno ="1";
@@ -129,10 +161,12 @@ function updateResult(checkboxId, isChecked) {
     for (let i = 0; i < targetCount; i++) {
   
       targetCheckBox[i].classList.remove('checked');
-      let getLikeCount = Number(likeCount[i].innerText);  // 기존의 LIKE_COUNT 값을 가져옴
+      let getLikeCount = Number(likeRealCount[i].value);  // 기존의 LIKE_COUNT 값을 가져옴
       getLikeCount -= 1;
+      likeRealCount[i].value = getLikeCount;
         
-      likeCount[i].innerHTML = getLikeCount;
+      let getShowCount = likeCountReplace(getLikeCount);
+      likeShowCount[i].innerHTML = getShowCount;  
   
     }
 
@@ -142,6 +176,8 @@ function updateResult(checkboxId, isChecked) {
 
   comUpdateArray(changedValuesArray, { LIKE_IDXX :checkboxId,  CLIKE_YSNO : currentLikeYsno , PLIKE_YSNO : preLikeValue }, 'LIKE_IDXX');
   removeItemsWithSameValue(changedValuesArray, 'CLIKE_YSNO', 'PLIKE_YSNO');
+
+  console.log(changedValuesArray);
   
 }
 

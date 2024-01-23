@@ -57,7 +57,8 @@
 												<div class="heartContainer">
 												  <input type="checkbox" id="${list.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
 												  <label for="${list.MOIM_IDXX}"></label>
-												  <span class="heartCount" data-count-id="${list.MOIM_IDXX}">${list.LIKE_COUNT}</span>
+                          <input id="realCount" type="hidden" data-realCount-id="${list.MOIM_IDXX}" value="${list.LIKE_COUNT}" >
+												  <span id="showCount"class="heartCount main" data-ShowCount-id="${list.MOIM_IDXX}"></span>
 											  </div>
 											</div>
 										</div>

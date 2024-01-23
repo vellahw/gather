@@ -175,7 +175,8 @@ document.addEventListener("DOMContentLoaded", function(){
                                           <div class="heartContainer">
                                             <input type="checkbox" id="${wmoim.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
                                             <label for="${wmoim.MOIM_IDXX}"></label>
-                                            <span class="heartCount main" data-count-id="${wmoim.MOIM_IDXX}">${wmoim.LIKE_COUNT}</span>
+                                            <input id="realCount" type="hidden" data-realCount-id="${wmoim.MOIM_IDXX}" value="${wmoim.LIKE_COUNT}" >
+                                            <span id="showCount" class="heartCount main" data-ShowCount-id="${wmoim.MOIM_IDXX}"></span>
 								          </div>
 								        </div>
                                     </div>
@@ -258,7 +259,8 @@ document.addEventListener("DOMContentLoaded", function(){
                                               <div class="heartContainer">
 										        <input type="checkbox" id="${rmoim.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
 										        <label for="${rmoim.MOIM_IDXX}"></label>
-										        <span class="heartCount main" data-count-id="${rmoim.MOIM_IDXX}">${rmoim.LIKE_COUNT}</span>
+										        <input id="realCount" type="hidden" data-realCount-id="${rmoim.MOIM_IDXX}" value="${rmoim.LIKE_COUNT}" >
+                                                <span id="showCount"class="heartCount main" data-ShowCount-id="${rmoim.MOIM_IDXX}"></span>
 								              </div>
 								            </div>
                                         </div>
