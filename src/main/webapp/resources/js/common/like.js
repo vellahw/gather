@@ -11,6 +11,7 @@ window.onbeforeunload = function () {
    return  likeUpdate(changedValuesArray);
 
 }
+
 /* 
 240122 hanwon
 name: likeInsert
@@ -22,23 +23,23 @@ function likeUpdate(dataArray) {
 
   if(dataArrayLength != 0) {
 
-      $.ajax({
+    $.ajax({
         
-        url : "/likeUpdate.com",
-        type : "POST",
-        data : JSON.stringify(dataArray),
-        dataType : 'json',
-        contentType: "application/json",
-        success : function(result){
-        },
-        error: function (xhr) {
-          console.log(xhr.responseText);
-        }
+      url : "/likeUpdate.com",
+      type : "POST",
+      data : JSON.stringify(dataArray),
+      dataType : 'json',
+      contentType: "application/json",
+      success : function(result){
+      },
+      error: function (xhr) {
+        console.log(xhr.responseText);
+      }
         
-      }); 
+    }); 
   }
 }
-;
+
 /*
 admin: hanwon
 Purpose: LIKE_YSNO 값에 따른 하트 아이콘 변경

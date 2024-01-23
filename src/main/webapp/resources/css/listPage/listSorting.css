@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+.contentsContainer {
+  margin: 51px auto;
+  width: 1132px;
+  position: relative;
+  padding: 30px 0 30px 0;
+}
+
+.areaTitle {
+  position: relative;
+  padding: 0px 17px 0px 20px;
+}
+
+.moimMakeArea{
+  position: absolute;
+  right: 14px;
+}
+
+.contentsList {
+  margin: 19px auto;
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;	
+}
+
+.Contents {
+  padding: 25px 13px 25px 23px;
+}
+
+.none {
+  text-align: center;
+  padding-top: 90px;
+  padding-bottom: 66px
+}

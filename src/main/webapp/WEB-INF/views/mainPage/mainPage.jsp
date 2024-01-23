@@ -3,8 +3,9 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<link rel="stylesheet" href="/resources/css/mainPage/mainPage.css">
-<script src="/resources/js/common/naver.js"></script>
+<link rel="stylesheet" href="/resources/css/listPage/listSorting.css">
+<link rel="stylesheet" href="/resources/css/mainPage/mainSorting.css">
+<link rel="stylesheet" href="/resources/css/common/card.css">
 <script src="/resources/js/common/like.js"></script>
 <script src="/resources/js/mainPage/asyncMoim.js"></script>
 <script src="/resources/js/mainPage/mainPage.js"></script>
@@ -30,9 +31,9 @@
 
 </c:if>
 
-<div class="contentsContainer">
+<div class="contentsContainer mainContainer">
   <div id="weatherSection">
-  	<h1 id="weatherTitle" class="areaTitle">
+  	<h1 id="weatherTitle" class="mainAreaTitle">
   	</h1>
 		<div class="slideWrap">
   	  <div class="slideContainer">
@@ -46,9 +47,9 @@
 </div>
 
 <c:if test="${USER_NUMB == null}">
-	<div class="contentsContainer">
+	<div class="contentsContainer mainContainer">
 	  <div id="weatherSection">
-	  	<h1 id="regionTitle" class="areaTitle"></h1>
+	  	<h1 id="regionTitle" class="mainAreaTitle"></h1>
 				<div class="slideWrap">
 	  	  	<div class="slideContainer">
 				  	<button type="button" class="arrowBtn left" id="leftBtn"></button>

@@ -2,9 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<div class="contentsContainer">
+<div class="contentsContainer mainContainer">
   <div class="contentsWrap">
-	  <h1 class="areaTitle">
+	  <h1 class="mainAreaTitle">
 	    <c:out value="${param.title}" />
 	    <c:if test="${param.titleIcon != ''}">
 	      <img src="/resources/img/icon/${param.titleIcon}.png"
@@ -57,7 +57,7 @@
 											<div class="heartContainer">
 											  <input type="checkbox" id="${list.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
 											  <label for="${list.MOIM_IDXX}"></label>
-											  <span class="heartCount main" data-count-id="${list.MOIM_IDXX}">${list.LIKE_COUNT}</span>
+											  <span class="heartCount" data-count-id="${list.MOIM_IDXX}">${list.LIKE_COUNT}</span>
 										  </div>
 										</div>
 									</div>
