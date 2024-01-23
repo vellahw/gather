@@ -225,6 +225,7 @@ document.addEventListener("DOMContentLoaded", function(){
    * 버튼 제어
    */
   if(sessionStorage.getItem("USER_NUMB") == null) { // 로그인X
+
     document.querySelector('.loginPlz').style.display = 'block';
 
   } else { //로그인 했다면
@@ -266,20 +267,8 @@ document.addEventListener("DOMContentLoaded", function(){
 
       // Example usage
       updateButtonUI(detail.APPR_YSNO);
-      
+
     }
-
-  
-
-    // $.ajax({
-    //   type: "POST",
-    //   url: "/gatherJoin.com",
-    //   data: JSON.stringify(data),
-    //   contentType: "application/json",
-    //   success: function (result) {
-    //   }
-    // });
-    
   }
 
 
@@ -293,25 +282,69 @@ function addClickListener(element, callback) {
   element.addEventListener('click', callback);
 }
 
-// 예제 사용
+// 참여 유효성 검사
 function onClickHandler() {
-  const { MINN_AGEE, MAXX_AGEE, GNDER_CODE } = detail;
+  const { MINN_AGEE, MAXX_AGEE, GNDR_CODE, MOIM_IDXX, APPR_YSNO } = detail;
   const { USER_AGEE, USER_GNDR, USER_JUMIN2 } = sessionStorage;
+  let WAIT_YSNO;
 
   if (isAgeOutOfRange(MINN_AGEE, MAXX_AGEE, USER_AGEE)) {
+
     comAlert2(4, null, '회원님의 나이가 모임의 연령대에 맞지 않습니다.');
-  } else if (isGenderMismatch(GNDER_CODE, USER_JUMIN2)) {
-    comAlert2(4, null, getGenderMismatchMessage(GNDER_CODE));
+
+  } else if (isGenderMismatch(GNDR_CODE, USER_JUMIN2)) {
+
+    comAlert2(4, null, getGenderMismatchMessage(GNDR_CODE));
+
+  } else {
+
+    if(APPR_YSNO == 'N') {
+      WAIT_YSNO = 'N'
+    } else {
+      WAIT_YSNO = 'Y'
+    }
+
+    const data = {
+        MOIM_IDXX : MOIM_IDXX
+      , WAIT_YSNO : WAIT_YSNO
+    }
+
+    comAjax(
+      "POST"
+      , "/moimJoin.com"
+      , JSON.stringify(data)
+      , "application/json"
+      , alert("흠")
+    );
+
   }
+
 }
 
 function isAgeOutOfRange(minAge, maxAge, userAge) {
-  return userAge < minAge || userAge > maxAge;
+
+  if(minAge == 0 && maxAge == 100) {
+
+    return false;
+
+  } else {
+
+    return userAge < minAge || userAge > maxAge;
+
+  }
 }
 
 function isGenderMismatch(moimGender, userJumin2) {
-  return (moimGender === 'M' && userJumin2 === '1' && userJumin2 === '3') ||
-         (moimGender === 'W' && userJumin2 === '2' && userJumin2 === '4');
+  if(moimGender == null) {
+
+    return false;
+
+  } else {
+    
+    return (moimGender === 'M' && userJumin2 === '1' && userJumin2 === '3') ||
+           (moimGender === 'W' && userJumin2 === '2' && userJumin2 === '4');
+
+  }
 }
 
 function getGenderMismatchMessage(moimGender) {
