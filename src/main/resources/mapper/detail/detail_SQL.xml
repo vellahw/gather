@@ -23,7 +23,7 @@
               , 'N'
               , #{WAIT_YSNO}
               , SYSDATE
-              );
+              )
       		]]>
    </insert>
    

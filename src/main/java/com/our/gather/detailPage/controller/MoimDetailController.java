@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -73,10 +74,13 @@ public class MoimDetailController {
 	// 모임참여
 	@RequestMapping("/moimJoin.com")
 	@ResponseBody
-	public Map<Object, String> moimJoin(
-			@RequestParam(value = "MOIM_IDXX", required = false) String MOIM_IDXX,
-			@RequestParam(value = "WAIT_YSNO", required = false) String WAIT_YSNO, 
-			HttpSession session, HttpServletRequest request, CommandMap commandMap) throws Exception {
+	public Map<Object, String> moimJoin(@RequestBody Map<String, String> requestBody, HttpSession session, 
+			HttpServletRequest request, CommandMap commandMap) throws Exception {
+		
+		System.out.println("돌긴 도는가?" + requestBody);
+		
+		String MOIM_IDXX = requestBody.get("MOIM_IDXX");
+		String WAIT_YSNO = requestBody.get("WAIT_YSNO");
 
 		Map<Object, String> resultMap = new HashMap<>();
 
@@ -150,12 +154,12 @@ public class MoimDetailController {
 			moimDetailService.moimStateUpdate(commandMap.getMap(), commandMap);
 
 			resultMap.put("result", "success");
-			resultMap.put("message", "모임 참여에 성공하였습니다.");
+			resultMap.put("message", "상태변경 완료.");
 
 		} catch (Exception e) {
 
 			resultMap.put("result", "fail");
-			resultMap.put("message", "모임 참여에 실패하였습니다. 오류 메시지: " + e.getMessage());
+			resultMap.put("message", "상태변경 실패.\n 오류 메시지: " + e.getMessage());
 			System.out.println("error : " + e.getMessage());
 
 		}
