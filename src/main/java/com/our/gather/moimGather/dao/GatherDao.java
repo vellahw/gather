@@ -1,4 +1,4 @@
-package com.our.gather.gather.dao;
+package com.our.gather.moimGather.dao;
 
 import java.util.List;
 import java.util.Map;

@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     if(result.TYPE_CODE == "UR" ){  //일반 사용자
 
-                	    comAlert2(5,"로그인 완료", result.USER_NICK + "님 반갑습니다!", "let's gather!", "/gather.com");
+                	    comAlert2(5,"로그인 완료", result.USER_NICK + "님 반갑습니다!", "let's gather!", document.referrer);
 
                     } else if (result.TYPE_CODE == "DV" || result.TYPE_CODE == "AD") {  //관리자 또는 개발자.
 

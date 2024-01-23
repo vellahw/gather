@@ -59,20 +59,20 @@
 	  </div>
 	
 	  <form id="signupForm" action="/signup" method="post"  style="display:none;">
-	    <h2 class="LoginHead">회원가입</h2>
-	    <!-- 회원가입 폼의 필드들을 여기에 추가 -->
-	    <input type="text" name="newUsername" placeholder="New Username">
-	    <input type="password" name="newPassword" placeholder="New Password">
-	    <button type="button" onclick="nextSection('step2')">Next</button>
+		    <h2 class="LoginHead">회원가입</h2>
+		    <!-- 회원가입 폼의 필드들을 여기에 추가 -->
+		    <input type="text" name="newUsername" placeholder="New Username">
+		    <input type="password" name="newPassword" placeholder="New Password">
+		    <button type="button" onclick="nextSection('step2')">Next</button>
 	  </form>
 	
 	  <!-- Step 2: 추가 정보 입력 -->
 	  <form id="step2" action="/signup" method="post" style="display:none;">
-	  <h2 class="LoginHead">회원가입 - 추가 정보 입력</h2>
-	  <!-- 회원가입 폼의 필드들을 여기에 추가 -->
-	  <input type="text" name="additionalInfo" placeholder="Additional Info">
-	  <button type="button" onclick="prevSection()">Back</button>
-	  <button type="button" onclick="nextSection('step3')">Next</button>
+		  <h2 class="LoginHead">회원가입 - 추가 정보 입력</h2>
+		  <!-- 회원가입 폼의 필드들을 여기에 추가 -->
+		  <input type="text" name="additionalInfo" placeholder="Additional Info">
+		  <button type="button" onclick="prevSection()">Back</button>
+		  <button type="button" onclick="nextSection('step3')">Next</button>
 	  </form>
 	
 	  <!-- Step 3: 회원가입 완료 -->

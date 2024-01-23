@@ -1,4 +1,4 @@
-package com.our.gather.gather.service;
+package com.our.gather.moimGather.service;
 
 import java.util.List;
 import java.util.Map;
