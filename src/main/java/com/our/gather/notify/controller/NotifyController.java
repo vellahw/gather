@@ -21,18 +21,20 @@ public class NotifyController {
 	@Resource(name = "NotifyService")
 	private NotifyService notifyService;
 
-	//알림 insert
+	// 알림 insert
 	@ResponseBody
 	@RequestMapping("/insertNotify.com")
-	public  ResponseEntity<String> insertNotify(@RequestBody Map<String, String> map, HttpSession session,
-				HttpServletRequest request, CommandMap commandMap) throws Exception {
-		
-            	commandMap.put("USER_NUMB", map.get("POST_USER"));
-            	commandMap.put("SEND_USER", session.getAttribute("USER_NUMB"));
-            	commandMap.put("BOAD_IDXX", map.get("BOAD_IDXX"));
-            	commandMap.put("NOTI_CODE", map.get("NOTI_CODE"));
-            	notifyService.insertNotify(commandMap.getMap(), commandMap);
-	
+	public ResponseEntity<String> insertNotify(@RequestBody Map<String, String> map, HttpSession session,
+			HttpServletRequest request, CommandMap commandMap) throws Exception {
+
+		System.out.println("승현이의 노고 ㅎㅎㅎㅎ 짱이다 내남푠    "+map);
+
+		commandMap.put("USER_NUMB", map.get("POST_USER"));
+		commandMap.put("SEND_USER", session.getAttribute("USER_NUMB"));
+		commandMap.put("BOAD_IDXX", map.get("BOAD_IDXX"));
+		commandMap.put("NOTI_CODE", map.get("NOTI_CODE"));
+		notifyService.insertNotify(commandMap.getMap(), commandMap);
+
 		return ResponseEntity.ok("Success");
 	}
 

@@ -292,50 +292,64 @@ document.addEventListener("DOMContentLoaded", function(){
       comAlert2(4, null, getGenderMismatchMessage(GNDR_CODE));
 
     } else {
-      if(yourStateValue != null) {
+      if(yourStateValue != 'null') {
         const yourState = parseString(yourStateValue).result;
         const { MAST_YSNO, BANN_YSNO, WAIT_YSNO } = yourState;
 
         // 일반 참여자
         if(MAST_YSNO == 'N') {
+          let states;
 
-          let waitYsNo; // Ajax로 보낼 WAIT_YSNO 값
+        //   let waitYsNo; // Ajax로 보낼 WAIT_YSNO 값
   
-          /*==== '참여하기' ====*/
-          APPR_YSNO == 'N' ? waitYsNo = 'N' : waitYsNo = 'Y'; // APPR_YSNO 값에 따른 WAIT_YSNO 값 설정
+        //   /*==== '참여하기' ====*/
+        //   APPR_YSNO == 'N' ? waitYsNo = 'N' : waitYsNo = 'Y'; // APPR_YSNO 값에 따른 WAIT_YSNO 값 설정
   
-          const data = {
-              MOIM_IDXX : MOIM_IDXX
-            , WAIT_YSNO : waitYsNo
-          }
+        //   const data = {
+        //       MOIM_IDXX : MOIM_IDXX
+        //     , WAIT_YSNO : waitYsNo
+        //   }
   
-          runMoimJoin(data, APPR_YSNO);
+        //   runMoimJoin(data, APPR_YSNO);
         
-        } else 
+        // } else 
 
-        /*==== '참여취소' ====*/
-        if(BANN_YSNO == 'N' && WAIT_YSNO == 'N') {
-          let states = 'exit';
-
-          const data = {
+          /*==== '참여취소' ====*/
+          if(BANN_YSNO == 'N' && WAIT_YSNO == 'N') {
+            states = 'exit';
+            let data = {
               MOIM_IDXX : MOIM_IDXX
             , USER_NUMB : USER_NUMB
             , states : states
           }
+            runStateUpdate(data);
+            comNotify('003', detail.USER_NUMB);
 
-          runJoinCancle(data);
-
-        } else if(BANN_YSNO == 'Y' && WAIT_YSNO == 'Y') {
-          let states = 'normal';
-
-          const data = {
+          } else if(BANN_YSNO == 'Y' && WAIT_YSNO == 'Y') {
+            states = 'normal';
+            let data = {
               MOIM_IDXX : MOIM_IDXX
             , USER_NUMB : USER_NUMB
             , states : states
           }
-
-          runJoinCancle(data);
+            runStateUpdate(data, "Y");
+            comNotify('001', detail.USER_NUMB);
+          }
         }
+      } else {
+
+        let waitYsNo; // Ajax로 보낼 WAIT_YSNO 값
+  
+        /*==== '참여하기' ====*/
+        APPR_YSNO == 'N' ? waitYsNo = 'N' : waitYsNo = 'Y'; // APPR_YSNO 값에 따른 WAIT_YSNO 값 설정
+
+        const data = {
+            MOIM_IDXX : MOIM_IDXX
+          , WAIT_YSNO : waitYsNo
+        }
+
+        runMoimJoin(data, APPR_YSNO);
+        comNotify('001', detail.USER_NUMB);
       }
 
     }
@@ -362,15 +376,40 @@ function runMoimJoin(data) {
 }
 
 // 취소하기 동작 함수
-function runStateUpdate(data) {
+function runStateUpdate(data, state) {
   comConfirm2(
-      '모임 참여를 취소하시겠어요?'
+      getTitleText(state)
     , null
     , 'warning'
-    , '취소되었습니다.'
+    , getContentText(state)
     , 'success'
-    , stateUpdate
-  )
+    , function(){
+       comAjax(
+      "POST"
+      , "/moimStateUpdate.com"
+      , JSON.stringify(data)
+      , "application/json"
+      , function(){
+          location.reload();
+        }
+    )}
+  );
+
+  function getTitleText(state) {
+    if(state == 'Y') {
+      return '모임에 재참여 하시겠어요?';
+    } else {
+      return '모임 참여를 취소하시겠어요?';
+    }
+  }
+
+  function getContentText(state) {
+    if(state == 'Y') {
+      return '모임에 참여되었어요!';
+    } else {
+      return '참여가 취소되었어요.';
+    }
+  }
 
   function stateUpdate() {
     comAjax(
@@ -382,7 +421,6 @@ function runStateUpdate(data) {
           location.reload();
         }
     );
-    console.log(data.states)
   }
 }
 

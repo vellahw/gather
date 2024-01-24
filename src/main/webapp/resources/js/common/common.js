@@ -16,7 +16,7 @@ function comAjax(targetType, targetUrl, targetData, targetContentType, targetSuc
         console.log(xhr.responseText);
     }
   });
-  
+
 }
 
 
@@ -359,7 +359,7 @@ function parseString(targetValue) {
 240125 Hwai
 name:parseString
 Purpose: 알림 insert
-parameter:(situation: 
+parameter:(situation: (String 타입)
            001: 방장이 받는 참여알림
            002: 방장이 받는 참여요청
            003: 방장이 받는 탈퇴알림
@@ -372,12 +372,12 @@ parameter:(situation:
            postUser: 알림을 받는 user_numb)
 */	
 function comNotify(situation, postUser) {
-
+    const queryParams = new URLSearchParams(window.location.search);
     const boadidx = queryParams.get("idx");
 
     const data = {
         NOTI_CODE : situation,
-        MOIM_IDXX : boadidx,
+        BOAD_IDXX : boadidx,
         POST_USER : postUser
         }
 

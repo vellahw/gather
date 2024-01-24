@@ -10,7 +10,7 @@
                LPAD(NVL(MAX(CAST(SUBSTR(NOTI_SEQC, 7) AS NUMBER)), 0) + 1, 4, '0') AS NOTI_SEQC
           FROM TB_NOTIFY
          WHERE USER_NUMB = #{USER_NUMB} 
-           AND TO_CHAR(SYSDATE, 'YYMMDD') = SUBSTR(NOTI_SEQC, 1, 6);
+           AND TO_CHAR(SYSDATE, 'YYMMDD') = SUBSTR(NOTI_SEQC, 1, 6)
         ]]>
     	</selectKey>
   		<![CDATA[
