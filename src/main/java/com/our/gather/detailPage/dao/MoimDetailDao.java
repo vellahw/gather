@@ -17,7 +17,7 @@ public class MoimDetailDao extends AbstractDao {
 
 	// 모임 참여상태 변경
 	public void moimStateUpdate(Map<String, Object> map, CommandMap commandMap) throws Exception {
-		insert("detail.moimStateUpdate", map);
+		update("detail.moimStateUpdate", map);
 	}
 
 }

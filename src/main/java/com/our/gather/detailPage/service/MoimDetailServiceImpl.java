@@ -27,7 +27,7 @@ public class MoimDetailServiceImpl implements MoimDetailService {
 	// 모임 참여 상태변경
 	@Override
 	public void moimStateUpdate(Map<String, Object> map, CommandMap commandMap) throws Exception {
-		moimDetailDao.moimJoin(map, commandMap);
+		moimDetailDao.moimStateUpdate(map, commandMap);
 	}
 
 }
