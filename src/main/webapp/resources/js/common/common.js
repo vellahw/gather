@@ -256,7 +256,10 @@ function comAlert3(title, content, icon,  okFn){
 240114 Hwai
 name:comConfirm
 Purpose:컨펌창
-parameter:(title : 제목, content: 내용 , icon : 아이콘 , okPath:확인 후 경로 )
+parameter:(title : 제목
+         , content: 내용 
+         , icon : 아이콘 
+         , okPath:확인 후 경로 )
 */ 
 function comConfirm(title, content, icon, okPath){ 
 
@@ -281,19 +284,16 @@ function comConfirm(title, content, icon, okPath){
 /* 
 240124 Hanwon
 name:comConfirm2
-Purpose:컨펌창
+Purpose:컨펌 후 확인 시 알럿
 parameter:(title: 제목
          , content: 내용
          , icon: 아이콘
          , okTitle: '네' 눌렀을 때 뜨는 제목
          , okIcon: '네' 눌렀을 때 뜰 아이콘
          , okFn: '네' 누른 후의 동작
-         , noTitle: '아니오' 눌렀을 때 뜨는 제목
-         , noIcon: '아니오' 눌렀을 때 뜰 아이콘
-         , noFn: '아니오' 누른 후의 동작
          )
 */ 
-function comConfirm2(title, content, icon, okTitle, okIcon, okFn, noTitle, noIcon, noFn) { 
+function comConfirm2(title, content, icon, okTitle, okIcon, okFn) { 
   swal({
       title: title,
       text: content,
@@ -353,4 +353,39 @@ function parseString(targetValue) {
       
   return { result: result };
 
+}
+
+/* 
+240125 Hwai
+name:parseString
+Purpose: 알림 insert
+parameter:(situation: 
+           001: 방장이 받는 참여알림
+           002: 방장이 받는 참여요청
+           003: 방장이 받는 탈퇴알림
+           004: 방장이 받는 회원의 리뷰작성
+           005: 방장이 받는 좋아요 Insert
+           006: 방장이 받는 타회원의 댓글
+           007: 회원이 받는 방장의 승인 허가
+           008: 회원이 받는 방장의 승인 불허
+           009: 회원이 받는 방장의 강제퇴장
+           postUser: 알림을 받는 user_numb)
+*/	
+function comNotify(situation, postUser) {
+
+    const boadidx = queryParams.get("idx");
+
+    const data = {
+        NOTI_CODE : situation,
+        MOIM_IDXX : boadidx,
+        POST_USER : postUser
+        }
+
+      
+    comAjax( "POST"
+            , "/insertNotify.com"
+            , JSON.stringify(data)
+            , "application/json");
+            
+  
 }
