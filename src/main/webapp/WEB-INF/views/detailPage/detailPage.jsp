@@ -140,7 +140,7 @@
 		    
 		  <button type="button" class="basicBtn" id="updateBtn">수정하기</button>
      
-      <button type="button" class="basicBtn" id="joinCancle">참여취소</button>
+      <button type="button" class="basicBtn" id="reJoin">참여하기</button>
 	  </div>
 	</div>
 	

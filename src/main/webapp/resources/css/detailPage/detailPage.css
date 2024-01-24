@@ -249,6 +249,6 @@
   width: 100%;
 }
 
-#joinMoimBtn, #reviewBtn, #updateBtn, #joinCancle {
+#joinMoimBtn, #reviewBtn, #updateBtn, #reJoin {
 	display: none;
 }
