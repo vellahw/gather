@@ -1,12 +1,12 @@
 package com.our.gather.detailPage.controller;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -106,10 +106,8 @@ public class MoimDetailController {
 	// 모임참여 상태변경
 	@RequestMapping("/moimStateUpdate.com")
 	@ResponseBody
-	public ModelAndView moimStateUpdate(@RequestBody Map<String, String> requestBody, HttpSession session, 
+	public ResponseEntity<String> moimStateUpdate(@RequestBody Map<String, String> requestBody, HttpSession session, 
 			HttpServletRequest request, CommandMap commandMap) throws Exception {
-		
-		ModelAndView mv = new ModelAndView("jsonView");
 		
 		String USER_NUMB = requestBody.get("USER_NUMB");
 		String MOIM_IDXX = requestBody.get("MOIM_IDXX");
@@ -145,16 +143,14 @@ public class MoimDetailController {
 				
 			moimDetailService.moimStateUpdate(commandMap.getMap(), commandMap);
 
-			mv.addObject("result", "success");
+			return ResponseEntity.ok("Success");
 
 		} catch (Exception e) {
 
-			mv.addObject("result", "fail");
-			System.out.println("error : " + e.getMessage());
+			return ResponseEntity.ok("fail");
 
 		}
 
-		return mv;
 	}
 
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="notify">
+
+	<insert id="insertNotify" parameterType="hashMap">
+	 	<selectKey keyProperty="NOTI_SEQC" order="BEFORE" resultType="String">
+	 	<![CDATA[
+        SELECT TO_CHAR(SYSDATE, 'YYMMDD') ||
+               LPAD(NVL(MAX(CAST(SUBSTR(NOTI_SEQC, 7) AS NUMBER)), 0) + 1, 4, '0') AS NOTI_SEQC
+          FROM TB_NOTIFY
+         WHERE USER_NUMB = #{USER_NUMB} 
+           AND TO_CHAR(SYSDATE, 'YYMMDD') = SUBSTR(NOTI_SEQC, 1, 6);
+        ]]>
+    	</selectKey>
+  		<![CDATA[
+	     INSERT INTO TB_NOTIFY (
+			          USER_NUMB     /* 알림 받는 USER_NUMB */
+			        , NOTI_SEQC     /* 알림 테이블 체번 (yyyyMMdd0001) */
+			        , SEND_USER     /* 알림 보내는 USER_NUMB */
+			        , BOAD_IDXX     /* 게시글 PK */
+			        , NOTI_CODE     /* 알림코드 */
+			        , READ_YSNO     /* 열람여부 */
+			        , REGG_DATE     /* 알림날짜 */
+			 ) VALUES (
+			          #{USER_NUMB}     
+			        , #{NOTI_SEQC}    
+			        , #{SEND_USER}    
+			        , #{BOAD_IDXX}     
+			        , #{NOTI_CODE}    
+			        , 'N'     		
+			        , SYSDATE    
+	         ) 
+ 		 ]]>
+	 </insert>
+	
+</mapper>
