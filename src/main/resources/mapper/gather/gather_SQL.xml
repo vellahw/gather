@@ -225,7 +225,7 @@
 		                , APPR_YSNO															/* 승인 여부 */
 		                , MINN_AGEE						 									/* 최소나이 */
                 		, MAXX_AGEE															/* 최대나이 */
-										, APPR_LMIT															/* 모임 제한 KR */
+						, APPR_LMIT															/* 모임 제한 KR */
 		                , GNDR_CODE															/* 모임 성별 코드 */											
 		                , PREGI_NAME														/* 부모 지역명 */
 		                , REGI_NAME															/* 자식 지역명 */

@@ -47,18 +47,17 @@
 										<div class="userContainer">
 											<div class="userProfileWrap">
 												<div class="profileImgWrap">
-													<img src="${list.USER_IMAG}"
-															class="profileImg" alt="프로필사진">
+													<img src="${list.USER_IMAG}"class="profileImg" alt="프로필사진">
 												</div>
 												<span class="nickname">${list.USER_NICK}</span>
 											</div>
 											<div class="heartWrap">
 												<input type="hidden" data-like-id="${list.MOIM_IDXX}" value="${list.LIKE_YSNO}" id="heartYN"/>
 												<div class="heartContainer">
-												  <input type="checkbox" id="${list.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
-												  <label for="${list.MOIM_IDXX}"></label>
-                          <input id="realCount" type="hidden" data-realCount-id="${list.MOIM_IDXX}" value="${list.LIKE_COUNT}" >
-												  <span id="showCount"class="heartCount main" data-ShowCount-id="${list.MOIM_IDXX}"></span>
+											    	<input type="checkbox" id="${list.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
+													<label for="${list.MOIM_IDXX}"></label>
+		                         				    <input id="realCount" type="hidden" data-realCount-id="${list.MOIM_IDXX}" value="${list.LIKE_COUNT}" >
+													<span id="showCount"class="heartCount main" data-ShowCount-id="${list.MOIM_IDXX}"></span>
 											  </div>
 											</div>
 										</div>
