@@ -143,7 +143,7 @@ public class MoimDetailController {
 				
 			}
 				
-			moimDetailService.moimJoin(commandMap.getMap(), commandMap);
+			moimDetailService.moimStateUpdate(commandMap.getMap(), commandMap);
 
 			mv.addObject("result", "success");
 

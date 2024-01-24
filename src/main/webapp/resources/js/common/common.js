@@ -241,10 +241,7 @@ function comAlert3(title, content, icon,  okFn){
         title: title,
         text: content,
         icon: icon,
-        buttons: [
-            '아니오',
-            '네'
-        ],
+        buttons:'확인',
         }).then(function(isConfirm) {
         if (isConfirm) {
             okFn

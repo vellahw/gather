@@ -205,6 +205,13 @@ public class MainController {
 
 			dataList = List.of("A01", "A02", "A03", "A04", "A05"); // "test끝나면 지우기"
 			commandMap.put("WEATH_CATE", dataList); // B14
+			
+		case "cold":
+			
+			// dataList = List.of("A01", "A02", "A07", "A09", "B05", "B10", "B16", "D02",
+			// "D03", "D04", "D05", "D06", "D11", "D12", "D13", "D14", "D15", "D16");
+			dataList = List.of("A01", "A02", "A03", "A04", "A05"); // "test끝나면 지우기"
+			commandMap.put("WEATH_CATE", dataList); // B14
 
 			break;
 		}

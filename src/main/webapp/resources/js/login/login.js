@@ -153,10 +153,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 } else if (result.result == "fail"){    //정지된 사용자
 
-                    comAlert3("정지된 계정입니다.", "error" 
+                    comAlert2(3
+                              , "정지된 계정입니다." 
                               , result.USER_NICK + "님의 계정은 현재 정지상태입니다.\n 정지사유:  " 
-                              + result.BANN_CNTT 
-                              + "\n 정지기간:  " + result.BANN_STRT + " ~ " + result.BANN_ENDD, "확인", null);
+                                + result.BANN_CNTT 
+                                + "\n 정지기간:  " + result.BANN_STRT + " ~ " + result.BANN_ENDD
+                              , "확인", null);
 
                 } else {
 

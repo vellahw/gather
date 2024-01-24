@@ -50,14 +50,20 @@ document.addEventListener("DOMContentLoaded", function(){
             success : function(data) {
 
                 const weatherTitleArea = document.getElementById('weatherTitle');
+                //const tempArea = weatherTitleArea.querySelector('.tempArea');
+
                 
                 var weatherType = "";
                 var cityName = data.name;
                 var cityCode = city[cityName];
                 var weather = (data.weather[0].icon).substr(0, 2); //날씨코드
-                var temp = (data.main.temp).toFixed(1);
+                var temp = Number((data.main.temp).toFixed(1));
+                console.log(typeof(temp));
+                console.log("온도"+temp+"\n날씨"+weather);
+                
+                //tempArea.innerHTML = temp;
 
-                if(temp < 30){  //날씨data 결과에 따른 title
+                if(temp > 0 && temp < 27){  //날씨data 결과에 따른 title
             
                     if(weather == '01' || weather == '02'){ 
                         
@@ -82,44 +88,51 @@ document.addEventListener("DOMContentLoaded", function(){
 
                     }else if(weather == '03' || weather == '04' || weather == '50'){
                         
-                    weatherType = "cloudy";
-                    weatherTitleArea.innerHTML = '구름 많은 흐린 날 '                 
-                                                + '<img src="/resources/img/icon/weather/cloudy.png" class="areaTitleIcon"/>' 
-                                                + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
+                        weatherType = "cloudy";
+                        weatherTitleArea.innerHTML = '구름 많은 흐린 날 '                 
+                                                    + '<img src="/resources/img/icon/weather/cloudy.png" class="areaTitleIcon"/>' 
+                                                    + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
 
                     }else if(weather == '09' || weather == '10'){
                         
-                    weatherType = "rainy";
-                    weatherTitleArea.innerHTML = '비 오는 날 '                 
-                                                + '<img src="/resources/img/icon/weather/rainy.png" class="areaTitleIcon"/>' 
-                                                + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
+                        weatherType = "rainy";
+                        weatherTitleArea.innerHTML = '비 오는 날 '                 
+                                                    + '<img src="/resources/img/icon/weather/rainy.png" class="areaTitleIcon"/>' 
+                                                    + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
 
 
                     }else if(weather == '11'){ 
                         
-                    weatherType = "thunder";
-                    weatherTitleArea.innerHTML = '천둥 번개 치는 날 '                 
-                                                + '<img src="/resources/img/icon/weather/thunder.png" class="areaTitleIcon"/>' 
-                                                + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
+                        weatherType = "thunder";
+                        weatherTitleArea.innerHTML = '천둥 번개 치는 날 '                 
+                                                    + '<img src="/resources/img/icon/weather/thunder.png" class="areaTitleIcon"/>' 
+                                                    + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
 
 
                     }else if(weather == '13'){
                         
-                    weatherType = "snowy";
-                    weatherTitleArea.innerHTML = '눈 오는 날 '                 
-                                                + '<img src="/resources/img/icon/weather/snow.png" class="areaTitleIcon"/>' 
-                                                + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
+                        weatherType = "snowy";
+                        weatherTitleArea.innerHTML = '눈 오는 날 '                 
+                                                    + '<img src="/resources/img/icon/weather/snow.png" class="areaTitleIcon"/>' 
+                                                    + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
 
                     }
                     
-                } else if(temp >= 30 && weather == '01'){
+                } else if(temp >= 27 && weather == '01'){
                         
-                        weatherType = "hot";
-                        weatherTitleArea.innerHTML = '오늘 같이 더운 날 '                 
-                                                + '<img src="/resources/img/icon/weather/sunny.png" class="areaTitleIcon"/>' 
-                                                + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
+                    weatherType = "hot";
+                    weatherTitleArea.innerHTML = '오늘 같이 더운 날 '                 
+                                            + '<img src="/resources/img/icon/weather/sunny.png" class="areaTitleIcon"/>' 
+                                            + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
 
+                } else if(temp <= 0 && weather == '01'){
+                        
+                    weatherType = "cold";
+                    weatherTitleArea.innerHTML = '오늘 같이 추운 날 '                 
+                                            + '<img src="/resources/img/icon/weather/cold.png" class="areaTitleIcon"/>' 
+                                            + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
                 }
+
 
             $.ajax({ //날씨 정보전달
 
