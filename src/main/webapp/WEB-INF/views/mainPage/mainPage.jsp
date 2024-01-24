@@ -34,6 +34,8 @@
 <div class="contentsContainer mainContainer">
   <div id="weatherSection">
   	<h1 id="weatherTitle" class="mainAreaTitle">
+  	<span class="tempArea">
+  	</span>
   	</h1>
 		<div class="slideWrap">
   	  <div class="slideContainer">
