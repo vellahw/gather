@@ -175,11 +175,11 @@ function comAlert(title){
 240111 Hwai
 name:comAlert2
 Purpose:알럿창
-parameter:(type : 알럿타입 , title : 제목, content: 내용 , url : 확인 후 전송url
+parameter:(type : 알럿타입 , title : 제목, content: 내용 , okFun : 확인 후 function
 */ 
 function comAlert2(type, title, content, button , okFun){
 
-    //타입별 처리 실시 (1=일반/2=성공/3=경고/4=실패/5=확인 후 redirectUrl)
+    //타입별 처리 실시 (1=일반/2=성공/3=경고/4=실패/5=확인 후 function)
 
     if(type == 1){                            
         swal({ 
@@ -255,7 +255,7 @@ function comAlert3(title, content, icon,  okFn){
 }
 
 /* 
-admin:Hwai
+240114 Hwai
 name:comConfirm
 Purpose:컨펌창
 parameter:(title : 제목, content: 내용 , icon : 아이콘 , okPath:확인 후 경로 )

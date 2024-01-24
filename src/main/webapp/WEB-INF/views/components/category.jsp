@@ -24,7 +24,7 @@
                             <c:set var="childCode" value="${childCate.PARENTS_CODE}" />
                             <input id="ccode"type="hidden" value="${childCate.CATE_CODE}"/>
                             <c:if test="${parentsCode == childCode}">
-                                <li class="childCateItem" onClick="cateOnclick('${childCate.CATE_CODE}');">
+                                <li class="childCateItem" data-code2="${childCate.CATE_CODE}" onClick="cateOnclick('${childCate.CATE_CODE}');">
                                     <c:out value="${childCate.CATE_NAME}" />
                                 </li>
                             </c:if>
