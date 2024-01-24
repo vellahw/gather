@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     sessionStorage.setItem('USER_GNDR',result.USER_GNDR);       //회원성별
 
                     if(result.TYPE_CODE == "UR" ){  //일반 사용자
-
+                      
                 	    comAlert2( 5
                                   ,"로그인 완료"
                                   , result.USER_NICK + "님 반갑습니다!"
