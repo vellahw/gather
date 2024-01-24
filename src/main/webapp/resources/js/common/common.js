@@ -16,6 +16,7 @@ function comAjax(targetType, targetUrl, targetData, targetContentType, targetSuc
         console.log(xhr.responseText);
     }
   });
+  
 }
 
 
@@ -292,9 +293,7 @@ parameter:(title: 제목
          , noFn: '아니오' 누른 후의 동작
          )
 */ 
-function comConfirm2(title, content, icon,
-                     okTitle, okIcon, okFn,
-                     noTitle, noIcon, noFn) { 
+function comConfirm2(title, content, icon, okTitle, okIcon, okFn, noTitle, noIcon, noFn) { 
   swal({
       title: title,
       text: content,
@@ -307,13 +306,17 @@ function comConfirm2(title, content, icon,
       .then(
         function(isConfirm) {
           if (isConfirm) {
-            swal({
+            if(okTitle == null || okIcon == null) {
+              okFn;
+            } else {
+              swal({
               title: okTitle,
               icon: okIcon
-              })
-              .then( okFn );
+                })
+                .then( okFn ); // '네' 누른 후의 동작
+            }
           } else {
-            return false;
+            return false; // '아니오' 누른 후의 동작
           }
       })
 }
