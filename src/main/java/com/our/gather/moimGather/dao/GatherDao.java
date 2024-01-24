@@ -45,8 +45,7 @@ public class GatherDao extends AbstractDao {
 
 	// 게더맴버
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> getGatherMember(Map<String, Object> map, CommandMap commandMap,
-			HttpSession session) throws Exception {
+	public List<Map<String, Object>> getGatherMember(Map<String, Object> map, CommandMap commandMap) throws Exception {
 
 		List<Map<String, Object>> getGatherMember = (List<Map<String, Object>>) selectList("gather.getGatherMember",
 				map);

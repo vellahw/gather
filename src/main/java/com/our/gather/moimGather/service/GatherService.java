@@ -26,7 +26,7 @@ public interface GatherService {
 	
 	
 	//게더 멤버
-	List<Map<String, Object>> getGatherMember(Map<String, Object> map, HttpSession session, CommandMap commandMap)
+	List<Map<String, Object>> getGatherMember(Map<String, Object> map, CommandMap commandMap)
 			throws Exception;
 	
 	//로그인 회원 현재 게더 참여상태

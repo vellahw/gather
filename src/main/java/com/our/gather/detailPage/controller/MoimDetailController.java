@@ -46,9 +46,9 @@ public class MoimDetailController {
 
 		if (moimType.equals("GT")) {
 
-			mv.addObject("member", gatherService.getGatherMember(commandMap.getMap(), session, commandMap)); // 게더맴버
+
+			mv.addObject("member", gatherService.getGatherMember(commandMap.getMap(), commandMap)); // 게더맴버
 			mv.addObject("detail", gatherService.getGatherDetail(commandMap.getMap(), session, commandMap)); // 게더
-			
 			mv.addObject("img", gatherService.getGatherImg(commandMap.getMap(), commandMap)); // 게더 이미지
 
 			if (session.getAttribute("USER_NUMB") != null) {

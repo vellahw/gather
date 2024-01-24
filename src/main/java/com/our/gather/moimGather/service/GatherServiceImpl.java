@@ -74,15 +74,14 @@ public class GatherServiceImpl implements GatherService {
 	//게더 맴버 리스트
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED)
-	public List<Map<String, Object>> getGatherMember(Map<String, Object> map, HttpSession session,
-			CommandMap commandMap) throws Exception {
+	public List<Map<String, Object>> getGatherMember(Map<String, Object> map, CommandMap commandMap) throws Exception {
 		// TODO Auto-generated method stub
 		
 		System.out.println("USER_NUMB  "+ commandMap.get("USER_NUMB"));
 		System.out.println("commandMap  "+ commandMap.getMap());
 
 
-		return gatherDao.getGatherMember(map, commandMap, session);
+		return gatherDao.getGatherMember(map, commandMap);
 	}
 	
 	//로그인 한 회원의 게더 참여 상황.
