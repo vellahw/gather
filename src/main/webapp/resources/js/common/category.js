@@ -31,26 +31,26 @@ document.addEventListener("DOMContentLoaded", function(){
   240124 강승현
   해당 카테고리 진입시 active
   */
-  const PCATE_C0DE = document.querySelectorAll('#pcode');
-  const CCATE_CODE = document.querySelectorAll('#ccode');
+//   const PCATE_C0DE = document.querySelectorAll('#pcode');
+//   const CCATE_CODE = document.querySelectorAll('#ccode');
 
-  const params = new URL(location.href).searchParams;
-  const ccate = params.get('cate');  
-  const pcate = ccate.substring(0, 1); 
+//   const params = new URL(location.href).searchParams;
+//   const ccate = params.get('cate');  
+//   const pcate = ccate.substring(0, 1); 
 
-  // 부모 카테고리에 대한 처리
-for (let i = 0 ; PCATE_C0DE.length ; i++) {
-  if (PCATE_C0DE[i].value === pcate) {
+//   // 부모 카테고리에 대한 처리
+// for (let i = 0 ; PCATE_C0DE.length ; i++) {
+//   if (PCATE_C0DE[i].value === pcate) {
       
-  }
-}
+//   }
+// }
 
-// 자식 카테고리에 대한 처리
-for (let i = 0 ; CCATE_CODE.length ; i++) {
-  if (CCATE_CODE[i].value === ccate) {
+// // 자식 카테고리에 대한 처리
+// for (let i = 0 ; CCATE_CODE.length ; i++) {
+//   if (CCATE_CODE[i].value === ccate) {
    
-  }
-}
+//   }
+// }
 
 });
 

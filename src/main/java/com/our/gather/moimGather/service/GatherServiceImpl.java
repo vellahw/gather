@@ -76,6 +76,10 @@ public class GatherServiceImpl implements GatherService {
 	@Transactional(isolation = Isolation.READ_COMMITTED)
 	public List<Map<String, Object>> getGatherMember(Map<String, Object> map, CommandMap commandMap) throws Exception {
 		// TODO Auto-generated method stub
+		
+		System.out.println("USER_NUMB  "+ commandMap.get("USER_NUMB"));
+		System.out.println("commandMap  "+ commandMap.getMap());
+
 
 		return gatherDao.getGatherMember(map, commandMap);
 	}
