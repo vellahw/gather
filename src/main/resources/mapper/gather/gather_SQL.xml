@@ -28,7 +28,6 @@
                 , REGI_NAME							/* 지역명 */
                 , USER_NICK							/* 방장 닉네임 */
                 , USER_IMAG							/* 방장 프로필사진 */
-                , SELF_INTR							/* 방장 자기소개 */
                 , SMAL_DATE							/* 모임시간 (날짜 형식 MM.dd(day) 오전/오후 HH:mm) */
                 , FULL_DATE							/* 날짜 형식 (YYYY년 M월 오전/오후 HH:mm) */
                 , LIKE_COUNT						/* 좋아요 수 */
@@ -70,7 +69,6 @@
 		                      , REGI_NAME
 		                      , USER_NICK
 		                      , USER_IMAG
-		                      , SELF_INTR
 		                      , SMAL_DATE
 		                      , FULL_DATE
 		                      , LIKE_COUNT
@@ -102,7 +100,6 @@
 			                     , PREGI_NAME
 			                     , REGI_NAME
 			                     , USER_NICK
-			                     , SELF_INTR
 			                     , USER_IMAG
 			                     , SMAL_DATE
 			                     , FULL_DATE
@@ -131,7 +128,6 @@
 	                           , REGI_NAME
 	                           , USER_NICK
 	                           , USER_IMAG
-	                           , SELF_INTR
 	                           , SMAL_DATE
 	                           , FULL_DATE
 	                           , LIKE_COUNT
@@ -152,7 +148,6 @@
 	                                   , REGI_NAME
 	                                   , USER_NICK
 	                                   , USER_IMAG
-	                                   , SELF_INTR
 	                                   , SMAL_DATE
 	                                   , FULL_DATE
 	                                   , LIKE_COUNT
@@ -184,7 +179,6 @@
 			                     , REGI_NAME
 			                     , USER_NICK
 			                     , USER_IMAG
-			                     , SELF_INTR
 			                     , SMAL_DATE
 			                     , FULL_DATE
 			                     , LIKE_COUNT

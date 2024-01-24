@@ -263,7 +263,7 @@ document.addEventListener("DOMContentLoaded", function(){
       }
 
     // 모임 미참여
-    } else if(yourStateValue == 'null'){
+    } else if(yourStateValue == 'null') {
 
       // Example usage
       updateButtonUI(detail.APPR_YSNO);
@@ -342,14 +342,14 @@ function isGenderMismatch(moimGender, userJumin2) {
 
   } else {
     
-    return (moimGender === 'M' && userJumin2 === '1' && userJumin2 === '3') ||
-           (moimGender === 'W' && userJumin2 === '2' && userJumin2 === '4');
+    return (moimGender == 'M' && userJumin2 == '2' || userJumin2 == '4') ||
+           (moimGender == 'W' && userJumin2 == '1' || userJumin2 == '3');
 
   }
 }
 
 function getGenderMismatchMessage(moimGender) {
-  return moimGender === 'M' ? '여성회원만 참여가능한 모임입니다' : '남성회원만 참여가능한 모임입니다';
+  return moimGender === 'M' ? '남성 회원만 참여가능한 모임입니다' : '여성 회원만 참여가능한 모임입니다';
 }
 
 function updateButtonUI(approvalStatus) {
