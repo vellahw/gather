@@ -78,8 +78,6 @@ public class MoimDetailController {
 	public ModelAndView moimJoin(@RequestBody Map<String, String> requestBody, HttpSession session, 
 			HttpServletRequest request, CommandMap commandMap) throws Exception {
 		
-		System.out.println("돌긴 도는감?~~~~?    " + requestBody);
-		
 		ModelAndView mv = new ModelAndView("jsonView");
 		
 		String MOIM_IDXX = requestBody.get("MOIM_IDXX");
@@ -108,62 +106,55 @@ public class MoimDetailController {
 	// 모임참여 상태변경
 	@RequestMapping("/moimStateUpdate.com")
 	@ResponseBody
-	public Map<Object, String> moimStateUpdate(
-			@RequestParam(value = "USER_IDXX", required = false) String USER_IDXX,
-			@RequestParam(value = "MOIM_IDXX", required = false) String MOIM_IDXX,
-			@RequestParam(value = "WAIT_YSNO", required = false) String WAIT_YSNO,
-			@RequestParam(value = "BANN_YSNO", required = false) String BANN_YSNO,
-			HttpSession session, HttpServletRequest request, CommandMap commandMap) throws Exception {
+	public ModelAndView moimStateUpdate(@RequestBody Map<String, String> requestBody, HttpSession session, 
+			HttpServletRequest request, CommandMap commandMap) throws Exception {
+		
+		ModelAndView mv = new ModelAndView("jsonView");
+		
+		String USER_NUMB = requestBody.get("USER_NUMB");
+		String MOIM_IDXX = requestBody.get("MOIM_IDXX");
+		String states = requestBody.get("states");
 
-		Map<Object, String> resultMap = new HashMap<>();
-
+		
 		try {
 			
-			if(USER_IDXX == null) {
-				
-				commandMap.put("USER_IDXX", session.getAttribute("USER_NUMB"));
-				
-			} else {
-				
-				commandMap.put("USER_IDXX", USER_IDXX);
-			}
-			
+			commandMap.put("USER_NUMB", USER_NUMB);
 			commandMap.put("MOIM_IDXX", MOIM_IDXX);
-
-			if (WAIT_YSNO != null) {
-
-				commandMap.put("WAIT_YSNO", WAIT_YSNO);
-
-			} else {
-
-				commandMap.put("WAIT_YSNO", "N");
-
-			}
-
-			if (WAIT_YSNO != null) {
-
-				commandMap.put("BANN_YSNO", BANN_YSNO);
-
-			} else {
-
+			
+			if(states.equals("normal")) { 			//정상 참여자(대기여부:'N' 강퇴여부: 'N')
+				
+				commandMap.put("WAIT_YSNO", "N"); 	//대기여부
+				commandMap.put("BANN_YSNO", "N"); 	//강퇴여부
+				
+			} else if(states.equals("wait")){ 		//대기자 (대기여부:'Y' 강퇴여부: 'N')
+				
+				commandMap.put("WAIT_YSNO", "Y");
 				commandMap.put("BANN_YSNO", "N");
-
+				
+			} else if(states.equals("bann")) { 		//추방당한 회원 (대기여부:'N' 강퇴여부: 'Y')
+				
+				commandMap.put("WAIT_YSNO", "N");
+				commandMap.put("BANN_YSNO", "Y");
+			
+			} else if(states.equals("exit")) { 		//탈퇴 회원 (대기여부:'Y' 강퇴여부: 'Y')
+				
+				commandMap.put("WAIT_YSNO", "Y"); 
+				commandMap.put("BANN_YSNO", "Y"); 
+				
 			}
+				
+			moimDetailService.moimJoin(commandMap.getMap(), commandMap);
 
-			moimDetailService.moimStateUpdate(commandMap.getMap(), commandMap);
-
-			resultMap.put("result", "success");
-			resultMap.put("message", "상태변경 완료.");
+			mv.addObject("result", "success");
 
 		} catch (Exception e) {
 
-			resultMap.put("result", "fail");
-			resultMap.put("message", "상태변경 실패.\n 오류 메시지: " + e.getMessage());
+			mv.addObject("result", "fail");
 			System.out.println("error : " + e.getMessage());
 
 		}
 
-		return resultMap;
+		return mv;
 	}
 
 }
