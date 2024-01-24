@@ -31,8 +31,6 @@ document.addEventListener("DOMContentLoaded", function(){
   240124 강승현
   해당 카테고리 진입시 active
   */
-  debugger;
-
   const PCATE_CODE = document.querySelectorAll('#pcode');
   const params = new URL(location.href).searchParams;
   const cate = params.get('cate');  

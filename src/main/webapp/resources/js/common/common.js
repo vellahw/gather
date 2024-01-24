@@ -276,8 +276,32 @@ function comConfirm(title, content, icon, okPath){
         } else {
 
         }
-        })
+    })
+  }
 
+
+function testConfirm(title, content, icon, oKTitle, okIcon, okFn, noTitle, noIcon, noFn){ 
+    swal({
+        title: title,
+        text: content,
+        icon: icon,
+        buttons: [
+            '아니오',
+            '네'
+        ],
+        }).then(function(isConfirm) {
+
+        if (isConfirm) {
+            swal({
+                title: oKTitle,
+                icon: okIcon
+            }).then(
+                okFn
+            );
+        } else {
+            noFn
+        }
+    })
   }
 
 /* 
