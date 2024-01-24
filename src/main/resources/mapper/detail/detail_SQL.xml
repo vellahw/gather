@@ -34,7 +34,7 @@
             SET BANN_YSNO = #{BANN_YSNO}
               , WAIT_YSNO = #{WAIT_YSNO}
           WHERE MOIM_IDXX = #{MOIM_IDXX}
-                USER_IDXX = #{USER_NUMB}
+            AND USER_NUMB = #{USER_NUMB}
       		]]>
    </update>
 	

@@ -277,29 +277,46 @@ function comConfirm(title, content, icon, okPath){
   }
 
 
-function testConfirm(title, content, icon, oKTitle, okIcon, okFn, noTitle, noIcon, noFn){ 
-    swal({
-        title: title,
-        text: content,
-        icon: icon,
-        buttons: [
-            '아니오',
-            '네'
-        ],
-        }).then(function(isConfirm) {
-
-        if (isConfirm) {
+/* 
+240124 Hanwon
+name:comConfirm2
+Purpose:컨펌창
+parameter:(title: 제목
+         , content: 내용
+         , icon: 아이콘
+         , okTitle: '네' 눌렀을 때 뜨는 제목
+         , okIcon: '네' 눌렀을 때 뜰 아이콘
+         , okFn: '네' 누른 후의 동작
+         , noTitle: '아니오' 눌렀을 때 뜨는 제목
+         , noIcon: '아니오' 눌렀을 때 뜰 아이콘
+         , noFn: '아니오' 누른 후의 동작
+         )
+*/ 
+function comConfirm2(title, content, icon,
+                     okTitle, okIcon, okFn,
+                     noTitle, noIcon, noFn) { 
+  swal({
+      title: title,
+      text: content,
+      icon: icon,
+      buttons: [
+        '아니오',
+        '네'
+      ],
+      })
+      .then(
+        function(isConfirm) {
+          if (isConfirm) {
             swal({
-                title: oKTitle,
-                icon: okIcon
-            }).then(
-                okFn
-            );
-        } else {
-            noFn
-        }
-    })
-  }
+              title: okTitle,
+              icon: okIcon
+              })
+              .then( okFn );
+          } else {
+            return false;
+          }
+      })
+}
 
 /* 
 admin:Hanwon

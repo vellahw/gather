@@ -246,27 +246,33 @@ document.addEventListener("DOMContentLoaded", function(){
         // 디폴트 참여취소
         updateInnerHTML(joinMoimBtn, '참여취소')
         joinMoimBtn.addEventListener('click', ()=>{
-          testConfirm('모임 참여를 취소하시겠어요?', null, 'warning', '취소되었습니다.', 'success', joinCancle, function(){return false})
+          comConfirm2(
+              '모임 참여를 취소하시겠어요?'
+            , null
+            , 'warning'
+            , '취소되었습니다.'
+            , 'success'
+            , joinCancle)
+
+            const data = {
+              MOIM_IDXX : detail.MOIM_IDXX,
+              USER_NUMB : sessionStorage.USER_NUMB,
+              states : 'exit'
+            }
+    
+            function joinCancle(params) {
+              comAjax(
+                "POST"
+                , "moimStateUpdate.com"
+                , JSON.stringify(data)
+                , "application/json"
+                , function(){
+                    location.reload();
+                  }
+              );
+            }
         })
 
-        const data = {
-          MOIM_IDXX : detail.MOIM_IDXX,
-          USER_NUMB : sessionStorage.USER_NUMB,
-          states : 'exit'
-        }
-
-        function joinCancle(params) {
-          comAjax(
-            "POST"
-            , "moimStateUpdate.com"
-            , JSON.stringify(data)
-            , "application/json"
-            , function(){
-                alert("통신완?")
-              }
-          );
-          
-        }
 
         // if(yourState.BANN_YSNO == 'Y'){
 
@@ -282,7 +288,7 @@ document.addEventListener("DOMContentLoaded", function(){
       }
 
     // 모임 미참여
-    } else if(yourStateValue == 'null') {
+    } else if(yourStateValue == 'null'){
 
       // APPR_YSNO에 따라 참여하기/참여요청 버튼 띄움
       updateButtonUI(detail.APPR_YSNO);
