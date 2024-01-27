@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="/resources/css/common/layout/variable.css">
 <link rel="stylesheet" href="/resources/css/common/common.css">
 <link rel="stylesheet" href="/resources/css/common/layout/footer.css">
+<script src="/resources/js/common/search.js"></script>
+<script src="/resources/js/common/like.js"></script>
 <script src="/resources/js/common/layout/header.js"></script>
 <script src="/resources/js/common/common.js"></script>
 <script src="/resources/js/common/sweetalert.min.js"></script>

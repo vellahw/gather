@@ -7,7 +7,7 @@
 	<select id="hashTag" parameterType='hashmap'
 	   resultType="hashmap">
 	   <![CDATA[
-		SELECT
+		SELECT /* common.hashTag */
 		       HASH_IDXX
 		   	 , HASH_SEQC
 		     , HASH_TAGG

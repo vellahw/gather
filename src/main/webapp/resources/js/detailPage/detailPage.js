@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function(){
   const backgroundImg = document.querySelector('.backgroundImg'); 
   backgroundImg.src = img[0].src; // 백그라운드 이미지 초기화
 
+
   /**
    * 240118 장한원
    * 이미지 슬라이더
@@ -208,8 +209,27 @@ document.addEventListener("DOMContentLoaded", function(){
    * 멤버 프로필 오른쪽으로 이동
    */
   const countNode = document.getElementById('count');
-  const memberList = document.getElementById('memberList').value;
   const count = countNode.getAttribute('data-count'); // 참여한 멤버수
+  const memberList = document.getElementById('memberList').value;
+  const cleanedString = targetValue.replace(/[[]/g, '');
+          
+  // 등호를 콜론으로 대체, 키와 값을 큰따옴표로 감쌈
+  const jsonString = cleanedString.replace(/([^,=]+)=([^,=]+)/g, '"$1":"$2"');
+          
+  // JSON 타입으로 파싱
+  const result = JSON.parse(`{${jsonString}}`);
+  
+  for (let i=0; i< count; i++) {
+    let joinMemberList = [];
+  
+    if(memberList[i].BANN_YSNO == 'N' &&
+       memberList[i].WAIT_YSNO == 'N' &&
+       memberList[i].MAST_YSNO == 'N') {
+
+       joinMemberList.push(eachMember);
+    }
+    
+  }
 
   if(count > 1) { // 방장을 제외한 참여회원
     
@@ -251,6 +271,10 @@ document.addEventListener("DOMContentLoaded", function(){
         } else {
           // 디폴트 참여취소
           updateButtonUI(null, MAST_YSNO, 'cancel');
+
+          if(BANN_YSNO == 'N' && WAIT_YSNO == 'Y') {
+            document.querySelector('.bubble').style.display = 'flex';
+          }
         }
 
       // 방장
@@ -287,23 +311,21 @@ document.addEventListener("DOMContentLoaded", function(){
   function updateButton(element, text, state) {
     element.innerHTML = text;
     element.dataset.state = state;
-    addClickListener(element, onClickHandler);
-  }
-  
-  // 클릭 이벤트 함수
-  function addClickListener(element, callback) {
-    element.addEventListener('click', callback);
+    element.addEventListener('click', onClickHandler);
   }
   
   // 참여 유효성 검사
   function onClickHandler() {
-    const { MINN_AGEE, MAXX_AGEE, GNDR_CODE, MOIM_IDXX, APPR_YSNO } = detail;
+    const { MINN_AGEE, MAXX_AGEE, GNDR_CODE, MOIM_IDXX, APPR_YSNO, MAXX_PEOP, MEMB_COUNT } = detail;
     const { USER_AGEE, USER_JUMIN2, USER_NUMB } = sessionStorage;
     const yourStateValue = document.getElementById('yourState').value;
     
+    if(MAXX_PEOP == MEMB_COUNT){
+      comAlert2(4, '참여인원이 가득 찼어요');
+
     // 나이 체크
-    if (isAgeOutOfRange(MINN_AGEE, MAXX_AGEE, USER_AGEE)) {
-      comAlert2(4, null, '회원님의 나이가 모임의 연령대에 맞지 않아요.');
+    } else if (isAgeOutOfRange(MINN_AGEE, MAXX_AGEE, USER_AGEE)) {
+      comAlert2(4, null, '회원님의 나이가 모임의 연령대에 맞지 않아요');
 
     // 성별 체크
     } else if (isGenderMismatch(GNDR_CODE, USER_JUMIN2)) {
@@ -359,7 +381,7 @@ document.addEventListener("DOMContentLoaded", function(){
             , states : states
             }
 
-            runStateUpdate(data);
+            runStateUpdate(data, 'cancel');
             comNotify('003', detail.USER_NUMB);
 
           }
@@ -394,7 +416,6 @@ document.addEventListener("DOMContentLoaded", function(){
       , JSON.stringify(data)
       , "application/json"
       , function(){ // ajax 성공 후 실행
-
           comConfirm2(
             getTitleText(apprYsNo)
           , null
@@ -402,7 +423,6 @@ document.addEventListener("DOMContentLoaded", function(){
           , getConfirmText(apprYsNo)
           , 'success'
           , function(){ location. reload(); })
-
         }
     );
 
@@ -414,12 +434,12 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 
   // 취소하기 동작 함수
-  function runStateUpdate(data, state) {
+  function runStateUpdate(data, btnState) {
     comConfirm2(
-        getTitleText(state)
-      , null
+        getTitleText(btnState)
+      , getBigContentText(btnState)
       , 'warning'
-      , getContentText(state)
+      , getContentText(btnState)
       , 'success'
       , function(){
         comAjax(
@@ -433,16 +453,28 @@ document.addEventListener("DOMContentLoaded", function(){
       )}
     );
 
-    function getTitleText(state) {
-      if(state == 're') {
+    function getTitleText(btnState) {
+      if(btnState == 're') {
         return '모임에 재참여하시겠어요?';
       } else {
         return '모임 참여를 취소하시겠어요?';
       }
     }
-
-    function getContentText(state) {
-      if(state == 're') {
+    
+    function getBigContentText(btnState) {
+      const yourStateValue = document.getElementById('yourState').value;
+      const yourState = parseString(yourStateValue).result;
+      const { BANN_YSNO, WAIT_YSNO } = yourState;
+      
+      if(btnState == 'cancel' && BANN_YSNO == 'N' && WAIT_YSNO == 'Y'){
+        return '승인 대기중인 모임이에요.';
+      } else {
+        return null;
+      }
+    }
+    
+    function getContentText(btnState) {
+      if(btnState == 're') {
         return '모임에 참여되었어요!';
       } else {
         return '참여가 취소되었어요.';

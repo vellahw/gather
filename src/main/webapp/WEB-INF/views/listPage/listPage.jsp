@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="/resources/css/listPage/listSorting.css">
 <link rel="stylesheet" href="/resources/css/common/card.css">
 <script src="/resources/js/listPage/listPage.js"></script>
-<script src="/resources/js/common/like.js"></script>
 
 <div class="bannerContainer">
   <img src="/resources/img/banner/banner.png" class="bannerImg">
@@ -34,23 +33,38 @@
 								<img src="${list.MOIM_IMAG}" class="thumnail" alt="썸네일">
 							</div>
 							<div class="infoContainer">
-								<h3 class="title" onclick="goDetail('${list.MOIM_IDXX}')">${list.MOIM_TITL}</h3>
+								<h3 class="title" onclick="goDetail('${list.MOIM_IDXX}')">
+								  <c:out value="${list.MOIM_TITL}" />
+								</h3>
 								<div class="hashtagContainer">
-									<c:forEach var="hashtag" items="${list.HASH_TAGG}">
-										<button type="button" class="hashtag">#${hashtag}</button>
-									</c:forEach>
+								<c:choose>
+									<c:when test="${fn:length(list.HASH_TAGG) != 0 }">
+										<c:forEach var="hashtag" items="${list.HASH_TAGG}">
+											<button type="button" class="hashtag" onclick="goSearch(this)" data-hash="${hashtag}">
+											  <c:out value="#${hashtag}" />
+											</button>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<div style="height: 30px;"></div>
+									</c:otherwise>
+								</c:choose>
 								</div>
 								<div class="locationDateContainer">
 									<div class="locationContainer">
 										<div class="tooltip">
 											<img src="/resources/img/icon/locationIcon.png"
 							 		   				class="locationIcon" alt="장소 아이콘">
-								 			<span class="location">${list.REGI_NAME}</span>
-											<div class="tooltiptext">${list.PREGI_NAME}</div>
+								 			<span class="location">
+								 			  <c:out value="${list.REGI_NAME}" />
+								 			</span>
+											<div class="tooltiptext">
+											  <c:out value="${list.PREGI_NAME}" />
+											</div>
 										</div>
 									</div>
 									<span class="dateContainer">
-										${list.SMAL_DATE}
+										<c:out value="${list.SMAL_DATE}" />
 									</span>
 								</div>
 								<div class="userContainer">
@@ -59,7 +73,9 @@
 											<img src="${list.USER_IMAG}"
 								  					class="profileImg" alt="프로필사진">
 										</div>
-										<span class="nickname">${list.USER_NICK}</span>
+										<span class="nickname">
+										  <c:out value="${list.USER_NICK}" />
+										</span>
 									</div>
 									<div class="heartWrap">
 										<input type="hidden" data-like-id="${list.MOIM_IDXX}" value="${list.LIKE_YSNO}" id="heartYN"/>

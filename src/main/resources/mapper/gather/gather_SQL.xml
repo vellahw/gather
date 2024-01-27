@@ -219,8 +219,9 @@
 		                , CATE_IDXX															/* 카테고리 코드 */
 		                , PARENTS_CATE														/* 부모 카테고리 */
 		                , CHILD_CATE														/* 자식 카테고리 */
+                		, MAXX_PEOP															/* 최대 인원 */
 		                , PRES_PEOP															/* 현재 인원  n/n */
-		                , MEMB_COUNT														/* 현재 인원 */
+		                , MEMB_COUNT														/* 현재 인원수 */
 		                , MOIM_COST															/* 참가 비용 */
 		                , APPR_YSNO															/* 승인 여부 */
 		                , MINN_AGEE						 									/* 최소나이 */
