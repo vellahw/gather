@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="/resources/css/listPage/listSorting.css">
 <link rel="stylesheet" href="/resources/css/common/card.css">
 <script src="/resources/js/listPage/listPage.js"></script>
-<script src="/resources/js/common/like.js"></script>
 
 <div class="bannerContainer">
   <img src="/resources/img/banner/banner.png" class="bannerImg">
@@ -37,7 +36,7 @@
 								<h3 class="title" onclick="goDetail('${list.MOIM_IDXX}')">${list.MOIM_TITL}</h3>
 								<div class="hashtagContainer">
 									<c:forEach var="hashtag" items="${list.HASH_TAGG}">
-										<button type="button" class="hashtag">#${hashtag}</button>
+										<button type="button" class="hashtag" onclick="goSearch(this)" data-hash="${hashtag}">#${hashtag}</button>
 									</c:forEach>
 								</div>
 								<div class="locationDateContainer">
@@ -66,8 +65,8 @@
 										<div class="heartContainer">
 											<input type="checkbox" id="${list.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
 											<label for="${list.MOIM_IDXX}"></label>
-											<input id="realCount" type="hidden" data-realCount-id="${list.MOIM_IDXX}" value="${list.LIKE_COUNT}" >
-											<span id="showCount"class="heartCount main" data-ShowCount-id="${list.MOIM_IDXX}"></span>
+			          			<input id="realCount" type="hidden" data-realCount-id="${list.MOIM_IDXX}" value="${list.LIKE_COUNT}" >
+										  <span id="showCount"class="heartCount main" data-ShowCount-id="${list.MOIM_IDXX}"></span>
 										</div>
 									</div>
 								</div>
