@@ -333,7 +333,7 @@ document.addEventListener("DOMContentLoaded", function(){
             , states : states
           }
             runStateUpdate(data, "Y");
-            comNotify('001', detail.USER_NUMB);
+            comNotify('011', detail.USER_NUMB);
           }
         }
       } else {

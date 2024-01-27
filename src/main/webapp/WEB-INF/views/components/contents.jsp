@@ -27,9 +27,9 @@
 									<div class="infoContainer">
 										<h3 class="title" onclick="goDetail('${list.MOIM_IDXX}')">${list.MOIM_TITL}</h3>
 										<div class="hashtagContainer">
-											<!-- 해시태그 -->
-											<button type="button" class="hashtag">#전시회</button>
-											<button type="button" class="hashtag">#같이가요</button>
+											<c:forEach var="hashtag" items="${list.HASH_TAGG}">
+												<button type="button" class="hashtag">#${hashtag}</button>
+											</c:forEach>
 										</div>
 										<div class="locationDateContainer">
 											<div class="locationContainer">

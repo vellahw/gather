@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function(){
                                             + '<img src="/resources/img/icon/weather/sunny.png" class="areaTitleIcon"/>' 
                                             + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
 
-                } else if(temp <= 0 && weather == '01'){
+                } else if(temp <= 0 ){
                         
                     weatherType = "cold";
                     weatherTitleArea.innerHTML = '오늘 같이 추운 날 '                 
