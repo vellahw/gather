@@ -255,14 +255,14 @@
 }
 
 .bubble {
-  z-index: -1;
+  /* z-index: -1; */
+  display: none;
   position: absolute;
   bottom: 64px;
   width: 180px;
   height: 36px;
   background-color: #fabd91;
   border-radius: 31px;
-  display: flex;
   align-items: center;
   justify-content: center;
   color: var(--color-white);
@@ -274,19 +274,16 @@
 					  alternate;
 }
 
-/* .btnContainer::after {
+.bubble::after {
   border-top: 10px solid #fabd91;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
   border-bottom: 0px solid transparent;
   content: "";
   position: absolute;
-  bottom: 55px;
-  animation: motion 0.9s
-					  infinite 
-					  ease-in-out 
-					  alternate;
-} */
+  bottom: -10px;
+  left: 80px;
+}
 
 @keyframes motion {
   from{
