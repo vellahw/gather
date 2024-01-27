@@ -254,8 +254,8 @@
 	display: none;
 }
 
-.btnContainer::after {
-  content: '참여 승인 대기중이에요!';
+.bubble {
+  z-index: -1;
   position: absolute;
   bottom: 64px;
   width: 180px;
@@ -274,7 +274,7 @@
 					  alternate;
 }
 
-.btnContainer::before {
+/* .btnContainer::after {
   border-top: 10px solid #fabd91;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
@@ -286,7 +286,7 @@
 					  infinite 
 					  ease-in-out 
 					  alternate;
-}
+} */
 
 @keyframes motion {
   from{
