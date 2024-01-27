@@ -372,7 +372,8 @@ document.addEventListener("DOMContentLoaded", function(){
       , '/moimJoin.com'
       , JSON.stringify(data)
       , "application/json"
-      , function(){
+      , function(){ // ajax 성공 후 실행
+
           comConfirm2(
             getTitleText(apprYsNo)
           , null
@@ -380,6 +381,7 @@ document.addEventListener("DOMContentLoaded", function(){
           , getConfirmText(apprYsNo)
           , 'success'
           , function(){ location. reload(); })
+
         }
     );
 
