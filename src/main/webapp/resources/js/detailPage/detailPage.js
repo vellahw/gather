@@ -211,8 +211,6 @@ document.addEventListener("DOMContentLoaded", function(){
   const memberList = document.getElementById('memberList').value;
   const count = countNode.getAttribute('data-count'); // 참여한 멤버수
 
-  console.log(memberList)
-
   if(count > 1) { // 방장을 제외한 참여회원
     
     const memeberItem = countNode.querySelectorAll('.profileImgWrap')

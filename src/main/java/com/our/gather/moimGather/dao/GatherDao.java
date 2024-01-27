@@ -1,5 +1,7 @@
 package com.our.gather.moimGather.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,12 +17,29 @@ public class GatherDao extends AbstractDao {
 
 	// 로그인시 메인 게더
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> mainGather(Map<String, Object> map, CommandMap commandMap, HttpSession session)
-			throws Exception {
-
+	public List<Map<String, Object>> mainGather(Map<String, Object> map, CommandMap commandMap, HttpSession session) throws Exception {
+	    
 		List<Map<String, Object>> mainGather = (List<Map<String, Object>>) selectList("gather.mainGather", map);
+	    
+	    for (int i = 0; i < mainGather.size(); i++) {
+	        Map<String, Object> hash = new HashMap<>();
+	        hash.put("HASH_IDXX", mainGather.get(i).get("MOIM_IDXX"));
 
-		return mainGather;
+	        List<Map<String, Object>> HashTag = (List<Map<String, Object>>) selectList("common.hashTag", hash);
+
+	        List<Object> hashTag = new ArrayList<>();
+
+	        if (!HashTag.isEmpty()) {
+
+	            for (Map<String, Object> tag : HashTag) {
+	            	hashTag.add(tag.get("HASH_TAGG"));
+	            }
+	        }
+
+	        mainGather.get(i).put("HASH_TAGG", hashTag);
+	    }
+
+	    return mainGather;
 	}
 
 	// 게더추출
@@ -29,6 +48,24 @@ public class GatherDao extends AbstractDao {
 			throws Exception {
 
 		List<Map<String, Object>> getGatherList = (List<Map<String, Object>>) selectList("gather.getGather", map);
+		
+		  for (int i = 0; i < getGatherList.size(); i++) {
+		        Map<String, Object> hash = new HashMap<>();
+		        hash.put("HASH_IDXX", getGatherList.get(i).get("MOIM_IDXX"));
+
+		        List<Map<String, Object>> HashTag = (List<Map<String, Object>>) selectList("common.hashTag", hash);
+
+		        List<Object> hashTag = new ArrayList<>();
+
+		        if (!HashTag.isEmpty()) {
+
+		            for (Map<String, Object> tag : HashTag) {
+		            	hashTag.add(tag.get("HASH_TAGG"));
+		            }
+		        }
+
+		        getGatherList.get(i).put("HASH_TAGG", hashTag);
+		    }
 
 		return getGatherList;
 	}

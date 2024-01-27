@@ -369,6 +369,7 @@ parameter:(situation: (String 타입)
            007: 회원이 받는 방장의 승인 허가
            008: 회원이 받는 방장의 승인 불허
            009: 회원이 받는 방장의 강제퇴장
+           011: 방장이 받는 회원의 재참여
            postUser: 알림을 받는 user_numb)
 */	
 function comNotify(situation, postUser) {

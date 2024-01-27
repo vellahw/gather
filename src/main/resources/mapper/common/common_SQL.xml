@@ -3,6 +3,27 @@
 
 <mapper namespace="common">
 
+	<!-- 해시태그 -->
+	<select id="hashTag" parameterType='hashmap'
+	   resultType="hashmap">
+	   <![CDATA[
+		SELECT
+		       HASH_IDXX
+		   	 , HASH_SEQC
+		     , HASH_TAGG
+		  FROM (
+		        SELECT
+		               HASH_IDXX
+		             , HASH_SEQC
+		             , HASH_TAGG
+		             , SUM(LENGTH(HASH_TAGG)) OVER (PARTITION BY HASH_IDXX ORDER BY HASH_SEQC) AS RUNNING_LENGTH
+		    	  FROM TB_HASHTG
+			    )
+		WHERE RUNNING_LENGTH <= 11
+		  AND HASH_IDXX = #{HASH_IDXX}     
+	 ]]>
+	 </select>
+	
 	<insert id="insertFile" parameterType="hashMap">
   		<![CDATA[
 	    INSERT INTO TM_FILEXM (
