@@ -241,6 +241,7 @@
   display: flex;
   justify-content: center;
   margin-top: 60px;
+  position: relative;
 }
 
 .loginPlz {
@@ -251,4 +252,47 @@
 
 #joinMoimBtn, #reviewBtn, #updateBtn, #reJoin {
 	display: none;
+}
+
+.btnContainer::after {
+  content: '참여 승인 대기중이에요!';
+  position: absolute;
+  bottom: 64px;
+  width: 180px;
+  height: 36px;
+  background-color: #fabd91;
+  border-radius: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  font-weight: 500;
+  font-size: 14px;
+  animation: motion 0.9s 
+					  infinite 
+					  ease-in-out
+					  alternate;
+}
+
+.btnContainer::before {
+  border-top: 10px solid #fabd91;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 0px solid transparent;
+  content: "";
+  position: absolute;
+  bottom: 55px;
+  animation: motion 0.9s
+					  infinite 
+					  ease-in-out 
+					  alternate;
+}
+
+@keyframes motion {
+  from{
+    transform: translatey(0px);
+  }
+  to{
+    transform: translatey(-5px);
+  }
 }
