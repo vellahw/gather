@@ -4,7 +4,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="/resources/css/detailPage/detailPage.css">
 <script src="/resources/js/detailPage/detailPage.js"></script>
-<script src="/resources/js/common/like.js"></script>
 
 <img class="backgroundImg">
 
@@ -132,7 +131,7 @@
 	  <div class="btnContainer">
 	    <input type="hidden" value="${yourState}" id="yourState" />
 	    <input type="hidden" value="${detail}" id="detail"/> 
-	    <%-- <div class="bubble">참여 승인 대기중이에요!</div> --%>
+	    <div class="bubble">참여 승인 대기중이에요!</div>
 	    
 	    <button class="basicBtn loginPlz" onclick="loginOnClick()">로그인하고 참여하기</button>
 	    

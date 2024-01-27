@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="/resources/css/listPage/listSorting.css">
 <link rel="stylesheet" href="/resources/css/mainPage/mainSorting.css">
 <link rel="stylesheet" href="/resources/css/common/card.css">
-<script src="/resources/js/common/like.js"></script>
 <script src="/resources/js/mainPage/asyncMoim.js"></script>
 <script src="/resources/js/mainPage/mainPage.js"></script>
 
