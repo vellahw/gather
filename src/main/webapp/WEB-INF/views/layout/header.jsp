@@ -16,12 +16,14 @@
     </div>
   </div>
   <div class="rightContainer">
-    <div class="searchContainer">
-      <input type="text" class="searchBox" placeholder="관심사, 해시태그, 회원명을 검색해주세요!">
-      <button type="submit" class="searchBtn" >
-        <img class="searchIcon" src="/resources/img/icon/navbar/searchIcon.png" alt="검색버튼">
-      </button>
-    </div>
+  		<form action="/gather.com" method="get">	
+    		<div class="searchContainer">
+	    	<input type="text" name="keyword" class="searchBox" placeholder="관심사, 해시태그, 회원명을 검색해주세요!">
+	      	<button type="submit" class="searchBtn" >
+	        	<img class="searchIcon" src="/resources/img/icon/navbar/searchIcon.png" alt="검색버튼">
+	      	</button>
+    		</div>
+    	</form>
     <div class="userWrap">
       <c:if test="${USER_NUMB != null }">
         <div class="iconContainer mypage">

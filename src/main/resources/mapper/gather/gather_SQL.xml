@@ -212,12 +212,12 @@
        			*
 		  FROM (  
 		       	  SELECT /*mainPage.getGather*/              
-		                  GATH_IDXX AS MOIM_IDXX								/* 게더아이디 */
-		                , GATH_TITL AS MOIM_TITL								/* 게더 제목 */
-		                , GATH_CNTT AS MOIM_CNTT								/* 게더 내용 */
-		                , GATH_IMAG AS MOIM_IMAG								/* 게더 대표 이미지 */
+		                  GATH_IDXX AS MOIM_IDXX										   	/* 게더아이디 */
+		                , GATH_TITL AS MOIM_TITL										   	/* 게더 제목 */
+		                , GATH_CNTT AS MOIM_CNTT								           	/* 게더 내용 */
+		                , GATH_IMAG AS MOIM_IMAG								            /* 게더 대표 이미지 */
 		                , CATE_IDXX															/* 카테고리 코드 */
-		                , PARENTS_CATE													/* 부모 카테고리 */
+		                , PARENTS_CATE														/* 부모 카테고리 */
 		                , CHILD_CATE														/* 자식 카테고리 */
                 		, MAXX_PEOP															/* 최대 인원 */
 		                , PRES_PEOP															/* 현재 인원  n/n */
@@ -226,7 +226,7 @@
 		                , APPR_YSNO															/* 승인 여부 */
 		                , MINN_AGEE						 									/* 최소나이 */
                 		, MAXX_AGEE															/* 최대나이 */
-										, APPR_LMIT															/* 모임 제한 KR */
+						, APPR_LMIT															/* 모임 제한 KR */
 		                , GNDR_CODE															/* 모임 성별 코드 */											
 		                , PREGI_NAME														/* 부모 지역명 */
 		                , REGI_NAME															/* 자식 지역명 */
@@ -275,6 +275,20 @@
 		      <if test="CITY_CODE != null">
 		      	 <![CDATA[
 		         	 AND REGI_CODE LIKE '%'||#{CITY_CODE}||'%'
+		         ]]>
+		      </if>
+		      <if test="KEYY_WORD != null">
+		      	 <![CDATA[
+		         	 AND (REGI_NAME    LIKE '%'||#{KEYY_WORD}||'%')
+		         	  OR (PREGI_NAME   LIKE '%'||#{KEYY_WORD}||'%')
+		         	  OR (CHILD_CATE   LIKE '%'||#{KEYY_WORD}||'%')
+		         	  OR (PARENTS_CATE LIKE '%'||#{KEYY_WORD}||'%')
+		         	  OR (GATH_TITL    LIKE '%'||#{KEYY_WORD}||'%')
+		         	  OR (GATH_CNTT    LIKE '%'||#{KEYY_WORD}||'%')
+		         	  OR (USER_NICK    LIKE '%'||#{KEYY_WORD}||'%')
+		         	  OR GATH_IDXX IN (SELECT HASH_IDXX 
+		         	                     FROM TB_HASHTG 
+		         	                    WHERE HASH_TAGG LIKE '%'||#{KEYY_WORD}||'%')  
 		         ]]>
 		      </if>
 		      	<![CDATA[
