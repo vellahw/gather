@@ -209,8 +209,27 @@ document.addEventListener("DOMContentLoaded", function(){
    * 멤버 프로필 오른쪽으로 이동
    */
   const countNode = document.getElementById('count');
-  const memberList = document.getElementById('memberList').value;
   const count = countNode.getAttribute('data-count'); // 참여한 멤버수
+  const memberList = document.getElementById('memberList').value;
+  const cleanedString = targetValue.replace(/[[]/g, '');
+          
+  // 등호를 콜론으로 대체, 키와 값을 큰따옴표로 감쌈
+  const jsonString = cleanedString.replace(/([^,=]+)=([^,=]+)/g, '"$1":"$2"');
+          
+  // JSON 타입으로 파싱
+  const result = JSON.parse(`{${jsonString}}`);
+  
+  for (let i=0; i< count; i++) {
+    let joinMemberList = [];
+  
+    if(memberList[i].BANN_YSNO == 'N' &&
+       memberList[i].WAIT_YSNO == 'N' &&
+       memberList[i].MAST_YSNO == 'N') {
+
+       joinMemberList.push(eachMember);
+    }
+    
+  }
 
   if(count > 1) { // 방장을 제외한 참여회원
     

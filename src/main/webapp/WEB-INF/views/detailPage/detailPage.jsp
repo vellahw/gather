@@ -4,7 +4,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="/resources/css/detailPage/detailPage.css">
 <script src="/resources/js/detailPage/detailPage.js"></script>
-<script src="/resources/js/common/like.js"></script>
 
 <img class="backgroundImg">
 
