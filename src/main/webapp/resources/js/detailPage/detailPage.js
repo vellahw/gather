@@ -306,12 +306,13 @@ document.addEventListener("DOMContentLoaded", function(){
             }
 
             runMoimJoin(data, APPR_YSNO);
-            comNotify('011', detail.USER_NUMB);
+            comNotify('001', detail.USER_NUMB);
 
           /*==== 재참여 ====*/
           } else if(getBtnState == 'rejoin' && BANN_YSNO == 'Y' && WAIT_YSNO == 'Y') {
 
-            states = 'normal';
+            states = APPR_YSNO == 'N' ? 'normal' : 'wait'; // APPR_YSNO 값에 따른 states 값 설정
+
             let data = {
               MOIM_IDXX : MOIM_IDXX
               , USER_NUMB : USER_NUMB
@@ -334,17 +335,6 @@ document.addEventListener("DOMContentLoaded", function(){
             runStateUpdate(data);
             comNotify('003', detail.USER_NUMB);
 
-            // if(BANN_YSNO == 'Y' && WAIT_YSNO == 'Y'){
-            //   states = 'normal';
-            //   let data = {
-            //     MOIM_IDXX : MOIM_IDXX
-            //   , USER_NUMB : USER_NUMB
-            //   , states : states
-            //   }
-            //   runStateUpdate(data, 're');
-            //   comNotify('011', detail.USER_NUMB);
-            // }
-
           }
         }
     
@@ -362,7 +352,7 @@ document.addEventListener("DOMContentLoaded", function(){
         }
 
         runMoimJoin(data, APPR_YSNO);
-        comNotify('011', detail.USER_NUMB);
+        comNotify('001', detail.USER_NUMB);
 
       }
     }
