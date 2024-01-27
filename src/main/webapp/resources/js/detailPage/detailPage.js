@@ -208,9 +208,12 @@ document.addEventListener("DOMContentLoaded", function(){
    * 멤버 프로필 오른쪽으로 이동
    */
   const countNode = document.getElementById('count');
-  const count = countNode.getAttribute('data-count');
+  const memberList = document.getElementById('memberList').value;
+  const count = countNode.getAttribute('data-count'); // 참여한 멤버수
 
-  if(count != 0) {
+  console.log(memberList)
+
+  if(count > 1) { // 방장을 제외한 참여회원
     
     const memeberItem = countNode.querySelectorAll('.profileImgWrap')
 
@@ -219,6 +222,7 @@ document.addEventListener("DOMContentLoaded", function(){
     })
 
   }
+
  
   /**
    * 240119 장한원
@@ -265,7 +269,32 @@ document.addEventListener("DOMContentLoaded", function(){
       updateButtonUI(detail.APPR_YSNO, 'fresh');
 
     }
+  }
 
+  /* 상황에 따른 버튼 텍스트 제어 */
+  function updateButtonUI(moimApprYsNo, masterYsNo, state) {
+
+    let buttonText;
+    
+    if (moimApprYsNo != null) {
+        buttonText = moimApprYsNo === 'N' ? '참여하기' : '참여요청';
+    } else if (masterYsNo != null) {
+        buttonText = masterYsNo === 'N' ? '참여취소' : '마감하기';
+    }
+    
+    updateButton(joinMoimBtn, buttonText, state);
+  
+  }
+    
+  function updateButton(element, text, state) {
+    element.innerHTML = text;
+    element.dataset.state = state;
+    addClickListener(element, onClickHandler);
+  }
+  
+  // 클릭 이벤트 함수
+  function addClickListener(element, callback) {
+    element.addEventListener('click', callback);
   }
   
   // 참여 유효성 검사
@@ -358,12 +387,6 @@ document.addEventListener("DOMContentLoaded", function(){
     }
   }
 
-  // 클릭 이벤트 함수
-  function addClickListener(element, callback) {
-    element.addEventListener('click', callback);
-  }
-
-  
   // 참여하기 동작 함수
   function runMoimJoin(data, apprYsNo) {
 
@@ -463,30 +486,8 @@ document.addEventListener("DOMContentLoaded", function(){
     return moimApprYsNo === 'N' ? '모임에 참여되었어요!' : '모임에 참여 요청을 보냈어요!';
   }
 
-  /* 상황에 따른 버튼 텍스트 제어 */
-  function updateButtonUI(moimApprYsNo, masterYsNo, state) {
 
-    let buttonText;
   
-    if (moimApprYsNo != null) {
-      buttonText = moimApprYsNo === 'N' ? '참여하기' : '참여요청';
-    } else if (masterYsNo != null) {
-      buttonText = masterYsNo === 'N' ? '참여취소' : '마감하기';
-    }
-  
-    updateButton(joinMoimBtn, buttonText, state);
-
-  }
-  
-  function updateButton(element, text, state) {
-    element.innerHTML = text;
-    element.dataset.state = state;
-    addClickListener(element, onClickHandler);
-  }
-  
-  
-
-
 });
 
 

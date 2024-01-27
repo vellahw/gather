@@ -106,10 +106,11 @@
         <div class="masterName">${detail.USER_NICK}</div>
       </div>
     </div>
-    <div class="eachInfoWrap">
+     <div class="eachInfoWrap">
  			<h3 class="infoTitle member">함께하는 멤버들</h3>
+ 			<input type="hidden" id="memberList" value="<c:out value='${member}' />">
 			<c:choose>
-		    <c:when test="${fn:length(member) > 0 }">
+		    <c:when test="${fn:length(member) > 1 }">
 		      <div class="memeberProfiles" data-count="${fn:length(member)}" id="count">
 						<c:forEach var="m" items="${member}">
 						  <c:if test="${m.BANN_YSNO == 'N' && m.WAIT_YSNO == 'N' && m.MAST_YSNO == 'N'}">
@@ -131,7 +132,7 @@
 	  <div class="btnContainer">
 	    <input type="hidden" value="${yourState}" id="yourState" />
 	    <input type="hidden" value="${detail}" id="detail"/> 
-	    <div class="bubble">참여 승인 대기중이에요!</div>
+	    <%-- <div class="bubble">참여 승인 대기중이에요!</div> --%>
 	    
 	    <button class="basicBtn loginPlz" onclick="loginOnClick()">로그인하고 참여하기</button>
 	    
