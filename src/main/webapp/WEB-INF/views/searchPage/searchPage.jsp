@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="/resources/css/listPage/listSorting.css">
 <link rel="stylesheet" href="/resources/css/common/card.css">
 <script src="/resources/js/listPage/listPage.js"></script>
-<script src="/resources/js/common/like.js"></script>
 
 <div class="bannerContainer">
   <img src="/resources/img/banner/banner.png" class="bannerImg">
