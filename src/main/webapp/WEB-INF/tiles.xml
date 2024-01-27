@@ -17,6 +17,10 @@
   <definition name="listPage" extends="mainPage">
     <put-attribute name="body" value="/WEB-INF/views/listPage/listPage.jsp"/>
   </definition>
+  
+  <definition name="searchPage" extends="mainPage">
+    <put-attribute name="body" value="/WEB-INF/views/searchPage/searchPage.jsp"/>
+  </definition>
 
   <definition name="detailPage" extends="mainPage">
     <put-attribute name="body" value="/WEB-INF/views/detailPage/detailPage.jsp"/>

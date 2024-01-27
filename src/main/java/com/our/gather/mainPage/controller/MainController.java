@@ -36,14 +36,18 @@ public class MainController {
 
 	@RequestMapping(value = "/gather.com")
 	public ModelAndView main(@RequestParam(value = "type", required = false) String LIST_TYPE,
-			@RequestParam(value = "cate", required = false) String CATE_IDXX, HttpSession session,
-			CommandMap commandMap, Model model) throws Exception {
+							 @RequestParam(value = "cate", required = false) String CATE_IDXX,
+							 @RequestParam(value = "keyword", required = false) String KEYY_WORD,
+							 HttpSession session, CommandMap commandMap, Model model) throws Exception {
 
 		ModelAndView mv = new ModelAndView("/mainPage/mainPage");
 		mv.setViewName("mainPage");
 
 		ModelAndView mv2 = new ModelAndView("/listPage/listPage");
 		mv2.setViewName("listPage");
+		
+		ModelAndView mv3 = new ModelAndView("/searchPage/searchPage");
+		mv3.setViewName("searchPage");
 
 		List<Map<String, Object>> pCate = commonService.pCate(commandMap.getMap(), commandMap);
 		List<Map<String, Object>> cCate = commonService.cCate(commandMap.getMap(), commandMap);
@@ -51,17 +55,31 @@ public class MainController {
 		mv.addObject("cCate", cCate);
 		mv2.addObject("pCate", pCate);
 		mv2.addObject("cCate", cCate);
+		mv3.addObject("pCate", pCate);
+		mv3.addObject("cCate", cCate);
+		mv3.addObject("KEYY_WORD", KEYY_WORD);
+		
+		if(LIST_TYPE != null) {
+			
+			String moimType =  OracleFunction.getCodeName("MOIM_TYPE",LIST_TYPE.toUpperCase());
+			
+			mv.addObject("moimType", moimType);
+			mv2.addObject("moimType", moimType);
+			mv3.addObject("moimType", moimType);
+		}
 
 		if (LIST_TYPE == null) {
+			
+			mv.addObject("moimType", "게더"); //모임타입
+			mv2.addObject("moimType", "게더");
+			mv3.addObject("moimType", "게더");
 
-			if (CATE_IDXX == null) {
+			if (CATE_IDXX == null && KEYY_WORD == null) {
 
-				mv.addObject("moimType", "게더"); // 모임타입
 				mv.addObject("main", gatherService.mainGather(commandMap.getMap(), session, commandMap)); // 게더 메인
 
-			} else {
+			} else if(CATE_IDXX != null && KEYY_WORD == null) {
 
-				mv2.addObject("moimType", "게더");
 				commandMap.put("CATE_IDXX", CATE_IDXX);
 
 				if (CATE_IDXX.equals("all")) {
@@ -75,23 +93,28 @@ public class MainController {
 
 				}
 
-				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); // 게더
+				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //게더 카테고리검색 리스트
+				
 				return mv2;
 
+			} else if(CATE_IDXX == null && KEYY_WORD != null) {
+				
+				commandMap.put("KEYY_WORD", KEYY_WORD);
+				mv3.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //게더 키워드 검색 리스트
+				
+				return mv3;
+				
 			}
 		}
 		
-		
 		if (LIST_TYPE != null && LIST_TYPE.equals("cb")) {
 
-			if (CATE_IDXX == null) {
+			if (CATE_IDXX == null && KEYY_WORD == null) {
 
-				mv.addObject("moimType", "클럽"); // 모임타입
-				mv.addObject("main", gatherService.mainGather(commandMap.getMap(), session, commandMap)); // 게더 메인
+				mv.addObject("main", gatherService.mainGather(commandMap.getMap(), session, commandMap)); //추후 클럽으로 변경
 
-			} else {
+			} else if(CATE_IDXX != null && KEYY_WORD == null) {
 
-				mv2.addObject("moimType", "클럽");
 				commandMap.put("CATE_IDXX", CATE_IDXX);
 
 				if (CATE_IDXX.equals("all")) {
@@ -105,22 +128,28 @@ public class MainController {
 
 				}
 
-				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); // 게더
+				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //추후 클럽으로 변경
+				
 				return mv2;
 
+		     } else if (CATE_IDXX == null && KEYY_WORD != null) {
+				
+				commandMap.put("KEYY_WORD", KEYY_WORD);
+				mv3.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //추후 클럽으로 변경
+				
+				return mv3;
+				
 			}
 		}
 		
 		if (LIST_TYPE != null && LIST_TYPE.equals("ch")) {
 
-			if (CATE_IDXX == null) {
+			if (CATE_IDXX == null && KEYY_WORD == null) {
 
-				mv.addObject("moimType", "챌린지"); // 모임타입
-				mv.addObject("main", gatherService.mainGather(commandMap.getMap(), session, commandMap)); // 게더 메인
+				mv.addObject("main", gatherService.mainGather(commandMap.getMap(), session, commandMap)); //추후 챌린지로 변경
 
-			} else {
+			} else if(CATE_IDXX != null && KEYY_WORD == null) {
 
-				mv2.addObject("moimType", "챌린지");
 				commandMap.put("CATE_IDXX", CATE_IDXX);
 
 				if (CATE_IDXX.equals("all")) {
@@ -134,9 +163,17 @@ public class MainController {
 
 				}
 
-				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); // 게더
+				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //추후 챌린지로 변경
+				
 				return mv2;
 
+			} else if (CATE_IDXX == null && KEYY_WORD != null) {
+				
+				commandMap.put("KEYY_WORD", KEYY_WORD);
+				mv3.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //추후 챌린지로 변경
+				
+				return mv3;
+				
 			}
 		}
 
