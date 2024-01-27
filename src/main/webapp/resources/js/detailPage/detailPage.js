@@ -211,13 +211,14 @@ document.addEventListener("DOMContentLoaded", function(){
   const countNode = document.getElementById('count');
   const count = countNode.getAttribute('data-count'); // 참여한 멤버수
   const memberList = document.getElementById('memberList').value;
-  const cleanedString = targetValue.replace(/[[]/g, '');
+  const cleanedString = memberList.replace(/[[]/g, '');
+  console.log(cleanedString)
           
   // 등호를 콜론으로 대체, 키와 값을 큰따옴표로 감쌈
-  const jsonString = cleanedString.replace(/([^,=]+)=([^,=]+)/g, '"$1":"$2"');
+  // const jsonString = cleanedString.replace(/([^,=]+)=([^,=]+)/g, '"$1":"$2"');
           
-  // JSON 타입으로 파싱
-  const result = JSON.parse(`{${jsonString}}`);
+  // // JSON 타입으로 파싱
+  // const result = JSON.parse(`{${jsonString}}`);
   
   for (let i=0; i< count; i++) {
     let joinMemberList = [];
