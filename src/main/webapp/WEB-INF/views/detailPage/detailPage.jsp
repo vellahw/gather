@@ -7,6 +7,10 @@
 
 <img class="backgroundImg">
 
+<c:if test="${detail.ENDD_YSNO eq 'Y'}">
+	<div class="closebar">마감된 모임이에요</div>
+</c:if>
+
 <div class="detailContainer">
   <div class="slideContainer">
 		<button type="button" class="arrowBtn detail dl" id="leftBtn"></button>
