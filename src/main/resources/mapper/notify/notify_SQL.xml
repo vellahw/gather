@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<!-- 
+240128 KSH
+알림
+ -->
 <mapper namespace="notify">
-
+	
+	
+	<!-- 알림 INSERT -->
 	<insert id="insertNotify" parameterType="hashMap">
 	 	<selectKey keyProperty="NOTI_SEQC" order="BEFORE" resultType="String">
 	 	<![CDATA[
-        SELECT TO_CHAR(SYSDATE, 'YYMMDD') ||
+        SELECT /*notify.insertNotify*/
+        	   TO_CHAR(SYSDATE, 'YYMMDD') ||
                LPAD(NVL(MAX(CAST(SUBSTR(NOTI_SEQC, 7) AS NUMBER)), 0) + 1, 4, '0') AS NOTI_SEQC
           FROM TB_NOTIFY
          WHERE USER_NUMB = #{USER_NUMB} 
@@ -33,5 +39,115 @@
 	         ) 
  		 ]]>
 	 </insert>
+	 
+	 <!-- 로그인회원 알림조회 -->
+	<select id="getNotify" parameterType='hashmap' resultType="hashmap">
+	   <![CDATA[
+	   SELECT  /*notify.getNotify*/
+			   POST_USER			/* 받는 회원번호 */
+			 , SEND_USER			/* 보낸 회원번호 */
+			 , NOTI_SEQC			/* 알림시퀀스 */
+			 , USER_NICK			/* 보낸 회원 닉네임 */
+			 , NOTI_CNT1			/* 내용1 */
+			 , MOIM_TITL			/* 모임 제목 */
+			 , NOTI_CNT2			/* 내용2 */
+			 , CNTT_IDXX			/* 컨텐츠 번호 */
+			 , REGG_DATEKR			/* 날짜 MM월DD일 */
+			 , REGG_DATE			/* 날짜 */
+		  FROM
+			   ( SELECT 
+		    			 A.USER_NUMB AS POST_USER              
+		    		   , B.USER_NUMB AS SEND_USER              
+		   			   , A.NOTI_SEQC                           
+		    		   , B.USER_NICK                           
+					   , CASE WHEN A.NOTI_CODE IN ('010', '012', '013') 
+					                THEN '게더'
+					           ELSE '님이 게더' 
+					       END AS NOTI_CNT1                      
+					   , C.GATH_TITL AS MOIM_TITL              
+					   , D.CODE_OPT1 AS NOTI_CNT2            
+					   , C.GATH_IDXX AS CNTT_IDXX            
+					   , SUBSTR(formatDate(A.REGG_DATE), 7, 11) AS REGG_DATEKR
+					   , A.REGG_DATE
+					FROM TB_NOTIFY A
+			   LEFT JOIN TM_USERXM B 
+			          ON A.SEND_USER = B.USER_NUMB
+			   LEFT JOIN TM_GATHER C 
+			          ON A.BOAD_IDXX = C.GATH_IDXX
+			   LEFT JOIN TB_CODEXD D 
+			          ON D.COMD_CODE = A.NOTI_CODE
+				   WHERE A.BOAD_IDXX = C.GATH_IDXX
+					 AND A.READ_YSNO = 'N'
+		
+		       UNION ALL
+		
+				  SELECT 
+				         A.USER_NUMB AS POST_USER
+				       , B.USER_NUMB AS SEND_USER
+				       , A.NOTI_SEQC
+				       , B.USER_NICK
+				       , CASE WHEN A.NOTI_CODE IN ('010', '012', '013') 
+				                   THEN '챌린지'
+				               ELSE '님이 챌린지' 
+				          END AS NOTI_CNT1
+				       , C.CHAL_TITL AS MOIM_TITL
+				       , D.CODE_OPT1 AS NOTI_CNT2
+				       , C.CHAL_IDXX AS CNTT_IDXX
+				       , SUBSTR(formatDate(A.REGG_DATE), 7, 11) AS REGG_DATEKR
+				       , A.REGG_DATE
+				    FROM TB_NOTIFY A
+			   LEFT JOIN TM_USERXM B 
+				      ON A.SEND_USER = B.USER_NUMB
+			   LEFT JOIN TM_CHALNG C 
+			          ON A.BOAD_IDXX = C.CHAL_IDXX
+			   LEFT JOIN TB_CODEXD D ON D.COMD_CODE = A.NOTI_CODE
+				   WHERE A.READ_YSNO = 'N'
+				     AND A.BOAD_IDXX =  C.CHAL_IDXX
+				
+			   UNION ALL
+				
+				  SELECT   
+				         A.USER_NUMB AS POST_USER
+				       , B.USER_NUMB AS SEND_USER
+				       , A.NOTI_SEQC
+				       , B.USER_NICK
+				       , CASE WHEN A.NOTI_CODE IN ('010', '012', '013') 
+				                   THEN '클럽'
+				              ELSE '님이 클럽' 
+				          END AS NOTI_CNT1
+				       , C.CLUB_TITL AS MOIM_TITL
+				       , D.CODE_OPT1 AS NOTI_CNT2
+				       , C.CLUB_IDXX AS CNTT_IDXX
+				       , SUBSTR(formatDate(A.REGG_DATE), 7, 11) AS REGG_DATEKR
+				       , A.REGG_DATE
+				    
+				    FROM TB_NOTIFY A
+			   LEFT JOIN TM_USERXM B 
+			          ON A.SEND_USER = B.USER_NUMB
+			   LEFT JOIN TM_CLUBXM C 
+			          ON A.BOAD_IDXX = C.CLUB_IDXX
+			   LEFT JOIN TB_CODEXD D 
+			          ON D.COMD_CODE = A.NOTI_CODE
+				   WHERE A.READ_YSNO = 'N'
+				     AND A.BOAD_IDXX =  C.CLUB_IDXX
+		      )
+		WHERE POST_USER = #{USER_NUMB}
+	 ORDER BY REGG_DATE DESC
+	 ]]>
+	 </select>
+	 
+	 <update id="updateReadNoti" parameterType="hashmap">
+       <![CDATA[
+      UPDATE /*notify.updateReadNoti*/
+      		 TB_NOTIFY SET
+		     READ_YSNO = 'Y'
+	   WHERE USER_NUMB = #{USER_NUMB}
+	   ]]>
+	   <if test="NOTI_SEQC != null">
+	     <![CDATA[
+	     AND NOTI_SEQC = #{NOTI_SEQC}
+	     ]]>
+	   </if>
+   </update>
 	
 </mapper>
