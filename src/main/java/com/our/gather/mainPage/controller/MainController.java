@@ -63,6 +63,19 @@ public class MainController {
 		mv3.addObject("cCate", cCate);
 		mv3.addObject("KEYY_WORD", KEYY_WORD);
 		
+		if(session.getAttribute("USER_NUMB") != null) {
+			
+			List<Map<String, Object>> notify = notifyService.getNotify(commandMap.getMap(), commandMap, session);
+			
+			mv1.addObject("notify", notify);
+			mv2.addObject("notify", notify);
+			mv3.addObject("notify", notify);
+			mv1.addObject("notiCount", notify.size());
+			mv2.addObject("notiCount", notify.size());
+			mv3.addObject("notiCount", notify.size());
+			
+		}
+		
 		if(LIST_TYPE != null) {
 			
 			String moimType =  OracleFunction.getCodeName("MOIM_TYPE",LIST_TYPE.toUpperCase());
@@ -184,18 +197,7 @@ public class MainController {
 			
 		}
 		
-		if(session.getAttribute("USER_NUMB") != null) {
-			
-			List<Map<String, Object>> notify = notifyService.getNotify(commandMap.getMap(), commandMap, session);
-			
-			mv1.addObject("notify", notify);
-			mv2.addObject("notify", notify);
-			mv3.addObject("notify", notify);
-			mv1.addObject("notiCount", notify.size());
-			mv2.addObject("notiCount", notify.size());
-			mv3.addObject("notiCount", notify.size());
-			
-		}
+		
 
 		return mv1;
 	}

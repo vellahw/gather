@@ -1,5 +1,7 @@
 package com.our.gather.detailPage.controller;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -19,6 +21,7 @@ import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.service.CommonService;
 import com.our.gather.detailPage.service.MoimDetailService;
 import com.our.gather.moimGather.service.GatherService;
+import com.our.gather.notify.service.NotifyService;
 
 @Controller
 public class MoimDetailController {
@@ -29,8 +32,12 @@ public class MoimDetailController {
 	@Resource(name = "MoimDetailService")
 	private MoimDetailService moimDetailService;
 
+	@Resource(name = "NotifyService")
+	private NotifyService notifyService;
+	
 	@Resource(name = "GatherService")
 	private GatherService gatherService;
+	
 	
 	//모임 상세보기
 	@RequestMapping(value = "/gatherDetail.com")
@@ -56,6 +63,11 @@ public class MoimDetailController {
 				commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 				
 				// 로그인시 로그인 회원의 해당 게더 참여상태
+				List<Map<String, Object>> notify = notifyService.getNotify(commandMap.getMap(), commandMap, session);
+				
+				mv.addObject("notify", notify);
+				mv.addObject("notiCount", notify.size());
+				
 				Map<String, Object> result = gatherService.getGatherYourState(commandMap.getMap(), session, commandMap);
 				
 				if(result != null) {
@@ -104,53 +116,79 @@ public class MoimDetailController {
 	}
 
 	// 모임참여 상태변경
-	@RequestMapping("/moimStateUpdate.com")
-	@ResponseBody
-	public ResponseEntity<String> moimStateUpdate(@RequestBody Map<String, String> requestBody, HttpSession session, 
-			HttpServletRequest request, CommandMap commandMap) throws Exception {
-		
-		String USER_NUMB = requestBody.get("USER_NUMB");
-		String MOIM_IDXX = requestBody.get("MOIM_IDXX");
-		String states = requestBody.get("states");
+		@RequestMapping("/moimStateUpdate.com")
+		@ResponseBody
+		public ResponseEntity<String> moimStateUpdate(@RequestBody Map<String, String> requestBody, HttpSession session, 
+				HttpServletRequest request, CommandMap commandMap) throws Exception {
+			
+			String USER_NUMB = requestBody.get("USER_NUMB");
+			String MOIM_IDXX = requestBody.get("MOIM_IDXX");
+			String states = requestBody.get("states");
 
-		
-		try {
 			
-			commandMap.put("USER_NUMB", USER_NUMB);
-			commandMap.put("MOIM_IDXX", MOIM_IDXX);
-			
-			if(states.equals("normal")) { 			//정상 참여자(대기여부:'N' 강퇴여부: 'N')
+			try {
 				
-				commandMap.put("WAIT_YSNO", "N"); 	//대기여부
-				commandMap.put("BANN_YSNO", "N"); 	//강퇴여부
+				commandMap.put("USER_NUMB", USER_NUMB);
+				commandMap.put("MOIM_IDXX", MOIM_IDXX);
 				
-			} else if(states.equals("wait")){ 		//대기자 (대기여부:'Y' 강퇴여부: 'N')
+				if(states.equals("normal")) { 			//정상 참여자(대기여부:'N' 강퇴여부: 'N')
+					
+					commandMap.put("WAIT_YSNO", "N"); 	//대기여부
+					commandMap.put("BANN_YSNO", "N"); 	//강퇴여부
+					
+				} else if(states.equals("wait")){ 		//대기자 (대기여부:'Y' 강퇴여부: 'N')
+					
+					commandMap.put("WAIT_YSNO", "Y");
+					commandMap.put("BANN_YSNO", "N");
+					
+				} else if(states.equals("bann")) { 		//추방당한 회원 (대기여부:'N' 강퇴여부: 'Y')
+					
+					commandMap.put("WAIT_YSNO", "N");
+					commandMap.put("BANN_YSNO", "Y");
 				
-				commandMap.put("WAIT_YSNO", "Y");
-				commandMap.put("BANN_YSNO", "N");
-				
-			} else if(states.equals("bann")) { 		//추방당한 회원 (대기여부:'N' 강퇴여부: 'Y')
-				
-				commandMap.put("WAIT_YSNO", "N");
-				commandMap.put("BANN_YSNO", "Y");
-			
-			} else if(states.equals("exit")) { 		//탈퇴 회원 (대기여부:'Y' 강퇴여부: 'Y')
-				
-				commandMap.put("WAIT_YSNO", "Y"); 
-				commandMap.put("BANN_YSNO", "Y"); 
-				
+				} else if(states.equals("exit")) { 		//탈퇴 회원 (대기여부:'Y' 강퇴여부: 'Y')
+					
+					commandMap.put("WAIT_YSNO", "Y"); 
+					commandMap.put("BANN_YSNO", "Y"); 
+					
+				}
+					
+				moimDetailService.moimStateUpdate(commandMap.getMap(), commandMap);
+
+				return ResponseEntity.ok("Success");
+
+			} catch (Exception e) {
+
+				return ResponseEntity.ok("fail");
+
 			}
-				
-			moimDetailService.moimStateUpdate(commandMap.getMap(), commandMap);
-
-			return ResponseEntity.ok("Success");
-
-		} catch (Exception e) {
-
-			return ResponseEntity.ok("fail");
 
 		}
+		
+		// 모임참여 상태변경
+		@RequestMapping("/setGatherEnd.com")
+		@ResponseBody
+		public ResponseEntity<String> setGatherEnd(@RequestBody Map<String, String> requestBody, HttpSession session, 
+				HttpServletRequest request, CommandMap commandMap) throws Exception {
+			
+			String MOIM_IDXX = requestBody.get("MOIM_IDXX");
 
-	}
+			try {
+				
+				 Map<String, Object> paramMap = new HashMap<>();
+				 
+				 paramMap.put("GATH_IDXX", MOIM_IDXX);
+				
+				 gatherService.setGatherEnd(paramMap);
+
+				return ResponseEntity.ok("Success");
+
+			} catch (Exception e) {
+
+				return ResponseEntity.ok("fail");
+
+			}
+
+		}
 
 }
