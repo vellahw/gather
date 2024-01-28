@@ -259,15 +259,60 @@
   height: 80px;
 }
 
+.profileWrapper {
+	position: absolute;
+  width: 100%;
+}
+
 .members {
   position: absolute;
   top: 0;
   border: 5px solid var(--color-white);
 }	
 
-.noMember {
-	font-weight: 500;
-	line-height: 29px;
+.profileInfo {
+  position: absolute;
+  top: 13px;
+  display: none;
+ 	justify-content: space-between;
+ 	font-size: 14px;
+ 	background-color: var(--color-white);
+}
+
+.profileInfo > div {
+	padding-right: 25px;
+	display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profileInfo > div > p {
+	font-weight: 600;
+	margin-bottom: 5px;
+}
+
+.profileBtnContainer {
+	flex-direction: row !important;
+	align-items: center;
+}
+
+.Btn {
+	height: 24px;
+  background-color: var(--color-orange300);
+  color: var(--color-white) !important;
+  width: 48px;
+  border-radius: 15px;
+  font-size: 12px;
+  margin-right: 10px;
+  transition: background-color 0.3s;
+}
+
+.Btn:hover {
+	background-color: var(--primary);
+}
+
+.bann {
+	display: none;
 }
 
 .btnContainer {

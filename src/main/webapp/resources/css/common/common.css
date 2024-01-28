@@ -245,7 +245,7 @@ label:hover {
   height: 606px;
   padding: 28px;
   border-radius: 28px;
-  background: #FFD4B5;
+  background: var(--color-orange300);
   position: fixed;
   bottom: 40px;
   right: 40px;
@@ -260,9 +260,11 @@ label:hover {
 .notifyList::-webkit-scrollbar-track{
    display:none; 
 }
+
 .notifyList::-webkit-scrollbar-thumb {
-  border: 7px solid #FFD4B5;
-} 
+  border: 7px solid var(--color-orange300);
+}
+
 .act {
   visibility: visible;
   opacity: 1;

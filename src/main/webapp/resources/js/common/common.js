@@ -322,18 +322,6 @@ function comConfirm2(title, content, icon, okTitle, okIcon, okFn) {
 }
 
 /* 
-admin:Hanwon
-name:goDetail
-Purpose:디테일 페이지로 이동
-parameter:(params : MOIM_IDXX 파라미터)
-*/ 
-function goDetail(params, event) {
-
-  location.href = `/gatherDetail.com?idx=${params}`;
-
-}
-
-/* 
 admin:KSH
 name:comGoSomewhere
 Purpose:공통 페이지 이동함수
@@ -384,7 +372,7 @@ function parseString(targetValue) {
 
 /* 
 240125 KSH
-name:parseString
+name:comNotify
 Purpose: 알림 insert
 parameter:(situation: (String 타입)
            001: 방장이 받는 참여알림
