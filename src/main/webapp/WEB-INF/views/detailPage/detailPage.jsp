@@ -115,21 +115,50 @@
 				<c:forEach var="m" items="${member}">
 					<c:if test="${m.BANN_YSNO == 'N' && m.WAIT_YSNO == 'N' && m.MAST_YSNO == 'N'}">
 					 	<c:set var="count" value="${count + 1}" />
-					  <div class="profileImgWrap dp members" data-count="${count}" id="count">
-					  	<img class="profileImg" src="${m.USER_IMAG}" />
-					  </div>
+						 <div class="profileWrapper">
+							 <div class="profileImgWrap dp members" data-count="${count}" id="count">
+								<img class="profileImg" src="${m.USER_IMAG}" />
+							</div>
+							<div class="profileInfo">
+								<div>
+									<p>${m.USER_NICK}</p>
+									<p style="color: var(--color-gray500); font-weight: 500;">
+										${m.SELF_INTR}
+									</p>
+								</div>
+								<div class="profileBtnContainer">
+									<button class="Btn f">팔로우</button>
+									<button class="Btn bann" data-numb="${m.USER_NUMB}">강퇴</button>
+								</div>
+							</div>
+						</div>
 					</c:if>
 				</c:forEach>
      	</div>
     </div>
-    <div class="eachInfoWrap appr">
+    <div class="eachInfoWrap apprlist">
  			<h3 class="infoTitle member">참여 승인을 기다리고 있어요</h3>
 		  	<div class="memeberProfiles" data-appr="Y">
 					<c:forEach var="m" items="${member}">
 					  <c:if test="${m.BANN_YSNO == 'N' && m.WAIT_YSNO == 'Y' && m.MAST_YSNO == 'N'}">
 					   	<c:set var="count" value="${count + 1}" />
-					    <div class="profileImgWrap dp members" data-count="${count}" id="count">
-					    	<img class="profileImg" src="${m.USER_IMAG}" />
+					    <div class="profileWrapper">
+						    <div class="profileImgWrap dp members" data-count="${count}" id="count">
+						    	<img class="profileImg" src="${m.USER_IMAG}" />
+						    </div>
+						    <div class="profileInfo">
+						    	<div>
+							    	<p>${m.USER_NICK}</p>
+							    	<p style="color: var(--color-gray500); font-weight: 500;">
+							    		${m.SELF_INTR}
+							    	</p>
+						    	</div>
+						    	<div class="profileBtnContainer">
+							    	<button class="Btn f">팔로우</button>
+							    	<button class="Btn appr" data-numb="${m.USER_NUMB}">승인</button>
+							    	<button class="Btn bann" data-numb="${m.USER_NUMB}">거절</button>
+						    	</div>
+						    </div>
 					    </div>
 						</c:if>
 					</c:forEach>
