@@ -208,39 +208,32 @@ document.addEventListener("DOMContentLoaded", function(){
    * 240118 장한원
    * 멤버 프로필 오른쪽으로 이동
    */
+  const memeberList = document.querySelectorAll('.memeberProfiles');
   const countNode = document.getElementById('count');
-  const count = countNode.getAttribute('data-count'); // 참여한 멤버수
-  const memberList = document.getElementById('memberList').value;
-  const cleanedString = memberList.replace(/[[]/g, '');
-  console.log(cleanedString)
-          
-  // 등호를 콜론으로 대체, 키와 값을 큰따옴표로 감쌈
-  // const jsonString = cleanedString.replace(/([^,=]+)=([^,=]+)/g, '"$1":"$2"');
-          
-  // // JSON 타입으로 파싱
-  // const result = JSON.parse(`{${jsonString}}`);
   
-  for (let i=0; i< count; i++) {
-    let joinMemberList = [];
+  memeberList.forEach(list =>{
+    const memeberItem = list.querySelectorAll('.profileImgWrap');
+    console.log(memeberItem.length)
+    
+    
+    if(memeberItem.length > 0) { // 방장을 제외한 참여회원
+      
+      memeberItem.forEach((item, i) => {
+        item.style.left = 44 * i + 'px';
+      })
   
-    if(memberList[i].BANN_YSNO == 'N' &&
-       memberList[i].WAIT_YSNO == 'N' &&
-       memberList[i].MAST_YSNO == 'N') {
+    } else if(memeberItem.length == 0){
+      if(list.getAttribute('data-appr') == 'Y') {
+        document.querySelector('.appr').style.display = 'none';
+      }
 
-       joinMemberList.push(eachMember);
+      const element = document.createElement('p')
+      element.style = 'font-weight: 500; line-height: 29px; color: var(--color-gray500)';
+      element.textContent  = '참여한 멤버가 없습니다.	첫 번째 멤버가 되어보세요!'
+      list.appendChild(element);
     }
-    
-  }
-
-  if(count > 1) { // 방장을 제외한 참여회원
-    
-    const memeberItem = countNode.querySelectorAll('.profileImgWrap')
-
-    memeberItem.forEach((item, i) => {
-      item.style.left = 44 * i + 'px';
-    })
-
-  }
+  })
+  
 
  
   /**
@@ -476,7 +469,13 @@ document.addEventListener("DOMContentLoaded", function(){
     
     function getContentText(btnState) {
       if(btnState == 're') {
+        
+        if(detail.APPR_YSNO == 'Y') {
+          return '모임에 참여 요청을 보냈어요!';
+        }
+
         return '모임에 참여되었어요!';
+        
       } else {
         return '참여가 취소되었어요.';
       }

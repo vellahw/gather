@@ -111,25 +111,29 @@
     </div>
      <div class="eachInfoWrap">
  			<h3 class="infoTitle member">함께하는 멤버들</h3>
- 			<input type="hidden" id="memberList" value="<c:out value='${member}' />">
-			<c:choose>
-		    <c:when test="${fn:length(member) > 1 }">
-		      <div class="memeberProfiles" data-count="${fn:length(member)}" id="count">
-						<c:forEach var="m" items="${member}">
-						  <c:if test="${m.BANN_YSNO == 'N' && m.WAIT_YSNO == 'N' && m.MAST_YSNO == 'N'}">
-						      <div class="profileImgWrap dp members">
-						      	<img class="profileImg" src="${m.USER_IMAG}" />
-						      </div>
-							</c:if>
-						</c:forEach>
-      		</div>
-				 </c:when>
-				 <c:otherwise>
-					 <p class="noMember" id="count">
-				     참여한 멤버가 없습니다.	첫 번째 멤버가 되어보세요!
-					 </p>  
-				 </c:otherwise>
-	  </c:choose>
+		  <div class="memeberProfiles">
+				<c:forEach var="m" items="${member}">
+					<c:if test="${m.BANN_YSNO == 'N' && m.WAIT_YSNO == 'N' && m.MAST_YSNO == 'N'}">
+					 	<c:set var="count" value="${count + 1}" />
+					  <div class="profileImgWrap dp members" data-count="${count}" id="count">
+					  	<img class="profileImg" src="${m.USER_IMAG}" />
+					  </div>
+					</c:if>
+				</c:forEach>
+     	</div>
+    </div>
+    <div class="eachInfoWrap appr">
+ 			<h3 class="infoTitle member">참여 승인을 기다리고 있어요</h3>
+		  	<div class="memeberProfiles" data-appr="Y">
+					<c:forEach var="m" items="${member}">
+					  <c:if test="${m.BANN_YSNO == 'N' && m.WAIT_YSNO == 'Y' && m.MAST_YSNO == 'N'}">
+					   	<c:set var="count" value="${count + 1}" />
+					    <div class="profileImgWrap dp members" data-count="${count}" id="count">
+					    	<img class="profileImg" src="${m.USER_IMAG}" />
+					    </div>
+						</c:if>
+					</c:forEach>
+        </div>
     </div>
     
 	  <div class="btnContainer">

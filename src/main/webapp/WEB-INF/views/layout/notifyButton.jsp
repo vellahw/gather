@@ -74,5 +74,41 @@
 				에 다시...
 			</p>
 		</li>
+		<li class="noti">
+			<p>
+				<span>1월 28일</span>
+				<img src="/resources/img/icon/trashIcon.png" alt="삭제 아이콘" />
+			</p>
+			<p>
+				<span class="nick">닉네임7</span>
+				님이 게더 
+				<span class="t">'놀러와요 동물의'</span>
+				에 다시...
+			</p>
+		</li>
+		<li class="noti">
+			<p>
+				<span>1월 28일</span>
+				<img src="/resources/img/icon/trashIcon.png" alt="삭제 아이콘" />
+			</p>
+			<p>
+				<span class="nick">닉네임7</span>
+				님이 게더 
+				<span class="t">'놀러와요 동물의'</span>
+				에 다시...
+			</p>
+		</li>
+		<li class="noti">
+			<p>
+				<span>1월 28일</span>
+				<img src="/resources/img/icon/trashIcon.png" alt="삭제 아이콘" />
+			</p>
+			<p>
+				<span class="nick">닉네임7</span>
+				님이 게더 
+				<span class="t">'놀러와요 동물의'</span>
+				에 다시...
+			</p>
+		</li>
 </ul>
 </div>

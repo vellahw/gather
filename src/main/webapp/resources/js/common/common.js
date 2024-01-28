@@ -357,7 +357,7 @@ function parseString(targetValue) {
 
 /* 
 240125 Hwai
-name:parseString
+name:comNotify
 Purpose: 알림 insert
 parameter:(situation: (String 타입)
            001: 방장이 받는 참여알림
