@@ -86,9 +86,9 @@
 	<task:annotation-driven />
 
     <!-- 스케줄러 설정 -->
-    <task:scheduler id="GatherScheduler" pool-size="10" />
+    <task:scheduler id="CommonScheduler" pool-size="10" />
 
-    <bean id="GatherScheduler" class="com.our.gather.moimGather.scheduler.GatherScheduler" />
+    <bean id="CommonScheduler" class="com.our.gather.common.scheduler.CommonScheduler" />
     
     <!-- config.properties 스캔 -->
    <context:property-placeholder location="/WEB-INF/config/config.properties" /> 

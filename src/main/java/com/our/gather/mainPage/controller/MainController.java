@@ -21,6 +21,7 @@ import com.our.gather.common.oracleFunction.OracleFunction;
 import com.our.gather.common.service.CommonService;
 import com.our.gather.mainPage.service.MainService;
 import com.our.gather.moimGather.service.GatherService;
+import com.our.gather.notify.service.NotifyService;
 
 @Controller
 public class MainController {
@@ -33,6 +34,9 @@ public class MainController {
 	 
 	@Resource(name = "GatherService")
 	private GatherService gatherService;
+	
+	@Resource(name = "NotifyService")
+	private NotifyService notifyService;
 
 	@RequestMapping(value = "/gather.com")
 	public ModelAndView main(@RequestParam(value = "type", required = false) String LIST_TYPE,
@@ -40,8 +44,8 @@ public class MainController {
 							 @RequestParam(value = "keyword", required = false) String KEYY_WORD,
 							 HttpSession session, CommandMap commandMap, Model model) throws Exception {
 
-		ModelAndView mv = new ModelAndView("/mainPage/mainPage");
-		mv.setViewName("mainPage");
+		ModelAndView mv1 = new ModelAndView("/mainPage/mainPage");
+		mv1.setViewName("mainPage");
 
 		ModelAndView mv2 = new ModelAndView("/listPage/listPage");
 		mv2.setViewName("listPage");
@@ -51,8 +55,8 @@ public class MainController {
 
 		List<Map<String, Object>> pCate = commonService.pCate(commandMap.getMap(), commandMap);
 		List<Map<String, Object>> cCate = commonService.cCate(commandMap.getMap(), commandMap);
-		mv.addObject("pCate", pCate);
-		mv.addObject("cCate", cCate);
+		mv1.addObject("pCate", pCate);
+		mv1.addObject("cCate", cCate);
 		mv2.addObject("pCate", pCate);
 		mv2.addObject("cCate", cCate);
 		mv3.addObject("pCate", pCate);
@@ -63,20 +67,20 @@ public class MainController {
 			
 			String moimType =  OracleFunction.getCodeName("MOIM_TYPE",LIST_TYPE.toUpperCase());
 			
-			mv.addObject("moimType", moimType);
+			mv1.addObject("moimType", moimType);
 			mv2.addObject("moimType", moimType);
 			mv3.addObject("moimType", moimType);
 		}
 
 		if (LIST_TYPE == null) {
 			
-			mv.addObject("moimType", "게더"); //모임타입
+			mv1.addObject("moimType", "게더"); //모임타입
 			mv2.addObject("moimType", "게더");
 			mv3.addObject("moimType", "게더");
 
 			if (CATE_IDXX == null && KEYY_WORD == null) {
 
-				mv.addObject("main", gatherService.mainGather(commandMap.getMap(), session, commandMap)); // 게더 메인
+				mv1.addObject("main", gatherService.mainGather(commandMap.getMap(), session, commandMap)); // 게더 메인
 
 			} else if(CATE_IDXX != null && KEYY_WORD == null) {
 
@@ -105,13 +109,14 @@ public class MainController {
 				return mv3;
 				
 			}
+			
 		}
 		
 		if (LIST_TYPE != null && LIST_TYPE.equals("cb")) {
 
 			if (CATE_IDXX == null && KEYY_WORD == null) {
 
-				mv.addObject("main", gatherService.mainGather(commandMap.getMap(), session, commandMap)); //추후 클럽으로 변경
+				mv1.addObject("main", gatherService.mainGather(commandMap.getMap(), session, commandMap)); //추후 클럽으로 변경
 
 			} else if(CATE_IDXX != null && KEYY_WORD == null) {
 
@@ -140,13 +145,14 @@ public class MainController {
 				return mv3;
 				
 			}
+			
 		}
 		
 		if (LIST_TYPE != null && LIST_TYPE.equals("ch")) {
 
 			if (CATE_IDXX == null && KEYY_WORD == null) {
 
-				mv.addObject("main", gatherService.mainGather(commandMap.getMap(), session, commandMap)); //추후 챌린지로 변경
+				mv1.addObject("main", gatherService.mainGather(commandMap.getMap(), session, commandMap)); //추후 챌린지로 변경
 
 			} else if(CATE_IDXX != null && KEYY_WORD == null) {
 
@@ -175,11 +181,26 @@ public class MainController {
 				return mv3;
 				
 			}
+			
+		}
+		
+		if(session.getAttribute("USER_NUMB") != null) {
+			
+			List<Map<String, Object>> notify = notifyService.getNotify(commandMap.getMap(), commandMap, session);
+			
+			mv1.addObject("notify", notify);
+			mv2.addObject("notify", notify);
+			mv3.addObject("notify", notify);
+			mv1.addObject("notiCount", notify.size());
+			mv2.addObject("notiCount", notify.size());
+			mv3.addObject("notiCount", notify.size());
+			
 		}
 
-		return mv;
+		return mv1;
 	}
-
+	
+	//날씨에 따른 모임(챌린지, 클럽에 출력 유뮤 추후 결정)
 	@RequestMapping(value = "/getWeatherMoim.com", method = RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView getWeatherMoim(@RequestBody Map<String, String> requestBody, CommandMap commandMap,
@@ -197,8 +218,7 @@ public class MainController {
 
 		case "sunny":
 
-			// dataList = List.of("B01", "B04", "B06", "B17", "B20", "B22", "F07", "F04",
-			// "F06");
+			// dataList = List.of("B01", "B04", "B06", "B17", "B20", "B22", "F07", "F04", "F06");
 			dataList = List.of("A01", "A02", "A03", "A04", "A05");
 			commandMap.put("WEATH_CATE", dataList);
 
@@ -206,8 +226,7 @@ public class MainController {
 
 		case "cloudy":
 
-			// dataList = List.of("C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08",
-			// "C09", "C10", "C11", "C12");
+			// dataList = List.of("C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10", "C11", "C12");
 			dataList = List.of("A01", "A02", "A03", "A04", "A05");
 			commandMap.put("WEATH_CATE", dataList);
 
@@ -215,8 +234,7 @@ public class MainController {
 
 		case "rainy":
 
-			// dataList = List.of("A01", "A02", "A07", "A09", "B05", "B10", "B16", "D02",
-			// "D03", "D04", "D05", "D06", "D11", "D12", "D13", "D14", "D15", "D16");
+			// dataList = List.of("A01", "A02", "A07", "A09", "B05", "B10", "B16", "D02", "D03", "D04", "D05", "D06", "D11", "D12", "D13", "D14", "D15", "D16");
 			dataList = List.of("A01", "A02", "A03", "A04", "A05");
 			commandMap.put("WEATH_CATE", dataList);
 
@@ -224,8 +242,7 @@ public class MainController {
 
 		case "thunder":
 
-			// dataList = List.of("D10", "G01", "G02", "G03", "G04", "G05", "G06", "G07",
-			// "I01", "I02", "I03", "I04", "I05", "J01", "J02", "J03", "J04");
+			// dataList = List.of("D10", "G01", "G02", "G03", "G04", "G05", "G06", "G07", "I01", "I02", "I03", "I04", "I05", "J01", "J02", "J03", "J04");
 			dataList = List.of("A01", "A02", "A03", "A04", "A05");
 			commandMap.put("WEATH_CATE", dataList);
 
@@ -234,21 +251,20 @@ public class MainController {
 		case "snowy":
 
 			dataList = List.of("A01", "A02", "A03", "A04", "A05"); // "test끝나면 지우기"
-			commandMap.put("WEATH_CATE", dataList); // "B03"
+			commandMap.put("WEATH_CATE", dataList); //commandMap.put("WEATH_CATE", "B03");
 
 			break;
 
 		case "hot":
 
 			dataList = List.of("A01", "A02", "A03", "A04", "A05"); // "test끝나면 지우기"
-			commandMap.put("WEATH_CATE", dataList); // B14
+			commandMap.put("WEATH_CATE", dataList); //commandMap.put("WEATH_CATE", "B14");
 			
 		case "cold":
 			
-			// dataList = List.of("A01", "A02", "A07", "A09", "B05", "B10", "B16", "D02",
-			// "D03", "D04", "D05", "D06", "D11", "D12", "D13", "D14", "D15", "D16");
-			dataList = List.of("A01", "A02", "A03", "A04", "A05"); // "test끝나면 지우기"
-			commandMap.put("WEATH_CATE", dataList); // B14
+			// dataList = List.of("A01", "A02", "A07", "A09", "B05", "B10", "B16", "D02" "D03", "D04", "D05", "D06", "D11", "D12", "D13", "D14", "D15", "D16");
+			dataList = List.of("A01", "A02", "A03", "A04", "A05");
+			commandMap.put("WEATH_CATE", dataList);
 
 			break;
 		}
@@ -258,14 +274,19 @@ public class MainController {
 			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
 
 		} else if (moimType.equals("cb")) {
+			
+			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
 
 		} else if (moimType.equals("ch")) {
+			
+			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
 
 		}
 
 		return mv;
 	}
-
+	
+	//비로그인 사용자 근처의 모임(챌린지, 클럽에 출력 유뮤 추후 결정)
 	@RequestMapping(value = "/getCurrentRegionMoim.com", method = RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView getCurrentRegionMoim(@RequestBody Map<String, String> requestBody, CommandMap commandMap,
@@ -284,8 +305,12 @@ public class MainController {
 			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
 
 		} else if (moimType.equals("cb")) {
+			
+			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
 
 		} else if (moimType.equals("ch")) {
+			
+			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
 
 		}
 

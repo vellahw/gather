@@ -36,4 +36,23 @@ public class NotifyController {
 		return ResponseEntity.ok("Success");
 	}
 
+	//알림 읽음 처리
+	@ResponseBody
+	@RequestMapping("/NotiRead.com")
+	public ResponseEntity<String> updateReadNoti(@RequestBody Map<String, String> map, HttpSession session,
+			HttpServletRequest request, CommandMap commandMap) throws Exception {
+
+		commandMap.put("SEND_USER", session.getAttribute("USER_NUMB"));
+		
+		if(map.get("NOTI_SEQC") != null) {
+			
+			commandMap.put("NOTI_SEQC", map.get("NOTI_SEQC"));
+			
+		}
+		
+		notifyService.insertNotify(commandMap.getMap(), commandMap);
+
+		return ResponseEntity.ok("Success");
+	}
+
 }
