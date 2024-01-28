@@ -84,7 +84,7 @@
 
 /*========== 해시태그 + 호버하면 바탕색 올라감 ==========*/
 .hashtag {
-  padding: 4px 8px 4px 8px;
+  padding: 4px 8px 4px 7px;
   border: 1px solid var(--primary);
   border-radius: 8px;
   font-size: 12px;
@@ -235,18 +235,18 @@ label:hover {
 }
 
 .notifyList {
-	visibility: hidden;
+  visibility: hidden; 
+  visibility: visibile;
   transition: all 0.3s ease;
-  opacity: 0;
+  opacity: 0; 
   z-index: -1;
-  overflow: hidden;
-  
-	width: 380px;
-	height: 0px;
-	padding: 28px;
-	border-radius: 28px;
-	background: #FFD4B5;
-	position: fixed;
+  overflow: overlay;
+  width: 380px;
+  height: 606px;
+  padding: 28px;
+  border-radius: 28px;
+  background: #FFD4B5;
+  position: fixed;
   bottom: 40px;
   right: 40px;
   display: flex;
@@ -255,14 +255,14 @@ label:hover {
 }
 
 .notifyList::-webkit-scrollbar{
-  width: 20px;
+   display:none; 
 }
-
+.notifyList::-webkit-scrollbar-track{
+   display:none; 
+}
 .notifyList::-webkit-scrollbar-thumb {
   border: 7px solid #FFD4B5;
-}
-
-
+} 
 .act {
   visibility: visible;
   opacity: 1;
@@ -289,35 +289,40 @@ label:hover {
 }
 
 .noti {
-	/* width: calc(100% - 40px); */
-	width: calc(100% - (100% - 100%) - 40px);
-	height: fit-content;
-	padding: 20px;
-  margin-top: 20px;
-	border-radius: 20px;
-	background: var(--color-white);
+    /* width: calc(100% - 40px); */
+    width: calc(100% - (100% - 100%) - 40px);
+    height: fit-content;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 20px;
+    background: var(--color-white);
+    overflow-wrap: break-word;
+}
+.trachCan {
+   margin-left: 254px;
 }
 
-.noti > p {
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-  color: var(--color-gray500);
-  margin-bottom: 8px;
-  align-items: center;
+.noti.regDate {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: var(--color-gray500);
+    margin-bottom: 8px;
+    align-items: center;
 }
 
 .noti :nth-child(2) {
-  font-size: 18px;
-  font-weight: 500;
-  color: var(--color-black);	
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--color-black);    
 }
 
 .nick {
-  font-weight: 600;
+    font-weight: 600;
 }
 
 .t {
-	font-weight: 600 !important;
-	color: var(--primary) !important;
+    font-weight: 600 !important;
+    color: var(--primary) !important;
+    font-size: 18px;
 }

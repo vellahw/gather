@@ -21,7 +21,7 @@ function comAjax(targetType, targetUrl, targetData, targetContentType, targetSuc
 
 
 /* 
-240122 Hwai
+240122 KSH
 name:comUpdateArray
 Purpose: 배열 최신 객체 저장
 parameter: (arr : 배열명, value: 배열값, key: 비교 키)
@@ -41,7 +41,7 @@ function comUpdateArray(arr, value, key) {
 }
 
 /* 
-240111 Hwai
+240111 KSH
 name:whereIam
 Purpose: 현재 사용자가 위치한 모임타입
 parameter: null
@@ -64,7 +64,7 @@ function comWhereIam() {
 }
 
 /* 
-240111 Hwai
+240111 KSH
 name:ComIsEmpty
 Purpose: null, "" 값 체크
 parameter:obj
@@ -77,7 +77,7 @@ function ComIsEmpty(obj){
 }
 
 /* 
-240111 Hwai
+240111 KSH
 name:comApplyNumFmt
 Purpose:입력폼 초기화
 parameter:null
@@ -111,7 +111,7 @@ function comResetInput($inputForm, hiddenChkFlag = true, disabledChkFlag = true)
 	}
 }
 /* 
-240111 Hwai
+240111 KSH
 name:comApplyNumFmt
 Purpose: 통화포멧
 parameter:num
@@ -148,7 +148,7 @@ function comApplyNumFmt(num) {
 }
 
 /* 
-240111 Hwai
+240111 KSH
 name:ComRemoveNumFmt
 Purpose: 통화포멧제거
 parameter:num
@@ -159,7 +159,7 @@ function ComRemoveNumFmt(num) {
 
 }
 /* 
-240111 Hwai
+240111 KSH
 name:comAlert
 Purpose:알럿창
 parameter:(content: 내용)
@@ -173,7 +173,7 @@ function comAlert(title){
 }
 
 /* 
-240111 Hwai
+240111 KSH
 name:comAlert2
 Purpose:알럿창
 parameter:(type : 알럿타입 , title : 제목, content: 내용 , okFun : 확인 후 function
@@ -231,7 +231,7 @@ function comAlert2(type, title, content, button , okFun){
 };
 
 /* 
-240111 Hwai
+240111 KSH
 name:comAlert3
 Purpose:알럿창
 parameter:(title : 제목, icon:아이콘 , content: 내용 , button: 버튼 , okFn : 확인 후 함수)
@@ -253,7 +253,7 @@ function comAlert3(title, content, icon,  okFn){
 }
 
 /* 
-240114 Hwai
+240114 KSH
 name:comConfirm
 Purpose:컨펌창
 parameter:(title : 제목
@@ -333,6 +333,33 @@ function goDetail(params, event) {
 
 }
 
+/* 
+admin:KSH
+name:comGoSomewhere
+Purpose:공통 페이지 이동함수
+parameter:(pageName: 페이지(detail : 디테일 페이지
+                            search : 검색 페이지)
+           , params : 해당 파라미터)
+*/ 
+function comGoSomewhere(pageName, params) {
+
+  switch (pageName){
+
+    case 'detail':
+
+    location.href = `/gatherDetail.com?idx=${params}`;
+
+    break;
+
+    case 'search':
+
+    location.href = `/gather.com?keyword=${params}`
+    
+    break;
+
+  }
+
+}
 
 /* 
 admin:Hanwon
@@ -356,7 +383,7 @@ function parseString(targetValue) {
 }
 
 /* 
-240125 Hwai
+240125 KSH
 name:parseString
 Purpose: 알림 insert
 parameter:(situation: (String 타입)

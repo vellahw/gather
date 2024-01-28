@@ -29,14 +29,14 @@
 				<c:forEach var="list" items="${list}">
 					<div class="Contents">
 						<div class="eachWrap">
-							<div class="thumnailContainer" onclick="goDetail('${list.MOIM_IDXX}')">
+							<div class="thumnailContainer" onclick="comGoSomewhere('detail','${list.MOIM_IDXX}')">
 								<img src="${list.MOIM_IMAG}" class="thumnail" alt="썸네일">
 							</div>
 							<div class="infoContainer">
-								<h3 class="title" onclick="goDetail('${list.MOIM_IDXX}')">${list.MOIM_TITL}</h3>
+								<h3 class="title" onclick="comGoSomewhere('detail','${list.MOIM_IDXX}')">${list.MOIM_TITL}</h3>
 								<div class="hashtagContainer">
 									<c:forEach var="hashtag" items="${list.HASH_TAGG}">
-										<button type="button" class="hashtag" onclick="goSearch(this)" data-hash="${hashtag}">#${hashtag}</button>
+										<button type="button" class="hashtag" onclick="comGoSomewhere('search','${hashtag}')">#${hashtag}</button>
 									</c:forEach>
 								</div>
 								<div class="locationDateContainer">

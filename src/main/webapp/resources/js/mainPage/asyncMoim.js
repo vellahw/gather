@@ -1,5 +1,5 @@
 /*
-230110 Hwai
+230110 KSH
 날씨에 따른 모임추천
 */
 document.addEventListener("DOMContentLoaded", function(){
@@ -231,17 +231,17 @@ document.addEventListener("DOMContentLoaded", function(){
       const hashtag = data.HASH_TAGG;
       let str =
           `<div class="eachWrap">
-            <div class="thumnailContainer" onclick="goDetail('${data.MOIM_IDXX}')">
+            <div class="thumnailContainer" onclick="comGoSomewhere('detail','${data.MOIM_IDXX}')">
               <img src="${data.MOIM_IMAG}" class="thumnail" alt="썸네일">
             </div>
             <div class="infoContainer">
-              <h3 class="title" onclick="goDetail('${data.MOIM_IDXX}')">${data.MOIM_TITL}</h3>
+              <h3 class="title" onclick="comGoSomewhere('detail','${data.MOIM_IDXX}')">${data.MOIM_TITL}</h3>
               <div class="hashtagContainer">`;
       
       if(hashtag.length !=0) {
 
         for (let i = 0; i < hashtag.length; i++) {
-          str += `<button type="submit" class="hashtag" onclick="goSearch(this)" data-hash="${data.HASH_TAGG[i]}">
+          str += `<button type="submit" class="hashtag" onclick="comGoSomewhere('search','${data.HASH_TAGG[i]}')"">
                     #${data.HASH_TAGG[i]}
                   </button>`
         }
