@@ -338,6 +338,7 @@
                   END AS MAST_YSNO													/* 방장유무 */
 	           , A.USER_NUMB														/* 회원번호 */
 	           , B.USER_NICK														/* 회원닉네임 */
+	           , B.SELF_INTR														/* 회원자기소개 */
 	           , CASE WHEN LENGTH(B.FILE_SVNM) > 32 
 	                  		 THEN '/resources/img/upload/profile/'|| A.USER_NUMB ||'/'|| B.FILE_SVNM  
 	               	  ELSE '/resources/img/basic/profile/' || B.FILE_SVNM 
