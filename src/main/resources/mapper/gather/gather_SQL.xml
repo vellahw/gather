@@ -226,7 +226,7 @@
 		                , APPR_YSNO															/* 승인 여부 */
 		                , MINN_AGEE						 									/* 최소나이 */
                 		, MAXX_AGEE															/* 최대나이 */
-						, APPR_LMIT															/* 모임 제한 KR */
+										, APPR_LMIT															/* 모임 제한 KR */
 		                , GNDR_CODE															/* 모임 성별 코드 */											
 		                , PREGI_NAME														/* 부모 지역명 */
 		                , REGI_NAME															/* 자식 지역명 */
@@ -238,6 +238,7 @@
 		                , FULL_DATE															/* 날짜 형식 YYYY년 M월 오전/오후 HH:mm */
 		                , LIKE_COUNT														/* 좋아요 수 */
 		                , REGG_DATE															/* 모임 개설일 */
+		                , ENDD_YSNO															/* 모임 마감 유무 */
 		                 ]]>
 		                 <if test="USER_NUMB != null">
 		      			 	<![CDATA[

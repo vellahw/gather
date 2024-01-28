@@ -1,5 +1,38 @@
 @charset "UTF-8";
 
+.closebar {
+	margin: 22px auto;
+  width: 834px;
+  border-radius: 14px;
+  background-color: var(--color-white);
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  animation: colorChangeAdvanced 2s infinite 
+					  linear
+					  alternate;
+}
+
+@keyframes colorChange {
+    from {
+    	background-color: var(--color-white);
+    	color: var(--primary);
+    }
+    to {
+    	background-color: var(--primary);
+    	color: var(--color-white);
+    }
+}
+
+@keyframes colorChangeAdvanced {
+    0% {color: #FFD4B5;}
+    25% {color: #FFAE73;}
+    50% {color: #FD8731;}
+    100% {color: #FF5B37;}
+}
+
 .backgroundImg {
   z-index: -1;
   filter: blur(100px);
