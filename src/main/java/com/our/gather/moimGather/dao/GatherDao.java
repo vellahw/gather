@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.dao.AbstractDao;
+import com.our.gather.common.oracleFunction.OracleFunction;
 
 @Repository("GatherDao")
 public class GatherDao extends AbstractDao {
@@ -32,11 +33,31 @@ public class GatherDao extends AbstractDao {
 	        if (!HashTag.isEmpty()) {
 
 	            for (Map<String, Object> tag : HashTag) {
+	            	
 	            	hashTag.add(tag.get("HASH_TAGG"));
+	            	
 	            }
+	            
+	            mainGather.get(i).put("HASH_TAGG", hashTag);
+	        }
+	        
+	        
+	        if(session.getAttribute("USER_NUMB") != null) {
+	        	
+	        	String userId = mainGather.get(i).get("USER_NUMB").toString();
+	        	
+	        	String me = session.getAttribute("USER_NUMB").toString();
+	        	
+	        	String folwCode = OracleFunction.getRelationCode(me, userId);
+	        	
+	        	String folwBtn = OracleFunction.getCodeName("FOLW_CODE", folwCode);
+	        	
+	        	mainGather.get(i).put("FOLW_CODE", folwCode);
+	        	
+	        	mainGather.get(i).put("FOLW_BTNN", folwBtn);
+	        	
 	        }
 
-	        mainGather.get(i).put("HASH_TAGG", hashTag);
 	    }
 
 	    return mainGather;
@@ -60,11 +81,30 @@ public class GatherDao extends AbstractDao {
 		        if (!HashTag.isEmpty()) {
 
 		            for (Map<String, Object> tag : HashTag) {
+		            	
 		            	hashTag.add(tag.get("HASH_TAGG"));
+		            	
 		            }
+		            
+		            getGatherList.get(i).put("HASH_TAGG", hashTag);
+		        }
+		        
+		        if(session.getAttribute("USER_NUMB") != null) {
+		        	
+		        	String userId = getGatherList.get(i).get("USER_NUMB").toString();
+		        	
+		        	String me = session.getAttribute("USER_NUMB").toString();
+		        	
+		        	String folwCode = OracleFunction.getRelationCode(me, userId);
+		        	
+		        	String folwBtn = OracleFunction.getCodeName("FOLW_CODE", folwCode);
+		        	
+		        	getGatherList.get(i).put("FOLW_CODE", folwCode);
+		        	
+		        	getGatherList.get(i).put("FOLW_BTNN", folwBtn);
+		        	
 		        }
 
-		        getGatherList.get(i).put("HASH_TAGG", hashTag);
 		    }
 
 		return getGatherList;
@@ -84,9 +124,8 @@ public class GatherDao extends AbstractDao {
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getGatherMember(Map<String, Object> map, CommandMap commandMap) throws Exception {
 
-		List<Map<String, Object>> getGatherMember = (List<Map<String, Object>>) selectList("gather.getGatherMember",
-				map);
-
+		List<Map<String, Object>> getGatherMember = (List<Map<String, Object>>) selectList("gather.getGatherMember",map);
+		
 		return getGatherMember;
 	}
 

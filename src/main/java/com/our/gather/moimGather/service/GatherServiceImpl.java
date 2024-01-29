@@ -74,7 +74,7 @@ public class GatherServiceImpl implements GatherService {
 	//게더 맴버 리스트
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED)
-	public List<Map<String, Object>> getGatherMember(Map<String, Object> map, CommandMap commandMap) throws Exception {
+	public List<Map<String, Object>> getGatherMember(Map<String, Object> map, CommandMap commandMap ) throws Exception {
 		// TODO Auto-generated method stub
 		
 		return gatherDao.getGatherMember(map, commandMap);

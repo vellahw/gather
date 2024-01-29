@@ -118,7 +118,7 @@
 	 ]]>
 	 </select>
 	 
-	 <!--모임 like insert -->
+	<!--모임 like insert -->
 	<insert id="likeInsert" parameterType="hashmap">
      <![CDATA[
 	     /*common.likdeInsert*/
@@ -139,6 +139,30 @@
 	    DELETE TM_HEARTS 
 	     WHERE LIKE_IDXX = #{LIKE_IDXX}  
 	       AND USER_NUMB = #{USER_NUMB}  
+            ]]>
+	</delete>
+	
+	<!--모임 like insert -->
+	<insert id="follow" parameterType="hashmap">
+     <![CDATA[
+	     /*common.follow*/
+	     INSERT INTO TB_FOLLOW (
+	     		      USER_NUMB
+	     		    , FOLW_USER
+	      ) VALUES (
+	                  #{USER_NUMB}
+	                , #{FOLW_USER}
+	                )
+            ]]>
+	</insert>
+	
+	<!--모임 like Delete -->
+	<delete id="unfollow" parameterType="hashmap">
+    <![CDATA[
+	    /*common.unfollow*/
+	    DELETE TB_FOLLOW 
+	     WHERE USER_NUMB = #{USER_NUMB}  
+	       AND FOLW_USER = #{FOLW_USER}  
             ]]>
 	</delete>
 	
