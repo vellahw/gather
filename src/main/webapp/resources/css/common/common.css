@@ -248,7 +248,7 @@ label:hover {
   background: var(--color-orange300);
   position: fixed;
   bottom: 40px;
-  right: 40px;
+  right: 38px;
   display: flex;
   justify-content: center;
   flex-direction: column;
