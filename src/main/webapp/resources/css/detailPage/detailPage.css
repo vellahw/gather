@@ -233,7 +233,6 @@
 	padding: 4px 0 0 0;
 }
 
-
 .masterProfile {
   display: flex;
   align-items: center;
@@ -262,21 +261,15 @@
 
 .profileWrapper {
 	position: absolute;
-  /* width: 100%; */
   display: flex;
   align-items: center;
 }
 
 .members {
-  /* position: absolute;
-  top: 0; */
   border: 5px solid var(--color-white);
 }	
 
 .profileInfo {
-  /* position: absolute;
-  top: 13px; */
-  /* justify-content: space-between; */
   display: none;
  	font-size: 14px;
  	background-color: var(--color-white);
@@ -286,9 +279,6 @@
 
 .profileInfo > div {
 	padding-right: 25px;
-	/* display: flex;
-  flex-direction: column;
-  justify-content: center; */
 }
 
 .profileInfo > div > p {
@@ -298,8 +288,6 @@
 
 .profileBtnContainer {
   display: flex;
-	/* flex-direction: row !important;
-	align-items: center; */
 }
 
 .Btn {
@@ -317,10 +305,6 @@
 	background-color: var(--primary);
 }
 
-.bann {
-	display: none;
-}
-
 .btnContainer {
   display: flex;
   justify-content: center;
@@ -334,7 +318,7 @@
   width: 100%;
 }
 
-#joinMoimBtn, #reviewBtn, #updateBtn, #reJoin {
+#joinMoimBtn, #reviewBtn, #updateBtn, #reJoin, .appr, .bann  {
 	display: none;
 }
 

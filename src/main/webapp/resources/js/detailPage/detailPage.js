@@ -227,21 +227,9 @@ document.addEventListener("DOMContentLoaded", function(){
         item.addEventListener('mouseleave', ()=>{
           joinMemberListControl('leave', i);
         });
-
       })
-      
-      // profileImgWrap.forEach(profileImg =>{
-      //   // 마우스 오버하면 회원 정보, 버튼들 나옴
-      //   profileImg.addEventListener('mouseover', ()=>{
-      //     joinMemberListControl('over', i);
-      //   });
-  
-      //   profileImg.addEventListener('mouseleave', ()=>{
-      //     joinMemberListControl('leave', i);
-      //   });
-      // })
 
-
+    // 참여 멤버 없을 때
     } else if(profileImgWrap.length == 0){
 
       // 안내문구
@@ -254,19 +242,17 @@ document.addEventListener("DOMContentLoaded", function(){
       if(list.getAttribute('data-appr') == 'Y') {
         document.querySelector('.apprlist').style.display = 'none';
       }
-
     }
 
     function joinMemberListControl(state, i) {
-  
       profileInfo[i].style.display = state == 'over' ? 'flex' : 'none';
-      // profileInfo[i].style.left = state == 'over' ? `calc(50px * ${i + 1} + 20px)` : '0';
-  
-      // for (let i=0; i < (profileWrapper.length - 1); i++) {
       if(i != profileWrapper.length - 1) {
-        profileWrapper[i+1].style.left = state == 'over' ? `${profileWrapper[i].clientWidth}px` : `${44 * (i+1)}px`;
+          profileWrapper[i+1].style.left = state == 'over' ? `${profileWrapper[i].clientWidth}px` : `${44 * (i+1)}px`;
+          
+          for (let j=i+1; j < profileWrapper.length; j++) {
+            profileWrapper[j].style.left = state == 'over' ? `${profileWrapper[i].clientWidth + 44 * j}px` : `${44 * j}px`;
+          }
       }
-      // }
     }
   });
 
@@ -314,12 +300,11 @@ document.addEventListener("DOMContentLoaded", function(){
       // 방장
       } else if(MAST_YSNO == 'Y') {
         const updateBtn = document.getElementById('updateBtn');
-        const bannBtn = document.querySelectorAll('.bann');
-
         updateBtn.style.display = 'block';
         updateButtonUI(null, MAST_YSNO, 'master');
-
+        
         // 강퇴버튼
+        const bannBtn = document.querySelectorAll('.bann');
         bannBtn.forEach(btn => {
           btn.style.display = 'block';
 
@@ -351,8 +336,8 @@ document.addEventListener("DOMContentLoaded", function(){
             )}
           );
         }
-        })
-      }
+      });
+    }
 
     // 모임 미참여
     } else if(yourStateValue == 'null'){
