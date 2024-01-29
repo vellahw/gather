@@ -233,7 +233,6 @@
 	padding: 4px 0 0 0;
 }
 
-
 .masterProfile {
   display: flex;
   align-items: center;
@@ -243,47 +242,45 @@
 .dp {
   width: 60px;
   height: 60px;
+  border: 5px solid var(--color-white);
 }
 
-.masterName {
-	margin-left: 14px;
-  font-size: 18px; 
-  font-weight: 500; 
-  word-wrap: break-word;
+.master {
+	display: flex !important;	
+	align-items: start !important;
+	flex-direction: column;
+	padding-right: 25px;
+}
+
+.master > p {
+	font-size: 14px; 
+  font-weight: 600; 
 }
 
 .memeberProfiles {
 	margin-top: 4px;
 	display: flex;
+  flex-wrap: wrap;
   position: relative;
   height: 80px;
 }
 
 .profileWrapper {
 	position: absolute;
-  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
-.members {
-  position: absolute;
-  top: 0;
-  border: 5px solid var(--color-white);
-}	
-
 .profileInfo {
-  position: absolute;
-  top: 13px;
   display: none;
- 	justify-content: space-between;
  	font-size: 14px;
  	background-color: var(--color-white);
+ 	margin-left: 6px;
+  align-items: center;
 }
 
 .profileInfo > div {
 	padding-right: 25px;
-	display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
 .profileInfo > div > p {
@@ -291,9 +288,13 @@
 	margin-bottom: 5px;
 }
 
+.self {
+	color: var(--color-gray500);
+	font-weight: 500;
+}
+
 .profileBtnContainer {
-	flex-direction: row !important;
-	align-items: center;
+  display: flex;
 }
 
 .Btn {
@@ -311,10 +312,6 @@
 	background-color: var(--primary);
 }
 
-.bann {
-	display: none;
-}
-
 .btnContainer {
   display: flex;
   justify-content: center;
@@ -328,7 +325,8 @@
   width: 100%;
 }
 
-#joinMoimBtn, #reviewBtn, #updateBtn, #reJoin {
+#joinMoimBtn, #reviewBtn, #updateBtn, #reJoin,
+.appr, .bann, .noAppr  {
 	display: none;
 }
 
