@@ -160,7 +160,7 @@
 						    	<div class="profileBtnContainer">
 							    	<button class="Btn f">팔로우</button>
 							    	<button class="Btn appr" data-numb="${m.USER_NUMB}">승인</button>
-							    	<button class="Btn bann" data-numb="${m.USER_NUMB}">거절</button>
+							    	<button class="Btn noAppr" data-numb="${m.USER_NUMB}">거절</button>
 						    	</div>
 						    </div>
 					    </div>

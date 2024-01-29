@@ -318,7 +318,8 @@
   width: 100%;
 }
 
-#joinMoimBtn, #reviewBtn, #updateBtn, #reJoin, .appr, .bann  {
+#joinMoimBtn, #reviewBtn, #updateBtn, #reJoin,
+.appr, .bann, .noAppr  {
 	display: none;
 }
 
