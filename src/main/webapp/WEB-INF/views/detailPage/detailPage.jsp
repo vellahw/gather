@@ -111,7 +111,7 @@
 	        	<c:out value="${detail.USER_NICK}" />
 	        </p>
 	        <p class="self" data-intr-length="${fn:length(detail.SELF_INTR)}">
-	        	<input type="hidden" value="${m.SELF_INTR}" id="selfIntr">
+	        	<input type="hidden" value="${detail.SELF_INTR}" id="selfIntr">
 	        	<c:out value="${detail.SELF_INTR}" />
 	        </p>
       	</div>

@@ -262,13 +262,16 @@
 	display: flex;
   flex-wrap: wrap;
   position: relative;
-  height: 80px;
+  height: 72px;
+  overflow: hidden;
 }
 
 .profileWrapper {
 	position: absolute;
   display: flex;
   align-items: center;
+  bottom: 0;
+  top: 0;
 }
 
 .profileInfo {
@@ -286,6 +289,7 @@
 .profileInfo > div > p {
 	font-weight: 600;
 	margin-bottom: 5px;
+	width: fit-content;
 }
 
 .self {
