@@ -106,7 +106,13 @@
         <div class="profileImgWrap dp">
           <img class="profileImg" src="${detail.USER_IMAG}"/>
         </div>
-        <div class="masterName">${detail.USER_NICK}</div>
+        <div class="profileInfo master">
+	        <p style="margin-bottom: 5px;">${detail.USER_NICK}</p>
+	        <p class="self">${detail.SELF_INTR}</p>
+      	</div>
+				<div class="profileBtnContainer">
+					<button class="Btn f">팔로우</button>
+				</div>
       </div>
     </div>
      <div class="eachInfoWrap">
@@ -117,14 +123,14 @@
 					 	<c:set var="count" value="${count + 1}" />
 						 	<div class="profileWrapper">
 								<div class="profileImgContainer">
-								   <div class="profileImgWrap dp members" data-count="${count}" id="count">
+								   <div class="profileImgWrap dp" data-count="${count}" id="count">
 									  <img class="profileImg" src="${m.USER_IMAG}" />
 								   </div>
 								</div>
 								<div class="profileInfo">
 									<div>
 										<p>${m.USER_NICK}</p>
-										<p style="color: var(--color-gray500); font-weight: 500;">
+										<p class="self">
 											${m.SELF_INTR}
 										</p>
 									</div>
@@ -146,14 +152,14 @@
 					   	<c:set var="count" value="${count + 1}" />
 					    <div class="profileWrapper">
 					    	<div class="profileImgContainer">
-							    <div class="profileImgWrap dp members" data-count="${count}" id="count">
+							    <div class="profileImgWrap dp" data-count="${count}" id="count">
 							    	<img class="profileImg" src="${m.USER_IMAG}" />
 							    </div>
 						    </div>
 						    <div class="profileInfo">
 						    	<div>
 							    	<p>${m.USER_NICK}</p>
-							    	<p style="color: var(--color-gray500); font-weight: 500;">
+							    	<p class="self">
 							    		${m.SELF_INTR}
 							    	</p>
 						    	</div>
