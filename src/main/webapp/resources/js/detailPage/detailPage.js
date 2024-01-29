@@ -256,11 +256,13 @@ document.addEventListener("DOMContentLoaded", function(){
 
     function joinMemberListControl(state, i) {
       profileInfo[i].style.display = state == 'over' ? 'flex' : 'none';
+      
       if(i != profileWrapper.length - 1) {
           profileWrapper[i+1].style.left = state == 'over' ? `${profileWrapper[i].clientWidth}px` : `${44 * (i+1)}px`;
           
           for (let j=i+1; j < profileWrapper.length; j++) {
-            profileWrapper[j].style.left = state == 'over' ? `${profileWrapper[i].clientWidth + 44 * j}px` : `${44 * j}px`;
+            profileWrapper[j].style.left = state == 'over' ? `${(profileWrapper[i].clientWidth - 50) + 44 * j}px` : `${44 * j}px`;
+          	profileWrapper[j].style.transition = 'left 0.3s ease-in-out';
           }
       }
     }
