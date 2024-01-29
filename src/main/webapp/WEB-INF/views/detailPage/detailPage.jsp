@@ -115,22 +115,24 @@
 				<c:forEach var="m" items="${member}">
 					<c:if test="${m.BANN_YSNO == 'N' && m.WAIT_YSNO == 'N' && m.MAST_YSNO == 'N'}">
 					 	<c:set var="count" value="${count + 1}" />
-						 <div class="profileWrapper">
-							 <div class="profileImgWrap dp members" data-count="${count}" id="count">
-								<img class="profileImg" src="${m.USER_IMAG}" />
-							</div>
-							<div class="profileInfo">
-								<div>
-									<p>${m.USER_NICK}</p>
-									<p style="color: var(--color-gray500); font-weight: 500;">
-										${m.SELF_INTR}
-									</p>
+						 	<div class="profileWrapper">
+								<div class="profileImgContainer">
+								   <div class="profileImgWrap dp members" data-count="${count}" id="count">
+									  <img class="profileImg" src="${m.USER_IMAG}" />
+								   </div>
 								</div>
-								<div class="profileBtnContainer">
-									<button class="Btn f">팔로우</button>
-									<button class="Btn bann" data-numb="${m.USER_NUMB}">강퇴</button>
-								</div>
-							</div>
+								<div class="profileInfo">
+									<div>
+										<p>${m.USER_NICK}</p>
+										<p style="color: var(--color-gray500); font-weight: 500;">
+											${m.SELF_INTR}
+										</p>
+									</div>
+									<div class="profileBtnContainer">
+										<button class="Btn f">팔로우</button>
+										<button class="Btn bann" data-numb="${m.USER_NUMB}">강퇴</button>
+									</div>
+							 </div>
 						</div>
 					</c:if>
 				</c:forEach>
@@ -143,8 +145,10 @@
 					  <c:if test="${m.BANN_YSNO == 'N' && m.WAIT_YSNO == 'Y' && m.MAST_YSNO == 'N'}">
 					   	<c:set var="count" value="${count + 1}" />
 					    <div class="profileWrapper">
-						    <div class="profileImgWrap dp members" data-count="${count}" id="count">
-						    	<img class="profileImg" src="${m.USER_IMAG}" />
+					    	<div class="profileImgContainer">
+							    <div class="profileImgWrap dp members" data-count="${count}" id="count">
+							    	<img class="profileImg" src="${m.USER_IMAG}" />
+							    </div>
 						    </div>
 						    <div class="profileInfo">
 						    	<div>

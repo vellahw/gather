@@ -255,35 +255,40 @@
 .memeberProfiles {
 	margin-top: 4px;
 	display: flex;
+  flex-wrap: wrap;
   position: relative;
   height: 80px;
 }
 
 .profileWrapper {
 	position: absolute;
-  width: 100%;
+  /* width: 100%; */
+  display: flex;
+  align-items: center;
 }
 
 .members {
-  position: absolute;
-  top: 0;
+  /* position: absolute;
+  top: 0; */
   border: 5px solid var(--color-white);
 }	
 
 .profileInfo {
-  position: absolute;
-  top: 13px;
+  /* position: absolute;
+  top: 13px; */
+  /* justify-content: space-between; */
   display: none;
- 	justify-content: space-between;
  	font-size: 14px;
  	background-color: var(--color-white);
+ 	margin-left: 6px;
+  align-items: center;
 }
 
 .profileInfo > div {
 	padding-right: 25px;
-	display: flex;
+	/* display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center; */
 }
 
 .profileInfo > div > p {
@@ -292,8 +297,9 @@
 }
 
 .profileBtnContainer {
-	flex-direction: row !important;
-	align-items: center;
+  display: flex;
+	/* flex-direction: row !important;
+	align-items: center; */
 }
 
 .Btn {

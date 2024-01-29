@@ -213,15 +213,13 @@ document.addEventListener("DOMContentLoaded", function(){
   memeberList.forEach(list =>{
     const profileWrapper = list.querySelectorAll('.profileWrapper');
     const profileImgWrap = list.querySelectorAll('.profileImgWrap');
-    const profileInfo = list.querySelectorAll('.profileInfo')
+    const profileInfo = list.querySelectorAll('.profileInfo');
     
     // 참여자 명단
-    if(profileImgWrap.length > 0) { // 방장을 제외한 참여회원
-      profileImgWrap.forEach((item, i) => {
-
+    if(profileWrapper.length > 0) { // 방장을 제외한 참여회원
+      profileWrapper.forEach((item, i) => {
         item.style.left = 44 * i + 'px';
 
-        // 마우스 오버하면 회원 정보, 버튼들 나옴
         item.addEventListener('mouseover', ()=>{
           joinMemberListControl('over', i);
         });
@@ -231,7 +229,17 @@ document.addEventListener("DOMContentLoaded", function(){
         });
 
       })
-
+      
+      // profileImgWrap.forEach(profileImg =>{
+      //   // 마우스 오버하면 회원 정보, 버튼들 나옴
+      //   profileImg.addEventListener('mouseover', ()=>{
+      //     joinMemberListControl('over', i);
+      //   });
+  
+      //   profileImg.addEventListener('mouseleave', ()=>{
+      //     joinMemberListControl('leave', i);
+      //   });
+      // })
 
 
     } else if(profileImgWrap.length == 0){
@@ -252,12 +260,13 @@ document.addEventListener("DOMContentLoaded", function(){
     function joinMemberListControl(state, i) {
   
       profileInfo[i].style.display = state == 'over' ? 'flex' : 'none';
+      // profileInfo[i].style.left = state == 'over' ? `calc(50px * ${i + 1} + 20px)` : '0';
   
-      profileInfo[i].style.left = state == 'over' ? `calc(50px * ${i + 1} + 20px)` : '0';
-  
-      for (let i=0; i < (profileWrapper.length - 1); i++) {
-        profileWrapper[i+1].style.left = state == 'over' ? `${profileInfo[i].clientWidth}px` : '0';
+      // for (let i=0; i < (profileWrapper.length - 1); i++) {
+      if(i != profileWrapper.length - 1) {
+        profileWrapper[i+1].style.left = state == 'over' ? `${profileWrapper[i].clientWidth}px` : `${44 * (i+1)}px`;
       }
+      // }
     }
   });
 
