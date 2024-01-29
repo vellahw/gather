@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -24,14 +23,16 @@ public class CommonScheduler {
 	@Resource(name = "NotifyService")
 	private NotifyService notifyService;
 
-	//게더 스케줄러
+	//시간지난 게더 마감
 	@Scheduled(fixedRate = 6000000) //현재 1시간마다 실행 -- 배포 시 5초로 변경.
-	public void updateMoimStatus() throws Exception {
+	public void updateGatherWithNoti() throws Exception {
 		
 	    java.util.Date date = new java.util.Date();
 	    SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd HH:mm");
 	    String currentDateString = dateFormat.format(date);
 
+	    CommandMap commandMap = new CommandMap();
+	    
 	    try {
 	        // 현재 날짜 이전에 마감되지 않은 게더 가져오기
 	        List<Map<String, Object>> gathList = gatherService.getEndedGahter(currentDateString);
@@ -49,24 +50,19 @@ public class CommonScheduler {
 	                System.out.println("AUTO_ENDED for GATH_IDXX: " + gathIdxx + "when: " + currentDateString);
 	                gatherService.setGatherEnd(paramMap);
 
-	                CommandMap commandMap = new CommandMap();
-
+	                
 	                commandMap.put("MOIM_IDXX", gathIdxx);
-	                List<Map<String, Object>> memList = gatherService.getGatherMember(commandMap.getMap(), commandMap);
+	                List<Map<String, Object>> memList = gatherService.getGatherMemberForSD(commandMap.getMap(), commandMap);
 
 	                if (!memList.isEmpty()) {
 
 	                    for (int i = 0; i < memList.size(); i++) {
 
-	                        if (memList.get(i).get("MAST_YSNO").equals("N") && memList.get(i).get("WAIT_YSNO").equals("N") && memList.get(i).get("BANN_YSNO").equals("N")) {
-
-	                            commandMap.put("BOAD_IDXX", memList.get(i).get("MOIM_IDXX"));
-	                            commandMap.put("USER_NUMB", memList.get(i).get("USER_NUMB"));
-	                            commandMap.put("SEND_USER", "null");
-	                            commandMap.put("NOTI_CODE", "013");
-	                            notifyService.insertNotify(commandMap.getMap(), commandMap);
-
-	                        }
+                            commandMap.put("BOAD_IDXX", memList.get(i).get("MOIM_IDXX"));
+                            commandMap.put("USER_NUMB", memList.get(i).get("USER_NUMB"));
+                            commandMap.put("SEND_USER", "null");
+                            commandMap.put("NOTI_CODE", "B05");
+                            notifyService.insertNotify(commandMap.getMap(), commandMap);
 
 	                    }
 

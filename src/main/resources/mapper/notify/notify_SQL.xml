@@ -60,7 +60,7 @@
 		    		   , B.USER_NUMB AS SEND_USER              
 		   			   , A.NOTI_SEQC                           
 		    		   , B.USER_NICK                           
-					   , CASE WHEN A.NOTI_CODE IN ('010', '012', '013') 
+					   , CASE WHEN A.NOTI_CODE IN ('B04', 'B05', 'C01') 
 					                THEN '게더'
 					           ELSE '님이 게더' 
 					       END AS NOTI_CNT1                      

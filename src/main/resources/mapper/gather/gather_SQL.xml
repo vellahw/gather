@@ -381,6 +381,26 @@
 	      	]]>
     </select>
     
+    <!-- 
+	작성자:Hwai
+    작성일:23.01.30
+    (스케줄러 전용 게더 맴버 추출)
+    -->
+	<select id="getGatherMemberForScheduler" resultType="hashmap">
+    <![CDATA[
+		SELECT A.MOIM_IDXX
+	         , A.USER_NUMB
+	      FROM TB_MEMBER A
+	 LEFT JOIN TM_GATHER B
+	        ON A.MOIM_IDXX = B.GATH_IDXX
+	     WHERE A.MOIM_IDXX = #{MOIM_IDXX}
+	       AND A.BANN_YSNO = 'N'
+	       AND A.WAIT_YSNO = 'N'
+	       AND A.WAIT_YSNO = 'N'
+	       AND A.USER_NUMB <> B.USER_NUMB
+	      	]]>
+    </select>
+    
    	<!-- 
 	작성자:Hwai
     작성일:23.12.19
@@ -392,6 +412,22 @@
         	   GATH_IDXX
           FROM TM_GATHER
          WHERE TO_CHAR(CONCAT(CONCAT(MOIM_DATE, ' '), MOIM_TIME)) <= #{currentDateString}
+           AND ENDD_YSNO = 'N'
+     ]]>
+    </select>
+    
+    <!-- 
+	작성자:Hwai
+    작성일:23.12.19
+    (하루남은 게더 추출)
+    -->
+	<select id="getOneDayLeft" resultType="hashmap">
+    <![CDATA[
+        SELECT /*gather.getOneDayLeft*/
+        	   GATH_IDXX
+          FROM TM_GATHER
+         WHERE TO_DATE(CONCAT(CONCAT(MOIM_DATE, ' '), MOIM_TIME), 'YY/MM/DD HH24:MI') - SYSDATE <= 1
+           AND TO_DATE(CONCAT(CONCAT(MOIM_DATE, ' '), MOIM_TIME), 'YY/MM/DD HH24:MI') - SYSDATE > 0
            AND ENDD_YSNO = 'N'
      ]]>
     </select>
