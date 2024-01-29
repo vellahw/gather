@@ -33,7 +33,7 @@ public class OracleFunction {
     public static String getRelationCode(String p_user_numb, String p_folw_user) throws Exception {
         
         String sql = "{ ? = call getRelationCode(?, ?) }";
-        return executeFunction(sql, p_user_numb, p_folw_user);
+        return executeFunction(sql, p_user_numb, p_folw_user);	
     }
 
     private static String executeFunction(String sql, String param1, String param2) throws Exception {

@@ -116,6 +116,22 @@ public class GatherDao extends AbstractDao {
 			throws Exception {
 
 		Map<String, Object> getGatherDetail = (Map<String, Object>) selectOne("gather.getGather", map);
+		
+		if(session.getAttribute("USER_NUMB") != null) {
+
+            String userId =getGatherDetail.get("USER_NUMB").toString();
+
+            String me = session.getAttribute("USER_NUMB").toString();
+
+            String folwCode = OracleFunction.getRelationCode(me, userId);
+
+            String folwBtn = OracleFunction.getCodeName("FOLW_CODE", folwCode);
+
+            getGatherDetail.put("FOLW_CODE", folwCode);
+
+            getGatherDetail.put("FOLW_BTNN", folwBtn);
+
+        }
 
 		return getGatherDetail;
 	}

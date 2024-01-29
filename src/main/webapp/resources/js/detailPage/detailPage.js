@@ -209,7 +209,6 @@ document.addEventListener("DOMContentLoaded", function(){
    * 참여, 대기 명단
    */
   const memeberList = document.querySelectorAll('.memeberProfiles');
-  
   memeberList.forEach(list =>{
     const profileWrapper = list.querySelectorAll('.profileWrapper');
     const profileImgWrap = list.querySelectorAll('.profileImgWrap');
@@ -218,15 +217,25 @@ document.addEventListener("DOMContentLoaded", function(){
     // 참여자 명단
     if(profileWrapper.length > 0) { // 방장을 제외한 참여회원
       profileWrapper.forEach((item, i) => {
-        item.style.left = 44 * i + 'px';
 
+        item.style.left = 44 * i + 'px';
+        
         item.addEventListener('mouseover', ()=>{
           joinMemberListControl('over', i);
         });
-
+        
         item.addEventListener('mouseleave', ()=>{
           joinMemberListControl('leave', i);
         });
+
+        let profileInfo = item.querySelector('.profileInfo');
+        let selfIntrNode = profileInfo.querySelector('.self');
+        let selfIntrHidden = profileInfo.querySelector('#selfIntr');
+        let selfIntrValue = selfIntrHidden.value;
+        if(selfIntrValue.length > 12) {
+          let cutValue = selfIntrValue.substring(0, 12);
+          selfIntrNode.innerHTML = `${cutValue}...`;
+        }
 
       });
 
@@ -253,6 +262,15 @@ document.addEventListener("DOMContentLoaded", function(){
           for (let j=i+1; j < profileWrapper.length; j++) {
             profileWrapper[j].style.left = state == 'over' ? `${profileWrapper[i].clientWidth + 44 * j}px` : `${44 * j}px`;
           }
+      }
+    }
+
+    for (let i = 0; i < profileInfo.length; i++) {
+      let followBtn = profileInfo[i].querySelector('.f');
+      let followCode = followBtn.getAttribute('data-code');
+      if(followCode == 'FI'){
+        followBtn.style.backgroundColor = 'var(--color-white)';
+        followBtn.style.color = 'var(--primary)';
       }
     }
   });
@@ -285,10 +303,16 @@ document.addEventListener("DOMContentLoaded", function(){
 	      
        // 방장이 아님
       if(MAST_YSNO == 'N') {
-        if(BANN_YSNO == 'Y' && WAIT_YSNO == 'Y'){
+        // 재참여
+        if(BANN_YSNO == 'Y' && WAIT_YSNO == 'Y') {
           
           updateButtonUI(detail.APPR_YSNO, MAST_YSNO, 'rejoin');
 
+        // 강퇴자
+        } else if(BANN_YSNO == 'Y' && WAIT_YSNO == 'N') {
+          joinMoimBtn.innerHTML = '이 모임에 참여할 수 없어요.';
+          joinMoimBtn.addEventListener('click', onClickHandler);
+        
         } else {
           // 디폴트 참여취소
           updateButtonUI(null, MAST_YSNO, 'cancel');
@@ -304,9 +328,10 @@ document.addEventListener("DOMContentLoaded", function(){
           const updateBtn = document.getElementById('updateBtn');
           updateBtn.style.display = 'block';
         }
+        
         updateButtonUI(null, MAST_YSNO, 'master');
         
-        // 강퇴 버튼
+        /* 강퇴 버튼 */
         const bannBtn = document.querySelectorAll('.bann');
         bannBtn.forEach(btn => {
           btn.style.display = 'block';
@@ -320,7 +345,7 @@ document.addEventListener("DOMContentLoaded", function(){
           btn.addEventListener('click', function(){ runBann(data, '강퇴') });
         });
 
-        // 승인 버튼
+        /* 승인 버튼 */
         const apprBtn = document.querySelectorAll('.appr');
         apprBtn.forEach(btn => {
           btn.style.display = 'block';
@@ -337,8 +362,7 @@ document.addEventListener("DOMContentLoaded", function(){
           });
         })
 
-
-        // 승인 거절 버튼
+        /* 승인 거절 버튼 */
         const noApprBtn = document.querySelectorAll('.noAppr');
         noApprBtn.forEach(btn => {
           btn.style.display = 'block';
@@ -384,7 +408,7 @@ document.addEventListener("DOMContentLoaded", function(){
   // 참여 유효성 검사
   function onClickHandler() {
     const { MINN_AGEE, MAXX_AGEE, GNDR_CODE, MOIM_IDXX, APPR_YSNO, MAXX_PEOP, MEMB_COUNT } = detail;
-    const { USER_AGEE, USER_JUMIN2, USER_NUMB } = sessionStorage;
+    const { USER_AGEE, USER_JUMIN2, USER_NUMB} = sessionStorage;
     const yourStateValue = document.getElementById('yourState').value;
     
     if(MAXX_PEOP == MEMB_COUNT){
@@ -402,6 +426,10 @@ document.addEventListener("DOMContentLoaded", function(){
       if(yourStateValue != 'null') {
         const yourState = parseString(yourStateValue).result;
         const { MAST_YSNO, BANN_YSNO, WAIT_YSNO } = yourState;
+
+        if(BANN_YSNO == 'Y' && WAIT_YSNO == 'N') {
+          comAlert2(3, '모임에 참여할 수 없어요.', '강퇴 당하거나 승인 거절 당한 모임입니다.')
+        }
 
         // 일반 참여자
         if(MAST_YSNO == 'N') {
@@ -451,6 +479,29 @@ document.addEventListener("DOMContentLoaded", function(){
             runStateUpdate(data, 'cancel');
             comNotify('003', detail.USER_NUMB);
 
+          }
+        } 
+
+        // 방장일 때
+        else if(MAST_YSNO == 'Y') {
+          if(MEMB_COUNT < MAXX_PEOP) {
+            comConfirm2(
+              '모임 인원이 가득 차지 않았어요.'
+            , '이대로 마감할까요?'
+            , 'warning'
+            , '마감되었습니다.'
+            , 'success'
+            , function(){
+              comAjax(
+              "POST"
+              , "/setGatherEnd.com"
+              , JSON.stringify({ MOIM_IDXX : MOIM_IDXX})
+              , "application/json"
+              , function(){
+                  location.reload();
+                }
+            )}
+          );
           }
         }
     

@@ -298,10 +298,10 @@
 }
 
 .Btn {
-	height: 24px;
-  background-color: var(--color-orange300);
-  color: var(--color-white) !important;
-  width: 48px;
+  background-color: var(--color-white);
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  padding: 4px 8px 4px 7px;
   border-radius: 15px;
   font-size: 12px;
   margin-right: 10px;
@@ -310,6 +310,18 @@
 
 .Btn:hover {
 	background-color: var(--primary);
+	color: var(--color-white);
+}
+
+.f {
+	background-color: var(--primary);
+  border: 1px solid var(--primary);
+  color: var(--color-white);
+  padding: 4px 8px 4px 7px;
+  border-radius: 15px;
+  font-size: 12px;
+  margin-right: 10px;
+  transition: background-color 0.3s;
 }
 
 .btnContainer {
