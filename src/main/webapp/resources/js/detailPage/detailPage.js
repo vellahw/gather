@@ -320,6 +320,24 @@ document.addEventListener("DOMContentLoaded", function(){
           btn.addEventListener('click', function(){ runBann(data, '강퇴') });
         });
 
+        // 승인 버튼
+        const apprBtn = document.querySelectorAll('.appr');
+        apprBtn.forEach(btn => {
+          btn.style.display = 'block';
+          btn.addEventListener('click', ()=>{
+  
+            const data = {
+                MOIM_IDXX : detail.MOIM_IDXX
+              , USER_NUMB : btn.getAttribute('data-numb')
+              , states : 'normal'
+            }
+  
+            btn.addEventListener('click', function(){ runBann(data, '승인') });
+  
+          });
+        })
+
+
         // 승인 거절 버튼
         const noApprBtn = document.querySelectorAll('.noAppr');
         noApprBtn.forEach(btn => {
@@ -335,7 +353,7 @@ document.addEventListener("DOMContentLoaded", function(){
             btn.addEventListener('click', function(){ runBann(data, '거절') });
   
           });
-        })
+        });
     }
 
     // 모임 미참여
@@ -523,7 +541,7 @@ document.addEventListener("DOMContentLoaded", function(){
   function runBann(data, btnState) {
     comConfirm2(
         getConfirmTitleText(btnState)
-      , '해당 작업은 취소할 수 없어요.'
+      , getConfirmContentText(btnState)
       , 'warning'
       , getConfirmOkText(btnState)
       , 'success'
@@ -551,9 +569,21 @@ document.addEventListener("DOMContentLoaded", function(){
     } else if(btnState == '강퇴') {
       return '해당 회원을 강퇴하시겠어요?';
 
+    } else if(btnState == '승인') {
+      return '해당 회원의 참여를 승인하시겠어요?';
+
     } else if(btnState == '거절') {
       return '해당 회원의 참여를 거절하시겠어요?';
     }
+  }
+
+  /* 컨펌창 내용 리턴하는 함수 */
+  function getConfirmContentText(btnState) {
+    if(btnState == '승인') {
+      return null;
+    }
+    
+    return '해당 작업은 취소할 수 없어요.';
   }
 
   /* 컨펌창 '확인' 후 뜨는 내용 리턴하는 함수 */
@@ -571,6 +601,9 @@ document.addEventListener("DOMContentLoaded", function(){
 
     } else if(btnState == '강퇴') {
       return '강퇴되었습니다.';
+
+    } else if(btnState == '승인') {
+      return '승인되었습니다.';
 
     } else if(btnState == '거절') {
       return '승인 거절되었습니다.';
