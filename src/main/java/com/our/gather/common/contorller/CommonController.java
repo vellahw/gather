@@ -34,29 +34,64 @@ public class CommonController {
 		return getCategroy;
 	}
 
-	//좋아요 update
+	// 좋아요 update
 	@Transactional
 	@RequestMapping("/likeUpdate.com")
-	public  ResponseEntity<String> likeUpdate(@RequestBody List<Map<String, String>> jsonArray, HttpSession session,
-				HttpServletRequest request, CommandMap commandMap) throws Exception {
-		
-		for (Map<String, String> item : jsonArray) {
-            String clikeYsno = item.get("CLIKE_YSNO");
-            if ("1".equals(clikeYsno)) {
+	public ResponseEntity<String> likeUpdate(@RequestBody List<Map<String, String>> jsonArray, HttpSession session,
+			HttpServletRequest request, CommandMap commandMap) throws Exception {
 
-            	commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
-            	commandMap.put("LIKE_IDXX", item.get("LIKE_IDXX"));
-            	commonService.likeInsert(commandMap.getMap(), commandMap);
-		
-            } else {
-                
-            	commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
-            	commandMap.put("LIKE_IDXX", item.get("LIKE_IDXX"));
-            	commonService.likeDelete(commandMap.getMap(), commandMap);
-            }
-        }
-	
+		for (Map<String, String> item : jsonArray) {
+			String clikeYsno = item.get("CLIKE_YSNO");
+			if ("1".equals(clikeYsno)) {
+
+				commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
+				commandMap.put("LIKE_IDXX", item.get("LIKE_IDXX"));
+				commonService.likeInsert(commandMap.getMap(), commandMap);
+
+			} else {
+
+				commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
+				commandMap.put("LIKE_IDXX", item.get("LIKE_IDXX"));
+				commonService.likeDelete(commandMap.getMap(), commandMap);
+			}
+		}
+
 		return ResponseEntity.ok("Success");
+	}
+
+	// 좋아요 update
+	@Transactional
+	@RequestMapping("/followUpdate.com")
+	public ResponseEntity<String> followUpdate(@RequestBody Map<String, String> responseMap, HttpSession session,
+			HttpServletRequest request, CommandMap commandMap) throws Exception {
+
+		String folwCode = responseMap.get("folwCode");
+		String folwUser = responseMap.get("folwUser");
+		
+		commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
+		commandMap.put("FOLW_USER", folwUser);
+	
+	    try {
+	    	
+	    	if(folwCode.equals("FW")) {
+	    		
+	        	commonService.follow(commandMap.getMap(), commandMap);
+	        	
+	    	} else {
+	    	
+	    		commonService.unfollow(commandMap.getMap(), commandMap);
+	    	
+	    	}
+	
+	    	return ResponseEntity.ok("Success");
+	    	
+	            
+	    } catch(Exception e) {
+	    	
+	    	
+	    	System.out.println("error : " + e.getMessage());       
+	    	return ResponseEntity.ok("fail");    	
+	    }
 	}
 
 }

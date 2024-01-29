@@ -26,6 +26,7 @@
                 , APPR_LMIT							/* 모임 제한 */
                 , PREGI_NAME						/* 부모지역명 */
                 , REGI_NAME							/* 지역명 */
+                , USER_NUMB							/* 방장 회원번호 */
                 , USER_NICK							/* 방장 닉네임 */
                 , USER_IMAG							/* 방장 프로필사진 */
                 , SMAL_DATE							/* 모임시간 (날짜 형식 MM.dd(day) 오전/오후 HH:mm) */
@@ -67,6 +68,7 @@
 							  , APPR_LMIT
 		                      , PREGI_NAME
 		                      , REGI_NAME
+		                      , USER_NUMB
 		                      , USER_NICK
 		                      , USER_IMAG
 		                      , SMAL_DATE
@@ -99,6 +101,7 @@
 								 , APPR_LMIT
 			                     , PREGI_NAME
 			                     , REGI_NAME
+			                     , USER_NUMB
 			                     , USER_NICK
 			                     , USER_IMAG
 			                     , SMAL_DATE
@@ -126,6 +129,7 @@
 							   , APPR_LMIT
 	                           , PREGI_NAME
 	                           , REGI_NAME
+	                           , USER_NUMB
 	                           , USER_NICK
 	                           , USER_IMAG
 	                           , SMAL_DATE
@@ -146,6 +150,7 @@
 									   , APPR_LMIT
 	                                   , PREGI_NAME
 	                                   , REGI_NAME
+	                                   , USER_NUMB
 	                                   , USER_NICK
 	                                   , USER_IMAG
 	                                   , SMAL_DATE
@@ -177,6 +182,7 @@
 								 , APPR_LMIT
 			                     , PREGI_NAME
 			                     , REGI_NAME
+			                     , USER_NUMB
 			                     , USER_NICK
 			                     , USER_IMAG
 			                     , SMAL_DATE
@@ -226,7 +232,7 @@
 		                , APPR_YSNO															/* 승인 여부 */
 		                , MINN_AGEE						 									/* 최소나이 */
                 		, MAXX_AGEE															/* 최대나이 */
-										, APPR_LMIT															/* 모임 제한 KR */
+						, APPR_LMIT															/* 모임 제한 KR */
 		                , GNDR_CODE															/* 모임 성별 코드 */											
 		                , PREGI_NAME														/* 부모 지역명 */
 		                , REGI_NAME															/* 자식 지역명 */

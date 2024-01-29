@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.our.gather.common.common.CommandMap;
+import com.our.gather.common.oracleFunction.OracleFunction;
 import com.our.gather.common.service.CommonService;
 import com.our.gather.detailPage.service.MoimDetailService;
 import com.our.gather.moimGather.service.GatherService;
@@ -53,8 +54,29 @@ public class MoimDetailController {
 
 		if (moimType.equals("GT")) {
 
-
-			mv.addObject("member", gatherService.getGatherMember(commandMap.getMap(), commandMap)); // 게더맴버
+			List<Map<String, Object>> memList = gatherService.getGatherMember(commandMap.getMap(), commandMap);
+			
+			for (int i = 0; i < memList.size(); i++) {
+				
+				if(session.getAttribute("USER_NUMB") != null) {
+		        	
+		        	String userId = memList.get(i).get("USER_NUMB").toString();
+		        	
+		        	String me = session.getAttribute("USER_NUMB").toString();
+		        	
+		        	String folwCode = OracleFunction.getRelationCode(me, userId);
+		        	
+		        	String folwBtn = OracleFunction.getCodeName("FOLW_CODE", folwCode);
+		        	
+		        	memList.get(i).put("FOLW_CODE", folwCode);
+		        	
+		        	memList.get(i).put("FOLW_BTNN", folwBtn);
+		        	
+		        }
+				
+			}
+			
+			mv.addObject("member", memList); // 게더맴버
 			mv.addObject("detail", gatherService.getGatherDetail(commandMap.getMap(), session, commandMap)); // 게더
 			mv.addObject("img", gatherService.getGatherImg(commandMap.getMap(), commandMap)); // 게더 이미지
 
@@ -87,10 +109,9 @@ public class MoimDetailController {
 	// 모임참여
 	@RequestMapping("/moimJoin.com")
 	@ResponseBody
-	public ModelAndView moimJoin(@RequestBody Map<String, String> requestBody, HttpSession session, 
+	public ResponseEntity<String> moimJoin(@RequestBody Map<String, String> requestBody, HttpSession session, 
 			HttpServletRequest request, CommandMap commandMap) throws Exception {
 		
-		ModelAndView mv = new ModelAndView("jsonView");
 		
 		String MOIM_IDXX = requestBody.get("MOIM_IDXX");
 		String WAIT_YSNO = requestBody.get("WAIT_YSNO");
@@ -103,92 +124,91 @@ public class MoimDetailController {
 
 			moimDetailService.moimJoin(commandMap.getMap(), commandMap);
 
-			mv.addObject("result", "success");
+			return ResponseEntity.ok("Success");
 
 		} catch (Exception e) {
 
-			mv.addObject("result", "fail");
 			System.out.println("error : " + e.getMessage());
+			return ResponseEntity.ok("fail");
 
 		}
 
-		return mv;
 	}
 
 	// 모임참여 상태변경
-		@RequestMapping("/moimStateUpdate.com")
-		@ResponseBody
-		public ResponseEntity<String> moimStateUpdate(@RequestBody Map<String, String> requestBody, HttpSession session, 
-				HttpServletRequest request, CommandMap commandMap) throws Exception {
-			
-			String USER_NUMB = requestBody.get("USER_NUMB");
-			String MOIM_IDXX = requestBody.get("MOIM_IDXX");
-			String states = requestBody.get("states");
-
-			
-			try {
-				
-				commandMap.put("USER_NUMB", USER_NUMB);
-				commandMap.put("MOIM_IDXX", MOIM_IDXX);
-				
-				if(states.equals("normal")) { 			//정상 참여자(대기여부:'N' 강퇴여부: 'N')
-					
-					commandMap.put("WAIT_YSNO", "N"); 	//대기여부
-					commandMap.put("BANN_YSNO", "N"); 	//강퇴여부
-					
-				} else if(states.equals("wait")){ 		//대기자 (대기여부:'Y' 강퇴여부: 'N')
-					
-					commandMap.put("WAIT_YSNO", "Y");
-					commandMap.put("BANN_YSNO", "N");
-					
-				} else if(states.equals("bann")) { 		//추방당한 회원 (대기여부:'N' 강퇴여부: 'Y')
-					
-					commandMap.put("WAIT_YSNO", "N");
-					commandMap.put("BANN_YSNO", "Y");
-				
-				} else if(states.equals("exit")) { 		//탈퇴 회원 (대기여부:'Y' 강퇴여부: 'Y')
-					
-					commandMap.put("WAIT_YSNO", "Y"); 
-					commandMap.put("BANN_YSNO", "Y"); 
-					
-				}
-					
-				moimDetailService.moimStateUpdate(commandMap.getMap(), commandMap);
-
-				return ResponseEntity.ok("Success");
-
-			} catch (Exception e) {
-
-				return ResponseEntity.ok("fail");
-
-			}
-
-		}
+	@RequestMapping("/moimStateUpdate.com")
+	@ResponseBody
+	public ResponseEntity<String> moimStateUpdate(@RequestBody Map<String, String> requestBody, HttpSession session, 
+			HttpServletRequest request, CommandMap commandMap) throws Exception {
 		
-		// 모임참여 상태변경
-		@RequestMapping("/setGatherEnd.com")
-		@ResponseBody
-		public ResponseEntity<String> setGatherEnd(@RequestBody Map<String, String> requestBody, HttpSession session, 
-				HttpServletRequest request, CommandMap commandMap) throws Exception {
+		String USER_NUMB = requestBody.get("USER_NUMB");
+		String MOIM_IDXX = requestBody.get("MOIM_IDXX");
+		String states = requestBody.get("states");
+
+		
+		try {
 			
-			String MOIM_IDXX = requestBody.get("MOIM_IDXX");
-
-			try {
+			commandMap.put("USER_NUMB", USER_NUMB);
+			commandMap.put("MOIM_IDXX", MOIM_IDXX);
+			
+			if(states.equals("normal")) { 			//정상 참여자(대기여부:'N' 강퇴여부: 'N')
 				
-				 Map<String, Object> paramMap = new HashMap<>();
-				 
-				 paramMap.put("GATH_IDXX", MOIM_IDXX);
+				commandMap.put("WAIT_YSNO", "N"); 	//대기여부
+				commandMap.put("BANN_YSNO", "N"); 	//강퇴여부
 				
-				 gatherService.setGatherEnd(paramMap);
-
-				return ResponseEntity.ok("Success");
-
-			} catch (Exception e) {
-
-				return ResponseEntity.ok("fail");
-
+			} else if(states.equals("wait")){ 		//대기자 (대기여부:'Y' 강퇴여부: 'N')
+				
+				commandMap.put("WAIT_YSNO", "Y");
+				commandMap.put("BANN_YSNO", "N");
+				
+			} else if(states.equals("bann")) { 		//추방당한 회원 (대기여부:'N' 강퇴여부: 'Y')
+				
+				commandMap.put("WAIT_YSNO", "N");
+				commandMap.put("BANN_YSNO", "Y");
+			
+			} else if(states.equals("exit")) { 		//탈퇴 회원 (대기여부:'Y' 강퇴여부: 'Y')
+				
+				commandMap.put("WAIT_YSNO", "Y"); 
+				commandMap.put("BANN_YSNO", "Y"); 
+				
 			}
+				
+			moimDetailService.moimStateUpdate(commandMap.getMap(), commandMap);
+
+			return ResponseEntity.ok("Success");
+
+		} catch (Exception e) {
+
+			return ResponseEntity.ok("fail");
 
 		}
+
+	}
+		
+	// 모임참여 상태변경
+	@RequestMapping("/setGatherEnd.com")
+	@ResponseBody
+	public ResponseEntity<String> setGatherEnd(@RequestBody Map<String, String> requestBody, HttpSession session, 
+			HttpServletRequest request, CommandMap commandMap) throws Exception {
+		
+		String MOIM_IDXX = requestBody.get("MOIM_IDXX");
+
+		try {
+			
+			 Map<String, Object> paramMap = new HashMap<>();
+			 
+			 paramMap.put("GATH_IDXX", MOIM_IDXX);
+			
+			 gatherService.setGatherEnd(paramMap);
+
+			return ResponseEntity.ok("Success");
+
+		} catch (Exception e) {
+
+			return ResponseEntity.ok("fail");
+
+		}
+
+	}
 
 }

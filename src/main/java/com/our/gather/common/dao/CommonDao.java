@@ -49,7 +49,17 @@ public class CommonDao extends AbstractDao {
 
 	// 좋아요 Delete
 	public void likeDelete(Map<String, Object> map, CommandMap commandMap) throws Exception {
-		insert("common.likeDelete", map);
+		delete("common.likeDelete", map);
+	}
+
+	// 팔로우
+	public void follow(Map<String, Object> map, CommandMap commandMap) throws Exception {
+		insert("common.follow", map);
+	}
+
+	// 언팔로우
+	public void unfollow(Map<String, Object> map, CommandMap commandMap) throws Exception {
+		delete("common.unfollow", map);
 	}
 
 }

@@ -57,4 +57,21 @@ public class CommonServiceImpl implements CommonService {
 		commonDao.likeDelete(map, commandMap);
 	}
 
+	//팔로우
+	@Override
+	public void follow(Map<String, Object> map, CommandMap commandMap) throws Exception {
+		// TODO Auto-generated method stub
+
+		commonDao.follow(map, commandMap);
+	}
+	
+	
+	//언팔로우
+	@Override
+	public void unfollow(Map<String, Object> map, CommandMap commandMap) throws Exception {
+		// TODO Auto-generated method stub
+		
+		commonDao.unfollow(map, commandMap);
+	}
+
 }
