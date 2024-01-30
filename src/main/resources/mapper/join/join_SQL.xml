@@ -8,9 +8,9 @@
 
 	   <!--  회원가입 -->
 	   <insert id="joinUs" parameterType="hashmap" useGeneratedKeys="true" keyProperty="USER_NUMB">
-		   <selectKey resultType="string" keyProperty="USER_NUMB" >
+		   <selectKey keyProperty="USER_NUMB" order="BEFORE" resultType="String">
 	    	<![CDATA[
-	      SELECT 'UR' ||TO_CHAR(SYSDATE, 'YYMM') ||LPAD(NVL(MAX(CAST(SUBSTR(USER_NUMB,7,4) AS NUMBER))+1,1),4,'0') AS USER_NUMB  --회원번호 채번
+	      SELECT 'UR' ||TO_CHAR(SYSDATE, 'YYMM') ||LPAD(NVL(MAX(CAST(SUBSTR(USER_NUMB,7,4) AS NUMBER))+1,1),4,'0') AS USER_NUMB
 		  	FROM TM_USERXM
 		   WHERE SUBSTR(USER_NUMB,3,4) = TO_CHAR(SYSDATE, 'YYMM')
 	    	]]>
@@ -24,13 +24,11 @@
 					    , USER_IDXX  /* 아이디 */
 					    , PASS_WORD  /* 비밀번호 */
 					    , CELL_NUMB  /* 휴대폰번호 */
-					    , FILE_SVNM  /* 프로필사진 */
 					    , SELF_INTR  /* 자기소개 */
-					    , DONG_CODE  /* 시군구코드 */
 					    , REGI_DATE  /* 가입일 */
 					    , QUST_CODE  /* 회원가입시 받는 질문코드 */
 					    , ANSR_CODE  /* 질문에 대한 답 */
-					    , BANN_DATE  /* 정지일 */
+					    , FILE_SVNM  /* 프로필사진 */
 			) VALUES (
 					      #{USER_NUMB}  /* 회원번호 */
 					    , #{USER_NAME}  /* 회원이름 */
@@ -39,13 +37,11 @@
 					    , #{USER_IDXX}  /* 아이디 */
 					    , #{PASS_WORD}  /* 비밀번호 */
 					    , #{CELL_NUMB}  /* 휴대폰번호 */
-					    , #{FILE_SVNM}  /* 프로필사진 */
 					    , #{SELF_INTR}  /* 자기소개 */
-					    , #{DONG_CODE}  /* 시군구코드 */
 					    , SYSDATE       /* 가입일 */
 					    , #{QUST_CODE}  /* 회원가입시 받는 질문코드 */
 					    , #{ANSR_CODE}  /* 질문에 대한 답 */
-					    , NULL          /* 정지일 */
+					    , #{FILE_SVNM}  /* 프로필사진 */
 					   )
 	            ]]>
 	   </insert>
