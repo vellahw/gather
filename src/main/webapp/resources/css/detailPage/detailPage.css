@@ -262,13 +262,16 @@
 	display: flex;
   flex-wrap: wrap;
   position: relative;
-  height: 80px;
+  height: 72px;
+  overflow: hidden;
 }
 
 .profileWrapper {
 	position: absolute;
   display: flex;
   align-items: center;
+  bottom: 0;
+  top: 0;
 }
 
 .profileInfo {
@@ -279,18 +282,19 @@
   align-items: center;
 }
 
-.profileInfo > div {
+/* .profileInfo :nth-child(1) {
 	padding-right: 25px;
-}
+} */
 
 .profileInfo > div > p {
 	font-weight: 600;
 	margin-bottom: 5px;
+	width: fit-content;
 }
 
 .self {
 	color: var(--color-gray500);
-	font-weight: 500;
+	font-weight: 500 !important;
 }
 
 .profileBtnContainer {
@@ -298,18 +302,36 @@
 }
 
 .Btn {
-	height: 24px;
-  background-color: var(--color-orange300);
-  color: var(--color-white) !important;
-  width: 48px;
+  background-color: var(--color-white);
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  padding: 4px 8px 4px 7px;
   border-radius: 15px;
   font-size: 12px;
   margin-right: 10px;
   transition: background-color 0.3s;
 }
 
-.Btn:hover {
+.Btn:hover { 
+	background-color: var(--color-orange500);
+	color: var(--color-white);
+}
+
+.f {
+	display: none;
 	background-color: var(--primary);
+  border: 1px solid var(--primary);
+  color: var(--color-white);
+  padding: 4px 8px 4px 7px;
+  border-radius: 15px;
+  font-size: 12px;
+  margin-right: 10px;
+  transition: background-color 0.3s ease-out;
+}
+
+.actb {
+	background-color: var(--primary) !important;
+	color: var(--color-white) !important;
 }
 
 .btnContainer {

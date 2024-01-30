@@ -37,3 +37,17 @@
   padding-top: 90px;
   padding-bottom: 66px
 }
+
+.end {
+	filter: brightness(0.5);
+}
+
+.end::before {
+	content: '마감되었어요';
+  color: var(--color-white);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}

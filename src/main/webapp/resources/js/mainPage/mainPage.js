@@ -4,20 +4,24 @@ function contentsSlider(){
   * 240111 장한원
   * 컨텐츠 슬라이더
   */
-  const slideContainer = document.querySelectorAll('.slideWrap'); // 리스트를 감싸는 부모
-  
+ const slideContainer = document.querySelectorAll('.slideWrap'); // 리스트를 감싸는 부모
+ 
   slideContainer.forEach((slideContainer) => {
-
+   
     const slideList = slideContainer.querySelectorAll('.slideList'); // 컨텐츠를 감싸는 리스트
-
+   
     /* 리스트 제어 */
     slideList.forEach(slideList =>{
 
       const slideContents = slideList.querySelectorAll('.slideContents'); // 컨텐츠
       let slideContentCount = slideContents.length;
       
-      // 마우스오버하면 모임 이미지 확대 효과
       slideContents.forEach(slideContents=>{
+        
+        // 모임 마감되면 어두운 필터 적용
+        addEndfilter(slideContents);
+        
+        // 마우스오버하면 모임 이미지 확대 효과
         const thumnailImg = slideContents.querySelector('.thumnail'); // 컨텐츠
         
         slideContents.addEventListener('mouseover', function() {
@@ -125,4 +129,19 @@ function contentsSlider(){
 
   }) // END slideContainer.forEach  
 
+
+  /**
+  * 240130 장한원
+  * 마감 여부에 따른 썸네일 이미지 필터 적용
+  */
+  function addEndfilter(element) {
+    const thumnailContainer = element.querySelector('.thumnailContainer');
+  	const endValue = thumnailContainer.querySelector('.thumnail');
+    let getValue = endValue.getAttribute('data-end');
+
+    if(getValue == 'Y') {
+      thumnailContainer.classList.add('end');
+    }
+    
+  }
 }

@@ -236,19 +236,19 @@ label:hover {
 
 .notifyList {
   visibility: hidden; 
-  visibility: visibile;
+  /* visibility: visibile; */
   transition: all 0.3s ease;
   opacity: 0; 
   z-index: -1;
   overflow: overlay;
   width: 380px;
-  height: 606px;
+  height: 0px;
   padding: 28px;
   border-radius: 28px;
   background: var(--color-orange300);
   position: fixed;
   bottom: 40px;
-  right: 40px;
+  right: 38px;
   display: flex;
   justify-content: center;
   flex-direction: column;

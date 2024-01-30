@@ -107,11 +107,18 @@
           <img class="profileImg" src="${detail.USER_IMAG}"/>
         </div>
         <div class="profileInfo master">
-	        <p style="margin-bottom: 5px;">${detail.USER_NICK}</p>
-	        <p class="self">${detail.SELF_INTR}</p>
+	        <p style="margin-bottom: 5px;">
+	        	<c:out value="${detail.USER_NICK}" />
+	        </p>
+	        <p class="self" data-intr-length="${fn:length(detail.SELF_INTR)}">
+	        	<input type="hidden" value="${detail.SELF_INTR}" id="selfIntr">
+	        	<c:out value="${detail.SELF_INTR}" />
+	        </p>
       	</div>
 				<div class="profileBtnContainer">
-					<button class="Btn f">팔로우</button>
+					<button class="Btn f" data-code="${detail.FOLW_CODE}">
+						<c:out value="${detail.FOLW_BTNN}" />
+					</button>
 				</div>
       </div>
     </div>
@@ -128,15 +135,21 @@
 								   </div>
 								</div>
 								<div class="profileInfo">
-									<div>
-										<p>${m.USER_NICK}</p>
-										<p class="self">
-											${m.SELF_INTR}
+									<div style="padding-right: 25px;">
+										<p><c:out value="${m.USER_NICK}" /></p>
+										<p class="self" data-intr-length="${fn:length(m.SELF_INTR)}">
+										<input type="hidden" value="${m.SELF_INTR}" id="selfIntr">
+											<c:out value="${m.SELF_INTR}" />
 										</p>
 									</div>
 									<div class="profileBtnContainer">
-										<button class="Btn f">팔로우</button>
-										<button class="Btn bann" data-numb="${m.USER_NUMB}">강퇴</button>
+										<input type="hidden" id="data-mem" value="${m.USER_NUMB}">
+										<button class="Btn f" data-code="${m.FOLW_CODE}">
+											<c:out value="${m.FOLW_BTNN}" />
+										</button>
+										<button class="Btn bann" data-numb="${m.USER_NUMB}">
+											강퇴
+										</button>
 									</div>
 							 </div>
 						</div>
@@ -157,16 +170,23 @@
 							    </div>
 						    </div>
 						    <div class="profileInfo">
-						    	<div>
-							    	<p>${m.USER_NICK}</p>
-							    	<p class="self">
-							    		${m.SELF_INTR}
-							    	</p>
+						    	<div style="padding-right: 25px;">
+							    	<p><c:out value="${m.USER_NICK}" /></p>
+										<p class="self" data-intr-length="${fn:length(m.SELF_INTR)}">
+											<input type="hidden" value="${m.SELF_INTR}" id="selfIntr">
+											<c:out value="${m.SELF_INTR}" />
+										</p>
 						    	</div>
 						    	<div class="profileBtnContainer">
-							    	<button class="Btn f">팔로우</button>
-							    	<button class="Btn appr" data-numb="${m.USER_NUMB}">승인</button>
-							    	<button class="Btn noAppr" data-numb="${m.USER_NUMB}">거절</button>
+							    	<button class="Btn f" data-code="${m.FOLW_CODE}">
+							    		<c:out value="${m.FOLW_BTNN}" />
+							    	</button>
+							    	<button class="Btn appr" data-numb="${m.USER_NUMB}">
+							    		승인
+							    	</button>
+							    	<button class="Btn noAppr" data-numb="${m.USER_NUMB}">
+							    		거절
+							    	</button>
 						    	</div>
 						    </div>
 					    </div>

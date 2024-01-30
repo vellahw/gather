@@ -23,7 +23,9 @@
 							<div class="slideContents">
 								<div class="eachWrap">
 									<div class="thumnailContainer" onclick="comGoSomewhere('detail','${list.MOIM_IDXX}')">
-										<img src="${list.MOIM_IMAG}" class="thumnail" alt="썸네일">
+										<img src="${list.MOIM_IMAG}" data-end="${list.ENDD_YSNO}"
+												 class="thumnail"
+												 alt="썸네일">
 									</div>
 									<div class="infoContainer">
 										<h3 class="title" onclick="comGoSomewhere('detail','${list.MOIM_IDXX}')">
@@ -72,7 +74,7 @@
 											<div class="heartWrap">
 												<input type="hidden" data-like-id="${list.MOIM_IDXX}" value="${list.LIKE_YSNO}" id="heartYN"/>
 												<div class="heartContainer">
-											    <input type="checkbox" id="${list.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
+											    <input type="checkbox" id="${list.MOIM_IDXX}"  data-master="${list.USER_NUMB}" onchange="handleCheckboxChange(this)">
 													<label for="${list.MOIM_IDXX}"></label>
 		          				    <input id="realCount" type="hidden" data-realCount-id="${list.MOIM_IDXX}" value="${list.LIKE_COUNT}" >
 													<span id="showCount"class="heartCount main" data-ShowCount-id="${list.MOIM_IDXX}"></span>

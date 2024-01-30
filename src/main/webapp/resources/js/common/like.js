@@ -51,6 +51,8 @@ function likeUpdate(dataArray) {
       , "/likeUpdate.com"
       , JSON.stringify(dataArray)
       , "application/json"
+      , function() {
+      }
     );
   }
 }
@@ -112,7 +114,7 @@ function handleCheckboxChange(checkbox) {
       
     // 선택된 체크박스의 상태를 가져옴
     const isChecked = checkbox.checked; // true or false 반환
-    
+
     // 체크박스 스타일 업데이트
     updateResult(checkboxId, isChecked);
   }
@@ -170,9 +172,6 @@ function updateResult(checkboxId, isChecked) {
 
   comUpdateArray(changedValuesArray, { LIKE_IDXX :checkboxId,  CLIKE_YSNO : currentLikeYsno , PLIKE_YSNO : preLikeValue }, 'LIKE_IDXX');
   removeItemsWithSameValue(changedValuesArray, 'CLIKE_YSNO', 'PLIKE_YSNO');
-
-  console.log(changedValuesArray);
-  
 }
 
 

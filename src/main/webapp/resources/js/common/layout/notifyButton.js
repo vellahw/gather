@@ -2,35 +2,28 @@
  * 240128 장한원
  */
 document.addEventListener('DOMContentLoaded', ()=>{
-  const notifyBtn = document.querySelector('.notifyBtn');
-  const notiWrap = document.querySelector('.notifyList');
-  btnControl();
+  if(sessionStorage.USER_NUMB != null) {
+    const notifyBtn = document.querySelector('.notifyBtn');
+    const notiWrap = document.querySelector('.notifyList');
+    btnControl();
+  
+    // 버튼 및 목록의 이벤트 핸들러 등록
+    [notifyBtn, notiWrap].forEach(element => {
+      element.addEventListener('mouseenter', addClass);
+      element.addEventListener('mouseleave', removeClass);
+    });
 
-  notifyBtn.addEventListener('mouseenter', ()=>{
-    addClass();
-  })
+    function addClass() {
+      notiWrap.classList.add('act');
+    }
+  
+    function removeClass() {
+      notiWrap.classList.remove('act');
+    }
 
-  notifyBtn.addEventListener('mouseleave', ()=>{
-    removeClass();
-  })
-
-  notiWrap.addEventListener('mouseenter', ()=>{
-    addClass();
-  })
-
-  notiWrap.addEventListener('mouseleave', ()=>{
-    removeClass();
-  })
-
-  function addClass() {
-    notiWrap.classList.add('act');
   }
+})
 
-  function removeClass() {
-    notiWrap.classList.remove('act');
-  }
-	
- })
 
  /**
  * 240128 KSH

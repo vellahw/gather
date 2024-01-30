@@ -232,7 +232,7 @@ document.addEventListener("DOMContentLoaded", function(){
       let str =
           `<div class="eachWrap">
             <div class="thumnailContainer" onclick="comGoSomewhere('detail','${data.MOIM_IDXX}')">
-              <img src="${data.MOIM_IMAG}" class="thumnail" alt="썸네일">
+              <img src="${data.MOIM_IMAG}" data-end="${data.ENDD_YSNO}" class="thumnail" alt="썸네일">
             </div>
             <div class="infoContainer">
               <h3 class="title" onclick="comGoSomewhere('detail','${data.MOIM_IDXX}')">${data.MOIM_TITL}</h3>

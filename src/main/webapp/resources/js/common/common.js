@@ -403,5 +403,4 @@ function comNotify(situation, postUser) {
             , JSON.stringify(data)
             , "application/json");
             
-  
 }
