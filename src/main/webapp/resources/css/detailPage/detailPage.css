@@ -294,7 +294,7 @@
 
 .self {
 	color: var(--color-gray500);
-	font-weight: 500;
+	font-weight: 500 !important;
 }
 
 .profileBtnContainer {
