@@ -40,7 +40,7 @@
  		 ]]>
 	 </insert>
 	 
-	 <!-- 로그인회원 알림조회 -->
+	 <!-- 로그인회원 읽지 않은 알림조회 -->
 	<select id="getNotify" parameterType='hashmap' resultType="hashmap">
 	   <![CDATA[
 	   SELECT  /*notify.getNotify*/
@@ -76,6 +76,7 @@
 			          ON A.BOAD_IDXX = C.GATH_IDXX
 			   LEFT JOIN TB_CODEXD D 
 			          ON D.COMD_CODE = A.NOTI_CODE
+			          AND D.COMM_CODE = 'NOTI_CODE'
 				   WHERE A.BOAD_IDXX = C.GATH_IDXX
 					 AND A.READ_YSNO = 'N'
 		
@@ -100,7 +101,9 @@
 				      ON A.SEND_USER = B.USER_NUMB
 			   LEFT JOIN TM_CHALNG C 
 			          ON A.BOAD_IDXX = C.CHAL_IDXX
-			   LEFT JOIN TB_CODEXD D ON D.COMD_CODE = A.NOTI_CODE
+			   LEFT JOIN TB_CODEXD D 
+			          ON D.COMD_CODE = A.NOTI_CODE
+			         AND D.COMM_CODE = 'NOTI_CODE'
 				   WHERE A.READ_YSNO = 'N'
 				     AND A.BOAD_IDXX =  C.CHAL_IDXX
 				
@@ -128,6 +131,7 @@
 			          ON A.BOAD_IDXX = C.CLUB_IDXX
 			   LEFT JOIN TB_CODEXD D 
 			          ON D.COMD_CODE = A.NOTI_CODE
+			         AND D.COMM_CODE = 'NOTI_CODE'
 				   WHERE A.READ_YSNO = 'N'
 				     AND A.BOAD_IDXX =  C.CLUB_IDXX
 		      )

@@ -47,11 +47,17 @@ public class LoginController {
 
 	// 로그인 폼
 	@RequestMapping(value = "/gather/login.com", method = RequestMethod.GET)
-	public ModelAndView loginForm(CommandMap commandMap) throws Exception {
+	public ModelAndView loginForm(CommandMap commandMap,HttpSession session) throws Exception {
 
 		ModelAndView mv = new ModelAndView("/login/login");
 		mv.setViewName("login");
 
+		String naverAuthUrl = naverLoginVO.getAuthorizationUrl(session);
+		
+		System.out.println("네이버:" + naverAuthUrl);
+
+		mv.addObject("urlNaver", naverAuthUrl);
+		
 		List<Map<String, Object>> loginBackImg = loginService.loginBackImg(commandMap.getMap());
 		mv.addObject("Bimag", loginBackImg);
 
@@ -75,12 +81,6 @@ public class LoginController {
 			HttpServletRequest request) throws Exception {
 
 		ModelAndView mv = new ModelAndView("jsonView");
-		
-		String naverAuthUrl = naverLoginVO.getAuthorizationUrl(session);
-
-		System.out.println("네이버:" + naverAuthUrl);
-
-		mv.addObject("urlNaver", naverAuthUrl);
 
 		int result = loginService.loginCheck(param);
 
@@ -166,19 +166,15 @@ public class LoginController {
 	}
 
 	// 네이버 로그인 & 회원정보(이름) 가져오기
-	@RequestMapping(value = "/gather/naverLoginDo.com", produces = "application/json;charset=utf-8", method = {
-			RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView naverLogin(@RequestParam String code, @RequestParam String state, HttpSession session)
-			throws IOException {
+	@RequestMapping(value = "/gather/naverLoginDo.com",  method = {	RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView naverLogin(@RequestParam String code, @RequestParam String state, HttpSession session, CommandMap commandMap)
+			throws Exception {
 		ModelAndView mv = new ModelAndView();
-		
-		String naverAuthUrl = naverLoginVO.getAuthorizationUrl(session);
-		
-		System.out.println("urlNaver :" + naverAuthUrl);
+		mv.setViewName("redirect:/gather.com");
 
 		OAuth2AccessToken oauthToken;
 		oauthToken = naverLoginVO.getAccessToken(session, code, state);
-
+		
 		// 로그인한 사용자의 모든 정보가 JSON타입으로 저장되어 있음
 		apiResult = naverLoginVO.getUserProfile(oauthToken);
 
@@ -192,23 +188,46 @@ public class LoginController {
 		}
 		JSONObject jsonobj = (JSONObject) obj;
 		JSONObject response = (JSONObject) jsonobj.get("response");
-		String nname = (String) response.get("name");
-		String nemail = (String) response.get("email");
+		
+		System.out.println("리스폰스~~~~: "+ response);
+		
+		String USER_NAME = (String) response.get("name");
+		String USER_IDXX = (String) response.get("email");
 		String ngender = (String) response.get("gender");
 		String nbirthday = (String) response.get("birthday");
 		String nage = (String) response.get("age");
+		String nick = (String) response.get("nickname");
 		String nimage = (String) response.get("profile_image");
-
+		
+		Map<String, Object> naverLogin = new HashMap<>();
+		
+		naverLogin.put("USER_IDXX", response.get("email"));
+		naverLogin.put("PASS_WORD", ""+response.get("id"));
+		
+		System.out.println("요처어어엉" + naverLogin);
+		int result = loginService.loginCheck(naverLogin);
+		
+		System.out.println("겨어어얼과" + result);
+		
+		if(result == 0) {
+		 
+			commandMap.put("USER_NAME",USER_NAME);
+			commandMap.put("USER_NAME",USER_NAME); 
+			commandMap.put("USER_NAME",USER_NAME); 
+		 
+		 }
+		
 		// 로그인&아웃 하기위한 세션값 주기
-		session.setAttribute("USER_NAME", nname);
-		session.setAttribute("USER_IDXX", nemail);
+		session.setAttribute("USER_NUMB", "FKFKFKFKFKFFK");
+		session.setAttribute("USER_NICK", nick);
+		session.setAttribute("USER_NAME", USER_NAME);
+		session.setAttribute("USER_IDXX", USER_IDXX);
 		session.setAttribute("USER_GENR", ngender);
 		session.setAttribute("USER_BIRTH", nbirthday);
 		session.setAttribute("USER_AGEE", nage);
 		session.setAttribute("USER_IMAG", nimage);
 
 		// 네이버 로그인 성공 페이지 View 호출
-		mv.setViewName("/gather.com");
 		return mv;
 	}
 

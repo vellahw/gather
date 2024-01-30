@@ -44,24 +44,19 @@ public class NaverLoginVO {
 
 	/* 네이버아이디로 Callback 처리 및 AccessToken 획득 Method */
 	public OAuth2AccessToken getAccessToken(HttpSession session, String code, String state) throws IOException {
-		/* Callback으로 전달받은 세선검증용 난수값과 세션에 저장되어있는 값이 일치하는지 확인 */
-		String sessionState = getSession(session);
 		
-		if (StringUtils.pathEquals(sessionState, state)) {
+		/* Callback으로 전달받은 세선검증용 난수값과 세션에 저장되어있는 값이 일치하는지 확인 */
+		OAuth20Service oauthService = new ServiceBuilder()
+			.apiKey(CLIENT_ID)
+			.apiSecret(CLIENT_SECRET)
+			.callback(REDIRECT_URI)
+			.state(state)
+			.build(NaverLoginApi.instance());
 			
-			OAuth20Service oauthService = new ServiceBuilder()
-				.apiKey(CLIENT_ID).apiSecret(CLIENT_SECRET)
-				.callback(REDIRECT_URI)
-				.state(state).build(NaverLoginApi.instance());
+		OAuth2AccessToken accessToken = oauthService.getAccessToken(code);
 			
-			/* Scribe에서 제공하는 AccessToken 획득 기능으로 네아로 Access Token을 획득 */
-			OAuth2AccessToken accessToken = oauthService.getAccessToken(code);
-			
-			return accessToken;
+		return accessToken;
 
-		}
-
-		return null;
 
 	}
 

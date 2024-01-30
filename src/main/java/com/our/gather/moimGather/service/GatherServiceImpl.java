@@ -79,13 +79,6 @@ public class GatherServiceImpl implements GatherService {
 		return gatherDao.getGatherMember(map, commandMap, session);
 	}
 	
-	//게더 맴버 리스트
-	@Override
-	public List<Map<String, Object>> getGatherMemberForSD(Map<String, Object> map, CommandMap commandMap) throws Exception {
-		// TODO Auto-generated method stub
-		
-		return gatherDao.getGatherMemberForSD(map, commandMap);
-	}
 	
 	//로그인 한 회원의 게더 참여 상황.
 	@Override
@@ -102,14 +95,6 @@ public class GatherServiceImpl implements GatherService {
 		return gatherDao.getGatherYourState(map, commandMap, session);
 	}
 	
-	// 일정이 지난 게더
-	@Override
-	public List<Map<String, Object>> getEndedGahter(String currentDateString) throws Exception {
-		// TODO Auto-generated method stub
-
-		return gatherDao.getEndedGahter(currentDateString);
-	}
-
 	// 게더 마감
 	@Override
 	@Transactional(isolation = Isolation.SERIALIZABLE)

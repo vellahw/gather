@@ -1,4 +1,4 @@
-package com.our.gather.joinPage.service;
+package com.our.gather.join.service;
 
 import java.util.List;
 import java.util.Map;
@@ -8,9 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
+import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.dao.CommonDao;
 import com.our.gather.common.utils.FileUtils;
-import com.our.gather.joinPage.dao.JoinDao;
+import com.our.gather.join.dao.JoinDao;
 
 @Service("JoinService")
 public class JoinServiceImpl implements JoinService {
@@ -39,15 +40,23 @@ public class JoinServiceImpl implements JoinService {
 
 	// 회원가입
 	@Override
-	public void userJoin(Map<String, Object> map, HttpServletRequest request) throws Exception {
+	public void userJoin(Map<String, Object> map ,CommandMap commandMap, HttpServletRequest request) throws Exception {
 
-		joinDao.joinUs(map);
-
-		List<Map<String, Object>> plist = fileUtils.fileInsert(map, request);
-
-		for (int i = 0, size = plist.size(); i < size; i++) {
+		joinDao.joinUs(map, commandMap);
+		
+		try {
 			
-			commonDao.comFileInsert(map);
+			List<Map<String, Object>> plist = fileUtils.fileInsert(map, request);
+	
+			for (int i = 0, size = plist.size(); i < size; i++) {
+				
+				commonDao.comFileInsert(map);
+				
+				}
+		
+		}catch(Exception e){
+			
+			
 		}
 
 	}

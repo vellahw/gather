@@ -1,16 +1,17 @@
-package com.our.gather.joinPage.dao;
+package com.our.gather.join.dao;
 
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.dao.AbstractDao;
 
 @Repository("JoinDao")
 public class JoinDao extends AbstractDao {
 
 	// 회원가입
-	public void joinUs(Map<String, Object> map) throws Exception {
+	public void joinUs(Map<String, Object> map, CommandMap commandMap) throws Exception {
 		insert("join.joinUs", map);
 	}
 

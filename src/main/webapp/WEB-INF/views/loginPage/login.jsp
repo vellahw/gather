@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="/resources/css/login/login.css">
 <script src="/resources/js/login/login.js"></script>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
 
 <div class="backGroundContainer">
   <ul>
@@ -34,7 +35,7 @@
 	
 	  	<div class="socialButtons">
 		  <div id="naverIdLogin" style="display:none;"></div>
-	  	  <button id="naverLogin" class="loginButton naver">
+	  	  <button id="naverLogin" onclick="location.href='${urlNaver}'"class="loginButton naver">
 	  	    <img class="navericon" src="/resources/img/icon/loginApi/naver.png">
 	  		네이버 로그인
 	  	  </button>

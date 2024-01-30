@@ -167,17 +167,6 @@ public class GatherDao extends AbstractDao {
 		return getGatherMember;
 	}
 
-	// 게더 스케줄러 전용(쿼리가 너무 무거워서요...ㅎㅎ)
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> getGatherMemberForSD(Map<String, Object> map, CommandMap commandMap)
-			throws Exception {
-
-		List<Map<String, Object>> getGatherMemberForSD = (List<Map<String, Object>>) selectList(
-				"gather.getGatherMemberForScheduler", map);
-
-		return getGatherMemberForSD;
-	}
-
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getGatherImg(Map<String, Object> map, CommandMap commandMap) throws Exception {
 
@@ -194,25 +183,6 @@ public class GatherDao extends AbstractDao {
 		Map<String, Object> getGatherYourState = (Map<String, Object>) selectOne("gather.getGatherMember", map);
 
 		return getGatherYourState;
-	}
-
-	// 만남시간이 지난 게더리스트 (스케줄러)
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> getEndedGahter(String currentDateString) throws Exception {
-
-		List<Map<String, Object>> getEndedGahter = (List<Map<String, Object>>) selectList("gather.getEnddedGahter",
-				currentDateString);
-
-		return getEndedGahter;
-	}
-
-	// 만남시간이 지난 게더리스트 (스케줄러)
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> getOneDayLeft() throws Exception {
-
-		List<Map<String, Object>> getEndedGahter = (List<Map<String, Object>>) selectList("gather.getEnddedGahter");
-
-		return getEndedGahter;
 	}
 
 	// 모임마감

@@ -1,4 +1,4 @@
-package com.our.gather.joinPage.controller;
+package com.our.gather.join.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.our.gather.common.common.CommandMap;
-import com.our.gather.joinPage.service.JoinService;
+import com.our.gather.join.service.JoinService;
 
 @Controller
 public class JoinController {
@@ -48,7 +48,7 @@ public class JoinController {
 
 		ModelAndView mv = new ModelAndView("main_layout");
 
-		joinService.userJoin(commandMap.getMap(), request);
+		joinService.userJoin(commandMap.getMap(),commandMap, request);
 
 		return mv;
 
