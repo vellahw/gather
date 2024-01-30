@@ -1,10 +1,9 @@
 package com.our.gather.loginPage.controller;
 
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.net.http.HttpRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.our.gather.common.common.CommandMap;
+import com.our.gather.join.service.JoinService;
 import com.our.gather.loginPage.dao.NaverLoginVO;
 import com.our.gather.loginPage.service.LoginService;
 
@@ -36,6 +36,9 @@ public class LoginController {
 
 	@Resource(name = "LoginService")
 	private LoginService loginService;
+
+	@Resource(name = "JoinService")
+	private JoinService joinService;
 
 	private NaverLoginVO naverLoginVO;
 	private String apiResult = null;
@@ -47,17 +50,17 @@ public class LoginController {
 
 	// 로그인 폼
 	@RequestMapping(value = "/gather/login.com", method = RequestMethod.GET)
-	public ModelAndView loginForm(CommandMap commandMap,HttpSession session) throws Exception {
+	public ModelAndView loginForm(CommandMap commandMap, HttpSession session) throws Exception {
 
 		ModelAndView mv = new ModelAndView("/login/login");
 		mv.setViewName("login");
 
 		String naverAuthUrl = naverLoginVO.getAuthorizationUrl(session);
-		
+
 		System.out.println("네이버:" + naverAuthUrl);
 
 		mv.addObject("urlNaver", naverAuthUrl);
-		
+
 		List<Map<String, Object>> loginBackImg = loginService.loginBackImg(commandMap.getMap());
 		mv.addObject("Bimag", loginBackImg);
 
@@ -106,75 +109,75 @@ public class LoginController {
 				userYear += 1800;
 			}
 
-			int tmpAge = todayYear - userYear + 1;
-			
-			if(map.get("BANN_YSNO").equals("Y")) {		//정지된 사용자
-				
+			int tmpAge = todayYear - userYear;
+
+			if (map.get("BANN_YSNO").equals("Y")) { // 정지된 사용자
+
 				mv.addObject("USER_NICK", map.get("USER_NICK"));
-				mv.addObject("BANN_STRT", map.get("BANN_STRT"));		//정지 시작일
-				mv.addObject("BANN_ENDD", map.get("BANN_ENDD"));		//정지 종료일
-				mv.addObject("BANN_CNTT", map.get("BANN_CNTT"));		//정지 사유
-				
-				System.out.println("<------------USERNUMB:"+ map.get("USER_NUMB")+" is banned------------------>");
-				
+				mv.addObject("BANN_STRT", map.get("BANN_STRT")); // 정지 시작일
+				mv.addObject("BANN_ENDD", map.get("BANN_ENDD")); // 정지 종료일
+				mv.addObject("BANN_CNTT", map.get("BANN_CNTT")); // 정지 사유
+
+				System.out.println("<------------USERNUMB:" + map.get("USER_NUMB") + " is banned------------------>");
+
 				mv.addObject("result", "fail");
-				
+
 			} else {
-				
-				session.setAttribute("USER_NUMB", map.get("USER_NUMB"));			//회원번호
-				session.setAttribute("USER_TYPE", map.get("USER_TYPE"));			//회원타입(사용자, 개발자, 운영자)
-				session.setAttribute("TYPE_CODE", map.get("TYPE_CODE"));			//회원타입코드(UR: 사용자, DV:개발자, AD:운영자)
-				session.setAttribute("USER_NAME", map.get("USER_NAME"));			//회원이름
-				session.setAttribute("USER_NICK", map.get("USER_NICK"));			//회원 닉네임
-				session.setAttribute("USER_IMAG", map.get("USER_IMAG"));			//회원 프로필사진
-				session.setAttribute("USER_BIRTH", map.get("USER_BIRTH"));			//회원생일
-				session.setAttribute("USER_JUMIN2", map.get("USER_JUMIN2"));		//회원 주민번호 뒷자리
-				session.setAttribute("USER_AGEE", tmpAge);							//회원나이
-				session.setAttribute("REGI_NUMB", map.get("REGI_NUMB"));			//회원 주민등록번호
-				session.setAttribute("USER_GNDR", map.get("USER_GNDR"));			//회원성별
-				
-				mv.addObject("USER_NUMB", session.getAttribute("USER_NUMB"));		
-				mv.addObject("USER_TYPE", session.getAttribute("USER_TYPE"));		
-				mv.addObject("TYPE_CODE", session.getAttribute("TYPE_CODE"));		
-				mv.addObject("USER_NAME", session.getAttribute("USER_NAME"));		
-				mv.addObject("USER_NICK", session.getAttribute("USER_NICK"));		
-				mv.addObject("USER_IMAG", session.getAttribute("USER_IMAG"));		
-				mv.addObject("USER_BIRTH", session.getAttribute("USER_BIRTH"));		
-				mv.addObject("USER_JUMIN2", session.getAttribute("USER_JUMIN2"));	
-				mv.addObject("USER_AGEE", session.getAttribute("USER_AGEE"));		
-				mv.addObject("REGI_NUMB", session.getAttribute("REGI_NUMB"));		
+
+				session.setAttribute("USER_NUMB", map.get("USER_NUMB")); // 회원번호
+				session.setAttribute("USER_TYPE", map.get("USER_TYPE")); // 회원타입(사용자, 개발자, 운영자)
+				session.setAttribute("TYPE_CODE", map.get("TYPE_CODE")); // 회원타입코드(UR: 사용자, DV:개발자, AD:운영자)
+				session.setAttribute("USER_NAME", map.get("USER_NAME")); // 회원이름
+				session.setAttribute("USER_NICK", map.get("USER_NICK")); // 회원 닉네임
+				session.setAttribute("USER_IMAG", map.get("USER_IMAG")); // 회원 프로필사진
+				session.setAttribute("USER_BIRTH", map.get("USER_BIRTH")); // 회원생일
+				session.setAttribute("USER_JUMIN2", map.get("USER_JUMIN2")); // 회원 주민번호 뒷자리
+				session.setAttribute("USER_AGEE", tmpAge); // 회원나이
+				session.setAttribute("REGI_NUMB", map.get("REGI_NUMB")); // 회원 주민등록번호
+				session.setAttribute("USER_GNDR", map.get("USER_GNDR")); // 회원성별
+
+				mv.addObject("USER_NUMB", session.getAttribute("USER_NUMB"));
+				mv.addObject("USER_TYPE", session.getAttribute("USER_TYPE"));
+				mv.addObject("TYPE_CODE", session.getAttribute("TYPE_CODE"));
+				mv.addObject("USER_NAME", session.getAttribute("USER_NAME"));
+				mv.addObject("USER_NICK", session.getAttribute("USER_NICK"));
+				mv.addObject("USER_IMAG", session.getAttribute("USER_IMAG"));
+				mv.addObject("USER_BIRTH", session.getAttribute("USER_BIRTH"));
+				mv.addObject("USER_JUMIN2", session.getAttribute("USER_JUMIN2"));
+				mv.addObject("USER_AGEE", session.getAttribute("USER_AGEE"));
+				mv.addObject("REGI_NUMB", session.getAttribute("REGI_NUMB"));
 				mv.addObject("USER_GNDR", session.getAttribute("USER_GNDR"));
-				
+
 				LocalDateTime now = LocalDateTime.now();
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 				System.out.println("<------------------------------Login Success!!!!!-------------------------->");
-				System.out
-						.println("DateTime:" + now.format(formatter) + "\nUSER_NUMB :" + session.getAttribute("USER_NUMB"));
+				System.out.println(
+						"DateTime:" + now.format(formatter) + "\nUSER_NUMB :" + session.getAttribute("USER_NUMB"));
 				System.out.println("<-------------------------------------------------------------------------->");
-				
+
 				mv.addObject("result", "success");
 			}
-			
+
 		} else {
-			
+
 			mv.addObject("result", null);
 			System.out.println("<--------------------------------Login Fail...----------------------------->");
-			
+
 		}
 
 		return mv;
 	}
 
 	// 네이버 로그인 & 회원정보(이름) 가져오기
-	@RequestMapping(value = "/gather/naverLoginDo.com",  method = {	RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView naverLogin(@RequestParam String code, @RequestParam String state, HttpSession session, CommandMap commandMap)
-			throws Exception {
+	@RequestMapping(value = "/gather/naverLoginDo.com", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView naverLogin(@RequestParam String code, @RequestParam String state, HttpSession session,
+			CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("redirect:/gather.com");
+		mv.setViewName("redirect:/gather/login.com");
 
 		OAuth2AccessToken oauthToken;
 		oauthToken = naverLoginVO.getAccessToken(session, code, state);
-		
+
 		// 로그인한 사용자의 모든 정보가 JSON타입으로 저장되어 있음
 		apiResult = naverLoginVO.getUserProfile(oauthToken);
 
@@ -188,45 +191,143 @@ public class LoginController {
 		}
 		JSONObject jsonobj = (JSONObject) obj;
 		JSONObject response = (JSONObject) jsonobj.get("response");
-		
-		System.out.println("리스폰스~~~~: "+ response);
-		
-		String USER_NAME = (String) response.get("name");
-		String USER_IDXX = (String) response.get("email");
-		String ngender = (String) response.get("gender");
-		String nbirthday = (String) response.get("birthday");
-		String nage = (String) response.get("age");
-		String nick = (String) response.get("nickname");
-		String nimage = (String) response.get("profile_image");
-		
-		Map<String, Object> naverLogin = new HashMap<>();
-		
-		naverLogin.put("USER_IDXX", response.get("email"));
-		naverLogin.put("PASS_WORD", ""+response.get("id"));
-		
-		System.out.println("요처어어엉" + naverLogin);
-		int result = loginService.loginCheck(naverLogin);
-		
-		System.out.println("겨어어얼과" + result);
-		
-		if(result == 0) {
-		 
-			commandMap.put("USER_NAME",response.get("name"));
-			commandMap.put("USER_NAME",response.get("email")); 
-			commandMap.put("USER_NAME",USER_NAME); 
-		 
-		 }
-		
-		// 로그인&아웃 하기위한 세션값 주기
-		session.setAttribute("USER_NUMB", "FKFKFKFKFKFFK");
-		session.setAttribute("USER_NICK", nick);
-		session.setAttribute("USER_NAME", USER_NAME);
-		session.setAttribute("USER_IDXX", USER_IDXX);
-		session.setAttribute("USER_GENR", ngender);
-		session.setAttribute("USER_BIRTH", nbirthday);
-		session.setAttribute("USER_AGEE", nage);
-		session.setAttribute("USER_IMAG", nimage);
 
+		System.out.println("리스폰스~~~~: " + response);
+
+		String ngender = (String) response.get("gender"); 
+		String nbirthday = (String) response.get("birthday"); 
+		String birthYear = (String) response.get("birthyear"); 
+		String mobile = (String) response.get("mobile");
+
+		String[] phoneNumParts = mobile.split("-");
+		String first = phoneNumParts[0];
+		String second = phoneNumParts[1];
+		String third = phoneNumParts[2];
+		String CELL_NUMB = first + second + third;
+
+		// 성별에 따른 주민등록번호 앞자리 숫자 설정
+		int genderCode = (ngender.equals("M")) ? 1 : 2;
+
+		// 2000년 이후 출생자의 주민등록번호 앞자리 생성
+		if (Integer.parseInt(birthYear) >= 2000) {
+			genderCode += 2; // 2000년 이후 출생자의 성별 코드
+		}
+
+		// 생년월일에서 월과 일을 분리
+		String[] birthdayParts = nbirthday.split("-");
+		String month = birthdayParts[0];
+		String day = birthdayParts[1];
+
+		// 주민등록번호 앞자리 생성
+		String firstSevenDigits = birthYear.substring(2) + month + day + genderCode;
+
+		// 현재 나이 계산
+		LocalDate birthday = LocalDate.parse(birthYear + "-" + nbirthday, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		int age = Period.between(birthday, LocalDate.now()).getYears();
+		
+		String passwordString = "NAVER:" + response.get("id");
+
+		Map<String, Object> naverLogin = new HashMap<>();
+
+		naverLogin.put("USER_IDXX", response.get("email"));
+		naverLogin.put("PASS_WORD", passwordString);
+
+		int result = loginService.loginCheck(naverLogin);
+
+		if (result == 0) {
+
+			commandMap.put("USER_NAME", response.get("name"));
+			commandMap.put("REGI_NUMB", firstSevenDigits);
+			commandMap.put("USER_NICK", response.get("nickname"));
+			commandMap.put("USER_IDXX", response.get("email"));
+			commandMap.put("PASS_WORD", passwordString);
+			commandMap.put("CELL_NUMB", CELL_NUMB);
+			commandMap.put("SELF_INTR", "N/A");
+			commandMap.put("QUST_CODE", "N/A");
+			commandMap.put("ANSR_CODE", "N/A");
+			commandMap.put("FILE_SVNM", response.get("profile_image"));
+
+			joinService.userJoin(commandMap.getMap(), commandMap, request);
+			
+			Map<String, Object> map = loginService.login(naverLogin);
+		
+			session.setAttribute("USER_NUMB", map.get("USER_NUMB")); // 회원번호
+			session.setAttribute("USER_TYPE", map.get("USER_TYPE")); // 회원타입(사용자, 개발자, 운영자)
+			session.setAttribute("TYPE_CODE", map.get("TYPE_CODE")); // 회원타입코드(UR: 사용자, DV:개발자, AD:운영자)
+			session.setAttribute("USER_NAME", map.get("USER_NAME")); // 회원이름
+			session.setAttribute("USER_NICK", map.get("USER_NICK")); // 회원 닉네임
+			session.setAttribute("USER_IMAG", map.get("USER_IMAG")); // 회원 프로필사진
+			session.setAttribute("USER_BIRTH", map.get("USER_BIRTH")); // 회원생일
+			session.setAttribute("USER_JUMIN2", map.get("USER_JUMIN2")); // 회원 주민번호 뒷자리
+			session.setAttribute("USER_AGEE", age); // 회원나이
+			session.setAttribute("REGI_NUMB", map.get("REGI_NUMB")); // 회원 주민등록번호
+			session.setAttribute("USER_GNDR", map.get("USER_GNDR")); // 회원성별
+			
+			mv.addObject("api", passwordString);
+			mv.addObject("firstTime", "Y");
+			mv.addObject("result", "success");
+			mv.addObject("USER_NUMB", session.getAttribute("USER_NUMB"));
+			mv.addObject("USER_TYPE", session.getAttribute("USER_TYPE"));
+			mv.addObject("TYPE_CODE", session.getAttribute("TYPE_CODE"));
+			mv.addObject("USER_NAME", session.getAttribute("USER_NAME"));
+			mv.addObject("USER_NICK", session.getAttribute("USER_NICK"));
+			mv.addObject("USER_IMAG", session.getAttribute("USER_IMAG"));
+			mv.addObject("USER_BIRTH", session.getAttribute("USER_BIRTH"));
+			mv.addObject("USER_JUMIN2", session.getAttribute("USER_JUMIN2"));
+			mv.addObject("USER_AGEE", session.getAttribute("USER_AGEE"));
+			mv.addObject("REGI_NUMB", session.getAttribute("REGI_NUMB"));
+			mv.addObject("USER_GNDR", session.getAttribute("USER_GNDR"));
+			
+			
+		} else {
+
+			Map<String, Object> map = loginService.login(naverLogin);
+			
+			if (map.get("BANN_YSNO").equals("Y")) { // 정지된 사용자
+
+				mv.addObject("api", passwordString);
+				mv.addObject("USER_NICK", map.get("USER_NICK"));
+				mv.addObject("BANN_STRT", map.get("BANN_STRT")); // 정지 시작일
+				mv.addObject("BANN_ENDD", map.get("BANN_ENDD")); // 정지 종료일
+				mv.addObject("BANN_CNTT", map.get("BANN_CNTT")); // 정지 사유
+				
+				System.out.println("<------------USERNUMB:" + map.get("USER_NUMB") + " is banned------------------>");
+
+				mv.addObject("result", "fail");
+
+			} else {
+
+				session.setAttribute("USER_NUMB", map.get("USER_NUMB")); // 회원번호
+				session.setAttribute("USER_TYPE", map.get("USER_TYPE")); // 회원타입(사용자, 개발자, 운영자)
+				session.setAttribute("TYPE_CODE", map.get("TYPE_CODE")); // 회원타입코드(UR: 사용자, DV:개발자, AD:운영자)
+				session.setAttribute("USER_NAME", map.get("USER_NAME")); // 회원이름
+				session.setAttribute("USER_NICK", map.get("USER_NICK")); // 회원 닉네임
+				session.setAttribute("USER_IMAG", map.get("USER_IMAG")); // 회원 프로필사진
+				session.setAttribute("USER_BIRTH", map.get("USER_BIRTH")); // 회원생일
+				session.setAttribute("USER_JUMIN2", map.get("USER_JUMIN2")); // 회원 주민번호 뒷자리
+				session.setAttribute("USER_AGEE", age); // 회원나이
+				session.setAttribute("REGI_NUMB", map.get("REGI_NUMB")); // 회원 주민등록번호
+				session.setAttribute("USER_GNDR", map.get("USER_GNDR")); // 회원성별
+				
+				mv.addObject("api", passwordString);
+				mv.addObject("firstTime", "N");
+				mv.addObject("result", "success");
+				mv.addObject("USER_NUMB", session.getAttribute("USER_NUMB"));
+				mv.addObject("USER_TYPE", session.getAttribute("USER_TYPE"));
+				mv.addObject("TYPE_CODE", session.getAttribute("TYPE_CODE"));
+				mv.addObject("USER_NAME", session.getAttribute("USER_NAME"));
+				mv.addObject("USER_NICK", session.getAttribute("USER_NICK"));
+				mv.addObject("USER_IMAG", session.getAttribute("USER_IMAG"));
+				mv.addObject("USER_BIRTH", session.getAttribute("USER_BIRTH"));
+				mv.addObject("USER_JUMIN2", session.getAttribute("USER_JUMIN2"));
+				mv.addObject("USER_AGEE", session.getAttribute("USER_AGEE"));
+				mv.addObject("REGI_NUMB", session.getAttribute("REGI_NUMB"));
+				mv.addObject("USER_GNDR", session.getAttribute("USER_GNDR"));
+				
+			}
+		
+		}
+		
 		// 네이버 로그인 성공 페이지 View 호출
 		return mv;
 	}
