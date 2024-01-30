@@ -54,27 +54,7 @@ public class MoimDetailController {
 
 		if (moimType.equals("GT")) {
 
-			List<Map<String, Object>> memList = gatherService.getGatherMember(commandMap.getMap(), commandMap);
-			
-			for (int i = 0; i < memList.size(); i++) {
-				
-				if(session.getAttribute("USER_NUMB") != null) {
-		        	
-		        	String userId = memList.get(i).get("USER_NUMB").toString();
-		        	
-		        	String me = session.getAttribute("USER_NUMB").toString();
-		        	
-		        	String folwCode = OracleFunction.getRelationCode(me, userId);
-		        	
-		        	String folwBtn = OracleFunction.getCodeName("FOLW_CODE", folwCode);
-		        	
-		        	memList.get(i).put("FOLW_CODE", folwCode);
-		        	
-		        	memList.get(i).put("FOLW_BTNN", folwBtn);
-		        	
-		        }
-				
-			}
+			List<Map<String, Object>> memList = gatherService.getGatherMember(commandMap.getMap(), commandMap, session);
 			
 			mv.addObject("member", memList); // 게더맴버
 			mv.addObject("detail", gatherService.getGatherDetail(commandMap.getMap(), session, commandMap)); // 게더
