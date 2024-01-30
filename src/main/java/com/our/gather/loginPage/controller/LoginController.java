@@ -211,8 +211,8 @@ public class LoginController {
 		
 		if(result == 0) {
 		 
-			commandMap.put("USER_NAME",USER_NAME);
-			commandMap.put("USER_NAME",USER_NAME); 
+			commandMap.put("USER_NAME",response.get("name"));
+			commandMap.put("USER_NAME",response.get("email")); 
 			commandMap.put("USER_NAME",USER_NAME); 
 		 
 		 }
