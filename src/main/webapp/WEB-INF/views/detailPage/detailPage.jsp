@@ -135,7 +135,7 @@
 								   </div>
 								</div>
 								<div class="profileInfo">
-									<div>
+									<div style="padding-right: 25px;">
 										<p><c:out value="${m.USER_NICK}" /></p>
 										<p class="self" data-intr-length="${fn:length(m.SELF_INTR)}">
 										<input type="hidden" value="${m.SELF_INTR}" id="selfIntr">
@@ -143,6 +143,7 @@
 										</p>
 									</div>
 									<div class="profileBtnContainer">
+										<input type="hidden" id="data-mem" value="${m.USER_NUMB}">
 										<button class="Btn f" data-code="${m.FOLW_CODE}">
 											<c:out value="${m.FOLW_BTNN}" />
 										</button>
@@ -169,7 +170,7 @@
 							    </div>
 						    </div>
 						    <div class="profileInfo">
-						    	<div>
+						    	<div style="padding-right: 25px;">
 							    	<p><c:out value="${m.USER_NICK}" /></p>
 										<p class="self" data-intr-length="${fn:length(m.SELF_INTR)}">
 											<input type="hidden" value="${m.SELF_INTR}" id="selfIntr">

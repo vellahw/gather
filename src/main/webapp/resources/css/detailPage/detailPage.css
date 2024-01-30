@@ -282,9 +282,9 @@
   align-items: center;
 }
 
-.profileInfo > div {
+/* .profileInfo :nth-child(1) {
 	padding-right: 25px;
-}
+} */
 
 .profileInfo > div > p {
 	font-weight: 600;
