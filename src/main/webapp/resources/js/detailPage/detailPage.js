@@ -319,7 +319,7 @@ document.addEventListener("DOMContentLoaded", function(){
     if(yourStateValue != 'null') {
 
       const yourState = parseString(yourStateValue).result; // yourState data
-      const { MAST_YSNO, WAIT_YSNO, BANN_YSNO } = yourState;
+      const { MAST_YSNO, WAIT_YSNO, BANN_YSNO, REVW_YSNO } = yourState;
 	      
        // 방장이 아님
       if(MAST_YSNO == 'N') {
@@ -353,12 +353,14 @@ document.addEventListener("DOMContentLoaded", function(){
           
           joinMoimBtn.style.display = 'none';
           
-          // 리뷰 버튼 띄움
-          const reviewBtn = document.getElementById('reviewBtn');
-          reviewBtn.style.display = 'block';
+          if(REVW_YSNO == 'Y') {
 
+            // 리뷰 버튼 띄움
+            const reviewBtn = document.getElementById('reviewBtn');
+            reviewBtn.style.display = 'block';
+
+          }
         }
-
 
       // 방장
       } else if(MAST_YSNO == 'Y') {
@@ -432,7 +434,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
     // 모임 미참여
     } else if(yourStateValue == 'null'){
-
+      joinMoimBtn.style.display = 'block';
       updateButtonUI(detail.APPR_YSNO, 'fresh');
 
     }
@@ -452,10 +454,10 @@ document.addEventListener("DOMContentLoaded", function(){
     joinMoimBtn.innerHTML = buttonText;
     joinMoimBtn.dataset.state = state;
     joinMoimBtn.addEventListener('click', onClickHandler);
-  
+
   }
     
-  // 참여 유효성 검사
+  /* 참여 유효성 검사 */
   function onClickHandler() {
     const { MINN_AGEE, MAXX_AGEE, GNDR_CODE, MOIM_IDXX, APPR_YSNO, MAXX_PEOP, MEMB_COUNT } = detail;
     const { USER_AGEE, USER_JUMIN2, USER_NUMB} = sessionStorage;
@@ -500,7 +502,6 @@ document.addEventListener("DOMContentLoaded", function(){
             }
 
             runMoimJoin(data, APPR_YSNO);
-            comNotify('001', detail.USER_NUMB);
 
           /*==== 재참여 ====*/
           } else if(getBtnState == 'rejoin' && BANN_YSNO == 'Y' && WAIT_YSNO == 'Y') {
@@ -512,9 +513,11 @@ document.addEventListener("DOMContentLoaded", function(){
               , USER_NUMB : USER_NUMB
               , states : states
             }
+
+            let getBtnState;
+            getBtnState = APPR_YSNO == 'N' ? 're' : 'needAppr';
             
-            runStateUpdate(data, 're');
-            comNotify('011', detail.USER_NUMB);
+            runStateUpdate(data, getBtnState);
             
           /*==== '참여취소' ====*/
           } else if(getBtnState == 'cancel') {
@@ -527,7 +530,6 @@ document.addEventListener("DOMContentLoaded", function(){
             }
 
             runStateUpdate(data, 'cancel');
-            comNotify('003', detail.USER_NUMB);
 
           }
         } 
@@ -569,10 +571,10 @@ document.addEventListener("DOMContentLoaded", function(){
         }
 
         runMoimJoin(data, APPR_YSNO);
-        comNotify('001', detail.USER_NUMB);
 
       }
     }
+  
   }
 
   /* 참여하기 동작 함수 */
@@ -585,33 +587,44 @@ document.addEventListener("DOMContentLoaded", function(){
       , "application/json"
       , function(){ // ajax 성공 후 실행
           comConfirm2(
-            getTitleText(apprYsNo)
+            getText(apprYsNo).title
           , null
           , 'warning'
-          , getOkConfirmText(apprYsNo)
+          , getText(apprYsNo).text
           , 'success'
-          , function(){ location. reload(); })
+          , function(){
+              location. reload(); 
+              getBtnStateAndRunNotify(apprYsNo);
+            })
         }
     );
 
-    function getTitleText(apprYsNo) {
+    function getText(apprYsNo) {
       let title; 
+      let text;
+
       title = apprYsNo == 'N' ? '모임에 참여하시겠어요?' : '모임에 참여 요청을 보낼까요?';
-      return title;
+      text = apprYsNo == 'N' ? '모임에 참여되었어요!' : '모임에 참여 요청을 보냈어요!';
+
+      return { title : title, text: text };
     }
 
-    function getOkConfirmText(moimApprYsNo) {
-      return moimApprYsNo === 'N' ? '모임에 참여되었어요!' : '모임에 참여 요청을 보냈어요!';
+    function getBtnStateAndRunNotify(apprYsNo) {
+
+      let btnState;
+      btnState = apprYsNo == 'N' ? 'join' : 'needAppr';
+
+      runNotify(btnState);
     }
   }
 
   /* 취소하기 동작 함수 */
   function runStateUpdate(data, btnState) {
     comConfirm2(
-        getConfirmTitleText(btnState)
+        getConfirmText(btnState).confirmTitle
       , getBigContentText(btnState)
       , 'warning'
-      , getConfirmOkText(btnState)
+      , getConfirmText(btnState).confirmOkContent
       , 'success'
       , function(){
         comAjax(
@@ -621,6 +634,7 @@ document.addEventListener("DOMContentLoaded", function(){
         , "application/json"
         , function(){
             location.reload();
+            runNotify(btnState);
           }
       )}
     );
@@ -638,13 +652,13 @@ document.addEventListener("DOMContentLoaded", function(){
     }
   }
 
-  /* 강퇴/승인거절 동작 함수 */
+  /* 강퇴/승인/거절 동작 함수 */
   function runBann(data, btnState) {
     comConfirm2(
-        getConfirmTitleText(btnState)
-      , getConfirmContentText(btnState)
+        getConfirmText(btnState).confirmTitle
+      , getConfirmText(btnState).confirmContent
       , 'warning'
-      , getConfirmOkText(btnState)
+      , getConfirmText(btnState).confirmOkContent
       , 'success'
       , function(){
         comAjax(
@@ -653,61 +667,71 @@ document.addEventListener("DOMContentLoaded", function(){
         , JSON.stringify(data)
         , "application/json"
         , function(){
+            runNotify(btnState, data.USER_NUMB);
             location.reload();
           }
       )}
     );
   }
 
-  /* 컨펌창 타이틀 리턴하는 함수 */
-  function getConfirmTitleText(btnState) {
+  /* 컨펌창 문구 리턴 함수 */
+  function getConfirmText(btnState) {
+    let confirmTitle;
+    let confirmContent;
+    let confirmOkContent;
+
     if(btnState == 're') {
-      return '모임에 재참여하시겠어요?';
+      confirmTitle = '모임에 재참여하시겠어요?';
+      confirmOkContent = '모임에 참여되었어요!';
+
+    } else if(btnState == 'needAppr') {
+      confirmTitle = '모임에 다시 참여 요청을 보낼까요?'
+      confirmOkContent = '모임에 참여 요청을 보냈어요!';
 
     } else if(btnState == 'cancel') {
-      return '모임 참여를 취소하시겠어요?';
+      confirmTitle = '모임 참여를 취소하시겠어요?';
+      confirmOkContent = '참여 취소되었습니다.';
 
     } else if(btnState == '강퇴') {
-      return '해당 회원을 강퇴하시겠어요?';
+      confirmTitle = '해당 회원을 강제퇴장하시겠어요?';
+      confirmOkContent = '강제퇴장 처리되었습니다.';
+      confirmContent = '해당 작업은 취소할 수 없어요.';
 
     } else if(btnState == '승인') {
-      return '해당 회원의 참여를 승인하시겠어요?';
+      confirmTitle = '해당 회원의 참여를 승인하시겠어요?';
+      confirmOkContent = '승인되었습니다.';
 
     } else if(btnState == '거절') {
-      return '해당 회원의 참여를 거절하시겠어요?';
+      confirmTitle = '해당 회원의 참여를 거절하시겠어요?';
+      confirmContent = '해당 작업은 취소할 수 없어요.';
+      confirmOkContent = '승인 거절되었습니다.';
     }
+
+    return { confirmTitle: confirmTitle, confirmContent: confirmContent, confirmOkContent: confirmOkContent }
   }
 
-  /* 컨펌창 내용 리턴하는 함수 */
-  function getConfirmContentText(btnState) {
-    if(btnState == '승인') {
-      return null;
-    }
-    
-    return '해당 작업은 취소할 수 없어요.';
-  }
-
-  /* 컨펌창 '확인' 후 뜨는 내용 리턴하는 함수 */
-  function getConfirmOkText(btnState) {
-    if(btnState == 're') {
-      
-      if(detail.APPR_YSNO == 'Y') {
-        return '모임에 참여 요청을 보냈어요!';
-      }
-
-      return '모임에 참여되었어요!';
-      
+  /* comNotify 호출 함수 */  
+  function runNotify(btnState, postUser) {
+    if(btnState == 'join') {
+      return comNotify('A01', detail.USER_NUMB);
+  
+    } else if(btnState == 'needAppr') {
+      return comNotify('A02', detail.USER_NUMB);
+  
     } else if(btnState == 'cancel') {
-      return '참여가 취소되었어요.';
-
+      return comNotify('A03', detail.USER_NUMB);
+        
+    } else if(btnState == 're') {
+      return comNotify('A07', detail.USER_NUMB);
+        
     } else if(btnState == '강퇴') {
-      return '강퇴되었습니다.';
-
+      return comNotify('B03', postUser);
+        
     } else if(btnState == '승인') {
-      return '승인되었습니다.';
-
+      return comNotify('B01', postUser);
+        
     } else if(btnState == '거절') {
-      return '승인 거절되었습니다.';
+      return comNotify('B02', postUser);
     }
   }
 
