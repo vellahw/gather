@@ -90,7 +90,7 @@
 	            <c:out value="${detail.APPR_LMIT}" />
           	</span>
           </div>
-          <div class="each">
+          <div class="each peop">
           	<div class="infoIconWrap">
   	          <img class="infoIcon" src="/resources/img/icon/detail/peopleIcon.png" alt="인원 제한 아이콘" />
 	          </div>

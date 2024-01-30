@@ -202,6 +202,13 @@ document.addEventListener("DOMContentLoaded", function(){
       }
     })
   }
+
+  if(detail.MAXX_PEOP == detail.MEMB_COUNT) {
+    const newspan = document.createElement('span');
+    newspan.innerHTML = '참여 인원이 다 찼어요!';
+    newspan.classList.add('maxpeop');
+    document.querySelector('.peop').appendChild(newspan);
+  }
   
 
   /**

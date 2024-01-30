@@ -192,8 +192,6 @@ public class LoginController {
 		JSONObject jsonobj = (JSONObject) obj;
 		JSONObject response = (JSONObject) jsonobj.get("response");
 
-		System.out.println("리스폰스~~~~: " + response);
-
 		String ngender = (String) response.get("gender"); 
 		String nbirthday = (String) response.get("birthday"); 
 		String birthYear = (String) response.get("birthyear"); 

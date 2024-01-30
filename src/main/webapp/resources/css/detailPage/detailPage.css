@@ -233,6 +233,15 @@
 	padding: 4px 0 0 0;
 }
 
+.maxpeop {
+	color: var(--color-red);
+	font-size: 13px;
+  font-weight: 600;
+  padding: 4px 0 0 9px;
+  text-decoration: underline; 
+	
+}
+
 .masterProfile {
   display: flex;
   align-items: center;
