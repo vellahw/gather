@@ -2,37 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const userIdForm = document.getElementById('USER_IDXX'); // id 입력 input
     const userPwForm = document.getElementById('PASS_WORD'); // pw 입력 input
     const appendArea = document.getElementById('append'); // 안내문구 띄울 공간
-    
-//     var naverLogin = new naver.LoginWithNaverId( {
-//         clientId: "imq4BJkILgfjUij4Rw1W", // 내꺼
-//         callbackUrl: "http://localhost:8080/gather/naverLoginDo.com",
-//         isPopup: false, /* 팝업을 통한 연동처리 여부 */
-//         loginButton: {color: "green", type: 1, height: 20}, /* 로그인 버튼의 타입을 지정 */
-//         callbackHandle: true
-//     } ); 
-    
-//     /* 설정정보를 초기화하고 연동을 준비 */
-//     naverLogin.init();
-
-//     window.addEventListener('load', function () {	
-// 		naverLogin.getLoginStatus(function(status) {
-// 			if (status) {
-// 				const email = naverLogin.user.getEmail();
-// 				const nickName = naverLogin.user.getNickName();
-// 				const id = naverLogin.user.getId();
-				
-// 				alert(naverLogin);
-// 				alert(email);
-// 				alert(nickName);
-//       }
-//     })
-//   })
-
-//     // 네이버 로그인 소스에서 추가되는 부분
-//     $(document).on("click", "#naverLogin", function(){
-//         var naverLogin = document.getElementById("naverIdLogin").firstChild;
-//         naverLogin.click();
-//     });
 
     /*
       안내문구 띄우는 함수
@@ -187,6 +156,41 @@ document.addEventListener('DOMContentLoaded', function () {
 
     setInterval(slideImages, 5000); // 5초에 한 번씩 슬라이딩
 });
+
+function naverLogin(){
+    
+    var naverLogin = new naver.LoginWithNaverId( {
+        clientId: "imq4BJkILgfjUij4Rw1W", // 내꺼
+        callbackUrl: "http://localhost:8080/gather/naverLoginDo.com",
+        isPopup: false, /* 팝업을 통한 연동처리 여부 */
+        loginButton: {color: "green", type: 1, height: 20}, /* 로그인 버튼의 타입을 지정 */
+        callbackHandle: true
+    } ); 
+
+    /* 설정정보를 초기화하고 연동을 준비 */
+    naverLogin.init();
+
+    window.addEventListener('load', function () {	
+        naverLogin.getLoginStatus(function(status) {
+            if (status) {
+                const email = naverLogin.user.getEmail();
+                const nickName = naverLogin.user.getNickName();
+                const id = naverLogin.user.getId();
+                
+                alert(naverLogin);
+                alert(email);
+                alert(nickName);
+        }
+    })
+    })
+
+
+    // 네이버 로그인 소스에서 추가되는 부분
+    $(document).on("click", "#naverLogin", function(){
+        var naverLogin = document.getElementById("naverIdLogin").firstChild;
+        naverLogin.click();
+    });
+}
 
 // 로그인/회원가입 폼 전환을 담당하는 JavaScript 함수
 function toggleForm(formId) {

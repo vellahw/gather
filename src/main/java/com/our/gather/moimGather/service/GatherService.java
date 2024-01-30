@@ -29,16 +29,11 @@ public interface GatherService {
 	List<Map<String, Object>> getGatherMember(Map<String, Object> map, CommandMap commandMap, HttpSession session)
 			throws Exception;
 	
-	//게더 멤버
-	List<Map<String, Object>> getGatherMemberForSD(Map<String, Object> map, CommandMap commandMap)
-			throws Exception;
 	
 	//로그인 회원 현재 게더 참여상태
 	Map<String, Object> getGatherYourState(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception;
 	
-	//마감시간이 지난 게더 추출
-	List<Map<String, Object>> getEndedGahter(String currentDateString) throws Exception;
 	
 	//게더마감
 	void setGatherEnd(Map<String, Object> map) throws Exception;
