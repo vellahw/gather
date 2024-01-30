@@ -15,10 +15,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
 
     // 버튼 및 목록의 이벤트 핸들러 등록
-    // [notifyBtn, notifyList].forEach(element => {
-    //   element.addEventListener('mouseenter', addClass);
-    //   element.addEventListener('mouseleave', removeClass);
-    // });
+    [notifyBtn, notifyList].forEach(element => {
+       element.addEventListener('mouseenter', addClass);
+       element.addEventListener('mouseleave', removeClass);
+    });
 
     function addClass() {
       notifyList.classList.add('act');

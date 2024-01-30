@@ -52,10 +52,10 @@
 }
 
 .notifyList {
-  /* visibility: visible; 
+  visibility: hidden; 
   opacity: 0; 
-  z-index: -1; */
-  height: 606px;
+  z-index: -1; 
+  height: 0px;
 
   transition: all 0.3s ease;
   overflow: overlay;
