@@ -199,23 +199,24 @@ public class LoginController {
 		String nick = (String) response.get("nickname");
 		String nimage = (String) response.get("profile_image");
 		
-		Map<String, Object> naverLogin = new HashMap<>();
+//		Map<String, Object> naverLogin = new HashMap<>();
+//		
+//		naverLogin.put("USER_IDXX", response.get("email"));
+//		naverLogin.put("PASS_WORD", ""+response.get("id"));
+//		
+//		System.out.println("요처어어엉" + naverLogin);
+//		int result = loginService.loginCheck(naverLogin);
 		
-		naverLogin.put("USER_IDXX", response.get("email"));
-		naverLogin.put("PASS_WORD", ""+response.get("id"));
+//		System.out.println("겨어어얼과" + result);
 		
-		System.out.println("요처어어엉" + naverLogin);
-		int result = loginService.loginCheck(naverLogin);
-		
-		System.out.println("겨어어얼과" + result);
-		
-		if(result == 0) {
-		 
-			commandMap.put("USER_NAME",response.get("name"));
-			commandMap.put("USER_NAME",response.get("email")); 
-			commandMap.put("USER_NAME",USER_NAME); 
-		 
-		 }
+//		if(result == 0) {
+//		 
+//			commandMap.put("USER_NAME",response.get("name"));
+//			commandMap.put("USER_NAME",response.get("email")); 
+//			commandMap.put("USER_NAME",USER_NAME); 
+//		 
+//		 }
+//		
 		
 		// 로그인&아웃 하기위한 세션값 주기
 		session.setAttribute("USER_NUMB", "FKFKFKFKFKFFK");

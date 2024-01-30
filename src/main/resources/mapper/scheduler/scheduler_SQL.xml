@@ -52,7 +52,7 @@
     -->
 	<select id="getOneDayLeftGather" resultType="hashmap">
     <![CDATA[
-        SELECT /*gather.getOneDayLeft*/
+   SELECT /*gather.getOneDayLeft*/
     		   A.GATH_IDXX
 		 FROM TM_GATHER A
 	LEFT JOIN TB_NOTIFY B 
