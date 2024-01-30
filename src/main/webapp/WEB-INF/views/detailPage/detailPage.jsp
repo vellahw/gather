@@ -116,7 +116,7 @@
 	        </p>
       	</div>
 				<div class="profileBtnContainer">
-					<button class="  Btn f" data-code="${detail.FOLW_CODE}">
+					<button class="Btn f" data-code="${detail.FOLW_CODE}">
 						<c:out value="${detail.FOLW_BTNN}" />
 					</button>
 				</div>

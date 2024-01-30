@@ -228,12 +228,19 @@ document.addEventListener("DOMContentLoaded", function(){
           joinMemberListControl('leave', i);
         });
 
+        // 자기소개 12자로 자름
         let profileInfo = item.querySelector('.profileInfo');
         let selfIntrNode = profileInfo.querySelector('.self');
         let selfIntrHidden = profileInfo.querySelector('#selfIntr');
         let selfIntrValue = selfIntrHidden.value;
         if(selfIntrValue.length > 12) {
           let cutValue = selfIntrValue.substring(0, 12);
+          if(cutValue.substring(11, 12) == ' ') {
+            cutValue.substring(0, 11);
+
+            selfIntrNode.innerHTML = `${cutValue}...`;
+          }
+
           selfIntrNode.innerHTML = `${cutValue}...`;
         }
 
@@ -267,12 +274,16 @@ document.addEventListener("DOMContentLoaded", function(){
       }
     }
 
-    for (let i = 0; i < profileInfo.length; i++) {
-      let followBtn = profileInfo[i].querySelector('.f');
-      let followCode = followBtn.getAttribute('data-code');
-      if(followCode == 'FI'){
-        followBtn.style.backgroundColor = 'var(--color-white)';
-        followBtn.style.color = 'var(--primary)';
+    if(sessionStorage.USER_NUMB != null) {
+      document.querySelectorAll('.f').style.display = 'block'
+      // 팔로우 버튼
+      for (let i = 0; i < profileInfo.length; i++) {
+        let followBtn = profileInfo[i].querySelector('.f');
+        let followCode = followBtn.getAttribute('data-code');
+        if(followCode == 'FI'){
+          followBtn.style.backgroundColor = 'var(--color-white)';
+          followBtn.style.color = 'var(--primary)';
+        }
       }
     }
   });
@@ -305,6 +316,13 @@ document.addEventListener("DOMContentLoaded", function(){
 	      
        // 방장이 아님
       if(MAST_YSNO == 'N') {
+        
+        if(detail.ENDD_YSNO == 'Y') {
+          const reviewBtn = document.getElementById('reviewBtn');
+          reviewBtn.style.display = 'block';
+          joinMoimBtn.style.display = 'none';
+        }
+
         // 재참여
         if(BANN_YSNO == 'Y' && WAIT_YSNO == 'Y') {
           
