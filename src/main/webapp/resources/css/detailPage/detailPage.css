@@ -312,8 +312,8 @@
   transition: background-color 0.3s;
 }
 
-.Btn:hover {
-	background-color: var(--primary);
+.Btn:hover { 
+	background-color: var(--color-orange500);
 	color: var(--color-white);
 }
 
@@ -326,7 +326,12 @@
   border-radius: 15px;
   font-size: 12px;
   margin-right: 10px;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease-out;
+}
+
+.actb {
+	background-color: var(--primary) !important;
+	color: var(--color-white) !important;
 }
 
 .btnContainer {

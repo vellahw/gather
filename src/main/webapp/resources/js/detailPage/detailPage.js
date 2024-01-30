@@ -216,6 +216,7 @@ document.addEventListener("DOMContentLoaded", function(){
     
     // 참여자 명단
     if(profileWrapper.length > 0) { // 방장을 제외한 참여회원
+
       profileWrapper.forEach((item, i) => {
 
         item.style.left = 44 * i + 'px';
@@ -273,22 +274,7 @@ document.addEventListener("DOMContentLoaded", function(){
           }
       }
     }
-
-    if(sessionStorage.USER_NUMB != null) {
-      document.querySelectorAll('.f').style.display = 'block'
-      // 팔로우 버튼
-      for (let i = 0; i < profileInfo.length; i++) {
-        let followBtn = profileInfo[i].querySelector('.f');
-        let followCode = followBtn.getAttribute('data-code');
-        if(followCode == 'FI'){
-          followBtn.style.backgroundColor = 'var(--color-white)';
-          followBtn.style.color = 'var(--primary)';
-        }
-      }
-    }
   });
-
-
 
   /**
    * 240119 장한원
@@ -301,11 +287,32 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 
   } else { //로그인 했다면
+
+    // 팔로우 버튼
+    const followBtn = document.querySelectorAll('.f');
+
+    followBtn.forEach(btn => {
+
+      btn.style.display = 'block'
+      let followCode = btn.getAttribute('data-code');
+
+      if(followCode == 'FI'){
+
+        btn.style.backgroundColor = 'var(--color-white)';
+        btn.style.color = 'var(--primary)';
+        
+        btn.addEventListener('mouseenter', ()=>{
+          btn.classList.add('actb');
+        });
+
+        btn.addEventListener('mouseleave', ()=>{
+          btn.classList.remove('actb');
+        });
+
+      }
+        
+    });
  
-    if(detail.ENDD_YSNO == 'N') {
-      // 참여 버튼 block
-      joinMoimBtn.style.display = 'block';
-    }
     const yourStateValue = document.getElementById('yourState').value;
     
     // 모임 참여자일 때
@@ -316,89 +323,112 @@ document.addEventListener("DOMContentLoaded", function(){
 	      
        // 방장이 아님
       if(MAST_YSNO == 'N') {
+
+        // 모임 마감 안 됨
+        if(detail.ENDD_YSNO == 'N') {
+          // 참여 버튼 block
+          joinMoimBtn.style.display = 'block';
+
+          // 재참여
+          if(BANN_YSNO == 'Y' && WAIT_YSNO == 'Y') {
+            
+            updateButtonUI(detail.APPR_YSNO, MAST_YSNO, 'rejoin');
+  
+          // 강퇴자
+          } else if(BANN_YSNO == 'Y' && WAIT_YSNO == 'N') {
+            joinMoimBtn.innerHTML = '이 모임에 참여할 수 없어요.';
+            joinMoimBtn.addEventListener('click', onClickHandler);
+          
+          } else {
+            // 디폴트 참여취소
+            updateButtonUI(null, MAST_YSNO, 'cancel');
+  
+            if(BANN_YSNO == 'N' && WAIT_YSNO == 'Y') {
+              document.querySelector('.bubble').style.display = 'flex';
+            }
+          }
         
-        if(detail.ENDD_YSNO == 'Y') {
+        // 모임 마감
+        } else if(detail.ENDD_YSNO == 'Y') {
+          
+          joinMoimBtn.style.display = 'none';
+          
+          // 리뷰 버튼 띄움
           const reviewBtn = document.getElementById('reviewBtn');
           reviewBtn.style.display = 'block';
-          joinMoimBtn.style.display = 'none';
+
         }
 
-        // 재참여
-        if(BANN_YSNO == 'Y' && WAIT_YSNO == 'Y') {
-          
-          updateButtonUI(detail.APPR_YSNO, MAST_YSNO, 'rejoin');
-
-        // 강퇴자
-        } else if(BANN_YSNO == 'Y' && WAIT_YSNO == 'N') {
-          joinMoimBtn.innerHTML = '이 모임에 참여할 수 없어요.';
-          joinMoimBtn.addEventListener('click', onClickHandler);
-        
-        } else {
-          // 디폴트 참여취소
-          updateButtonUI(null, MAST_YSNO, 'cancel');
-
-          if(BANN_YSNO == 'N' && WAIT_YSNO == 'Y') {
-            document.querySelector('.bubble').style.display = 'flex';
-          }
-        }
 
       // 방장
       } else if(MAST_YSNO == 'Y') {
-        if(detail.ENDD_YSNO != 'Y') {
+
+        // 모임 마감 안 됨
+        if(detail.ENDD_YSNO == 'N') {
+
+          joinMoimBtn.style.display = 'block';
+
+          // 수정 버튼 띄움
           const updateBtn = document.getElementById('updateBtn');
           updateBtn.style.display = 'block';
-        }
+
+          updateButtonUI(null, MAST_YSNO, 'master');
         
-        updateButtonUI(null, MAST_YSNO, 'master');
-        
-        /* 강퇴 버튼 */
-        const bannBtn = document.querySelectorAll('.bann');
-        bannBtn.forEach(btn => {
-          btn.style.display = 'block';
+          /* 강퇴 버튼 */
+          const bannBtn = document.querySelectorAll('.bann');
+          bannBtn.forEach(btn => {
+            btn.style.display = 'block';
 
-          const data = {
-            MOIM_IDXX : detail.MOIM_IDXX
-            , USER_NUMB : btn.getAttribute('data-numb')
-            , states : 'bann'
-          }
-
-          btn.addEventListener('click', function(){ runBann(data, '강퇴') });
-        });
-
-        /* 승인 버튼 */
-        const apprBtn = document.querySelectorAll('.appr');
-        apprBtn.forEach(btn => {
-          btn.style.display = 'block';
-          btn.addEventListener('click', ()=>{
-  
             const data = {
-                MOIM_IDXX : detail.MOIM_IDXX
-              , USER_NUMB : btn.getAttribute('data-numb')
-              , states : 'normal'
-            }
-  
-            btn.addEventListener('click', function(){ runBann(data, '승인') });
-  
-          });
-        })
-
-        /* 승인 거절 버튼 */
-        const noApprBtn = document.querySelectorAll('.noAppr');
-        noApprBtn.forEach(btn => {
-          btn.style.display = 'block';
-          btn.addEventListener('click', ()=>{
-  
-            const data = {
-                MOIM_IDXX : detail.MOIM_IDXX
+              MOIM_IDXX : detail.MOIM_IDXX
               , USER_NUMB : btn.getAttribute('data-numb')
               , states : 'bann'
             }
-  
-            btn.addEventListener('click', function(){ runBann(data, '거절') });
-  
+
+            btn.addEventListener('click', function(){ runBann(data, '강퇴') });
           });
-        });
-    }
+
+          /* 승인 버튼 */
+          const apprBtn = document.querySelectorAll('.appr');
+          apprBtn.forEach(btn => {
+            btn.style.display = 'block';
+            btn.addEventListener('click', ()=>{
+    
+              const data = {
+                  MOIM_IDXX : detail.MOIM_IDXX
+                , USER_NUMB : btn.getAttribute('data-numb')
+                , states : 'normal'
+              }
+    
+              btn.addEventListener('click', function(){ runBann(data, '승인') });
+    
+            });
+          })
+
+          /* 승인 거절 버튼 */
+          const noApprBtn = document.querySelectorAll('.noAppr');
+          noApprBtn.forEach(btn => {
+            btn.style.display = 'block';
+            btn.addEventListener('click', ()=>{
+    
+              const data = {
+                  MOIM_IDXX : detail.MOIM_IDXX
+                , USER_NUMB : btn.getAttribute('data-numb')
+                , states : 'bann'
+              }
+    
+              btn.addEventListener('click', function(){ runBann(data, '거절') });
+    
+            });
+          });
+
+        // 모임 마감
+        } else if(detail.ENDD_YSNO == 'Y') {
+          
+          joinMoimBtn.style.display = 'block';
+          joinMoimBtn.innerHTML = '이대로 모임 다시 만들기';
+        }
+      }
 
     // 모임 미참여
     } else if(yourStateValue == 'null'){
