@@ -23,7 +23,9 @@
 							<div class="slideContents">
 								<div class="eachWrap">
 									<div class="thumnailContainer" onclick="comGoSomewhere('detail','${list.MOIM_IDXX}')">
-										<img src="${list.MOIM_IMAG}" class="thumnail" alt="썸네일">
+										<img src="${list.MOIM_IMAG}" data-end="${list.ENDD_YSNO}"
+												 class="thumnail"
+												 alt="썸네일">
 									</div>
 									<div class="infoContainer">
 										<h3 class="title" onclick="comGoSomewhere('detail','${list.MOIM_IDXX}')">
