@@ -75,8 +75,9 @@
        <property name="order" value="1" />
    </bean> 
    
-   <!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
+   <!-- apiBO Class에 대한 Bean설정 추가 -->
 	<bean id="NaverLoginVO" class="com.our.gather.loginPage.dao.NaverLoginVO" />
+	<bean id="KakaoLoginVO" class="com.our.gather.loginPage.dao.KakaoLoginVO" />
    
 	<!-- bean 스캔 -->
 	<context:component-scan base-package="com.our.gather" >
