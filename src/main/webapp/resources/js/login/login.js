@@ -1,10 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
+
     const userIdForm = document.getElementById('USER_IDXX'); // id 입력 input
     const userPwForm = document.getElementById('PASS_WORD'); // pw 입력 input
     const appendArea = document.getElementById('append'); // 안내문구 띄울 공간
 
     
-      /*
+    /*
       네아로 로그인 시 세션 저장 및 알럿
       parameter: (text: 띄울 문구)
     */ 
@@ -27,23 +28,22 @@ document.addEventListener('DOMContentLoaded', function () {
       const BANN_ENDD = params.get('BANN_ENDD');
       const BANN_CNTT = params.get('BANN_CNTT');
 
-      debugger;
-
       if(api){
 
         if(result == "success"){
 
-            sessionStorage.setItem('USER_NUMB',USER_NUMB);       //회원번호
-            sessionStorage.setItem('USER_TYPE',USER_TYPE);       //회원타입(사용자, 개발자, 운영자)
-            sessionStorage.setItem('TYPE_CODE',TYPE_CODE);       //회원타입코드(UR: 사용자, DV:개발자, AD:운영자)
-            sessionStorage.setItem('USER_NAME',USER_NAME);       //회원이름
-            sessionStorage.setItem('USER_NICK',USER_NICK);      //회원 닉네임
-            sessionStorage.setItem('USER_IMAG',USER_IMAG);       //회원 프로필사진
-            sessionStorage.setItem('USER_BIRTH',USER_BIRTH);     //회원생일
-            sessionStorage.setItem('USER_JUMIN2',USER_JUMIN2);   //회원 주민번호 뒷자리
-            sessionStorage.setItem('USER_AGEE',USER_AGEE);       //회원나이
-            sessionStorage.setItem('REGI_NUMB',REGI_NUMB);       //회원 주민등록번호
-            sessionStorage.setItem('USER_GNDR',USER_GNDR);       //회원성별
+            sessionStorage.setItem('USER_NUMB', USER_NUMB);       //회원번호
+            sessionStorage.setItem('USER_TYPE', USER_TYPE);       //회원타입(사용자, 개발자, 운영자)
+            sessionStorage.setItem('TYPE_CODE', TYPE_CODE);       //회원타입코드(UR: 사용자, DV:개발자, AD:운영자)
+            sessionStorage.setItem('USER_NAME', USER_NAME);       //회원이름
+            sessionStorage.setItem('USER_NICK', USER_NICK);      //회원 닉네임
+            sessionStorage.setItem('USER_IMAG', USER_IMAG);       //회원 프로필사진
+            sessionStorage.setItem('USER_BIRTH', USER_BIRTH);     //회원생일
+            sessionStorage.setItem('USER_JUMIN2', USER_JUMIN2);   //회원 주민번호 뒷자리
+            sessionStorage.setItem('USER_AGEE', USER_AGEE);       //회원나이
+            sessionStorage.setItem('REGI_NUMB', REGI_NUMB);       //회원 주민등록번호
+            sessionStorage.setItem('USER_GNDR', USER_GNDR);       //회원성별
+            sessionStorage.setItem('isNaver', 'true');       
 
             if(firstTime == 'N') { //첫번째 로그인이 아닐때
 
@@ -232,6 +232,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     setInterval(slideImages, 5000); // 5초에 한 번씩 슬라이딩
 });
+
 
 // 로그인/회원가입 폼 전환을 담당하는 JavaScript 함수
 function toggleForm(formId) {

@@ -7,15 +7,15 @@ function contentsSlider(){
  const slideContainer = document.querySelectorAll('.slideWrap'); // 리스트를 감싸는 부모
  
   slideContainer.forEach((slideContainer) => {
-   
+
     const slideList = slideContainer.querySelectorAll('.slideList'); // 컨텐츠를 감싸는 리스트
    
     /* 리스트 제어 */
-    slideList.forEach(slideList =>{
+    slideList.forEach(slideList => {
 
       const slideContents = slideList.querySelectorAll('.slideContents'); // 컨텐츠
       let slideContentCount = slideContents.length;
-      
+
       slideContents.forEach(slideContents=>{
         
         // 모임 마감되면 어두운 필터 적용
@@ -123,8 +123,16 @@ function contentsSlider(){
           
         }) // END btn.forEach
 
-      } // END  if(slideContentCount > 4)
+      } else if(slideContentCount == 0) {
+				const parent = slideContainer.parentNode.parentNode;
+				parent.style.display = 'none';
 
+        if(sessionStorage.getItem('isNaver') == 'true') {
+          const region = document.querySelector('div[data-type="Region"]');
+          region.style.display = 'block';
+        }
+
+      } // END  if(slideContentCount > 4)
     }) // END slideList.forEach
 
   }) // END slideContainer.forEach  
