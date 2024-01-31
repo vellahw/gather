@@ -5,6 +5,7 @@
 document.addEventListener("DOMContentLoaded", function(){
 
   var USER_NUMB = sessionStorage.getItem('USER_NUMB');
+  var isNaver = sessionStorage.getItem('isNaver');
   
   var city = {
 
@@ -183,9 +184,8 @@ document.addEventListener("DOMContentLoaded", function(){
               dataType: "json",
               contentType: "application/json",
               success : function(data) {
-                    
-                var data = data.data; 
 
+                var data = data.data; 
 
                   const regionTitleArea = document.getElementById('regionTitle');
 

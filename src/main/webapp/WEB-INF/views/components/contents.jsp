@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<div class="contentsContainer mainContainer">
+<div class="contentsContainer mainContainer"  data-type="${param.type}">
   <div class="contentsWrap">
 	  <h1 class="mainAreaTitle">
 	    <c:out value="${param.title}" />

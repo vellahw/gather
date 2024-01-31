@@ -19,6 +19,7 @@
 <script src="/resources/js/common/common.js"></script>
 <script src="/resources/js/common/sweetalert.min.js"></script>
 <link rel="icon" href="/resources/img/logo/favicon.ico">
+<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js"></script> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>

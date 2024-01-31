@@ -127,6 +127,11 @@ function contentsSlider(){
 				const parent = slideContainer.parentNode.parentNode;
 				parent.style.display = 'none';
 
+        if(sessionStorage.getItem('isNaver') == 'true') {
+          const region = document.querySelector('div[data-type="Region"]');
+          region.style.display = 'block';
+        }
+
       } // END  if(slideContentCount > 4)
     }) // END slideList.forEach
 
