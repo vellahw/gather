@@ -117,7 +117,7 @@ public class MainController {
 			} else if(CATE_IDXX == null && KEYY_WORD != null) {
 				
 				commandMap.put("KEYY_WORD", KEYY_WORD);
-				mv3.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //게더 키워드 검색 리스트
+				mv3.addObject("list",  gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //게더 키워드 검색 리스트
 				
 				return mv3;
 				

@@ -67,5 +67,33 @@
 		  WHERE USER_NICK = #{USER_NICK}
     ]]>
    </select>
+   
+   
+   <!-- 선호 카테고리 저장 -->
+   <select id="checkCategoryIsin" parameterType="hashmap" resultType="int">
+      <![CDATA[
+      	 /*join.inertCate*/
+         SELECT COUNT(1)
+		   FROM TB_URCATE
+		  WHERE USER_NUMB = #{USER_NUMB}
+  			AND CATE_IDXX = #{CATE_IDXX}
+    ]]>
+   </select>
+   
+   <!-- 선호 카테고리 저장 -->
+   <insert id="inertCate" parameterType="hashmap">
+      <![CDATA[
+      	 /*join.inertCate*/
+         INSERT INTO TB_URCATE(
+                    USER_NUMB
+                  , CATE_IDXX
+                  , REGG_DATE
+         ) VALUES (
+                   #{USER_NUMB}
+                 , #{CATE_IDXX}
+                 , SYSDATE
+                   )     
+    ]]>
+   </insert>
   
 </mapper>

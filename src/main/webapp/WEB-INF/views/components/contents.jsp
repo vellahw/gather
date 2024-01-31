@@ -19,7 +19,7 @@
 				<button type="button" class="arrowBtn right" id="rigthBtn"></button>
 				<div class="slideList">
 					<c:forEach var="list" items="${main}">
-						<c:if test="${list.TYPE == param.type}">
+						<c:if test="${list.TYPE == param.type && fn:length(list) > 0}">
 							<div class="slideContents">
 								<div class="eachWrap">
 									<div class="thumnailContainer" onclick="comGoSomewhere('detail','${list.MOIM_IDXX}')">
@@ -35,7 +35,7 @@
 											<c:choose>
 												<c:when test="${fn:length(list.HASH_TAGG) != 0 }">
 													<c:forEach var="hashtag" items="${list.HASH_TAGG}">
-														<button type="button" class="hashtag" onclick="comGoSomewhere('search','${hashtag}'">
+														<button type="button" class="hashtag" onclick="comGoSomewhere('search','${hashtag}')">
 														  <c:out value="#${hashtag}" />
 														</button>
 													</c:forEach>
@@ -84,6 +84,9 @@
 									</div>
 								</div>
 							</div>
+						</c:if>
+						<c:if test="${list.TYPE == param.type && fn:length(list) == 0}">
+							<div class="none">조회된 결과가 없습니다!</div>
 						</c:if>
 					</c:forEach>
 				</div>

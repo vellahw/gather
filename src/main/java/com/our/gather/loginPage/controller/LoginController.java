@@ -1,6 +1,5 @@
 package com.our.gather.loginPage.controller;
 
-import java.net.http.HttpRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -232,7 +231,7 @@ public class LoginController {
 
 		int result = loginService.loginCheck(naverLogin);
 
-		if (result == 0) {
+		if (result == 0) { //첫 로그인 시 가입 후 로그인 처리
 
 			commandMap.put("USER_NAME", response.get("name"));
 			commandMap.put("REGI_NUMB", firstSevenDigits);
@@ -240,7 +239,7 @@ public class LoginController {
 			commandMap.put("USER_IDXX", response.get("email"));
 			commandMap.put("PASS_WORD", passwordString);
 			commandMap.put("CELL_NUMB", CELL_NUMB);
-			commandMap.put("SELF_INTR", "N/A");
+			commandMap.put("SELF_INTR", "");
 			commandMap.put("QUST_CODE", "N/A");
 			commandMap.put("ANSR_CODE", "N/A");
 			commandMap.put("FILE_SVNM", response.get("profile_image"));
