@@ -48,7 +48,7 @@
 			 , SEND_USER			/* 보낸 회원번호 */
 			 , NOTI_SEQC			/* 알림시퀀스 */
 			 , USER_NICK			/* 보낸 회원 닉네임 */
-             , CASE WHEN SUBSTR(NOTI_CODE,1,2) = 'A'
+             , CASE WHEN SUBSTR(NOTI_CODE,1,1) = 'A'
                          THEN '님이 ' ||MOIM_TYPEKR|| ' '
                     ELSE MOIM_TYPEKR
                 END AS NOTI_CNT1

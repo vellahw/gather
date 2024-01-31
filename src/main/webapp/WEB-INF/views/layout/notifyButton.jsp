@@ -13,9 +13,12 @@
 
 <div class="notifyList" data-count="${notiCount}">
 	<ul>
-		<li class="delAll" onclick="comConfirm2('모든 알림을 삭제하시겠습니까?',null,'warning','삭제되었습니다.','success',function(){updateReadNoti();})">모두삭제</li>
-			<c:choose>
-  			<c:when test="${fn:length(notify) > 0 }">
+		<li class="delAll"
+				onclick="comConfirm2('모든 알림을 삭제하시겠습니까?',null,'warning','삭제되었습니다.','success',function(){updateReadNoti();})">
+				모두삭제
+		</li>
+		<c:choose>
+  		<c:when test="${fn:length(notify) > 0 }">
 				<c:forEach var="noti" items="${notify}">
 			    <li class="noti" data-noti-id="${noti.NOTI_SEQC}">
 		      	<div class="regDate">
