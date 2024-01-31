@@ -39,7 +39,7 @@
 	  	    <img class="navericon" src="/resources/img/icon/loginApi/naver.png">
 	  		네이버 로그인
 	  	  </button>
-	  	  <button class="loginButton kakao">
+	  	  <button class="loginButton kakao" onclick="location.href='${urlKakao}'">
 	  		<img class="kakaoicon" src="/resources/img/icon/loginApi/kakao.png" alt="Kakao Icon">
 	   			카카오 로그인
 	  		</button>
