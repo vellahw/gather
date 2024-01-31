@@ -23,8 +23,8 @@
 			      		<c:out value="${noti.REGG_DATEKR}" />
 			      	</span>
 			      	<div class="parent">
-				      	<button type="button" class="readBtn" onclick="updateReadNoti(${noti.NOTI_SEQC})">
-				      		읽음처리
+				      	<button type="button" data-noti-seqc="${noti.NOTI_SEQC}" class="readBtn" onclick="updateReadNoti(this)">
+				      		읽음
 				      	</button>
 			      	</div>
 			   		</div>

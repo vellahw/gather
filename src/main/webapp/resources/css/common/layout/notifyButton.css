@@ -72,13 +72,14 @@
   flex-direction: column;
 }
 
-.act {
+.listact {
   visibility: visible;
   opacity: 1;
-  z-index: 0;
+  z-index: 1;
   
   overflow: scroll;
-  height: 606px;
+  height: auto;
+  max-height: 606px;
   padding: 28px;
 }
 
@@ -130,9 +131,15 @@
 	color: var(--color-gray500);
 	border: 1px solid var(--color-gray500);
 	background-color: var(--color-white);
-  border-radius: 11px;
-  padding: 3px;
+  border-radius: 13px;
+  padding: 5px 8px 5px 8px;
   font-size: 11px;
+}
+
+.readAct {
+	visibility: hidden;
+  opacity: 0;
+  transform: translateX(490px) !important;
 }
 
 .readBtn :hover {
