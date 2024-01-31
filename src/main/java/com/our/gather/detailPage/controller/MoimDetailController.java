@@ -21,6 +21,7 @@ import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.oracleFunction.OracleFunction;
 import com.our.gather.common.service.CommonService;
 import com.our.gather.detailPage.service.MoimDetailService;
+import com.our.gather.join.service.JoinService;
 import com.our.gather.moimGather.service.GatherService;
 import com.our.gather.notify.service.NotifyService;
 
@@ -39,6 +40,9 @@ public class MoimDetailController {
 	@Resource(name = "GatherService")
 	private GatherService gatherService;
 	
+	@Resource(name = "JoinService")
+	private JoinService joinService;
+	
 	
 	//모임 상세보기
 	@RequestMapping(value = "/gatherDetail.com")
@@ -55,14 +59,22 @@ public class MoimDetailController {
 		if (moimType.equals("GT")) {
 
 			List<Map<String, Object>> memList = gatherService.getGatherMember(commandMap.getMap(), commandMap, session);
+			Map<String, Object> detailMap = gatherService.getGatherDetail(commandMap.getMap(), session, commandMap);
 			
 			mv.addObject("member", memList); // 게더맴버
-			mv.addObject("detail", gatherService.getGatherDetail(commandMap.getMap(), session, commandMap)); // 게더
+			mv.addObject("detail", detailMap); // 게더
 			mv.addObject("img", gatherService.getGatherImg(commandMap.getMap(), commandMap)); // 게더 이미지
 
 			if (session.getAttribute("USER_NUMB") != null) {
 
 				commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
+				
+				Map<String, Object> cateIn = new HashMap<>();
+
+				cateIn.put("CATE_IDXX", detailMap.get("CATE_IDXX"));
+				cateIn.put("USER_NUMB", session.getAttribute("USER_NUMB"));
+
+				joinService.inertCate(cateIn, commandMap);
 				
 				// 로그인시 로그인 회원의 해당 게더 참여상태
 				List<Map<String, Object>> notify = notifyService.getNotify(commandMap.getMap(), commandMap, session);

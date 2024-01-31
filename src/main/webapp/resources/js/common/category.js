@@ -55,7 +55,7 @@ function cateOnclick(cateCode) {
   const comType = comWhereIam().moimType || ""; // 기본값으로 빈 문자열 사용
 
   // URL에서 모든 type 및 cate 파라미터를 제거
-  const newURL = currentURL.replace(/(\?|&)type=[^&]*/g, '').replace(/(\?|&)cate=[^&]*/g, '');
+  const newURL = currentURL.replace(/(\?|&)type=[^&]*/g, '').replace(/(\?|&)cate=[^&]*/g, '').replace(/(\?|&)keyword=[^&]*/g, '');
 
   // type 및 cate 파라미터가 함께 추가되도록 조작
   if (comType !== "gt") {

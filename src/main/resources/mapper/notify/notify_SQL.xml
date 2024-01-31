@@ -48,7 +48,10 @@
 			 , SEND_USER			/* 보낸 회원번호 */
 			 , NOTI_SEQC			/* 알림시퀀스 */
 			 , USER_NICK			/* 보낸 회원 닉네임 */
-			 , NOTI_CNT1			/* 내용1 */
+             , CASE WHEN SUBSTR(NOTI_CODE,1,2) = 'A'
+                         THEN '님이 ' ||MOIM_TYPEKR|| ' '
+                    ELSE MOIM_TYPEKR
+                END AS NOTI_CNT1
 			 , MOIM_TITL			/* 모임 제목 */
 			 , NOTI_CNT2			/* 내용2 */
 			 , CNTT_IDXX			/* 컨텐츠 번호 */
@@ -58,15 +61,13 @@
 			   ( SELECT 
 		    			 A.USER_NUMB AS POST_USER              
 		    		   , B.USER_NUMB AS SEND_USER              
-		   			   , A.NOTI_SEQC                           
-		    		   , B.USER_NICK                           
-					   , CASE WHEN A.NOTI_CODE IN ('B04', 'B05', 'C01') 
-					                THEN '게더'
-					           ELSE '님이 게더' 
-					       END AS NOTI_CNT1                      
+		   			   , A.NOTI_SEQC 
+                       , A.NOTI_CODE
+		    		   , B.USER_NICK                                                 
 					   , C.GATH_TITL AS MOIM_TITL              
 					   , D.CODE_OPT1 AS NOTI_CNT2            
-					   , C.GATH_IDXX AS CNTT_IDXX            
+					   , C.GATH_IDXX AS CNTT_IDXX 
+                       , getCodeName('MOIM_TYPE',SUBSTR(C.GATH_IDXX,1,2)) AS MOIM_TYPEKR
 					   , SUBSTR(formatDate(A.REGG_DATE), 7, 11) AS REGG_DATEKR
 					   , A.REGG_DATE
 					FROM TB_NOTIFY A
@@ -86,14 +87,12 @@
 				         A.USER_NUMB AS POST_USER
 				       , B.USER_NUMB AS SEND_USER
 				       , A.NOTI_SEQC
+                       , A.NOTI_CODE
 				       , B.USER_NICK
-				       , CASE WHEN A.NOTI_CODE IN ('010', '012', '013') 
-				                   THEN '챌린지'
-				               ELSE '님이 챌린지' 
-				          END AS NOTI_CNT1
 				       , C.CHAL_TITL AS MOIM_TITL
 				       , D.CODE_OPT1 AS NOTI_CNT2
 				       , C.CHAL_IDXX AS CNTT_IDXX
+                       , getCodeName('MOIM_TYPE',SUBSTR(C.CHAL_IDXX,1,2)) AS MOIM_TYPEKR
 				       , SUBSTR(formatDate(A.REGG_DATE), 7, 11) AS REGG_DATEKR
 				       , A.REGG_DATE
 				    FROM TB_NOTIFY A
@@ -113,14 +112,12 @@
 				         A.USER_NUMB AS POST_USER
 				       , B.USER_NUMB AS SEND_USER
 				       , A.NOTI_SEQC
-				       , B.USER_NICK
-				       , CASE WHEN A.NOTI_CODE IN ('010', '012', '013') 
-				                   THEN '클럽'
-				              ELSE '님이 클럽' 
-				          END AS NOTI_CNT1
+                       , A.NOTI_CODE
+				       , B.USER_NICK 
 				       , C.CLUB_TITL AS MOIM_TITL
 				       , D.CODE_OPT1 AS NOTI_CNT2
 				       , C.CLUB_IDXX AS CNTT_IDXX
+                       , getCodeName('MOIM_TYPE',SUBSTR(C.CLUB_IDXX,1,2)) AS MOIM_TYPEKR
 				       , SUBSTR(formatDate(A.REGG_DATE), 7, 11) AS REGG_DATEKR
 				       , A.REGG_DATE
 				    

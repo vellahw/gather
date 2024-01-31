@@ -80,7 +80,8 @@
 		                  WHERE CATE_IDXX IN ( 
                                     		  SELECT CATE_IDXX
                                        			FROM TB_URCATE
-                                      		   WHERE USER_NUMB = #{USER_NUMB})
+                                      		   WHERE USER_NUMB = #{USER_NUMB}
+                                      		   )
                  )
         UNION ALL
         		]]>
@@ -194,8 +195,7 @@
 			                 WHERE REGI_CODE IN (
 			                                     SELECT REGI_CODE
 			                                       FROM TB_URREGI
-			                                      WHERE USER_NUMB = #{USER_NUMB}
-			                                     
+			                                      WHERE USER_NUMB = #{USER_NUMB}			                                     
 			                                     )
 			                 )
 			]]>

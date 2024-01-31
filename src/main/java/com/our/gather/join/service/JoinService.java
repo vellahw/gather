@@ -9,7 +9,10 @@ import com.our.gather.common.common.CommandMap;
 public interface JoinService {
 
 	// 회원가입
-	void userJoin(Map<String, Object> map , CommandMap commandMap , HttpServletRequest request) throws Exception;
+	void userJoin(Map<String, Object> map, CommandMap commandMap, HttpServletRequest request) throws Exception;
+
+	// 선호카테고리 저장
+	void inertCate(Map<String, Object> map, CommandMap commandMap) throws Exception;
 
 	// 아이디 중복 확인
 	Map<String, Object> checkId(Map<String, Object> map) throws Exception;
