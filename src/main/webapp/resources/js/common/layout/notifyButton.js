@@ -21,11 +21,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
     });
 
     function addClass() {
-      notifyList.classList.add('act');
+      notifyList.classList.add('listact');
     }
   
     function removeClass() {
-      notifyList.classList.remove('act');
+      notifyList.classList.remove('listact');
     }
   }
 })
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
  */
 function btnControl() {
 
-  const notiCount = document.querySelector('.notiCount'); // 알림 갯수
+  const notiCount = document.querySelector('.notiCount');
   const delAll = document.querySelector('.delAll'); // 모두 삭제 버튼
   const noAlim = document.querySelector('.noAlim'); // 알림이 없습니다.
 
@@ -60,26 +60,24 @@ function btnControl() {
 function updateReadNoti(notiSeqc){
 
   let data = "";
+  const notiSeqcValue = notiSeqc.getAttribute('data-noti-seqc');
   const notiCount = document.querySelector('.notiCount'); //알림 갯수
   const delAllBtn = document.querySelector('.delAll'); // 읽음 버튼
   const allNoti = document.querySelectorAll('.noti'); // 모든 알림들
   const notifyList = document.querySelector('.notifyList');
   const notiCountValue = notifyList.dataset.count;
 
-  if(notiSeqc != 'undefined'){
+  if(notiSeqcValue != 'undefined'){
 
-    data = JSON.stringify({NOTI_SEQC : notiSeqc});
+    data = JSON.stringify({NOTI_SEQC : notiSeqcValue});
 
     notiCount.textContent = parseInt(notiCount.textContent) - 1;
-    const notiCntt = document.querySelector(`li[data-noti-id="${notiSeqc}"`); //해당 알림
+    const notiCntt = document.querySelector(`li[data-noti-id="${notiSeqcValue}"`); //해당 알림
     
-    notiCntt.style.visibility = 'hidden';
-    notiCntt.style.opacity = '0';
-    notiCntt.style.transform = 'translateX(490px)';
+    notiCntt.classList.add('readAct');
 
     for (let i = 1; i < allNoti.length; i++) {
       allNoti[i].style.transform = `translateY(-134px)`;
-      
     }
 
 
