@@ -1,8 +1,12 @@
 /*
 230110 KSH
-날씨에 따른 모임추천
+날씨에 따른 모임추천 ㅜㅜ
 */
 document.addEventListener("DOMContentLoaded", function(){
+
+  function name(params) {
+    
+  }
 
   var USER_NUMB = sessionStorage.getItem('USER_NUMB');
   
@@ -170,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function(){
             error: function(res, req) {
               console.log("error : " + res, req);
             }
-          })
+          });
 
           if(USER_NUMB == null){
 
@@ -222,9 +226,9 @@ document.addEventListener("DOMContentLoaded", function(){
         error:function(res, req) {
         console.log("error : " + res, req);
 
-        }})
+        }});
         
-    })
+    });
     
 
     // 날씨, 근처 게더 요소 만듦
