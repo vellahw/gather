@@ -78,9 +78,13 @@
 		                      , ENDD_YSNO
 		                   FROM VW_GATHER
 		                  WHERE CATE_IDXX IN ( 
-                                    		  SELECT CATE_IDXX
-                                       			FROM TB_URCATE
-                                      		   WHERE USER_NUMB = #{USER_NUMB}
+                                    		   SELECT CATE_IDXX
+                                                 FROM(
+                                    		  			SELECT ROW_NUMBER() OVER (ORDER BY REGG_DATE DESC) RNUM
+                                                             , CATE_IDXX
+                                       			          FROM TB_URCATE
+                                      		             WHERE USER_NUMB = #{USER_NUMB})
+                                                WHERE RNUM <= 3
                                       		   )
                  )
         UNION ALL

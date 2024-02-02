@@ -65,6 +65,11 @@
   font-weight: 500;
   margin-top: 6px;
 }
+.title{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 
 .userProfileWrap {
   display: flex;

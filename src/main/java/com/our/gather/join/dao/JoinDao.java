@@ -20,6 +20,11 @@ public class JoinDao extends AbstractDao {
 		insert("join.inertCate", map);
 	}
 
+	// 회원 선호카테고리 저장
+	public void updateNewstCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
+		insert("join.updateNewstCate", map);
+	}
+
 	// 회원 선호카테고리 중복확인
 	public int checkCategoryIsin(Map<String, Object> map) throws Exception {
 		return Integer.parseInt(selectOne("join.checkCategoryIsin", map).toString());

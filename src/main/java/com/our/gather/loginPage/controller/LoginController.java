@@ -344,7 +344,7 @@ public class LoginController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("redirect:/gather.com");
 		
-		System.out.println("로그인 성공 callbackKako");
+		System.out.println("로그인 성공 callbackKakao");
 		OAuth2AccessToken oauthToken;
 		oauthToken = kakaoLoginVO.getAccessToken(session, code, state);	
 		// 로그인 사용자 정보를 읽어온다

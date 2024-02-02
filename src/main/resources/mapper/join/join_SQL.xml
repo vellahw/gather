@@ -80,6 +80,17 @@
     ]]>
    </select>
    
+     <!-- 선호 카테고리 저장 -->
+   <select id="updateNewstCate" parameterType="hashmap" resultType="int">
+      <![CDATA[
+      	 /*join.updateNewstCate*/
+        UPDATE TB_URCATE
+           SET REGG_DATE = SYSDATE
+         WHERE USER_NUMB = #{USER_NUMB}
+  		   AND CATE_IDXX = #{CATE_IDXX}
+    ]]>
+   </select>
+   
    <!-- 선호 카테고리 저장 -->
    <insert id="inertCate" parameterType="hashmap">
       <![CDATA[
