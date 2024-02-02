@@ -62,6 +62,10 @@ public class JoinServiceImpl implements JoinService {
 		if(result == 0) {
 			
 			joinDao.inertCate(map, commandMap);
+			
+		} else {
+			
+			joinDao.updateNewstCate(map, commandMap);
 		}
 
 	}
