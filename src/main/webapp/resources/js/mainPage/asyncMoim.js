@@ -5,7 +5,6 @@
 document.addEventListener("DOMContentLoaded", function(){
 
   var USER_NUMB = sessionStorage.getItem('USER_NUMB');
-  var isNaver = sessionStorage.getItem('isNaver');
   
   var city = {
 
