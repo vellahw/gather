@@ -286,8 +286,8 @@ document.addEventListener("DOMContentLoaded", function(){
                 <div class="heartWrap">
                   <input type="hidden" data-like-id="${data.MOIM_IDXX}" value="${data.LIKE_YSNO}" id="heartYN"/>
                   <div class="heartContainer">
-                    <input type="checkbox" id="${data.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
-                    <label for="${data.MOIM_IDXX}"></label>
+                    <input class="heart-box" type="checkbox" id="${data.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
+                    <label class="heartIcon" for="${data.MOIM_IDXX}"></label>
                     <input id="realCount" type="hidden" data-realCount-id="${data.MOIM_IDXX}" value="${data.LIKE_COUNT}" >
                     <span id="showCount" class="heartCount main" data-ShowCount-id="${data.MOIM_IDXX}"></span>
                   </div>
