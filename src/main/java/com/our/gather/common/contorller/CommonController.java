@@ -1,5 +1,6 @@
 package com.our.gather.common.contorller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,12 +19,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.service.CommonService;
+import com.our.gather.notify.service.NotifyService;
+import com.our.gather.scheduler.service.SchedulerService;
 
 @Controller
 public class CommonController {
 
 	@Resource(name = "CommonService")
 	private CommonService commonService;
+	
+	@Resource(name = "NotifyService")
+	private NotifyService notifyService;
+	
+	@Resource(name = "SchedulerService")
+	private SchedulerService schedulerService;
 
 	@ResponseBody
 	@RequestMapping(value = "/cateGory.get", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -47,6 +56,24 @@ public class CommonController {
 				commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 				commandMap.put("LIKE_IDXX", item.get("LIKE_IDXX"));
 				commonService.likeInsert(commandMap.getMap(), commandMap);
+				
+				commandMap.put("MOIM_IDXX", item.get("LIKE_IDXX"));
+				List<Map<String, Object>> memList = schedulerService.getGatherMemberForSD(commandMap.getMap(), commandMap);
+				
+				for (int i = 0; i < memList.size(); i++) {
+					
+					if(memList.get(i).get("MAST_YSNO").equals("Y") && session.getAttribute("USER_NUMB") != memList.get(i).get("USER_NUMB")) { //본인이 아닌 방장에게 전송
+						
+						commandMap.put("BOAD_IDXX", item.get("LIKE_IDXX"));
+						commandMap.put("SEND_USER", (String) session.getAttribute("USER_NUMB"));
+						commandMap.put("USER_NUMB", (String) memList.get(i).get("USER_NUMB"));
+						commandMap.put("NOTI_CODE", "A05");
+						
+						notifyService.insertNotify(commandMap.getMap(), commandMap);
+						
+					}
+
+				}
 
 			} else {
 
@@ -56,7 +83,7 @@ public class CommonController {
 			}
 		}
 
-		return ResponseEntity.ok("Success");
+		return ResponseEntity.ok("success");
 	}
 
 	// 좋아요 update
@@ -83,7 +110,7 @@ public class CommonController {
 	    	
 	    	}
 	
-	    	return ResponseEntity.ok("Success");
+	    	return ResponseEntity.ok("success");
 	    	
 	            
 	    } catch(Exception e) {
