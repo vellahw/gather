@@ -63,7 +63,7 @@
 <c:import url="../components/contents.jsp">
   <c:param name="type" value="Hot" />
   <c:param name="title" value="자리가 얼마 남지 않았어요!" />
-  <c:param name="titleIcon" value="hotTitleIcon" />
+  <c:param name="titleIcon" value="runIcon" />
 </c:import>
 
 <c:import url="../components/contents.jsp">

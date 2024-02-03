@@ -9,11 +9,13 @@
   align-items: center;
   width: fit-content;
   margin-left: 48px;
-  
-  /* background: rgb(2,0,36);
+}
+
+.gr {
+  background: rgb(2,0,36);
   background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(253,135,49,1) 0%, rgba(202,216,91,1) 100%);
   color: transparent;
-  -webkit-background-clip: text; */
+  -webkit-background-clip: text;
 }
 
 .areaTitleIcon {
@@ -36,4 +38,8 @@
   margin: 19px auto;
   display: flex;
   width: 100%;
+}
+
+.hot {
+	width: 24px;
 }

@@ -5,11 +5,16 @@
 
 <div class="contentsContainer mainContainer"  data-type="${param.type}">
   <div class="contentsWrap">
-	  <h1 class="mainAreaTitle">
+	  <h1 class="mainAreaTitle
+	  					 <c:if test="${param.type == 'Taste'}">gr</c:if>
+	  					">
 	    <c:out value="${param.title}" />
 	    <c:if test="${param.titleIcon != ''}">
 	      <img src="/resources/img/icon/${param.titleIcon}.png"
-					   class="areaTitleIcon" alt="타이틀 아이콘">
+					   class="areaTitleIcon
+					   				<c:if test="${param.titleIcon == 'hotTitleIcon'}">hot</c:if>
+					   			 "
+					   alt="타이틀 아이콘">
 	    </c:if> 
 	  </h1>
 		
