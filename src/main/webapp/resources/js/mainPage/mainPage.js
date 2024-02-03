@@ -127,7 +127,7 @@ function contentsSlider(){
 				const parent = slideContainer.parentNode.parentNode;
 				parent.style.display = 'none';
 
-        if(sessionStorage.getItem('isNaver') == 'true') {
+        if(sessionStorage.getItem('isNaver') == 'true') { 
           const region = document.querySelector('div[data-type="Region"]');
           region.style.display = 'block';
         }
@@ -138,18 +138,19 @@ function contentsSlider(){
   }) // END slideContainer.forEach  
 
 
-  /**
-  * 240130 장한원
-  * 마감 여부에 따른 썸네일 이미지 필터 적용
-  */
-  function addEndfilter(element) {
-    const thumnailContainer = element.querySelector('.thumnailContainer');
-  	const endValue = thumnailContainer.querySelector('.thumnail');
-    let getValue = endValue.getAttribute('data-end');
+}
 
-    if(getValue == 'Y') {
-      thumnailContainer.classList.add('end');
-    }
-    
+/**
+* 240130 장한원
+* 마감 여부에 따른 썸네일 이미지 필터 적용
+*/
+function addEndfilter(element) {
+  const thumnailContainer = element.querySelector('.thumnailContainer');
+  const endValue = thumnailContainer.querySelector('.thumnail');
+  let getValue = endValue.getAttribute('data-end');
+
+  if(getValue == 'Y') {
+    thumnailContainer.classList.add('end');
   }
+  
 }
