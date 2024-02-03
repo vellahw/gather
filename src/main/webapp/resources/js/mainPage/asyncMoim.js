@@ -1,235 +1,237 @@
 /*
 230110 KSH
-날씨에 따른 모임추천 ㅜㅜ
+날씨에 따른 모임추천
 */
 document.addEventListener("DOMContentLoaded", function(){
-
-  function name(params) {
-    
-  }
-
-  var USER_NUMB = sessionStorage.getItem('USER_NUMB');
+  const isNaver = sessionStorage.getItem('isNaver');
+    var USER_NUMB = sessionStorage.getItem('USER_NUMB');
   
-  var city = {
-
-      'Seoul'             : 'A',
-      'Gyeongg-do'        : 'B',
-      'Incheon'           : 'C',
-      'Gangwon-do'        : 'D',
-      'Chungcheongbuk-do' : 'E',
-      'Chungcheongnam-do' : 'F',
-      'Gongju'            : 'G',
-      'Daejeon'           : 'H',
-      'Gwangju'           : 'I',
-      'Jeollabuk-do'      : 'J',
-      'Gyeongsangbuk-do'  : 'K',
-      'Daegu'             : 'L',
-      'Jeju'              : 'M',
-      'Jeollanam-do'      : 'N',
-      'Ulsan'             : 'O',
-      'Gyeongsangnam-do'  : 'P',
-      'Busan'             : 'Q'
-    };
-    
-  navigator.geolocation.getCurrentPosition(function(pos) {
-
-    var today = new Date();   
-    var hours = ('0' + today.getHours()).slice(-2);
+    var city = {
   
-    var moimType = comWhereIam().moimType;
-        
-    var latitude= pos.coords.latitude;
-    var longitude = pos.coords.longitude;
-    var apiURI = "http://api.openweathermap.org/data/2.5/weather?"
-    + "lat="+ latitude + "&lon=" + longitude
-    + "&lang=kr&appid=12984781cde1466744c656c07b5a583c&units=metric";
-        
-    $.ajax({  //(날씨)openweathermapApi ajax 시작부분
-            
-      url : apiURI,
-      dataType : "json",
-      type : "GET",
-      async : "false",
+        'Seoul'             : 'A',
+        'Gyeongg-do'        : 'B',
+        'Incheon'           : 'C',
+        'Gangwon-do'        : 'D',
+        'Chungcheongbuk-do' : 'E',
+        'Chungcheongnam-do' : 'F',
+        'Gongju'            : 'G',
+        'Daejeon'           : 'H',
+        'Gwangju'           : 'I',
+        'Jeollabuk-do'      : 'J',
+        'Gyeongsangbuk-do'  : 'K',
+        'Daegu'             : 'L',
+        'Jeju'              : 'M',
+        'Jeollanam-do'      : 'N',
+        'Ulsan'             : 'O',
+        'Gyeongsangnam-do'  : 'P',
+        'Busan'             : 'Q'
+      };
+      
+    navigator.geolocation.getCurrentPosition(function(pos) {
+  
+      var today = new Date();   
+      var hours = ('0' + today.getHours()).slice(-2);
+    
+      var moimType = comWhereIam().moimType;
+          
+      var latitude= pos.coords.latitude;
+      var longitude = pos.coords.longitude;
+      var apiURI = "http://api.openweathermap.org/data/2.5/weather?"
+      + "lat="+ latitude + "&lon=" + longitude
+      + "&lang=kr&appid=12984781cde1466744c656c07b5a583c&units=metric";
+          
+      $.ajax({  //(날씨)openweathermapApi ajax 시작부분
+              
+        url : apiURI,
+        dataType : "json",
+        type : "GET",
+        async : "false",
+        success : function(data) {
+
+          const weatherTitleArea = document.getElementById('weatherTitle');
+          //const tempArea = weatherTitleArea.querySelector('.tempArea');
+  
+          var weatherType = "";
+          var cityName = data.name;
+          var cityCode = city[cityName];
+          var weather = (data.weather[0].icon).substr(0, 2); //날씨코드
+          var temp = Number((data.main.temp).toFixed(1));
+          console.log(typeof(temp));
+          console.log("온도"+temp+"\n날씨"+weather);
+                  
+          //tempArea.innerHTML = temp;
+  
+            if(temp > 0 && temp < 27){  //날씨data 결과에 따른 title
+                
+              if(weather == '01' || weather == '02'){ 
+                            
+                  weatherType = "sunny";
+                  var weatherImg = "";
+                  var dayNightKr = "";
+  
+                  if( hours >= "07" && hours <= "20"){
+  
+                      weatherImg = '<img src="/resources/img/icon/weather/sunny.png" class="areaTitleIcon"/>'
+                      dayNightKr = "날";
+  
+                  } else {
+  
+                    weatherImg = '<img src="/resources/img/icon/weather/moon.png" class="areaTitleIcon"/>' 
+                    dayNightKr = "밤";
+                  }
+  
+                  weatherTitleArea.innerHTML = '기분 좋은 맑은 ' + dayNightKr                 
+                                              + weatherImg
+                                              + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
+  
+              }else if(weather == '03' || weather == '04' || weather == '50'){
+                            
+                  weatherType = "cloudy";
+                  weatherTitleArea.innerHTML = '구름 많은 흐린 날 '                 
+                                                  + '<img src="/resources/img/icon/weather/cloudy.png" class="areaTitleIcon"/>' 
+                                                  + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
+  
+              }else if(weather == '09' || weather == '10'){
+                            
+                  weatherType = "rainy";
+                  weatherTitleArea.innerHTML = '비 오는 날 '                 
+                                              + '<img src="/resources/img/icon/weather/rainy.png" class="areaTitleIcon"/>' 
+                                              + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
+  
+  
+              }else if(weather == '11'){ 
+                            
+                  weatherType = "thunder";
+                  weatherTitleArea.innerHTML = '천둥 번개 치는 날 '                 
+                                              + '<img src="/resources/img/icon/weather/thunder.png" class="areaTitleIcon"/>' 
+                                              + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
+  
+  
+              }else if(weather == '13'){
+                            
+                weatherType = "snowy";
+                weatherTitleArea.innerHTML = '눈 오는 날 '                 
+                                            + '<img src="/resources/img/icon/weather/snow.png" class="areaTitleIcon"/>' 
+                                            + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
+  
+              }
+                        
+            } else if(temp >= 27 && weather == '01'){
+                            
+              weatherType = "hot";
+              weatherTitleArea.innerHTML = '오늘 같이 더운 날 '                 
+                                      + '<img src="/resources/img/icon/weather/sunny.png" class="areaTitleIcon"/>' 
+                                      + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
+  
+            } else if(temp <= 0 ){
+                            
+                weatherType = "cold";
+                weatherTitleArea.innerHTML = '오늘 같이 추운 날 '                 
+                                        + '<img src="/resources/img/icon/weather/cold.png" class="areaTitleIcon"/>' 
+                                        + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
+            }
+  
+            getWeatherMoim(weatherType, moimType);
+  
+            if(USER_NUMB == null || isNaver == 'true'){
+              getCurrentRegionMoim(cityCode, moimType);
+
+            }
+          },//(날씨)openweathermapApi ajax success
+  
+          error:function(res, req) {
+            console.log("error : " + res, req);
+          }
+        });
+    });
+
+
+
+  function getCurrentRegionMoim(cityCode, moimType) {
+    $.ajax({ //현재 위치정보 전달
+
+      url : "/getCurrentRegionMoim.com",
+      data: JSON.stringify({ cityCode : cityCode,
+                              moimType: moimType }),
+      type : "post",
+      dataType: "json",
+      contentType: "application/json",
       success : function(data) {
 
-        const weatherTitleArea = document.getElementById('weatherTitle');
-        //const tempArea = weatherTitleArea.querySelector('.tempArea');
+        var data = data.data; 
 
-        var weatherType = "";
-        var cityName = data.name;
-        var cityCode = city[cityName];
-        var weather = (data.weather[0].icon).substr(0, 2); //날씨코드
-        var temp = Number((data.main.temp).toFixed(1));
-        console.log(typeof(temp));
-        console.log("온도"+temp+"\n날씨"+weather);
-                
-        //tempArea.innerHTML = temp;
+          const regionTitleArea = document.getElementById('regionTitle');
 
-
-          if(temp > 0 && temp < 27){  //날씨data 결과에 따른 title
+          regionTitleArea.innerHTML = '근처에 있는 '+ comWhereIam().moimTypeKr +'에요!'
               
-            if(weather == '01' || weather == '02'){ 
-                          
-                weatherType = "sunny";
-                var weatherImg = "";
-                var dayNightKr = "";
-
-                if( hours >= "07" && hours <= "20"){
-
-                    weatherImg = '<img src="/resources/img/icon/weather/sunny.png" class="areaTitleIcon"/>'
-                    dayNightKr = "날";
-
-                } else {
-
-                  weatherImg = '<img src="/resources/img/icon/weather/moon.png" class="areaTitleIcon"/>' 
-                  dayNightKr = "밤";
-                }
-
-                weatherTitleArea.innerHTML = '기분 좋은 맑은 ' + dayNightKr                 
-                                            + weatherImg
-                                            + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
-
-            }else if(weather == '03' || weather == '04' || weather == '50'){
-                          
-                weatherType = "cloudy";
-                weatherTitleArea.innerHTML = '구름 많은 흐린 날 '                 
-                                                + '<img src="/resources/img/icon/weather/cloudy.png" class="areaTitleIcon"/>' 
-                                                + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
-
-            }else if(weather == '09' || weather == '10'){
-                          
-                weatherType = "rainy";
-                weatherTitleArea.innerHTML = '비 오는 날 '                 
-                                            + '<img src="/resources/img/icon/weather/rainy.png" class="areaTitleIcon"/>' 
-                                            + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
-
-
-            }else if(weather == '11'){ 
-                          
-                weatherType = "thunder";
-                weatherTitleArea.innerHTML = '천둥 번개 치는 날 '                 
-                                            + '<img src="/resources/img/icon/weather/thunder.png" class="areaTitleIcon"/>' 
-                                            + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
-
-
-            }else if(weather == '13'){
-                          
-              weatherType = "snowy";
-              weatherTitleArea.innerHTML = '눈 오는 날 '                 
-                                          + '<img src="/resources/img/icon/weather/snow.png" class="areaTitleIcon"/>' 
-                                          + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
-
-            }
+          const regionList = document.getElementById('regionList');
+          const fragment = document.createDocumentFragment(); 
+                  
+          if(moimType == "gt") {
                       
-          } else if(temp >= 27 && weather == '01'){
-                          
-            weatherType = "hot";
-            weatherTitleArea.innerHTML = '오늘 같이 더운 날 '                 
-                                    + '<img src="/resources/img/icon/weather/sunny.png" class="areaTitleIcon"/>' 
-                                    + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
-
-          } else if(temp <= 0 ){
-                          
-              weatherType = "cold";
-              weatherTitleArea.innerHTML = '오늘 같이 추운 날 '                 
-                                      + '<img src="/resources/img/icon/weather/cold.png" class="areaTitleIcon"/>' 
-                                      + ' 이런 ' + comWhereIam().moimTypeKr +" 어때요?"
-          }
-
-
-        $.ajax({ //날씨 정보전달
-
-            url : "/getWeatherMoim.com",
-            data: JSON.stringify({ weatherType: weatherType ,
-                                       moimType: moimType }),
-            type : "post",
-            dataType: "json",
-            contentType: "application/json",
-            success : function(data) {
-                               
-              var data = data.data; 
-                    
-              const weatherList = document.getElementById('weatherList');
-              const fragment = document.createDocumentFragment();  // DocumentFragment 생성
-                   
-              if(moimType == "gt") {
-                for (let i = 0; i < data.length; i++) {
-                  let wmoim = data[i];
-
-                  // DocumentFragment에 각 반복에서 생성된 노드를 추가
-                  const slideContents = document.createElement('div');
-                  slideContents.className = 'slideContents';
-                  slideContents.innerHTML = createElement(wmoim);
-                        
-                  fragment.appendChild(slideContents);
-                }
-                        
-                  // 한 번에 삽입
-                  weatherList.appendChild(fragment);
-                  contentsSlider();
-                  likeYsnoUpdate();
-
-              }
-            },
-            error: function(res, req) {
-              console.log("error : " + res, req);
-            }
-          });
-
-          if(USER_NUMB == null){
-
-            $.ajax({ //현재 위치정보 전달
-
-              url : "/getCurrentRegionMoim.com",
-              data: JSON.stringify({ cityCode : cityCode,
-                                      moimType: moimType }),
-              type : "post",
-              dataType: "json",
-              contentType: "application/json",
-              success : function(data) {
-
-                var data = data.data; 
-
-                  const regionTitleArea = document.getElementById('regionTitle');
-
-                  regionTitleArea.innerHTML = '근처에 있는 '+ comWhereIam().moimTypeKr +'에요!'
+            for (let i = 0; i < data.length; i++) {
+                let rmoim = data[i];
                       
-                  const regionList = document.getElementById('regionList');
-                  const fragment = document.createDocumentFragment(); 
-                          
-                  if(moimType == "gt") {
-                              
-                    for (let i = 0; i < data.length; i++) {
-                        let rmoim = data[i];
-                              
-                        const slideContents = document.createElement('div');
-                        slideContents.className = 'slideContents';
-                        slideContents.innerHTML = createElement(rmoim);
-                              
-                        fragment.appendChild(slideContents);
-                    }
-                          
-                    // 한 번에 삽입
-                    regionList.appendChild(fragment);
-                    contentsSlider();
-                    likeYsnoUpdate();
-                  }
-              
-              },
-              error: function(res, req) {
-                console.log("error : " + res, req);
-              }
-            })
+                const slideContents = document.createElement('div');
+                slideContents.className = 'slideContents';
+                slideContents.innerHTML = createElement(rmoim);
+                      
+                fragment.appendChild(slideContents);
+            }
+                  
+            // 한 번에 삽입
+            regionList.appendChild(fragment);
+            contentsSlider();
+            likeYsnoUpdate();
           }
-        },//(날씨)openweathermapApi ajax success
-
-        error:function(res, req) {
+      
+      },
+      error: function(res, req) {
         console.log("error : " + res, req);
-
-        }});
-        
-    });
+      }
+    })
+  }
     
+  function getWeatherMoim(weatherType, moimType) {
+    $.ajax({ //날씨 정보전달
+
+      url : "/getWeatherMoim.com",
+      data: JSON.stringify({ weatherType: weatherType ,
+                                 moimType: moimType }),
+      type : "post",
+      dataType: "json",
+      contentType: "application/json",
+      success : function(data) {
+                         
+        var data = data.data; 
+              
+        const weatherList = document.getElementById('weatherList');
+        const fragment = document.createDocumentFragment();  // DocumentFragment 생성
+             
+        if(moimType == "gt") {
+          for (let i = 0; i < data.length; i++) {
+            let wmoim = data[i];
+
+            // DocumentFragment에 각 반복에서 생성된 노드를 추가
+            const slideContents = document.createElement('div');
+            slideContents.className = 'slideContents';
+            slideContents.innerHTML = createElement(wmoim);
+                  
+            fragment.appendChild(slideContents);
+          }
+                  
+            // 한 번에 삽입
+            weatherList.appendChild(fragment);
+            contentsSlider();
+            likeYsnoUpdate();
+
+        }
+      },
+      error: function(res, req) {
+        console.log("error : " + res, req);
+      }
+    });
+  }
 
     // 날씨, 근처 게더 요소 만듦
     function createElement(data) {
