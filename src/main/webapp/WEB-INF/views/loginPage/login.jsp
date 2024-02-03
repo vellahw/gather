@@ -43,7 +43,7 @@
 	  		<img class="kakaoicon" src="/resources/img/icon/loginApi/kakao.png" alt="Kakao Icon">
 	   			카카오 로그인
 	  		</button>
-	  		<button class="Login google">
+	  		<button class="Login google" onclick="location.href='${urlGoogle}'">
 	  			<img class="googleicon" src="/resources/img/icon/loginApi/google.png" alt="Google Icon">
 	   			구글 로그인
 	  		</button>

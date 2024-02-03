@@ -1,6 +1,5 @@
 package com.our.gather.common.contorller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,14 +61,17 @@ public class CommonController {
 				
 				for (int i = 0; i < memList.size(); i++) {
 					
-					if(memList.get(i).get("MAST_YSNO").equals("Y") && session.getAttribute("USER_NUMB") != memList.get(i).get("USER_NUMB")) { //본인이 아닌 방장에게 전송
+					if(memList.get(i).get("MAST_YSNO").equals("Y")) { //본인이 아닌 방장에게 전송
 						
-						commandMap.put("BOAD_IDXX", item.get("LIKE_IDXX"));
-						commandMap.put("SEND_USER", (String) session.getAttribute("USER_NUMB"));
-						commandMap.put("USER_NUMB", (String) memList.get(i).get("USER_NUMB"));
-						commandMap.put("NOTI_CODE", "A05");
-						
-						notifyService.insertNotify(commandMap.getMap(), commandMap);
+						if(!session.getAttribute("USER_NUMB").equals(memList.get(i).get("USER_NUMB"))) {
+							
+							commandMap.put("BOAD_IDXX", item.get("LIKE_IDXX"));
+							commandMap.put("SEND_USER", (String) session.getAttribute("USER_NUMB"));
+							commandMap.put("USER_NUMB", (String) memList.get(i).get("USER_NUMB"));
+							commandMap.put("NOTI_CODE", "A05");
+							
+							notifyService.insertNotify(commandMap.getMap(), commandMap);
+						}
 						
 					}
 

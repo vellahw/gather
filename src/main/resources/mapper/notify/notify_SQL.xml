@@ -44,7 +44,8 @@
 	<select id="getNotify" parameterType='hashmap' resultType="hashmap">
 	   <![CDATA[
 	   SELECT  /*notify.getNotify*/
-			   POST_USER			/* 받는 회원번호 */
+	   		   ROW_NUMBER() OVER (ORDER BY REGG_DATE DESC) RNUM
+			 , POST_USER			/* 받는 회원번호 */
 			 , SEND_USER			/* 보낸 회원번호 */
 			 , NOTI_SEQC			/* 알림시퀀스 */
 			 , USER_NICK			/* 보낸 회원 닉네임 */

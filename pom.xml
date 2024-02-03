@@ -114,7 +114,7 @@
 			<artifactId>aopalliance</artifactId>
 			<version>1.0</version>
 		</dependency>
-		
+
 		<!-- Tiles -->
 		<dependency>
 			<groupId>org.apache.tiles</groupId>
@@ -388,6 +388,12 @@
 			<version>3.4</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-google</artifactId>
+			<version>1.0.0.RELEASE</version>
+		</dependency>
+
 		<!-- MultipartHttpServletRequset -->
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -413,7 +419,7 @@
 			<artifactId>ojdbc8</artifactId>
 			<version>21.1.0.0</version>
 		</dependency>
-	
+
 	</dependencies>
 
 

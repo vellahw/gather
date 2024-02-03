@@ -32,51 +32,84 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if(result == "success"){
 
-            sessionStorage.setItem('USER_NUMB', USER_NUMB);       //회원번호
-            sessionStorage.setItem('USER_TYPE', USER_TYPE);       //회원타입(사용자, 개발자, 운영자)
-            sessionStorage.setItem('TYPE_CODE', TYPE_CODE);       //회원타입코드(UR: 사용자, DV:개발자, AD:운영자)
-            sessionStorage.setItem('USER_NAME', USER_NAME);       //회원이름
-            sessionStorage.setItem('USER_NICK', USER_NICK);      //회원 닉네임
-            sessionStorage.setItem('USER_IMAG', USER_IMAG);       //회원 프로필사진
-            sessionStorage.setItem('USER_BIRTH', USER_BIRTH);     //회원생일
-            sessionStorage.setItem('USER_JUMIN2', USER_JUMIN2);   //회원 주민번호 뒷자리
-            sessionStorage.setItem('USER_AGEE', USER_AGEE);       //회원나이
-            sessionStorage.setItem('REGI_NUMB', REGI_NUMB);       //회원 주민등록번호
-            sessionStorage.setItem('USER_GNDR', USER_GNDR);       //회원성별
-            sessionStorage.setItem('isNaver', 'true');       
+            if(api == "naver"){
 
-            if(firstTime == 'N') { //첫번째 로그인이 아닐때
+                    sessionStorage.setItem('USER_NUMB', USER_NUMB);       //회원번호
+                    sessionStorage.setItem('USER_TYPE', USER_TYPE);       //회원타입(사용자, 개발자, 운영자)
+                    sessionStorage.setItem('TYPE_CODE', TYPE_CODE);       //회원타입코드(UR: 사용자, DV:개발자, AD:운영자)
+                    sessionStorage.setItem('USER_NAME', USER_NAME);       //회원이름
+                    sessionStorage.setItem('USER_NICK', USER_NICK);      //회원 닉네임
+                    sessionStorage.setItem('USER_IMAG', USER_IMAG);       //회원 프로필사진
+                    sessionStorage.setItem('USER_BIRTH', USER_BIRTH);     //회원생일
+                    sessionStorage.setItem('USER_JUMIN2', USER_JUMIN2);   //회원 주민번호 뒷자리
+                    sessionStorage.setItem('USER_AGEE', USER_AGEE);       //회원나이
+                    sessionStorage.setItem('REGI_NUMB', REGI_NUMB);       //회원 주민등록번호
+                    sessionStorage.setItem('USER_GNDR', USER_GNDR);       //회원성별
+                    sessionStorage.setItem('api', api);                   //api 종류
 
-                comAlert2( 5
-                    ,"로그인 완료"
-                    , USER_NICK + "님 반갑습니다!"
-                    , "let's gather!"
-                    , function(){
-                    location.href = "/gather.com"});
+                if(firstTime == 'N') { //첫번째 로그인이 아닐때
 
-            } else {
+                    comAlert2( 5
+                        ,"로그인 완료"
+                        , USER_NICK + "님 반갑습니다!"
+                        , "let's gather!"
+                        , function(){
+                        location.href = "/gather.com"});
 
-                comAlert2( 5
-                    ,"로그인 완료!"
-                    , USER_NICK + "님 가입을 환영합니다!"
-                    , "let's gather!"
-                    , function(){
-                    location.href = "/gather.com"});
+                } else {
 
+                    comAlert2( 5
+                        ,"로그인 완료!"
+                        , USER_NICK + "님 가입을 환영합니다!"
+                        , "let's gather!"
+                        , function(){
+                        location.href = "/gather.com"});
+
+                }
+
+            } else if(api == "kakao") {
+
+                if(firstTime == 'N') { //첫번째 로그인이 아닐때
+
+                    sessionStorage.setItem('USER_NUMB', USER_NUMB);       //회원번호
+                    sessionStorage.setItem('USER_TYPE', USER_TYPE);       //회원타입(사용자, 개발자, 운영자)
+                    sessionStorage.setItem('TYPE_CODE', TYPE_CODE);       //회원타입코드(UR: 사용자, DV:개발자, AD:운영자)
+                    sessionStorage.setItem('USER_NAME', USER_NAME);       //회원이름
+                    sessionStorage.setItem('USER_NICK', USER_NICK);      //회원 닉네임
+                    sessionStorage.setItem('USER_IMAG', USER_IMAG);       //회원 프로필사진
+                    sessionStorage.setItem('USER_BIRTH', USER_BIRTH);     //회원생일
+                    sessionStorage.setItem('USER_JUMIN2', USER_JUMIN2);   //회원 주민번호 뒷자리
+                    sessionStorage.setItem('USER_AGEE', USER_AGEE);       //회원나이
+                    sessionStorage.setItem('REGI_NUMB', REGI_NUMB);       //회원 주민등록번호
+                    sessionStorage.setItem('USER_GNDR', USER_GNDR);       //회원성별
+                    sessionStorage.setItem('api', api);                   //api 종류
+
+                    comAlert2( 5
+                        ,"로그인 완료"
+                        , USER_NICK + "님 반갑습니다!"
+                        , "let's gather!"
+                        , function(){
+                        location.href = "/gather.com"});
+
+                } else {
+
+                        
+                }
+                
             }
 
         } else {
-            
+        
             comAlert2(3
                 , "정지된 계정입니다." 
                 , USER_NICK + "님의 계정은 현재 정지상태입니다.\n 정지사유:  " 
                 + BANN_CNTT 
                 + "\n 정지기간:  " + BANN_STRT + " ~ " + BANN_ENDD
                 , "확인", null);
-        }
 
-
-      }
+        }            
+                
+    }      
 
     /*
       안내문구 띄우는 함수
