@@ -99,6 +99,24 @@
 		</div>
 		
 		<div class="loginContainer" id="signupStep3">
+			<div class="bubble">이대로 프로필을 생성할까요?</div>
+			<div class="mypage-bg"></div>
+			<div class="container" style="transform: translateY(-60px);">
+				<div class="profileImgWrap pro">
+					<img class="profileImg" src="/resources/img/basic/profile/profile.jpg" alt="프로필사진"/>
+				</div>
+				<div class="p-updateBtn">
+					<img src="/resources/img/icon/pencile.png" class="p-updateIcon" alt="수정버튼">
+				</div>
+				
+				
+				
+			</div>
+		
+			<div class="btnContainer" style="margin-top: 90px;">
+			  <button type="button" class="waybtn prev" onclick="prevSection('step4')">이전</button>
+			  <button type="button" class="waybtn next" onclick="nextSection('step4')">확인</button>
+		  </div>
 		</div>
 		
 		

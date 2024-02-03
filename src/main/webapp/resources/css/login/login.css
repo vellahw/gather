@@ -238,3 +238,61 @@ form {
     right: -300%;
     transition: right 0.5s ease-in-out;
 }
+
+.pro {
+	width: 90px;
+	height: 90px;
+}
+
+.bubble {
+  z-index: 1;
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  width: 180px;
+  height: 26px;
+  background-color: var(--color-white);
+  border-radius: 31px;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  font-weight: 500;
+  font-size: 13px;
+  animation: motion 0.9s infinite ease-in-out alternate;
+  display: flex;
+}
+
+@keyframes motion {
+  from{
+    transform: translate(-50%, 0px);
+  }
+  to{
+    transform: translate(-50%, -5px);
+  }
+}
+
+.mypage-bg {
+	height: calc(35% + 20px);
+  background-color: var(--color-orange300);
+  width: calc(100% + 30px * 2);
+  transform: translate(-30px, -20px);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.p-updateBtn {
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	overflow: hidden;
+	background-color: var(--color-gray100);
+  border: 3px solid var(--color-white);
+  display: flex;
+  justify-content: center;
+  transform: translate(70px, -34px);
+}
+
+.p-updateIcon {
+	width: 14px;
+  object-fit: contain;
+}

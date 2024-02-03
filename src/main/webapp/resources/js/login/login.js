@@ -259,13 +259,19 @@ function prevSection(where) {
   const loginForm = document.getElementById("loginForm");
   const signupContainer = document.getElementById("signupContainer");
   const signupStep2 = document.getElementById("signupStep2");
+  const signupStep3 = document.getElementById("signupStep3");
 
   if(where == 'step2') {
     signupContainer.classList.remove('_act');
     loginForm.classList.add('_act');
+
   } else if(where == 'step3') {
     signupStep2.classList.remove('_act');
     signupContainer.classList.add('_act');
+
+  } else if(where == 'step4') {
+    signupStep3.classList.remove('_act');
+    signupStep2.classList.add('_act');
   }
 
 
@@ -283,16 +289,17 @@ function prevSection(where) {
 function nextSection(where) {
   const signupContainer = document.getElementById("signupContainer");
   const signupStep2 = document.getElementById("signupStep2");
-  const signupStep3 = document.getElementById("signupStep2");
+  const signupStep3 = document.getElementById("signupStep3");
 
   if(where == 'step2') {
     signupContainer.classList.remove('_act');
     signupStep2.classList.add('_act');
+
   } else if(where == 'step3') {
     signupStep2.classList.remove('_act');
     signupStep3.classList.add('_act');
     
-  }
+  } 
 
   // var currentSection = document.querySelector('.signupSection:not([style*="display: none;"])');
   // var nextSection = document.getElementById(nextSectionId);
