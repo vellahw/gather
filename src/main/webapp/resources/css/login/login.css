@@ -4,7 +4,7 @@ body{
  ::-webkit-scrollbar {
    display: none;
  }
-
+ 
 .backGroundContainer {
   overflow: hidden;
   position: relative;
@@ -49,12 +49,13 @@ body{
   bottom: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--color-white);
-  padding: 20px;
+  padding: 20px 30px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 400px;
   height: 530px;
   text-align: center;
+	transition: all 0.2s ease;
 }
 
 form {
@@ -62,23 +63,30 @@ form {
   flex-direction: column;
   padding: 0;
   margin: 0;
-  transition: left 0.5s ease-in-out;
+  
+}
+
+#naverIdLogin, #findIdForm, #signupForm, #step2, #step3, #findPwForm {
+  opacity: 0;
+  visibility: hidden;
+	width: 0;
+	padding: 0;
+	position: absolute;
+}
+
+._act {
+	width: 400px !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  padding: 20px 30px !important;
+}
+
+.loginForm {
+	margin-bottom : 20px
 }
 
 .LoginHead {
   padding: 26px 0px 30px 0px;
-}
-
-.inputLogin {
-  padding: 15px;
-  margin-bottom: 10px;
-  border: 1px solid var(--color-gray100);
-  border-radius: 25px;
-}
-
-input.inputLogin:focus {
-  outline: 1px solid var(--primary);
-  border: 1px solid var(--color-white);
 }
 
 .btn {
@@ -166,6 +174,35 @@ input.inputLogin:focus {
 .socialButtons img {
   margin-right: 10px;
   max-height: 20px;
+}
+
+.joinlabel {
+	display: inline-flex;
+  padding: 0 0 5px 5px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+._join {
+	margin-bottom: 20px;
+}
+
+.btnContainer {
+	justify-content: space-between;
+  display: flex;
+  padding: 14px 4px 0 4px;
+}
+
+.waybtn {
+	background-color: var(--color-gray100);
+  color: var(--color-white);
+  padding: 8px 20px;
+  font-size: 14px;
+  border-radius: 17px;
+}
+
+.next {
+	background-color: var(--primary);
 }
 
 .signupContainer {
