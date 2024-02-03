@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function(){
+  controlContainer();
+
   const isNaver = sessionStorage.getItem('isNaver');
   var USER_NUMB = sessionStorage.getItem('USER_NUMB');
   var city = {
@@ -131,7 +133,16 @@ document.addEventListener("DOMContentLoaded", function(){
         getWeatherMoim(weatherType, moimType);
   
         if(USER_NUMB == null || isNaver == 'true'){
-          getCurrentRegionMoim(cityCode, moimType);
+          const Region = document.querySelector('div[data-type="Region"]');
+          const regionList = Region.querySelector('.slideList');
+          const recomandRegionList = document.querySelector('div[data-id="regionList"]');
+          
+          if(regionList.childElementCount == 0) {
+            regionList.style.display = 'none';
+            recomandRegionList.style.display = 'block';
+            getCurrentRegionMoim(cityCode, moimType);
+          }
+
         }
 
       },//(날씨)openweathermapApi ajax success
@@ -143,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function(){
   });
 
 
-
+  /* 근처에 있는 게더 생성 함수 */
   function getCurrentRegionMoim(cityCode, moimType) {
     $.ajax({ //현재 위치정보 전달
 
@@ -187,7 +198,8 @@ document.addEventListener("DOMContentLoaded", function(){
       }
     });
   }
-    
+  
+  /* 날씨에 따른 게더 추천 함수 */
   function getWeatherMoim(weatherType, moimType) {
     $.ajax({ //날씨 정보전달
 
@@ -229,7 +241,7 @@ document.addEventListener("DOMContentLoaded", function(){
     });
   }
 
-  // 날씨, 근처 게더 요소 만듦
+  // 요소 만듦
   function createElement(data) {
     const hashtag = data.HASH_TAGG;
     let str =

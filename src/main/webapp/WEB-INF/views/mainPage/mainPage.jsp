@@ -15,22 +15,20 @@
 
 <%@ include file="../components/category.jsp"%>
 
-<c:if test="${USER_NUMB != null}">
-	<c:import url="../components/contents.jsp">
-	    <c:param name="type" value="Taste" />
-	    <c:param name="title" value="${USER_NICK}님의 취향 저격 ${moimType}" />
-	    <c:param name="titleIcon" value="tasteTitleIcon" />
-	</c:import>
+<c:import url="../components/contents.jsp">
+	<c:param name="type" value="Taste" />
+	<c:param name="title" value="${USER_NICK}님의 취향 저격 ${moimType}" />
+	<c:param name="titleIcon" value="tasteTitleIcon" />
+</c:import>
 
-	<c:import url="../components/contents.jsp">
-	    <c:param name="type" value="Region" />
-	    <c:param name="title" value="${USER_NICK}님 근처의  ${moimType}" />
-	    <c:param name="titleIcon" value="tasteTitleIcon" />
- 	</c:import>
+<c:import url="../components/contents.jsp">
+	<c:param name="type" value="Region" />
+	<c:param name="title" value="${USER_NICK}님 근처의  ${moimType}" />
+	<c:param name="titleIcon" value="tasteTitleIcon" />
+</c:import>
 
-</c:if>
-
-<div class="contentsContainer mainContainer">
+<%-- 날씨 추천 게더 --%>
+<div class="contentsContainer mainContainer" data-id="weatherList">
   <div id="weatherSection">
   	<h1 id="weatherTitle" class="mainAreaTitle">
   	<span class="tempArea">
@@ -40,28 +38,27 @@
   	  <div class="slideContainer">
 			  <button type="button" class="arrowBtn left" id="leftBtn"></button>
 			  <button type="button" class="arrowBtn right" id="rigthBtn"></button>
-			  <div class="slideList"  id="weatherList">
+			  <div class="slideList" id="weatherList">
 			  </div>
 		  </div>
 	  </div>
 	</div>
 </div>
 
-<c:if test="${USER_NUMB == null}">
-	<div class="contentsContainer mainContainer">
-	  <div id="weatherSection">
-	  	<h1 id="regionTitle" class="mainAreaTitle"></h1>
-				<div class="slideWrap">
-	  	  	<div class="slideContainer">
-				  	<button type="button" class="arrowBtn left" id="leftBtn"></button>
-				  	<button type="button" class="arrowBtn right" id="rigthBtn"></button>
-				  	<div class="slideList" id="regionList">
-				  	</div>
-			  	</div>
-				</div>	
-		</div>
+<%-- 근처의 게더 --%>
+<div class="contentsContainer mainContainer" data-id="regionList">
+  <div id="weatherSection">
+  	<h1 id="regionTitle" class="mainAreaTitle"></h1>
+			<div class="slideWrap">
+  	  	<div class="slideContainer">
+			  	<button type="button" class="arrowBtn left" id="leftBtn"></button>
+			  	<button type="button" class="arrowBtn right" id="rigthBtn"></button>
+			  	<div class="slideList" id="regionList">
+		  	</div>
+	  	</div>
+		</div>	
 	</div>
-</c:if>
+</div>
 
 <c:import url="../components/contents.jsp">
   <c:param name="type" value="Hot" />
