@@ -357,8 +357,6 @@ public class LoginController {
 		JSONObject response_obj = (JSONObject) jsonObj.get("kakao_account");	
 		JSONObject response_obj2 = (JSONObject) response_obj.get("profile");
 		
-		System.out.println("뭐가 올까용?" + response_obj);
-		System.out.println("뭐가 올까용2?" + response_obj2);
 		// 프로필 조회
 		String email = (String) response_obj.get("account_email");
 		String nick = (String) response_obj2.get("nickname");

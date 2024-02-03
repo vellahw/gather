@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
   const slideContainer = document.querySelector('.slideContainer'); // 리스트를 감싸는 부모
   const slideList = slideContainer.querySelector('.imgWrap'); // 이미지 감싸는 리스트
-  const liWidth = slideList.clientWidth; // 슬라이드 너비
+  const liWidth = slideList.clientWidth; // 슬라이드 너비작동
   const img = slideList.querySelectorAll('img'); // 슬라이드 이미지
   const slideContentCount = img.length; // 이미지 갯수
   
@@ -260,7 +260,7 @@ document.addEventListener("DOMContentLoaded", function(){
       // 안내문구
       const noMemberText = document.createElement('p');
       noMemberText.style = 'font-weight: 500; line-height: 29px; color: var(--color-gray500)';
-      noMemberText.textContent  = '참여한 멤버가 없습니다.	첫 번째 멤버가 되어보세요!';
+      noMemberText.textContent  = '참여한 멤버가 없습니다.   첫 번째 멤버가 되어보세요!';
       list.appendChild(noMemberText);
 
       // 참여승인대기 회원 없을 경우 아예 안 띄움
@@ -277,7 +277,7 @@ document.addEventListener("DOMContentLoaded", function(){
           
           for (let j=i+1; j < profileWrapper.length; j++) {
             profileWrapper[j].style.left = state == 'over' ? `${(profileWrapper[i].clientWidth - 25) + 44 * j}px` : `${44 * j}px`;
-          	profileWrapper[j].style.transition = 'left 0.3s ease-in-out';
+             profileWrapper[j].style.transition = 'left 0.3s ease-in-out';
           }
       }
     }
@@ -288,6 +288,8 @@ document.addEventListener("DOMContentLoaded", function(){
    * 버튼 제어
    */
   if(sessionStorage.getItem("USER_NUMB") == null) { // 로그인X
+
+    debugger;
 
     if(detail.ENDD_YSNO == 'N') {
       document.querySelector('.loginPlz').style.display = 'block';
@@ -300,22 +302,32 @@ document.addEventListener("DOMContentLoaded", function(){
 
     followBtn.forEach(btn => {
 
-      btn.style.display = 'block'
       let followCode = btn.getAttribute('data-code');
+      let userNumb = btn.getAttribute('data-numb');
 
-      if(followCode == 'FI'){
+      if(userNumb == sessionStorage.getItem("USER_NUMB")) {
 
-        btn.style.backgroundColor = 'var(--color-white)';
-        btn.style.color = 'var(--primary)';
-        
-        btn.addEventListener('mouseenter', ()=>{
-          btn.classList.add('actb');
-        });
+        btn.style.display = 'none'
 
-        btn.addEventListener('mouseleave', ()=>{
-          btn.classList.remove('actb');
-        });
 
+      } else {
+
+      btn.style.display = 'block'
+
+        if(followCode == 'FI'){
+
+          btn.style.backgroundColor = 'var(--color-white)';
+          btn.style.color = 'var(--primary)';
+          
+          btn.addEventListener('mouseenter', ()=>{
+            btn.classList.add('actb');
+          });
+
+          btn.addEventListener('mouseleave', ()=>{
+            btn.classList.remove('actb');
+          });
+
+        }
       }
     });
 
@@ -326,7 +338,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
       const yourState = parseString(yourStateValue).result; // yourState data
       const { MAST_YSNO, WAIT_YSNO, BANN_YSNO, REVW_YSNO } = yourState;
-	      
+         
        // 방장이 아님
       if(MAST_YSNO == 'N') {
 
@@ -814,5 +826,3 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 
 });
-
-

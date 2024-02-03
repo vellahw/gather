@@ -6,15 +6,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
 let changedValuesArray = []; //ajax로 넘겨줄 배열
 
-window.onbeforeunload = function () {
-  
-  // 비동기 함수 호출
-  likeUpdate(changedValuesArray);
-  likeYsnoUpdate();
- 
-  return;
-}
+if(sessionStorage.getItem("USER_NUMB") != null){
+  // 1초마다 likeUpdate 함수 실행
+  setInterval(function() {
 
+    if(changedValuesArray.length > 0) {
+
+      likeUpdate(changedValuesArray);
+      changedValuesArray.splice(0, changedValuesArray.length);
+
+    }
+
+  }, 100); //
+}
 
 /* 
 240123 Hwai
@@ -42,6 +46,7 @@ Purpose: 게시물 좋아요 처리
 parameter: (dataArray: 좋아요 데이터 배열)
 */
 function likeUpdate(dataArray) {
+  
   const dataArrayLength = dataArray.length;
 
   if(dataArrayLength != 0) {
@@ -51,8 +56,6 @@ function likeUpdate(dataArray) {
       , "/likeUpdate.com"
       , JSON.stringify(dataArray)
       , "application/json"
-      , function() {
-      }
     );
   }
 }
@@ -171,19 +174,5 @@ function updateResult(checkboxId, isChecked) {
   }
 
   comUpdateArray(changedValuesArray, { LIKE_IDXX :checkboxId,  CLIKE_YSNO : currentLikeYsno , PLIKE_YSNO : preLikeValue }, 'LIKE_IDXX');
-  removeItemsWithSameValue(changedValuesArray, 'CLIKE_YSNO', 'PLIKE_YSNO');
-}
-
-
-/*
-admin: Hwai
-Purpose: 현재 좋아요 유무와 orginal 좋아요 유무의 값이 같지 않은 항목만 남기기
-*/
-function removeItemsWithSameValue(arr, key1, key2) {
-  // CLIKE_YSNO와 PLIKE_YSNO의 값이 같지 않은 항목만 남기기
-  const filteredArray = arr.filter(item => item[key1] !== item[key2]);
-
-  // 기존 배열을 변경
-  arr.length = 0;
-  arr.push(...filteredArray);
+  console.log(changedValuesArray);
 }

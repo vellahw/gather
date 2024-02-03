@@ -374,17 +374,7 @@ function parseString(targetValue) {
 240125 KSH
 name:comNotify
 Purpose: 알림 insert
-parameter:(situation: (String 타입)
-           001: 방장이 받는 참여알림
-           002: 방장이 받는 참여요청
-           003: 방장이 받는 탈퇴알림
-           004: 방장이 받는 회원의 리뷰작성
-           005: 방장이 받는 좋아요 Insert
-           006: 방장이 받는 타회원의 댓글
-           007: 회원이 받는 방장의 승인 허가
-           008: 회원이 받는 방장의 승인 불허
-           009: 회원이 받는 방장의 강제퇴장
-           011: 방장이 받는 회원의 재참여
+parameter:(situation: (String 타입) 구글시트확인)
            postUser: 알림을 받는 user_numb)
 */	
 function comNotify(situation, postUser) {
@@ -402,5 +392,30 @@ function comNotify(situation, postUser) {
             , "/insertNotify.com"
             , JSON.stringify(data)
             , "application/json");
+            
+}
+
+/* 
+240202 KSH
+name:comNotify
+Purpose: 팔로우 언팔로우
+parameter:(folwCode: 관계상태)
+            userNumb: user_numb)
+*/	
+function comFollow(folwCode, userNumb) {
+
+    const data = {
+        folwCode : folwCode,
+        folwUser : userNumb
+        }
+
+      
+    comAjax( "POST"
+            , "/followUpdate.com"
+            , JSON.stringify(data)
+            , "application/json"
+            ,function(){
+              location.reload();
+            });
             
 }
