@@ -49,13 +49,14 @@ body{
   bottom: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--color-white);
-  padding: 20px 30px;
+  padding: 0;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 400px;
+  width: 0;
   height: 530px;
   text-align: center;
-	transition: all 0.2s ease;
+	transition: all 0.3s;
+	z-index: -1;
 }
 
 form {
@@ -63,10 +64,11 @@ form {
   flex-direction: column;
   padding: 0;
   margin: 0;
-  
 }
 
-#naverIdLogin, #findIdForm, #signupForm, #step2, #step3, #findPwForm {
+#naverIdLogin, #findIdForm,
+#signupContainer, #signupStep2,
+#signupStep3, #findPwForm {
   opacity: 0;
   visibility: hidden;
 	width: 0;
@@ -79,6 +81,7 @@ form {
   opacity: 1 !important;
   visibility: visible !important;
   padding: 20px 30px !important;
+  z-index: 0 !important;
 }
 
 .loginForm {
@@ -187,6 +190,26 @@ form {
 	margin-bottom: 20px;
 }
 
+.reginumbWrap {
+	text-align: left;
+}
+
+.reginumbWrap > span {
+	font-size: 18px;
+  font-weight: 500;
+  color: var(--color-gray100);
+  letter-spacing: 4px;
+}
+
+.regi {
+	margin-right: 3px;
+}
+
+.regi2 {
+  width: 8px;
+  margin-right: 3px;
+}
+
 .btnContainer {
 	justify-content: space-between;
   display: flex;
@@ -214,12 +237,4 @@ form {
     position: absolute;
     right: -300%;
     transition: right 0.5s ease-in-out;
-}
-
-#step2, #step3 {
-    left: -100%;
-}
-
-#step3 {
-    left: -200%;
 }
