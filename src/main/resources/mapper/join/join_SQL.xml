@@ -105,7 +105,7 @@
     ]]>
    </insert>
    
-   <!-- 선호 카테고리 저장 -->
+   <!-- 선호 지역 저장 -->
    <insert id="inertRegi" parameterType="hashmap">
       <![CDATA[
       	 /*join.inertRegi*/

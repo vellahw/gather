@@ -6,7 +6,7 @@ body{
  }
  
 .backGroundContainer {
-  overflow: hidden;
+  /* overflow: hidden; */
   position: relative;
   width: 100%;
 }
@@ -287,10 +287,50 @@ form {
   line-height: 22px;
 }
 
-.regionBox {
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
+.level1 {
+	display: flex;
+	padding: 18px 0;
+  flex-wrap: wrap;
+  font-size: 15px;
 }
+
+.R_1 {
+	flex: 1 1 30%;
+  height: 46px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.R_1:hover {
+	color: var(--primary);
+}
+
+.level2 {
+	display: flex;
+  flex-wrap: wrap;
+  background-color: var(--primary);
+  color: var(--color-white);
+  border-radius: 16px
+  
+}
+
+.level2-active {
+	padding: 10px;
+}
+
+.ccc {
+	display: 'flex !important';
+}
+
+.child {
+	/* display: none; */
+  justify-content: center;
+	flex: 1 1 25%;
+	line-height: 44px;
+}
+
 
 .mypage-bg {
 	height: calc(35% + 20px);

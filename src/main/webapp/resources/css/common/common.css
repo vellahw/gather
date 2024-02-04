@@ -160,11 +160,11 @@ input.basicInput:focus {
   margin-top: 23px;
 }
 
-input[type='checkbox'] {
+.heart-box{
   display: none;
 }
 
-input[type='checkbox']+label {
+.heart-box + .heartIcon {
   width: 38px;
   height: 38px;
   cursor: pointer;

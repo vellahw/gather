@@ -174,5 +174,4 @@ function updateResult(checkboxId, isChecked) {
   }
 
   comUpdateArray(changedValuesArray, { LIKE_IDXX :checkboxId,  CLIKE_YSNO : currentLikeYsno , PLIKE_YSNO : preLikeValue }, 'LIKE_IDXX');
-  console.log(changedValuesArray);
 }

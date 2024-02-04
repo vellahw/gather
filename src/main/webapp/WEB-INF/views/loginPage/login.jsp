@@ -3,9 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="/resources/css/login/login.css">
-<script src="/resources/js/login/login.js"></script>
-<script src="/resources/js/join/join.js"></script>
-<script src="/resources/js/join/joinform.js"></script>
+<script src="/resources/js/loginPage/login.js"></script>
+<script src="/resources/js/loginPage/join.js"></script>
+<script src="/resources/js/loginPage/joinform.js"></script>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
 
 <div class="backGroundContainer">
@@ -108,6 +108,21 @@
 		    	<p>어느 지역에서 모이고 싶으신가요?</p>
 		    	<p>선호하는 지역을 선택해주세요.</p>
 		    	<div class="regionBox">
+		    		<div class="level1">
+			    		<c:forEach var="r" items="${regi}">
+								<c:if test="${r.REGI_LEVL == '1'}">
+									<div class="R_1" data-code="${r.PARENTS_CODE}">${r.REGI_NAME}</div>
+								</c:if>
+			    		</c:forEach>
+		    		</div>
+		    		<div class="level2">
+		    			<c:forEach var="r" items="${regi}">
+								<c:if test="${r.REGI_LEVL == '2'}">
+									<label class="ccc" for="${r.REGI_CODE}">${r.REGI_NAME}</label>
+									<input type="checkbox" id="${r.REGI_CODE}" class="child" data-regi-code="${r.REGI_CODE}" onchange="checkRegi(this)" />
+								</c:if>
+			    		</c:forEach>
+		    		</div>
 		    	</div>
 		    </div>
 		    <div class="btnContainer">
