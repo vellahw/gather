@@ -13,18 +13,17 @@ function btnOnclick() {
   step1Btn.addEventListener('click', ()=>{
     const userId = document.getElementById('userId').value;
     const userPw = document.getElementById('userPw').value;
-    const userName = document.getElementById('user-name').value;
     const userCellNum = document.getElementById('userCell').value;
-
+    
     firstArr.push({
       USER_IDXX : userId
       , PASS_WORD : userPw
-      , USER_NAME : userName
       , CELL_NUMB : userCellNum
     });
   });
-
+  
   step2Btn.addEventListener('click', ()=>{
+    const userName = document.getElementById('userName').value;
     const userRegi1 = document.getElementById('user-regi').value;
     const userRegi2 = document.getElementById('user-regi2').value;
     const userRegiNum = userRegi1 + userRegi2;
@@ -32,9 +31,11 @@ function btnOnclick() {
     const userSelfIntro = document.getElementById('user-self').value;
     const nicknameNode = document.querySelector('.nickname');
     const selfIntroNode = document.querySelector('.selfIntro');
+
     const secondArr = [{
-    		REGI_NUMB : userRegiNum
-    	, USER_NICK : userNickname 
+        USER_NAME : userName
+    	,	REGI_NUMB : userRegiNum
+    	, USER_NICK : userNickname
     	, SELF_INTR : userSelfIntro
     }];
 
@@ -42,6 +43,8 @@ function btnOnclick() {
     nicknameNode.innerHTML = userNickname;
     selfIntroNode.innerHTML = userSelfIntro;
     data = Object.assign({}, firstArr[0], secondArr[0]);
+
+    console.log(data)
   });
   
   // 마지막 확인 버튼
@@ -52,19 +55,28 @@ function btnOnclick() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: {
-        data : JSON.stringify(data),
-        regi : regiCheckArr
-      },
+      body: JSON.stringify({
+          data : data
+        , regi : regiCheckArr
+      }),
     })
-    .then(() => {
-      comAlert2( 5
-        ,"회원가입 완료!"
-        , data.USER_NICK + "님 가입을 환영합니다!"
-        , "로그인 하러 가기"
-        , function(){
-          location.href = "/gather/login.com"});
-    });
+    .then((response) => {
+      if(response.ok) {
+        comAlert2(
+            5
+          ,"회원가입 완료!"
+          , data.USER_NICK + "님 가입을 환영합니다!"
+          , "로그인 하러 가기"
+          , function(){
+            location.href = "/gather/login.com"
+        });
+
+        return response.json();
+      }
+    })
+    .then(json => console.log(json))
+    .catch(error => console.error(error));
+
   });
 
 
