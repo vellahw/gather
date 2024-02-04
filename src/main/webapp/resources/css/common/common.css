@@ -19,6 +19,20 @@
 }
 
 
+/*========== 기본 input 태그 ==========*/
+.basicInput {
+  padding: 15px;
+  margin-bottom: 10px;
+  border: 1px solid var(--color-gray100);
+  border-radius: 25px;
+}
+
+input.basicInput:focus {
+  outline: 1px solid var(--primary);
+  border: 1px solid var(--color-white);
+}
+
+
 /*========== 상단 배너 ==========*/
 .bannerContainer {
   width: calc(100vw - (100vw - 100%));
@@ -134,10 +148,6 @@
 
 
 /*========== 좋아요 아이콘 ==========*/
-.heartIcon {
-  width: 38px;
-}
-
 #heart, #heartFill {
 	display: none;
 }
@@ -162,7 +172,7 @@ input[type='checkbox']+label {
   right: calc(100% - 7px);
 }
 
-label {
+label.heartIcon {
   background-repeat: no-repeat;
   background-image: url('../../img/icon/heartIcon.png');
   background-size: 100%;
@@ -170,10 +180,10 @@ label {
 	transition: transform 0.4s ease;
 }
 
-label.checked {
+label.heartIcon.checked {
   background-image: url('../../img/icon/heartFillIcon.png') !important; /* !important를 사용하여 우선순위를 높입니다. */
 }
 
-label:hover {
+label.heartIcon:hover {
 	transform: scale(1.1);
 }

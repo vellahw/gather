@@ -124,20 +124,18 @@ function contentsSlider(){
         }) // END btn.forEach
 
       } else if(slideContentCount == 0) {
-				const parent = slideContainer.parentNode.parentNode;
-				parent.style.display = 'none';
+				// const parent = slideContainer.parentNode.parentNode;
+				// parent.style.display = 'none';
 
-        if(sessionStorage.getItem('isNaver') == 'true') { 
-          const region = document.querySelector('div[data-type="Region"]');
-          region.style.display = 'block';
-        }
+        // if(sessionStorage.getItem('isNaver') == 'true') { 
+        //   const region = document.querySelector('div[data-type="Region"]');
+        //   region.style.display = 'block';
+        // }
 
       } // END  if(slideContentCount > 4)
     }) // END slideList.forEach
 
   }) // END slideContainer.forEach  
-
-
 }
 
 /**
@@ -152,5 +150,36 @@ function addEndfilter(element) {
   if(getValue == 'Y') {
     thumnailContainer.classList.add('end');
   }
-  
+}
+
+/**
+ * 240203 장한원
+ * 로그인 유무에 따른 container display 설정
+ */
+function controlContainer() {
+  const userNumb = sessionStorage.getItem('USER_NUMB');
+  const $taste = document.querySelector('div[data-type="Taste"]');
+  const $region = document.querySelector('div[data-type="Region"]');
+
+  $taste.style.display = 'none';
+  $region.style.display = 'none';
+
+  const recomandRegionList = document.querySelector('div[data-id="regionList"]');
+  recomandRegionList.style.display = 'none';
+
+  if(userNumb != null) {
+
+    const regionList = $region.querySelector('.slideList');
+    const tasteList = $taste.querySelector('.slideList');
+    const regionCount = regionList.childElementCount;
+    const tasteCount = tasteList.childElementCount;
+
+    if(regionCount != 0) {
+      $region.style.display = 'block';
+    }
+    
+    if(tasteCount != 0) {
+      $taste.style.display = 'block';
+    }
+  }
 }
