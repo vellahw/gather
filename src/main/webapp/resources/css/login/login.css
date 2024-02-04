@@ -281,18 +281,18 @@ form {
 }
 
 .p-updateBtn {
-	width: 24px;
-	height: 24px;
+	width: 30px;
+	height: 30px;
 	border-radius: 50%;
 	overflow: hidden;
 	background-color: var(--color-gray100);
   border: 3px solid var(--color-white);
   display: flex;
   justify-content: center;
-  transform: translate(70px, -34px);
+  transform: translate(67px, -36px);
 }
 
 .p-updateIcon {
-	width: 14px;
+	width: 16px;
   object-fit: contain;
 }

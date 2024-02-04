@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="/resources/css/login/login.css">
 <script src="/resources/js/login/login.js"></script>
+<script src="/resources/js/login/join.js"></script>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
 
 <div class="backGroundContainer">
@@ -71,7 +72,7 @@
 		    <input type="text" id="user-cell" class="basicInput _join" name="CELL_NUMB">
 		    <div class="btnContainer">
 			    <button type="button" class="waybtn prev" onclick="prevSection('step2')">이전</button>
-			    <button type="button" class="waybtn next" onclick="nextSection('step2')">다음</button>
+			    <button type="button" class="waybtn next" id="next" onclick="nextSection('step2')">다음</button>
 		    </div>
 		  </form>
 		</div>
@@ -93,7 +94,7 @@
 		    
 		    <div class="btnContainer" style="margin-top: 90px;">
 			  	<button type="button" class="waybtn prev" onclick="prevSection('step3')">이전</button>
-			  	<button type="button" class="waybtn next" onclick="nextSection('step3')">다음</button>
+			  	<button type="button" class="waybtn next" id="next2" onclick="nextSection('step3')">다음</button>
 		  	</div>
 		  </form>
 		</div>
@@ -106,16 +107,19 @@
 					<img class="profileImg" src="/resources/img/basic/profile/profile.jpg" alt="프로필사진"/>
 				</div>
 				<div class="p-updateBtn">
-					<img src="/resources/img/icon/pencile.png" class="p-updateIcon" alt="수정버튼">
+					<img src="/resources/img/icon/pencile.png" class="p-updateIcon" alt="프사수정버튼">
 				</div>
-				
+				<div>
+					<p>닉네임</p>
+					<p>자기소개</p>
+				</div>
 				
 				
 			</div>
 		
 			<div class="btnContainer" style="margin-top: 90px;">
 			  <button type="button" class="waybtn prev" onclick="prevSection('step4')">이전</button>
-			  <button type="button" class="waybtn next" onclick="nextSection('step4')">확인</button>
+			  <button type="button" class="waybtn next" id="submit">확인</button>
 		  </div>
 		</div>
 		

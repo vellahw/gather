@@ -232,6 +232,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   setInterval(slideImages, 5000); // 5초에 한 번씩 슬라이딩
 
+	btnOnclick();
 });
 
 // 로그인/회원가입 폼 전환을 담당하는 JavaScript 함수
