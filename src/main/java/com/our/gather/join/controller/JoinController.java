@@ -49,39 +49,34 @@ public class JoinController {
 		return mv;
 	}
 
-	// 회원가입 처리
 	@RequestMapping(value = "/gather/joinDo.com", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<String> userJoin(
-			@RequestParam(value = "data", required = false) HashMap<String, Object> param,
-			@RequestParam(value = "regi", required = false) List<Map<String, String>> jsonArray, CommandMap commandMap,
-			HttpServletRequest request) throws Exception {
+	public ResponseEntity<String> userJoin(@RequestBody Map<String, Object> requestBody, HttpServletRequest request, CommandMap commandMap) throws Exception {
 
-		try {
+	    try {
+	    	
+	        Map<String, Object> param = (Map<String, Object>) requestBody.get("data");
+	        List<Map<String, String>> jsonArray = (List<Map<String, String>>) requestBody.get("regi");
 
-			joinService.userJoin(param, commandMap, request);
+	        joinService.userJoin(param, commandMap, request);
+	        
+	        String userNumb = (String) param.get("USER_NUMB");
 
-			if (jsonArray != null) {
+	        if (jsonArray != null) {
+	        	
+	            for (Map<String, String> item : jsonArray) {
+	                
+	                commandMap.put("USER_NUMB", userNumb);
+	                commandMap.put("REGI_CODE", item.get("REGI_CODE"));
 
-				for (Map<String, String> item : jsonArray) {
+	                joinService.insertRegi(commandMap.getMap(), commandMap);
+	            }
+	        }
 
-					String regiCode = item.get("REGI_CODE");
-					String userNumb = (String) commandMap.get("USER_NUMB");
-					commandMap.put("USER_NUMB", userNumb);
-					commandMap.put("REGI_CODE", regiCode);
-
-					joinService.insertRegi(commandMap.getMap(), commandMap);
-
-				}
-			}
-
-			return ResponseEntity.ok("success");
-
-		} catch (Exception e) {
-
-			System.out.println("error : " + e.getMessage());
-			return ResponseEntity.ok("fail");
-		}
-
+	        return ResponseEntity.ok("success");
+	    } catch (Exception e) {
+	        System.out.println("error : " + e.getMessage());
+	        return ResponseEntity.ok("fail");
+	    }
 	}
 }

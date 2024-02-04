@@ -52,18 +52,19 @@ function btnOnclick() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: {
-        data : JSON.stringify(data),
-        regi : regiCheckArr
-      },
+      body: JSON.stringify({
+        data: data,
+        regi: regiCheckArr
+      }),
     })
     .then(() => {
-      comAlert2( 5
+      comAlert2(5
         ,"회원가입 완료!"
         , data.USER_NICK + "님 가입을 환영합니다!"
         , "로그인 하러 가기"
         , function(){
-          location.href = "/gather/login.com"});
+          location.href = "/gather/login.com"
+        });
     });
   });
 

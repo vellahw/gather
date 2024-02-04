@@ -106,9 +106,9 @@
    </insert>
    
    <!-- 선호 지역 저장 -->
-   <insert id="inertRegi" parameterType="hashmap">
+   <insert id="insertRegi" parameterType="hashmap">
       <![CDATA[
-      	 /*join.inertRegi*/
+      	 /*join.insertRegi*/
          INSERT INTO TB_URREGI(
                     USER_NUMB
                   , REGI_CODE
