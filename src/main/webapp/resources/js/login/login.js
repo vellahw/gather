@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 , "확인", null);
 
         }                  
-    }
+    
   }
 
                           

@@ -26,8 +26,6 @@
 					    , CELL_NUMB  /* 휴대폰번호 */
 					    , SELF_INTR  /* 자기소개 */
 					    , REGI_DATE  /* 가입일 */
-					    , QUST_CODE  /* 회원가입시 받는 질문코드 */
-					    , ANSR_CODE  /* 질문에 대한 답 */
 					    , FILE_SVNM  /* 프로필사진 */
 			) VALUES (
 					      #{USER_NUMB}  /* 회원번호 */
@@ -39,8 +37,6 @@
 					    , #{CELL_NUMB}  /* 휴대폰번호 */
 					    , #{SELF_INTR}  /* 자기소개 */
 					    , SYSDATE       /* 가입일 */
-					    , #{QUST_CODE}  /* 회원가입시 받는 질문코드 */
-					    , #{ANSR_CODE}  /* 질문에 대한 답 */
 					    , #{FILE_SVNM}  /* 프로필사진 */
 					   )
 	            ]]>
@@ -50,7 +46,8 @@
    <select id="checkId" resultType="hashmap" parameterType="hashmap">
       <![CDATA[
         SELECT /*join.checkId*/
-        	   CASE WHEN COUNT(*) = 1 THEN '이미 사용중인 이메일입니다.'
+               COUNT(*) AS result
+        	 , CASE WHEN COUNT(*) = 1 THEN '이미 사용중인 이메일입니다.'
                     ELSE '사용가능한 이메일입니다.' END AS CHECK_IDXX
     	  FROM TM_USERXM
 		 WHERE USER_IDXX = #{USER_IDXX}
@@ -61,7 +58,8 @@
    <select id="checkNick" resultType="hashmap" parameterType="hashmap">
       <![CDATA[
          SELECT /*join.checkNick*/
-                CASE WHEN COUNT(*) = 1 THEN '이미 사용중인 닉네임입니다.'
+                COUNT(*) AS result
+              , CASE WHEN COUNT(*) = 1 THEN '이미 사용중인 닉네임입니다.'
                      ELSE '사용가능한 닉네임입니다.' END AS CHECK_NICK
     	   FROM TM_USERXM
 		  WHERE USER_NICK = #{USER_NICK}
@@ -69,7 +67,7 @@
    </select>
    
    
-   <!-- 선호 카테고리 저장 -->
+   <!-- 선호카테고리 유무확인 -->
    <select id="checkCategoryIsin" parameterType="hashmap" resultType="int">
       <![CDATA[
       	 /*join.inertCate*/
@@ -102,6 +100,22 @@
          ) VALUES (
                    #{USER_NUMB}
                  , #{CATE_IDXX}
+                 , SYSDATE
+                   )     
+    ]]>
+   </insert>
+   
+   <!-- 선호 카테고리 저장 -->
+   <insert id="inertRegi" parameterType="hashmap">
+      <![CDATA[
+      	 /*join.inertRegi*/
+         INSERT INTO TB_URREGI(
+                    USER_NUMB
+                  , REGI_CODE
+                  , REGG_DATE
+         ) VALUES (
+                   #{USER_NUMB}
+                 , #{REGI_CODE}
                  , SYSDATE
                    )     
     ]]>

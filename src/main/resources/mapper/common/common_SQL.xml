@@ -99,21 +99,19 @@
    
    
 	<!-- 카테고리검색 -->
-	<select id="getCategory" parameterType='hashmap'
+	<select id="getRegi" parameterType='hashmap'
 	   resultType="hashmap">
 	   <![CDATA[
 	   	  SELECT /*common.getCategory*/
                   CASE WHEN LENGTH(COMD_CODE) = 1
                             THEN 1
                        ELSE 2
-                   END AS CATE_LEVL                                                     /* 카테고리 레벨 */
-	            , SUBSTR(COMD_CODE,'1','1')  AS PARENTS_CODE							/* 부모 카테고리 코드 */
-	            , COMD_CODE AS CATE_CODE												/* 부모 카테고리 코드 */
-	    		, COMD_NAME AS CATE_NAME   											    /* 부모 카테고리 이름 */
-	    		, CODE_OPT1 AS CATE_PATH												/*  카테고리 경로 */
-	    		, CODE_OPT2 AS IMAG_SRCC												/*  카테고리 이미지 경로 */
+                   END AS REGI_LEVL                                                     /* 지역 레벨 */
+	            , SUBSTR(COMD_CODE,'1','1')  AS PARENTS_CODE							/* 부모 지역 코드 */
+	            , COMD_CODE AS REGI_CODE												/* 부모 지역 코드 */
+	    		, COMD_NAME AS REGI_NAME   											    /* 부모 지역 이름 */
 			FROM TB_CODEXD
-	  	   WHERE COMM_CODE = 'CATE_IDXX'
+	  	   WHERE COMM_CODE = 'REGI_CODE'
 		ORDER BY COMD_CODE
 	 ]]>
 	 </select>
