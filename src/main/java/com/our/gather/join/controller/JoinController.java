@@ -46,7 +46,7 @@ public class JoinController {
 
 		return mv;
 	}
-
+	
 	// 회원가입 처리
 	@RequestMapping(value = "/gather/joinDo.com", method = RequestMethod.POST)
 	public ResponseEntity<String> userJoin(CommandMap commandMap, HttpServletRequest request) throws Exception {
