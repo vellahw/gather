@@ -29,14 +29,18 @@ function btnOnclick() {
     const userRegiNum = userRegi1 + userRegi2;
     const userNickname = document.getElementById('user-nick').value;
     const userSelfIntro = document.getElementById('user-self').value;
-
+    const nicknameNode = document.querySelector('.nickname');
+    const selfIntroNode = document.querySelector('.selfIntro');
     const secondArr = [{
     		REGI_NUMB : userRegiNum
-    	, USER_NICK : userNickname
+    	, USER_NICK : userNickname 
     	, SELF_INTR : userSelfIntro
     }];
 
     data = Object.assign({}, firstArr[0], secondArr[0]);
+    
+    nicknameNode.innerHTML = userNickname;
+    selfIntroNode.innerHTML = userSelfIntro;
 
   });
 
@@ -50,8 +54,13 @@ function btnOnclick() {
       },
       body: JSON.stringify(data),
     })
-    .then((response) => console.log(response));
-    
+    .then(() => {
+      comAlert2( 5
+        ,"회원가입 완료!"
+        , data.USER_NICK + "님 가입을 환영합니다!"
+        , "로그인 하러 가기"
+        , function(){
+          location.href = "/gather/login.com"});
+    });
   });
-
 }

@@ -54,8 +54,9 @@ public class JoinController {
 	public ResponseEntity<String> userJoin(@RequestBody HashMap<String, Object> param, 
 				@RequestBody List<Map<String, String>> jsonArray, CommandMap commandMap, HttpServletRequest request) throws Exception {
 
-		try {
 
+        try {
+          
 			joinService.userJoin(param, commandMap, request);
 			
 			if(jsonArray != null) {
@@ -76,10 +77,11 @@ public class JoinController {
 			
 		} catch (Exception e) {
 
-			System.out.println("error : " + e.getMessage());
-			return ResponseEntity.ok("fail");
-		}
 
-	}
+            System.out.println("error : " + e.getMessage());
+            return ResponseEntity.ok("fail");
+        }
+
+    }
 
 }

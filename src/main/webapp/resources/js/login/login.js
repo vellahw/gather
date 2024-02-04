@@ -107,7 +107,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 , "확인", null);
 
         }                  
-    
   }
 
                           
@@ -265,81 +264,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   setInterval(slideImages, 5000); // 5초에 한 번씩 슬라이딩
 
+  /* join.js의 회원가입 처리 함수 */
 	btnOnclick();
+
 });
-
-// 로그인/회원가입 폼 전환을 담당하는 JavaScript 함수
-function toggleForm(formId) {
-  const loginForm = document.getElementById("loginForm");
-  const findIdForm = document.getElementById("findIdForm");
-  const findPwForm = document.getElementById("findPwForm");
-  const signupContainer = document.getElementById("signupContainer");
-
-  loginForm.classList.remove('_act');
-
-  if (formId === 'findIdForm') {
-    findIdForm.classList.add('_act');
-  } else if (formId === 'findPwForm') {
-    findPwForm.classList.add('_act');
-  } else if(formId === 'signupForm') {
-    signupContainer.classList.add('_act');
-    loginForm.classList.remove('_act');
-  }
-}
-
-// 이전버튼
-function prevSection(where) {
-
-  const loginForm = document.getElementById("loginForm");
-  const signupContainer = document.getElementById("signupContainer");
-  const signupStep2 = document.getElementById("signupStep2");
-  const signupStep3 = document.getElementById("signupStep3");
-
-  if(where == 'step2') {
-    signupContainer.classList.remove('_act');
-    loginForm.classList.add('_act');
-
-  } else if(where == 'step3') {
-    signupStep2.classList.remove('_act');
-    signupContainer.classList.add('_act');
-
-  } else if(where == 'step4') {
-    signupStep3.classList.remove('_act');
-    signupStep2.classList.add('_act');
-  }
-
-
-  // var currentSection = document.querySelector('.signupSection:not([style*="display: none;"])');
-  // var prevSection = currentSection.previousElementSibling;
-
-  // if (currentSection && prevSection) {
-  //   currentSection.style.left = '100%';
-  //   prevSection.style.left = '0';
-  // }
-}
-
-
-// 다음버튼
-function nextSection(where) {
-  const signupContainer = document.getElementById("signupContainer");
-  const signupStep2 = document.getElementById("signupStep2");
-  const signupStep3 = document.getElementById("signupStep3");
-
-  if(where == 'step2') {
-    signupContainer.classList.remove('_act');
-    signupStep2.classList.add('_act');
-
-  } else if(where == 'step3') {
-    signupStep2.classList.remove('_act');
-    signupStep3.classList.add('_act');
-    
-  } 
-
-  // var currentSection = document.querySelector('.signupSection:not([style*="display: none;"])');
-  // var nextSection = document.getElementById(nextSectionId);
-
-  // if (currentSection && nextSection) {
-  //   currentSection.style.left = '-100%';
-  //   nextSection.style.left = '0';
-  // }
-}

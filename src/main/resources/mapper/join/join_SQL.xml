@@ -37,7 +37,7 @@
 					    , #{CELL_NUMB}  /* 휴대폰번호 */
 					    , #{SELF_INTR}  /* 자기소개 */
 					    , SYSDATE       /* 가입일 */
-					    , #{FILE_SVNM}  /* 프로필사진 */
+					    , 'profile.jpg'  /* 프로필사진 */
 					   )
 	            ]]>
 	   </insert>
