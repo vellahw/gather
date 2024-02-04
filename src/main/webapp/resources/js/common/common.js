@@ -41,6 +41,18 @@ function comUpdateArray(arr, value, key) {
 }
 
 /* 
+240122 KSH
+name:comRemoveDuplicates
+Purpose: 배열 중복값 삭제
+parameter: (arr : 배열명, value: 배열값, key: 비교 키)
+*/	
+function comRemoveDuplicates(arr) {
+  return arr.filter((value, index, self) => {
+      return self.indexOf(value) === index;
+  });
+}
+
+/* 
 240111 KSH
 name:whereIam
 Purpose: 현재 사용자가 위치한 모임타입
