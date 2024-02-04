@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.our.gather.common.common.CommandMap;
+import com.our.gather.common.service.CommonService;
 import com.our.gather.join.service.JoinService;
 import com.our.gather.loginPage.dao.GoogleLoginVO;
 import com.our.gather.loginPage.dao.KakaoLoginVO;
@@ -40,6 +41,9 @@ public class LoginController {
 
 	@Resource(name = "JoinService")
 	private JoinService joinService;
+	
+	@Resource(name = "CommonService")
+	private CommonService commonService;
 	
 	@Autowired
 	private NaverLoginVO naverLoginVO;
@@ -67,6 +71,9 @@ public class LoginController {
 		
 		String googleAuthUrl = googleLoginVO.getAuthorizationUrl(session);
 		mv.addObject("urlGoogle", googleAuthUrl);
+		
+		List<Map<String, Object>> getRegi = commonService.getRegi(commandMap.getMap(), commandMap);
+		mv.addObject("regi", getRegi);
 
 		List<Map<String, Object>> loginBackImg = loginService.loginBackImg(commandMap.getMap());
 		mv.addObject("Bimag", loginBackImg);

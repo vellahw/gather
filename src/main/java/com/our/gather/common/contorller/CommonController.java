@@ -33,15 +33,6 @@ public class CommonController {
 	@Resource(name = "SchedulerService")
 	private SchedulerService schedulerService;
 
-	@ResponseBody
-	@RequestMapping(value = "/cateGory.get", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Map<String, Object>> getCategory(HttpSession session, CommandMap commandMap) throws Exception {
-
-		List<Map<String, Object>> getCategroy = commonService.getCategory(commandMap.getMap(), commandMap);
-
-		return getCategroy;
-	}
-
 	// 좋아요 update
 	@Transactional
 	@RequestMapping("/likeUpdate.com")

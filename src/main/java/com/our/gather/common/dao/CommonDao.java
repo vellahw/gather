@@ -35,11 +35,11 @@ public class CommonDao extends AbstractDao {
 
 	// 카테고리 전체
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> getCategory(Map<String, Object> map, CommandMap commandMap) throws Exception {
+	public List<Map<String, Object>> getRegi(Map<String, Object> map, CommandMap commandMap) throws Exception {
 
-		List<Map<String, Object>> getCategory = (List<Map<String, Object>>) selectList("common.getCategory", map);
+		List<Map<String, Object>> getRegi = (List<Map<String, Object>>) selectList("common.getRegi", map);
 
-		return getCategory;
+		return getRegi;
 	}
 
 	// 좋아요insert

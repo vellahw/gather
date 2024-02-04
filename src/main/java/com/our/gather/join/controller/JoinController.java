@@ -1,6 +1,7 @@
 package com.our.gather.join.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -48,16 +49,34 @@ public class JoinController {
 	}
 	
 	// 회원가입 처리
-    @RequestMapping(value = "/gather/joinDo.com", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity<String> userJoin(@RequestBody HashMap<String, Object> param, CommandMap commandMap, HttpServletRequest request) throws Exception {
+	@RequestMapping(value = "/gather/joinDo.com", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<String> userJoin(@RequestBody HashMap<String, Object> param, 
+				@RequestBody List<Map<String, String>> jsonArray, CommandMap commandMap, HttpServletRequest request) throws Exception {
+
 
         try {
+          
+			joinService.userJoin(param, commandMap, request);
+			
+			if(jsonArray != null) {
+				
+				for(Map<String, String> item : jsonArray) {
+					
+					String regiCode = item.get("REGI_CODE");
+					String userNumb = (String) commandMap.get("USER_NUMB");
+					commandMap.put("USER_NUMB", userNumb);
+					commandMap.put("REGI_CODE", regiCode);
+					
+					joinService.insertRegi(commandMap.getMap(), commandMap);
+					
+				}
+			}
 
-            joinService.userJoin(param, commandMap, request);
-            return ResponseEntity.ok("success");
+			return ResponseEntity.ok("success");
+			
+		} catch (Exception e) {
 
-        } catch (Exception e) {
 
             System.out.println("error : " + e.getMessage());
             return ResponseEntity.ok("fail");

@@ -56,17 +56,25 @@ public class JoinServiceImpl implements JoinService {
 
 		hsMap.put("CATE_IDXX", map.get("CATE_IDXX"));
 		hsMap.put("USER_NUMB", map.get("USER_NUMB"));
-		
+
 		int result = joinDao.checkCategoryIsin(hsMap);
-		
-		if(result == 0) {
-			
+
+		if (result == 0) {
+
 			joinDao.inertCate(map, commandMap);
-			
+
 		} else {
-			
+
 			joinDao.updateNewstCate(map, commandMap);
 		}
+
+	}
+
+	// 선호 카테고리 저장
+	@Override
+	public void insertRegi(Map<String, Object> map, CommandMap commandMap) throws Exception {
+
+		joinDao.insertRegi(map, commandMap);
 
 	}
 

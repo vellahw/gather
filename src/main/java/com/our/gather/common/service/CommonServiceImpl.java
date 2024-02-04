@@ -34,10 +34,10 @@ public class CommonServiceImpl implements CommonService {
 	
 	//카테고리전체
 	@Override
-	public List<Map<String, Object>> getCategory(Map<String, Object> map, CommandMap commandMap) throws Exception {
+	public List<Map<String, Object>> getRegi(Map<String, Object> map, CommandMap commandMap) throws Exception {
 		// TODO Auto-generated method stub
 
-		return commonDao.getCategory(map, commandMap);
+		return commonDao.getRegi(map, commandMap);
 	}
 	
 	//좋아요 insert
