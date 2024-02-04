@@ -56,30 +56,21 @@ function btnOnclick() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-          data : data
-        , regi : regiCheckArr
+        data: data,
+        regi: regiCheckArr
       }),
     })
-    .then((response) => {
-      if(response.ok) {
-        comAlert2(
-            5
-          ,"회원가입 완료!"
-          , data.USER_NICK + "님 가입을 환영합니다!"
-          , "로그인 하러 가기"
-          , function(){
-            location.href = "/gather/login.com"
+    .then(() => {
+      comAlert2(5
+        ,"회원가입 완료!"
+        , data.USER_NICK + "님 가입을 환영합니다!"
+        , "로그인 하러 가기"
+        , function(){
+          location.href = "/gather/login.com"
         });
-
-        return response.json();
-      }
-    })
-    .then(json => console.log(json))
-    .catch(error => console.error(error));
+    });
 
   });
-
-
 
 }
 
