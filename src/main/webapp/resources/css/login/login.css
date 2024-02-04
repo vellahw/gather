@@ -271,6 +271,27 @@ form {
   }
 }
 
+.regionArea {
+	text-align: left;
+}
+
+.regionArea p:nth-of-type(1)  {
+	font-size: 18px;
+  font-weight: 600;
+  line-height: 26px;
+}
+
+.regionArea p:nth-of-type(2)  {
+	font-size: 14px;
+  color: var(--color-gray500);
+  line-height: 22px;
+}
+
+.regionBox {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+}
+
 .mypage-bg {
 	height: calc(35% + 20px);
   background-color: var(--color-orange300);
@@ -281,18 +302,36 @@ form {
 }
 
 .p-updateBtn {
-	width: 30px;
-	height: 30px;
+	width: 26px;
+	height: 26px;
 	border-radius: 50%;
 	overflow: hidden;
 	background-color: var(--color-gray100);
   border: 3px solid var(--color-white);
   display: flex;
   justify-content: center;
-  transform: translate(67px, -36px);
+  transform: translate(68px, -38px);
+  cursor: pointer;
 }
 
 .p-updateIcon {
 	width: 16px;
   object-fit: contain;
+}
+
+.user {
+	text-align: left;
+  padding: 0 6px;
+  transform: translateY(-20px);
+}
+
+.nickname {
+	font-size: 18px;
+  font-weight: 600;
+  line-height: 34px;
+}
+
+.selfIntro {
+	color: var(--color-gray500);
+  font-size: 14px;
 }

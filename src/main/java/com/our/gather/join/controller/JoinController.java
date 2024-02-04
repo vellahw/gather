@@ -48,20 +48,21 @@ public class JoinController {
 	}
 	
 	// 회원가입 처리
-	@RequestMapping(value = "/gather/joinDo.com", method = RequestMethod.POST)
-	public ResponseEntity<String> userJoin(CommandMap commandMap, HttpServletRequest request) throws Exception {
+    @RequestMapping(value = "/gather/joinDo.com", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> userJoin(@RequestBody HashMap<String, Object> param, CommandMap commandMap, HttpServletRequest request) throws Exception {
 
-		try {
+        try {
 
-			joinService.userJoin(commandMap.getMap(), commandMap, request);
-			return ResponseEntity.ok("success");
+            joinService.userJoin(param, commandMap, request);
+            return ResponseEntity.ok("success");
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			System.out.println("error : " + e.getMessage());
-			return ResponseEntity.ok("fail");
-		}
+            System.out.println("error : " + e.getMessage());
+            return ResponseEntity.ok("fail");
+        }
 
-	}
+    }
 
 }
