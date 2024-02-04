@@ -80,10 +80,10 @@
 		  
 		  
 		<div class="loginContainer" id="signupStep2">
-		  <form method="post" action="/signup">
+		  <form>
 		    <h2 class="LoginHead">회원가입</h2>
-		    <label class="joinlabel" for="user-name">이름</label>
-		    <input type="text" id="user-name" class="basicInput _join">
+		    <label class="joinlabel" for="userName">이름</label>
+		    <input type="text" id="userName" class="basicInput _join">
 			  <label class="joinlabel" for="user-regi">주민등록번호</label>
 			  <div class="reginumbWrap">
 			    <input type="text" id="user-regi" class="basicInput _join regi">-

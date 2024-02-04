@@ -13,18 +13,17 @@ function btnOnclick() {
   step1Btn.addEventListener('click', ()=>{
     const userId = document.getElementById('userId').value;
     const userPw = document.getElementById('userPw').value;
-    const userName = document.getElementById('user-name').value;
     const userCellNum = document.getElementById('userCell').value;
-
+    
     firstArr.push({
       USER_IDXX : userId
       , PASS_WORD : userPw
-      , USER_NAME : userName
       , CELL_NUMB : userCellNum
     });
   });
-
+  
   step2Btn.addEventListener('click', ()=>{
+    const userName = document.getElementById('userName').value;
     const userRegi1 = document.getElementById('user-regi').value;
     const userRegi2 = document.getElementById('user-regi2').value;
     const userRegiNum = userRegi1 + userRegi2;
@@ -32,9 +31,11 @@ function btnOnclick() {
     const userSelfIntro = document.getElementById('user-self').value;
     const nicknameNode = document.querySelector('.nickname');
     const selfIntroNode = document.querySelector('.selfIntro');
+
     const secondArr = [{
-    		REGI_NUMB : userRegiNum
-    	, USER_NICK : userNickname 
+        USER_NAME : userName
+    	,	REGI_NUMB : userRegiNum
+    	, USER_NICK : userNickname
     	, SELF_INTR : userSelfIntro
     }];
 
@@ -42,6 +43,8 @@ function btnOnclick() {
     nicknameNode.innerHTML = userNickname;
     selfIntroNode.innerHTML = userSelfIntro;
     data = Object.assign({}, firstArr[0], secondArr[0]);
+
+    console.log(data)
   });
   
   // 마지막 확인 버튼
@@ -66,9 +69,8 @@ function btnOnclick() {
           location.href = "/gather/login.com"
         });
     });
+
   });
-
-
 
 }
 
