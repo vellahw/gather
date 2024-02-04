@@ -8,10 +8,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const notiCountValue = notifyList.dataset.count;
     const delAllBtn = document.querySelector('.delAll'); // 읽음 버튼
     
-    btnControl();
+    btnControl(notiCountValue);
 
     if(notiCountValue == '0') {
+
       delAllBtn.style.display = 'none';
+
     }
 
     // 버튼 및 목록의 이벤트 핸들러 등록
@@ -35,21 +37,22 @@ document.addEventListener('DOMContentLoaded', ()=>{
  * 240128 KSH
  * 버튼 제어
  */
-function btnControl() {
+function btnControl(notiCount) {
 
-  const notiCount = document.querySelector('.notiCount');
   const delAll = document.querySelector('.delAll'); // 모두 삭제 버튼
   const noAlim = document.querySelector('.noAlim'); // 알림이 없습니다.
 
-  if(notiCount < 1 ){
 
+  if(notiCount > "1"){
+
+    delAll.style.display = 'block';
+    noAlim.style.display = 'none';
+
+  } else {
+   
     delAll.style.display = 'none';
+    noAlim.style.display = 'block';
 
-    if(notiCount == 0) {
-
-      noAlim.style.display = 'block';
-
-    }
   }
 }
 
@@ -63,9 +66,10 @@ function updateReadNoti(notiSeqc){
   const notiSeqcValue = notiSeqc.getAttribute('data-noti-seqc');
   const notiCount = document.querySelector('.notiCount'); //알림 갯수
   const delAllBtn = document.querySelector('.delAll'); // 읽음 버튼
-  const allNoti = document.querySelectorAll('.noti'); // 모든 알림들
   const notifyList = document.querySelector('.notifyList');
+  const noAlim = document.querySelector('.noAlim'); // 읽음 버튼
   const notiCountValue = notifyList.dataset.count;
+
 
   if(notiSeqcValue != 'undefined'){
 
@@ -73,29 +77,37 @@ function updateReadNoti(notiSeqc){
 
     notiCount.textContent = parseInt(notiCount.textContent) - 1;
     const notiCntt = document.querySelector(`li[data-noti-id="${notiSeqcValue}"`); //해당 알림
-    
+    notiCntt.style.transform = `translateY(-134px)`;
     notiCntt.classList.add('readAct');
+    
+     notiCntt.addEventListener('transitionend', function() {
+       notiCntt.style.display = 'none';
+     });
+    
 
-    for (let i = 1; i < allNoti.length; i++) {
-      allNoti[i].style.transform = `translateY(-134px)`;
+    if( notiCount.textContent == 0){
+
+        delAllBtn.style.display = 'none';
+        noAlim.style.display = 'block';
+        
     }
+      
+    } else if(notiCountValue == '0') {
+      
+      data = null;
+      notiCount.textContent = 0;
+      delAllBtn.style.display = 'none';
+      noAlim.style.display = 'block';
+      
+    }
+    
+    comAjax(
+      "POST"
+      , "/updateReadNoti.com"
+      , data
+      , "application/json"
+      );
 
-
-  } else if(notiCountValue == '0') {
-
-    data = null;
-    notiCount.textContent = 0;
-    delAllBtn.style.display = 'none';
-
-  }
-
-  comAjax(
-    "POST"
-    , "/updateReadNoti.com"
-    , data
-    , "application/json"
-  );
-
-  btnControl();
-
+      btnControl(notiCountValue);
+      
 }

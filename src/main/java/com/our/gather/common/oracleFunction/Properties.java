@@ -9,8 +9,6 @@ public class Properties {
 	public static String url;
     public static String username;
     public static String password;
-    public static String NaverClientId;
-    public static String NaverClientSecret;
     
     @Value("${spring.datasource.url}")
 	public void setUrl(String url) {
@@ -27,13 +25,4 @@ public class Properties {
     	Properties.password = password;
 	}
     
-    @Value("${app.naver.clientId}")
-	public void setNaverClientId(String NaverClientId) {
-    	Properties.NaverClientId = NaverClientId;
-	}
-
-    @Value("${app.naver.clientSecret}")
-	public void setNaverClientSecret(String NaverClientSecret) {
-    	Properties.NaverClientSecret = NaverClientSecret;
-	}
 }

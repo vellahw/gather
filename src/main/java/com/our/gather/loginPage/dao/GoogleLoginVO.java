@@ -13,45 +13,45 @@ import com.github.scribejava.core.model.OAuthRequest;
 import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
-import com.our.gather.loginPage.service.NaverLoginApi;
+import com.our.gather.loginPage.service.GoogleLoginApi;
 
-public class NaverLoginVO {
+public class GoogleLoginVO {
 
-    @Value("${app.naver.clientId}")
-    private String NAVER_CLIENT_ID;
+	@Value("${app.naver.clientId}")
+	private String GOOGLE_CLIENT_ID;
 
-    @Value("${app.naver.clientSecret}")
-    private String NAVER_CLIENT_SECRET;
-    
-	private final static String REDIRECT_URI = "http://localhost:8080/gather/naverLoginDo.com";
+	@Value("${app.naver.clientSecret}")
+	private String GOOGLE_CLIENT_SECRET;
+
+	private final static String REDIRECT_URI = "http://localhost:8080/gather/googleLoginDo.com";
 	private final static String SESSION_STATE = "oauth_state";
-	private final static String PROFILE_API_URL = "https://openapi.naver.com/v1/nid/me";
+	private final static String PROFILE_API_URL = "https://www.googleapis.com/oauth2/v3/userinfo";
 
 	public String getAuthorizationUrl(HttpSession session) {
-		
-		String state = generateRandomString();
-		setSession(session, state);
-
-		OAuth20Service oauthService = new ServiceBuilder()
-				
-			.apiKey(NAVER_CLIENT_ID)
-			.apiSecret(NAVER_CLIENT_SECRET)
-			.callback(REDIRECT_URI)
-			.state(state) 
-			.build(NaverLoginApi.instance());
-
-		return oauthService.getAuthorizationUrl();
-
+			
+			String state = generateRandomString();
+			setSession(session, state);
+	
+			OAuth20Service oauthService = new ServiceBuilder()
+					
+				.apiKey(GOOGLE_CLIENT_ID)
+				.apiSecret(GOOGLE_CLIENT_SECRET)
+				.callback(REDIRECT_URI)
+				.state(state) 
+				.build(GoogleLoginApi.instance());
+	
+			return oauthService.getAuthorizationUrl();
+	
 	}
 
 	public OAuth2AccessToken getAccessToken(HttpSession session, String code, String state) throws IOException {
 		
 		OAuth20Service oauthService = new ServiceBuilder()
-			.apiKey(NAVER_CLIENT_ID)
-			.apiSecret(NAVER_CLIENT_SECRET)
+			.apiKey(GOOGLE_CLIENT_ID)
+			.apiSecret(GOOGLE_CLIENT_SECRET)
 			.callback(REDIRECT_URI)
 			.state(state)
-			.build(NaverLoginApi.instance());
+			.build(GoogleLoginApi.instance());
 			
 		OAuth2AccessToken accessToken = oauthService.getAccessToken(code);
 			
@@ -62,10 +62,10 @@ public class NaverLoginVO {
 	public String getUserProfile(OAuth2AccessToken oauthToken) throws IOException {
 		
 		OAuth20Service oauthService = new ServiceBuilder()
-				.apiKey(NAVER_CLIENT_ID)
-				.apiSecret(NAVER_CLIENT_SECRET)
+				.apiKey(GOOGLE_CLIENT_ID)
+				.apiSecret(GOOGLE_CLIENT_SECRET)
 				.callback(REDIRECT_URI)
-				.build(NaverLoginApi.instance());
+				.build(GoogleLoginApi.instance());
 		
 		OAuthRequest request = new OAuthRequest(Verb.GET, PROFILE_API_URL, oauthService);
 		oauthService.signRequest(oauthToken, request);
