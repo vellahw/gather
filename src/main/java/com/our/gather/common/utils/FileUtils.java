@@ -58,7 +58,8 @@ public class FileUtils {
 						listMap.put("FILE_SEQC", null);
 					}
 					
-					listMap.put("FILE_IDXX", map.get("USER_NAME"));
+					listMap.put("FILE_IDXX", map.get("USER_NUMB"));
+					listMap.put("FILE_PATH", file);
 					
 				} else if (map.get("GATH_IDXX") != null) {
 					

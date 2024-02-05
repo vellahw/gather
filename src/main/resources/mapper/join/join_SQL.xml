@@ -5,16 +5,17 @@
     작성일:23.12.19
 -->
 <mapper namespace="join">
-
-	   <!--  회원가입 -->
-	   <insert id="joinUs" parameterType="hashmap" useGeneratedKeys="true" keyProperty="USER_NUMB">
-		   <selectKey keyProperty="USER_NUMB" order="BEFORE" resultType="String">
-	    	<![CDATA[
+		
+		<!--  회원번호 체번 -->
+	   <select  id="makeUserNumb" resultType="String">
+    	<![CDATA[
 	      SELECT 'UR' ||TO_CHAR(SYSDATE, 'YYMM') ||LPAD(NVL(MAX(CAST(SUBSTR(USER_NUMB,7,4) AS NUMBER))+1,1),4,'0') AS USER_NUMB
 		  	FROM TM_USERXM
 		   WHERE SUBSTR(USER_NUMB,3,4) = TO_CHAR(SYSDATE, 'YYMM')
-	    	]]>
-	    	</selectKey>
+    	]]>
+    	</select>
+	   <!--  회원가입 -->
+	   <insert id="joinUs" parameterType="hashmap" useGeneratedKeys="true" keyProperty="USER_NUMB">
 	        <![CDATA[
 	       INSERT INTO TM_USERXM (
 					      USER_NUMB  /* 회원번호 */
@@ -37,7 +38,7 @@
 					    , #{CELL_NUMB}  /* 휴대폰번호 */
 					    , #{SELF_INTR}  /* 자기소개 */
 					    , SYSDATE       /* 가입일 */
-					    , 'profile.jpg'  /* 프로필사진 */
+					    , #{FILE_SVNM}  /* 프로필사진 */
 					   )
 	            ]]>
 	   </insert>

@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.aspectj.weaver.patterns.IfPointcut.IfFalsePointcut;
 import org.springframework.stereotype.Service;
 
 import com.our.gather.common.common.CommandMap;
@@ -26,25 +27,35 @@ public class JoinServiceImpl implements JoinService {
 	@Resource(name = "fileUtils")
 	private FileUtils fileUtils;
 
-	// 회원가입
 	@Override
 	public void userJoin(Map<String, Object> map, CommandMap commandMap, HttpServletRequest request) throws Exception {
 
-		joinDao.joinUs(map, commandMap);
+		String userNumbString = joinDao.makeUserNumb();
+		map.put("USER_NUMB", userNumbString);
+		commandMap.put("USER_NUMB", userNumbString);
 
 		try {
+			
+			List<Map<String, Object>> flist = fileUtils.fileInsert(map, request);
 
-			List<Map<String, Object>> plist = fileUtils.fileInsert(map, request);
+			for (int i = 0, size = flist.size(); i < size; i++) {
 
-			for (int i = 0, size = plist.size(); i < size; i++) {
+				commonDao.comFileInsert(flist.get(i));
 
-				commonDao.comFileInsert(map);
+				if (!flist.get(i).get("FILE_SEQC").equals("XXX")) {
 
+					map.put("FILE_SVNM", flist.get(i).get("FILE_SVNM"));
+					
+				}
 			}
 
 		} catch (Exception e) {
 
 		}
+
+		map.put("FILE_SVNM", "profile.jpg");//파일 준비 된다면 지워주세요
+		
+		joinDao.joinUs(map, commandMap);
 
 	}
 
