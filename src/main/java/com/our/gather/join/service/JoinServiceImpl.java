@@ -33,24 +33,28 @@ public class JoinServiceImpl implements JoinService {
 		String userNumbString = joinDao.makeUserNumb();
 		map.put("USER_NUMB", userNumbString);
 		commandMap.put("USER_NUMB", userNumbString);
+		
+		if(map.get("FILE_SVNM") == null) {
 
-		try {
-			
-			List<Map<String, Object>> flist = fileUtils.fileInsert(map, request);
-
-			for (int i = 0, size = flist.size(); i < size; i++) {
-
-				commonDao.comFileInsert(flist.get(i));
-
-				if (!flist.get(i).get("FILE_SEQC").equals("XXX")) {
-
-					map.put("FILE_SVNM", flist.get(i).get("FILE_SVNM"));
-					
+			try {
+				
+				List<Map<String, Object>> flist = fileUtils.fileInsert(map, request);
+	
+				for (int i = 0, size = flist.size(); i < size; i++) {
+	
+					commonDao.comFileInsert(flist.get(i));
+	
+					if (!flist.get(i).get("FILE_SEQC").equals("XXX")) {
+	
+						map.put("FILE_SVNM", flist.get(i).get("FILE_SVNM"));
+						
+					}
 				}
+	
+			} catch (Exception e) {
+				
+	
 			}
-
-		} catch (Exception e) {
-
 		}
 
 		map.put("FILE_SVNM", "profile.jpg");//파일 준비 된다면 지워주세요
