@@ -296,11 +296,12 @@ form {
 
 .R_1 {
 	flex: 1 1 30%;
-  height: 46px;
+  margin: 14px 0;
   justify-content: center;
   display: flex;
   align-items: center;
   cursor: pointer;
+  flex-direction: column;
 }
 
 .R_1:hover {
@@ -308,30 +309,39 @@ form {
 }
 
 .level2 {
-	display: none;
+	display: flex;
   flex-wrap: wrap;
   background-color: var(--primary);
   color: var(--color-white);
-  border-radius: 16px
-  
+  border-radius: 16px;
+  position: absolute;
+  z-index: 1;
 }
 
 .level2-active {
 	padding: 10px;
 }
 
-.childlabel {
-	display: 'flex !important';
-}
-
 .child {
 	/* display: none; */
+	justify-content: center;
+	flex: 1 1 25%;
+	line-height: 44px;
+	width: fit-content;
+}
+
+.clicked {
+	background-color: black;
+	color: var(--color-white);
+}
+
+/* .child + .childlabel {
   justify-content: center;
 	flex: 1 1 25%;
 	line-height: 44px;
+	width: fit-content;
 }
-
-
+  */
 .mypage-bg {
 	height: calc(35% + 20px);
   background-color: var(--color-orange300);

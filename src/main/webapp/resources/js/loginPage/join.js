@@ -160,35 +160,54 @@ function createNode(item) {
 /* 자식 지역 체크박스 생성 함수 */
 function createChildRegi(item, pcode) {
   if(item.PARENTS_CODE == pcode) {
-    const childRegi = document.createElement('input');
-    childRegi.type = 'checkbox';
+    const container = document.createElement('div');
+
+    const childRegi = document.createElement('button');
+    childRegi.type = 'button';
     childRegi.className = 'child';
+    childRegi.textContent = item.REGI_NAME;
     childRegi.dataset.regiCode = item.REGI_CODE;
 
-    /* 지역 선택시 동작 함수 */
-    let regiCheckArr = [];
-
-    // onchange 이벤트를 감지하여 처리하는 함수 정의
-    const handleChange = function(event) {
-      console.log(event.target)
-      const target = event.target;
-      const regiCode = target.getAttribute('data-regi-code');
-
-      regiCheckArr.push({ 'REGI_CODE': regiCode });
-
-    };
-
-    childRegi.addEventListener('change', handleChange);
-
+    childRegi.addEventListener('click', handleChange);
+    
     const childRegilabel = document.createElement('label');
     childRegilabel.className = 'childlabel';
     childRegilabel.innerHTML = item.REGI_NAME;
     
     const targetElement = document.querySelector(`div[data-pcode="${pcode}"]`);
+    
     targetElement.appendChild(childRegi);
-    targetElement.appendChild(childRegilabel);
+    // container.appendChild(childRegilabel);
+    
+    // targetElement.appendChild(container);
   }
 }
+
+/* 지역 선택시 동작 함수 */
+let regiCheckArr = [];
+
+// onchange 이벤트를 감지하여 처리하는 함수 정의
+const handleChange = function(event) {
+  const target = event.target;
+  console.log(target)
+  target.classList.toggle('clicked');
+
+  const regiCode = target.getAttribute('data-regi-code');
+
+  const classList = target.classList;
+  
+  if(classList.contains('clicked')) {
+    regiCheckArr.push({ 'REGI_CODE': regiCode });
+  } else {  
+    for (let i = 0; i < regiCheckArr.length; i++) {
+      if (regiCheckArr[i]['REGI_CODE'] === regiCode) {
+        regiCheckArr.splice(i, 1);
+        break;
+      }
+    }
+  }
+};
+
 
 /* 자식 지역 이벤트 리스너 */
 function showChildRegi(parentCodeList) {
@@ -211,7 +230,6 @@ function showChildRegi(parentCodeList) {
 
 }
 
-let regiCheckArr = [];
 function checkRegi(regi) {
 
   const regiCode = regi.getAttribute('data-regi-code');
@@ -231,5 +249,3 @@ function checkRegi(regi) {
     }
   }
 }
-
-console.log(regiCheckArr)

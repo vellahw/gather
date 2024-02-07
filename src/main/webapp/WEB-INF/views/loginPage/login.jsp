@@ -108,18 +108,7 @@
 		    	<p>어느 지역에서 모이고 싶으신가요?</p>
 		    	<p>선호하는 지역을 선택해주세요.</p>
 		    	<div class="regionBox">
-		    		<div class="level1">
-		    			<div class="level2"></div>
-		    		</div>
-		    		<div class="level2">
-		    			<c:forEach var="r" items="${regi}">
-								<c:if test="${r.REGI_LEVL == '2'}">
-									<%-- <label class="ccc" for="${r.REGI_CODE}">${r.REGI_NAME}</label>
-									<input type="checkbox" id="${r.REGI_CODE}" class="child" data-regi-code="${r.REGI_CODE}" onchange="checkRegi(this)" />
-								 --%>
-								</c:if>
-			    		</c:forEach>
-		    		</div>
+		    		<div class="level1"></div>
 		    	</div>
 		    </div>
 		    <div class="btnContainer">
