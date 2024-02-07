@@ -109,17 +109,14 @@
 		    	<p>선호하는 지역을 선택해주세요.</p>
 		    	<div class="regionBox">
 		    		<div class="level1">
-			    		<c:forEach var="r" items="${regi}">
-								<c:if test="${r.REGI_LEVL == '1'}">
-									<div class="R_1" data-code="${r.PARENTS_CODE}">${r.REGI_NAME}</div>
-								</c:if>
-			    		</c:forEach>
+		    			<div class="level2"></div>
 		    		</div>
 		    		<div class="level2">
 		    			<c:forEach var="r" items="${regi}">
 								<c:if test="${r.REGI_LEVL == '2'}">
-									<label class="ccc" for="${r.REGI_CODE}">${r.REGI_NAME}</label>
+									<%-- <label class="ccc" for="${r.REGI_CODE}">${r.REGI_NAME}</label>
 									<input type="checkbox" id="${r.REGI_CODE}" class="child" data-regi-code="${r.REGI_CODE}" onchange="checkRegi(this)" />
+								 --%>
 								</c:if>
 			    		</c:forEach>
 		    		</div>
@@ -165,3 +162,4 @@
 		</div>
   
 </div>
+<input type="hidden" id="regi" value="${regi}" />

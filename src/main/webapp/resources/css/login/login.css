@@ -308,7 +308,7 @@ form {
 }
 
 .level2 {
-	display: flex;
+	display: none;
   flex-wrap: wrap;
   background-color: var(--primary);
   color: var(--color-white);
@@ -320,7 +320,7 @@ form {
 	padding: 10px;
 }
 
-.ccc {
+.childlabel {
 	display: 'flex !important';
 }
 
