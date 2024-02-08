@@ -68,14 +68,20 @@
 			    <input type="text" id="userId" class="basicInput _join" placeholder="이메일 형식으로 입력해주세요.">
 		    	<button type="button" class="authmailBtn">이메일 인증</button>
 		    </div>
-		    <div id="appendId" class="append"></div>
+		    <div id="appendId" class="append userId"></div>
+		    
 		    <label class="joinlabel" for="userPw">비밀번호</label>
 		    <input type="password" id="userPw" class="basicInput _join">
-		    <div id="appendPw" class="append"></div>
+		    <div id="appendPw" class="append userPw"></div>
+		    
 		    <label class="joinlabel" for="pwConfirm">비밀번호 확인</label>
 		    <input type="password" id="pwConfirm" class="basicInput _join">
+		    <div id="appendPwConfirm" class="append pwConfirm"></div>
+		    
 		    <label class="joinlabel" for="userCell">핸드폰번호</label>
 		    <input type="text" id="userCell" class="basicInput _join">
+		    <div id="appendCell" class="append userCell"></div>
+		    
 		    <div class="btnContainer">
 			    <button type="button" class="waybtn prev" onclick="prevSection('step2')">이전</button>
 			    <button type="button" class="waybtn next" id="next" onclick="nextSection('step2')">다음</button>

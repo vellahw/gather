@@ -110,9 +110,11 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // 아이디(이메일) 입력 검사
-  userIdForm.addEventListener("change", function(num){
-    if(checkId(userIdForm.value) == false){ 
+  userIdForm.addEventListener("change", () => {
+    if(!checkId(userIdForm.value)){ 
       appendWarning('append', "올바른 이메일 형식을 입력해주세요.");
+    } else {
+      appendArea.style.display = 'none';
     }
   });
 
@@ -246,6 +248,8 @@ document.addEventListener('DOMContentLoaded', function () {
   /* join.js의 회원가입 처리 함수 */
 	btnOnclick();
 
+  inputChangeHandler();
+
 });
 
 /*
@@ -254,8 +258,9 @@ document.addEventListener('DOMContentLoaded', function () {
 */ 
 function appendWarning(id, text) {
   const appendArea = document.getElementById(id);
+  appendArea.style.display = 'block';
   appendArea.innerHTML = text; 
-  appendArea.classList.toggle('append_block');
+  appendArea.style.marginBottom = '10px';
 }
     
 // 이메일 입력값 유효성 검사 함수

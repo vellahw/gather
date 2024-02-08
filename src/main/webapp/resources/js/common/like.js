@@ -17,7 +17,7 @@ if(sessionStorage.getItem("USER_NUMB") != null){
 
     }
 
-  }, 100); //
+  }, 100);
 }
 
 /* 

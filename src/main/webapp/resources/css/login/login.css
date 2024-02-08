@@ -139,12 +139,6 @@ form {
 .append {
   color: var(--color-red);
   font-size: 12px;
-  display: none;
-}
-
-.append_block {
-	display: block;
-  margin-bottom: 10px;
 }
 
 .additionalButtons {
