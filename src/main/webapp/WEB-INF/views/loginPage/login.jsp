@@ -9,7 +9,7 @@
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
 
 <div class="backGroundContainer">
-  <ul>
+  <ul class="backGroundList">
 	  <c:forEach var="Bimag" items="${Bimag}">
 	  <li>
 		  <div class="backgroundItem">
@@ -108,7 +108,7 @@
 		    	<p>어느 지역에서 모이고 싶으신가요?</p>
 		    	<p>선호하는 지역을 선택해주세요.</p>
 		    	<div class="regionBox">
-		    		<div class="level1"></div>
+		    		<ul class="level1"></ul>
 		    	</div>
 		    </div>
 		    <div class="btnContainer">

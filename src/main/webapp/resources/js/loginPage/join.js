@@ -2,7 +2,7 @@
  * 240204 장한원
  * 회원가입 기능
  */
-function btnOnclick() {
+const btnOnclick = function() {
   const step1Btn = document.getElementById('next');
   const step2Btn = document.getElementById('next2');
   const step3Btn = document.getElementById('next3');
@@ -43,8 +43,6 @@ function btnOnclick() {
     nicknameNode.innerHTML = userNickname;
     selfIntroNode.innerHTML = userSelfIntro;
     data = Object.assign({}, firstArr[0], secondArr[0]);
-
-    console.log(data)
   });
   
   // 마지막 확인 버튼
@@ -76,9 +74,10 @@ function btnOnclick() {
 
 /**
  * 240207 장한원
- * 선호 지역 데이터 관리
+ * 선호 지역 데이터 처리
+ * login.js에서 호출함
  */
-function controlRegiData() {
+const controlRegiData = function() {
 
   // fetch("/gether/gatRegi.com", {
   //   method: 'POST', // 요청 메서드 설정
@@ -139,47 +138,39 @@ function controlRegiData() {
 
 
 /* 부모 지역 노드 생성 및 자식 지역 노드 생성 함수 */
-function createNode(item) {
+const createNode = function(item) {
   // 부모 지역 노드 생성
-  const parentRegiNode = document.createElement('div');
+  const parentRegiNode = document.createElement('li');
   parentRegiNode.className = 'R_1';
   parentRegiNode.innerHTML = item.REGI_NAME;
   parentRegiNode.dataset.code = item.PARENTS_CODE;
 
-  document.querySelector('.level1').appendChild(parentRegiNode); // 추가
-
   //자식 노드 생성 (checkbox들을 담을 div)
-  const childRegiNode = document.createElement('div');
+  const childRegiNode = document.createElement('ul');
   childRegiNode.className = 'level2';
   childRegiNode.dataset.pcode = item.PARENTS_CODE;
-
-  document.querySelector('.level1').appendChild(childRegiNode);
+  
+  document.querySelector('.level1').appendChild(parentRegiNode); 
+  parentRegiNode.appendChild(childRegiNode);
 }
 
 
 /* 자식 지역 체크박스 생성 함수 */
-function createChildRegi(item, pcode) {
+const createChildRegi = function(item, pcode) {
   if(item.PARENTS_CODE == pcode) {
-    const container = document.createElement('div');
+    const container = document.createElement('li');
 
     const childRegi = document.createElement('button');
     childRegi.type = 'button';
     childRegi.className = 'child';
     childRegi.textContent = item.REGI_NAME;
     childRegi.dataset.regiCode = item.REGI_CODE;
-
     childRegi.addEventListener('click', handleChange);
     
-    const childRegilabel = document.createElement('label');
-    childRegilabel.className = 'childlabel';
-    childRegilabel.innerHTML = item.REGI_NAME;
+    const targetElement = document.querySelector(`ul[data-pcode="${pcode}"]`);
     
-    const targetElement = document.querySelector(`div[data-pcode="${pcode}"]`);
-    
-    targetElement.appendChild(childRegi);
-    // container.appendChild(childRegilabel);
-    
-    // targetElement.appendChild(container);
+    container.appendChild(childRegi)
+    targetElement.appendChild(container);
   }
 }
 
@@ -188,8 +179,8 @@ let regiCheckArr = [];
 
 // onchange 이벤트를 감지하여 처리하는 함수 정의
 const handleChange = function(event) {
+	event.stopPropagation()
   const target = event.target;
-  console.log(target)
   target.classList.toggle('clicked');
 
   const regiCode = target.getAttribute('data-regi-code');
@@ -210,27 +201,23 @@ const handleChange = function(event) {
 
 
 /* 자식 지역 이벤트 리스너 */
-function showChildRegi(parentCodeList) {
+const showChildRegi = function(parentCodeList) {
  
   parentCodeList.forEach((pcode, i) => {
 
-    const targetElement = document.querySelector(`div[data-code="${pcode}"]`);
+    const targetElement = document.querySelector(`li[data-code="${pcode}"]`);
     
-    targetElement.addEventListener('mouseover', (e)=>{
-      const childElement = e.target.nextElementSibling;
-      childElement.style.display = 'flex';
+    targetElement.addEventListener('click', (event)=>{
+      event.stopPropagation()
+      const childElement = document.querySelector(`ul[data-pcode="${pcode}"]`);
+      targetElement.classList.toggle('R_1_active');
+      childElement.classList.toggle('level2_active');
     });
-
-    targetElement.addEventListener('mouseleave', (e)=>{
-      const childElement = e.target.nextElementSibling;
-      childElement.style.display = 'none';
-    });
-
   });
 
 }
 
-function checkRegi(regi) {
+const checkRegi = function(regi) {
 
   const regiCode = regi.getAttribute('data-regi-code');
   const isChecked = regi.checked;

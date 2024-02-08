@@ -6,12 +6,12 @@ body{
  }
  
 .backGroundContainer {
-  /* overflow: hidden; */
+  overflow: hidden;
   position: relative;
   width: 100%;
 }
 
-.backGroundContainer ul {
+.backGroundContainer ul.backGroundList {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -74,6 +74,27 @@ form {
 	width: 0;
 	padding: 0;
 	position: absolute;
+}
+
+#signupStep3 {
+	overflow: scroll;
+}
+
+#signupStep3::-webkit-scrollbar {
+	display: block;
+	height: 0;
+  width: 20px;
+}
+
+/* 스크롤바 막대 설정*/
+#signupStep3::-webkit-scrollbar-thumb{
+  background-color: #fff;
+  border-radius: 10px; 
+	border: 7px solid #fff;
+}
+
+#signupStep3::-webkit-scrollbar-track{
+	background-color: rgba(0,0,0,0); /* 스크롤바 뒷 배경을 투명 처리한다 */
 }
 
 ._act {
@@ -296,7 +317,7 @@ form {
 
 .R_1 {
 	flex: 1 1 30%;
-  margin: 14px 0;
+  padding: 14px 0;
   justify-content: center;
   display: flex;
   align-items: center;
@@ -304,44 +325,51 @@ form {
   flex-direction: column;
 }
 
+.R_1_active {
+	color: var(--primary);
+}
+
 .R_1:hover {
 	color: var(--primary);
 }
 
 .level2 {
-	display: flex;
+	display: none;
+	justify-content: center;
   flex-wrap: wrap;
-  background-color: var(--primary);
+  background-color: var(--color-orange400);
   color: var(--color-white);
   border-radius: 16px;
-  position: absolute;
+  width: 400px;
+  margin-top: 6px;
+  /* position: absolute;
   z-index: 1;
+  top: 210px;  */
 }
 
-.level2-active {
-	padding: 10px;
+.level2 li{
+  padding: 6px;
+}
+
+.level2_active {
+	display: flex;
 }
 
 .child {
-	/* display: none; */
 	justify-content: center;
-	flex: 1 1 25%;
-	line-height: 44px;
+	flex: 1 1 20%;
 	width: fit-content;
+	color: var(--color-white);
+	padding: 6px;
+  border-radius: 15px;
 }
 
 .clicked {
-	background-color: black;
-	color: var(--color-white);
+	background-color: var(--color-white);
+	color: var(--primary);
+	font-weight: 500;
 }
 
-/* .child + .childlabel {
-  justify-content: center;
-	flex: 1 1 25%;
-	line-height: 44px;
-	width: fit-content;
-}
-  */
 .mypage-bg {
 	height: calc(35% + 20px);
   background-color: var(--color-orange300);
