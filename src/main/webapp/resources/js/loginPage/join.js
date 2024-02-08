@@ -139,11 +139,17 @@ const controlRegiData = function() {
 
 /* 부모 지역 노드 생성 및 자식 지역 노드 생성 함수 */
 const createNode = function(item) {
-  // 부모 지역 노드 생성
+  // 부모 지역 담을 태그
   const parentRegiNode = document.createElement('li');
-  parentRegiNode.className = 'R_1';
-  parentRegiNode.innerHTML = item.REGI_NAME;
-  parentRegiNode.dataset.code = item.PARENTS_CODE;
+  parentRegiNode.className = 'regionList';
+  
+  // 부모 지역 노드
+  const parentRegiNameNode = document.createElement('span');
+  parentRegiNameNode.dataset.code = item.PARENTS_CODE;
+  parentRegiNameNode.className = 'parent';
+  parentRegiNameNode.innerHTML = item.REGI_NAME;
+
+  parentRegiNode.appendChild(parentRegiNameNode); // li + span
 
   //자식 노드 생성 (checkbox들을 담을 div)
   const childRegiNode = document.createElement('ul');
@@ -205,12 +211,12 @@ const showChildRegi = function(parentCodeList) {
  
   parentCodeList.forEach((pcode, i) => {
 
-    const targetElement = document.querySelector(`li[data-code="${pcode}"]`);
+    const targetElement = document.querySelector(`span[data-code="${pcode}"]`);
     
     targetElement.addEventListener('click', (event)=>{
       event.stopPropagation()
       const childElement = document.querySelector(`ul[data-pcode="${pcode}"]`);
-      targetElement.classList.toggle('R_1_active');
+      targetElement.classList.toggle('parent_active');
       childElement.classList.toggle('level2_active');
     });
   });

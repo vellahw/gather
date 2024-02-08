@@ -102,7 +102,7 @@
 		  </form>
 		</div>
 		<div class="loginContainer" id="signupStep3">
-		  <form method="post" action="/signup">
+		  <form>
 		    <h2 class="LoginHead">회원가입</h2>
 		    <div class="regionArea">
 		    	<p>어느 지역에서 모이고 싶으신가요?</p>

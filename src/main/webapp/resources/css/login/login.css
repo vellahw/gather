@@ -88,13 +88,24 @@ form {
 
 /* 스크롤바 막대 설정*/
 #signupStep3::-webkit-scrollbar-thumb{
-  background-color: #fff;
+  background-color: var(--primary);
   border-radius: 10px; 
 	border: 7px solid #fff;
 }
 
 #signupStep3::-webkit-scrollbar-track{
-	background-color: rgba(0,0,0,0); /* 스크롤바 뒷 배경을 투명 처리한다 */
+	background-color: rgba(0,0,0,0);
+}
+
+#signupStep3::-webkit-scrollbar-button:vertical:start:decrement,
+#signupStep3::-webkit-scrollbar-button:vertical:start:increment {
+  display: block;
+  height: 50px;
+}
+
+#signupStep3::-webkit-scrollbar-button:vertical:end:decrement {
+  display: block;
+  width: 50px;
 }
 
 ._act {
@@ -234,7 +245,7 @@ form {
 .btnContainer {
 	justify-content: space-between;
   display: flex;
-  padding: 14px 4px 0 4px;
+  padding: 0 4px 0 4px;
 }
 
 .waybtn {
@@ -315,22 +326,39 @@ form {
   font-size: 15px;
 }
 
-.R_1 {
+.regionList {
 	flex: 1 1 30%;
-  padding: 14px 0;
   justify-content: center;
   display: flex;
   align-items: center;
-  cursor: pointer;
   flex-direction: column;
+  transition: all 0.3s;
 }
 
-.R_1_active {
-	color: var(--primary);
+.parent {
+  padding: 10px 0;
+  cursor: pointer;
+  background-color: var(--color-white);
+  border-radius: 20px;
+  margin: 5px;
+  width: 92%;
+  text-align: center;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 2px 10px 0px;
 }
 
-.R_1:hover {
-	color: var(--primary);
+.regionList:hover {
+	transform: scale(1.03);
+	font-weight: 500;
+}
+
+.parent_active {
+	font-weight: 500;
+  width: calc(100% - 20px);
+  background-color: var(--color-orange400);
+  color: var(--color-white);
+  box-shadow: none;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .level2 {
@@ -340,8 +368,9 @@ form {
   background-color: var(--color-orange400);
   color: var(--color-white);
   border-radius: 16px;
-  width: 400px;
-  margin-top: 6px;
+  width: calc(400px - 40px);
+  margin-top: 10px;
+  transition: all 0.3s;
   /* position: absolute;
   z-index: 1;
   top: 210px;  */
@@ -353,6 +382,10 @@ form {
 
 .level2_active {
 	display: flex;
+	margin: 0;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  transform: translateY(-7px);
 }
 
 .child {
@@ -362,6 +395,12 @@ form {
 	color: var(--color-white);
 	padding: 6px;
   border-radius: 15px;
+  transition: all 0.3s;
+}
+
+.child:hover{
+	background-color: var(--color-white);
+	color: var(--primary);
 }
 
 .clicked {
