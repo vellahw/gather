@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="/resources/css/login/login.css">
 <script src="/resources/js/loginPage/login.js"></script>
 <script src="/resources/js/loginPage/join.js"></script>
-<script src="/resources/js/loginPage/joinform.js"></script>
+<script src="/resources/js/loginPage/joinformControl.js"></script>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
 
 <div class="backGroundContainer">
@@ -68,8 +68,10 @@
 			    <input type="text" id="userId" class="basicInput _join" placeholder="이메일 형식으로 입력해주세요.">
 		    	<button type="button" class="authmailBtn">이메일 인증</button>
 		    </div>
+		    <div id="appendId" class="append"></div>
 		    <label class="joinlabel" for="userPw">비밀번호</label>
 		    <input type="password" id="userPw" class="basicInput _join">
+		    <div id="appendPw" class="append"></div>
 		    <label class="joinlabel" for="pwConfirm">비밀번호 확인</label>
 		    <input type="password" id="pwConfirm" class="basicInput _join">
 		    <label class="joinlabel" for="userCell">핸드폰번호</label>
