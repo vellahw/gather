@@ -64,7 +64,10 @@
 		  <form id="signupForm" class="signupForm" method="post" autocomplete="off">
 		    <h2 class="LoginHead">회원가입</h2>
 		    <label class="joinlabel" for="userId">아이디</label>
-		    <input type="text" id="userId" class="basicInput _join">
+		    <div class="userIdContainer">
+			    <input type="text" id="userId" class="basicInput _join" placeholder="이메일 형식으로 입력해주세요.">
+		    	<button type="button" class="authmailBtn">이메일 인증</button>
+		    </div>
 		    <label class="joinlabel" for="userPw">비밀번호</label>
 		    <input type="password" id="userPw" class="basicInput _join">
 		    <label class="joinlabel" for="pwConfirm">비밀번호 확인</label>

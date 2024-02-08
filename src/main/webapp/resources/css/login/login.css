@@ -218,6 +218,39 @@ form {
   font-weight: 500;
 }
 
+.userIdContainer {
+	display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#userId {
+	margin: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: 0;
+  width: 70%;
+}
+
+.authmailBtn {
+	width: 25%;
+  padding: 15px;
+  border: 1px solid var(--primary);
+  border-radius: 25px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: 0;
+  background-color: var(--primary);
+  color: var(--color-white);
+  max-height: 49px !important;
+  transition: background-color 0.3s;
+}
+
+.authmailBtn:hover {
+	background-color: var(--color-orange500);
+}
+
 ._join {
 	margin-bottom: 20px;
 }
