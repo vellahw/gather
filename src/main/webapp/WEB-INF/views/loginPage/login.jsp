@@ -64,27 +64,27 @@
 		  <form id="signupForm" class="signupForm" method="post" autocomplete="off">
 		    <h2 class="LoginHead">회원가입</h2>
 		    <label class="joinlabel" for="userId">아이디</label>
-		    <div class="userIdContainer">
+		    <div class="userIdContainer step1">
 			    <input type="text" id="userId" class="basicInput _join" placeholder="이메일 형식으로 입력해주세요.">
 		    	<button type="button" class="authmailBtn">이메일 인증</button>
 		    </div>
 		    <div id="appendId" class="append userId"></div>
 		    
 		    <label class="joinlabel" for="userPw">비밀번호</label>
-		    <input type="password" id="userPw" class="basicInput _join">
+		    <input type="password" id="userPw" class="basicInput _join step1">
 		    <div id="appendPw" class="append userPw"></div>
 		    
 		    <label class="joinlabel" for="pwConfirm">비밀번호 확인</label>
-		    <input type="password" id="pwConfirm" class="basicInput _join">
+		    <input type="password" id="pwConfirm" class="basicInput _join step1">
 		    <div id="appendPwConfirm" class="append pwConfirm"></div>
 		    
 		    <label class="joinlabel" for="userCell">핸드폰번호</label>
-		    <input type="text" id="userCell" class="basicInput _join">
+		    <input type="text" id="userCell" class="basicInput _join step1" placeholder="숫자만 입력해주세요." maxlength="13">
 		    <div id="appendCell" class="append userCell"></div>
 		    
 		    <div class="btnContainer">
-			    <button type="button" class="waybtn prev" onclick="prevSection('step2')">이전</button>
-			    <button type="button" class="waybtn next" id="next" onclick="nextSection('step2')">다음</button>
+			    <button type="button" class="waybtn prev" onclick="prevSection('step1')">이전</button>
+			    <button type="button" class="waybtn next" id="next" onclick="nextSection('step1')">다음</button>
 		    </div>
 		  </form>
 		</div>
@@ -95,20 +95,26 @@
 		    <h2 class="LoginHead">회원가입</h2>
 		    <label class="joinlabel" for="userName">이름</label>
 		    <input type="text" id="userName" class="basicInput _join">
-			  <label class="joinlabel" for="user-regi">주민등록번호</label>
+		    <div id="appendName" class="append userName"></div>
+		    
+			  <label class="joinlabel" for="userRegiNum">주민등록번호</label>
 			  <div class="reginumbWrap">
-			    <input type="text" id="user-regi" class="basicInput _join regi">-
-			    <input type="text" id="user-regi2" class="basicInput _join regi2">
+			    <input type="text" id="userRegiNum" class="basicInput _join regi" maxlength="6">-
+			    <input type="text" id="userRegiNum2" class="basicInput _join regi2" maxlength="1">
 			    <span>●●●●●●</span>
 			  </div>
-		    <label class="joinlabel" for="user-nick">닉네임</label>
-		    <input type="text" id="user-nick" class="basicInput _join" placeholder="게더에서 사용할 닉네임을 입력해주세요!">
-			  <label class="joinlabel" for="user-self">자기소개</label>
-		    <input type="text" id="user-self" class="basicInput _join" placeholder="취향, 가치관 등을 나타내보세요!">
+			  <div id="appendRegiNum" class="append userRegiNum"></div>
+			  
+		    <label class="joinlabel" for="userNick">닉네임</label>
+		    <input type="text" id="userNick" class="basicInput _join" placeholder="게더에서 사용할 닉네임을 입력해주세요!">
+			  <div id="appendNick" class="append userNick"></div>
+			  
+			  <label class="joinlabel" for="userSelf">자기소개</label>
+		    <input type="text" id="userSelf" class="basicInput _join" placeholder="취향, 가치관 등을 나타내보세요!">
 		    
 		    <div class="btnContainer">
-			  	<button type="button" class="waybtn prev" onclick="prevSection('step3')">이전</button>
-			  	<button type="button" class="waybtn next" id="next2" onclick="nextSection('step3')">다음</button>
+			  	<button type="button" class="waybtn prev" onclick="prevSection('step2')">이전</button>
+			  	<button type="button" class="waybtn next" id="next2" onclick="nextSection('step2')">다음</button>
 		  	</div>
 		  </form>
 		</div>
@@ -123,8 +129,8 @@
 		    	</div>
 		    </div>
 		    <div class="btnContainer">
-			  	<button type="button" class="waybtn prev" onclick="prevSection('step4')">이전</button>
-			  	<button type="button" class="waybtn next" id="next3" onclick="nextSection('step4')">다음</button>
+			  	<button type="button" class="waybtn prev" onclick="prevSection('step3')">이전</button>
+			  	<button type="button" class="waybtn next" id="next3" onclick="nextSection('step3')">다음</button>
 		  	</div>
 		  </form>
 		</div>
@@ -145,7 +151,7 @@
 				</div>
 			</div>
 			<div class="btnContainer" style="margin-top: 90px;">
-			  <button type="button" class="waybtn prev" onclick="prevSection('step5')">이전</button>
+			  <button type="button" class="waybtn prev" onclick="prevSection('step4')">이전</button>
 			  <button type="button" class="waybtn next" id="submit">확인</button>
 		  </div>
 		</div>

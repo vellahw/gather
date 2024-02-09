@@ -24,11 +24,11 @@ const btnOnclick = function() {
   
   step2Btn.addEventListener('click', ()=>{
     const userName = document.getElementById('userName').value;
-    const userRegi1 = document.getElementById('user-regi').value;
-    const userRegi2 = document.getElementById('user-regi2').value;
+    const userRegi1 = document.getElementById('userRegiNum').value;
+    const userRegi2 = document.getElementById('userRegiNum2').value;
     const userRegiNum = userRegi1 + userRegi2;
-    const userNickname = document.getElementById('user-nick').value;
-    const userSelfIntro = document.getElementById('user-self').value;
+    const userNickname = document.getElementById('userNick').value;
+    const userSelfIntro = document.getElementById('userSelf').value;
     const nicknameNode = document.querySelector('.nickname');
     const selfIntroNode = document.querySelector('.selfIntro');
 
