@@ -1,3 +1,31 @@
+document.addEventListener('DOMContentLoaded', function () {
+  const showPwBtn = document.querySelector('.showPw');
+  const showIconSrc = showPwBtn.getAttribute('data-src');
+  const pwBtnImg = showPwBtn.querySelector('.pwBtnImg');
+  const userPw = document.getElementById('userPw');
+  const pwConfirm = document.getElementById('pwConfirm');
+
+  pwBtnImg.src = showIconSrc;
+  
+  showPwBtn.addEventListener('click', ()=>{
+    showPwBtn.classList.toggle('active');
+    if(showPwBtn.classList.contains('active')) {
+      pwBtnImg.src = '/resources/img/login/eyeHideIcon.png';
+      userPw.type = 'text';
+      pwConfirm.type = 'text';
+      
+    } else {
+      pwBtnImg.src = showIconSrc;
+      userPw.type = 'password';
+      pwConfirm.type = 'password';
+    }
+    
+  })
+
+
+});
+
+
 /* 
  * admin: 장한원
  * 로그인/회원가입 폼 전환을 담당
@@ -120,7 +148,6 @@ const inputChangeHandler = function() {
   const userRegiNum2 = document.getElementById('userRegiNum2');
   const userNickname = document.getElementById('userNick');
 
-
   userId.addEventListener('change', ()=>{
     if(!checkId(userId.value)){ 
       controlStyleAndAppendWarning(userId, 'appendId', '올바른 이메일 형식을 입력해주세요.');
@@ -168,30 +195,18 @@ const inputChangeHandler = function() {
 
   userName.addEventListener('input', (e)=>{
 
+    const inputValue = e.target.value;
     const isValidInput = (value) => {
       const regex = /^[ㄱ-ㅎ가-힣a-zA-Z]+$/;
       return regex.test(value);
-  };
+    };
   
-  // 입력 필드의 input 이벤트 핸들러
-      const inputValue = e.target.value;
-      if (!isValidInput(inputValue)) {
-          // 입력값이 유효하지 않으면 입력을 막음
-          controlStyleAndAppendWarning(userName, 'appendName', '한글/영어만 입력할 수 있습니다.');
-          e.target.value = e.target.value
-           .replace(/[^ㄱ-ㅎ가-힣a-zA-Z]+$/g, '');
-      }
+    if (!isValidInput(inputValue)) {
+        controlStyleAndAppendWarning(userName, 'appendName', '한글/영어만 입력할 수 있습니다.');
+        e.target.value = e.target.value
+          .replace(/[^ㄱ-ㅎ가-힣a-zA-Z]+$/g, '');
+    }
 
-
-    // const regex = /^[가-힣a-zA-Z]/;
-    // if (!regex.test(e.target.value)) {
-    //   e.preventDefault();
-    //   controlStyleAndAppendWarning(userName, 'appendName', '한글/영어만 입력할 수 있습니다.');
-
-    // } else {
-    //   e.target.value = e.target.value
-    //   .replace(/^[가-힣a-zA-Z]+$/g, '');
-    // }
   });
 
   userRegiNum.addEventListener('change', ()=>{

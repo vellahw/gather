@@ -255,6 +255,34 @@ form {
 	margin-bottom: 20px;
 }
 
+.userPwContainer {
+	height: 49px;
+  margin-bottom: 20px;
+	position: relative;
+}
+
+#userPw {
+	width: calc(100% - 32px);
+  position: absolute;
+  left: 0;
+  margin-bottom: 0;
+}
+
+.showPw {
+  position: absolute;
+  top: calc(100% - 33px);
+  right: 29px;
+}
+
+.showPw > img {
+	width: 23px;
+}
+
+.active {
+	top: calc(100% - 34.5px);
+	height: 19.8px;
+}
+
 .reginumbWrap {
 	text-align: left;
 }

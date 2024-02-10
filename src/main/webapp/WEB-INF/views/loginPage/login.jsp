@@ -13,7 +13,7 @@
 	  <c:forEach var="Bimag" items="${Bimag}">
 	  <li>
 		  <div class="backgroundItem">
-		    <img src="<c:out value="${Bimag.BACK_IMGG}"/>" class="backGroundImg">
+		    <img src="<c:out value="${Bimag.BACK_IMGG}"/>"  loading="lazy" class="backGroundImg">
 		  </div>
 	  </li>
 	  </c:forEach>
@@ -71,7 +71,12 @@
 		    <div id="appendId" class="append userId"></div>
 		    
 		    <label class="joinlabel" for="userPw">비밀번호</label>
-		    <input type="password" id="userPw" class="basicInput _join step1">
+		    <div class="userPwContainer">
+			    <input type="password" id="userPw" class="basicInput _join step1" placeholder="8-14자까지 입력 가능합니다." minlength="8" maxlength="14">
+			    <button type="button" class="showPw" data-src="/resources/img/login/eyeIcon.png">
+			    	<img class="pwBtnImg" alt="비밀번호 표시 버튼" />
+			    </button>
+		    </div>
 		    <div id="appendPw" class="append userPw"></div>
 		    
 		    <label class="joinlabel" for="pwConfirm">비밀번호 확인</label>
