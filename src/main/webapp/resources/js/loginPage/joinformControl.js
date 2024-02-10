@@ -102,8 +102,9 @@ const joinFormCheck = function(step) {
       let returnValue = true;
 
       if(userPw.value.length < 8) {
-        controlStyleAndAppendWarning(userPw, 'appendPw', '비밀번호는 최소 8자 이상 입력해주세요.');
+        controlStyleAndAppendWarning(userPw, 'appendPw', '최소 8자 이상의 비밀번호를 입력해주세요.');
         returnValue = false;
+
       } else if(userPw.value != pwConfirm.value) {
         controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', '비밀번호가 일치하지 않습니다.');
         returnValue = false;
@@ -187,13 +188,12 @@ const inputChangeHandler = function() {
     }
   });
 
-  userPw.addEventListener('change', ()=>{
-    if(userPw.value) {
-      if(userPw.value.length < 8) {
-        controlStyleAndAppendWarning(userPw, 'appendPw', '비밀번호는 최소 8자 이상 입력해주세요.');
-      } else {
-        hideWarning('.userPw');
-      }
+  userPw.addEventListener('input', (e)=>{
+    if(e.target.value.length > 14) {
+      controlStyleAndAppendWarning(userPw, 'appendPw', '최대 14자까지 설정 가능합니다.');
+      e.target.value = e.target.value.substring(0, 14);
+    } else {
+      hideWarning('.userPw');
     }
   });
 
@@ -377,8 +377,8 @@ const showUserPickedRegi = function(pickedList, regiList) {
 
   let previousValue;
 
+  // 부모 지역 생성
   parentNameList.forEach((current, index)=> {
-    // 부모지역 생성
     if (index === 0) {
       previousValue = current.parentCode; // 이전값 현재 값으로 초기화
 
@@ -392,20 +392,42 @@ const showUserPickedRegi = function(pickedList, regiList) {
       return;
     }
 
+    // 부모 지역 생성
     createParent(current);
 
     previousValue = current.parentCode; // 이전값 현재 값으로 초기화
-
-    // 자식지역 생성
-    const regiName = current.regiName;
-    const regiItemTag = document.createElement('li');
-    regiItemTag.innerHTML = regiName;
-    regiItemTag.className = 'regiItem';
-
-    const targetParent = document.querySelector(`ul[data-step4-pcode="${current.parentCode}"]`);
-    targetParent.appendChild(regiItemTag);
-
   });
 
 
+  // 자식 지역 생성
+  pickedList.forEach(current => {
+    const regiName = current.regiName;
+    
+    const regiItemTag = document.createElement('li');
+    regiItemTag.innerHTML = regiName;
+    regiItemTag.className = 'pickedChildRegiitem';
+    
+    const targetParent = document.querySelector(`ul[data-step4-child="${current.parentCode}"]`);
+
+    targetParent.appendChild(regiItemTag);
+  })
+}
+
+const createParent = function(current) {
+  const regiList = document.querySelector('.regiList');
+
+  const parentList = document.createElement('ul');
+  parentList.dataset.step4Pcode = current.parentCode;
+  parentList.className = 'parentRegiItem';
+
+  const childRegiListTag = document.createElement('ul'); // 자식 li 담는 ul
+  childRegiListTag.className = 'pickedChildRegiList';
+  childRegiListTag.dataset.step4Child = current.parentCode;
+  
+  const parentName = document.createElement('span');
+  parentName.innerHTML = current.parentName;
+
+  parentList.appendChild(parentName);
+  parentList.appendChild(childRegiListTag);
+  regiList.append(parentList);
 }

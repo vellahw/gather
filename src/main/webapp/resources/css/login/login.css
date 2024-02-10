@@ -76,34 +76,40 @@ form {
 	position: absolute;
 }
 
-#signupStep3 {
+#signupStep3, #signupStep4 {
 	overflow: scroll;
 }
 
-#signupStep3::-webkit-scrollbar {
+#signupStep3::-webkit-scrollbar,
+#signupStep4::-webkit-scrollbar {
 	display: block;
 	height: 0;
   width: 20px;
 }
 
 /* 스크롤바 막대 설정*/
-#signupStep3::-webkit-scrollbar-thumb{
+#signupStep3::-webkit-scrollbar-thumb,
+#signupStep4::-webkit-scrollbar-thumb {
   background-color: var(--primary);
   border-radius: 10px; 
 	border: 7px solid #fff;
 }
 
-#signupStep3::-webkit-scrollbar-track{
+#signupStep3::-webkit-scrollbar-track,
+#signupStep4::-webkit-scrollbar-track{
 	background-color: rgba(0,0,0,0);
 }
 
 #signupStep3::-webkit-scrollbar-button:vertical:start:decrement,
-#signupStep3::-webkit-scrollbar-button:vertical:start:increment {
+#signupStep3::-webkit-scrollbar-button:vertical:start:increment,
+#signupStep4::-webkit-scrollbar-button:vertical:start:decrement,
+#signupStep4::-webkit-scrollbar-button:vertical:start:increment {
   display: block;
   height: 50px;
 }
 
-#signupStep3::-webkit-scrollbar-button:vertical:end:decrement {
+#signupStep3::-webkit-scrollbar-button:vertical:end:decrement, 
+#signupStep4::-webkit-scrollbar-button:vertical:end:decrement {
   display: block;
   width: 50px;
 }
@@ -524,10 +530,30 @@ form {
   font-size: 14px;
 }
 
-.pickedRegi{
+.pickedRegiContianer{
 	margin-top: 35px;
 } 
 
 .pickedRegi > h3 {
 	font-size: 14px;
+}
+
+.regiList {
+	font-size: 14px;
+}
+
+.parentRegiItem {
+	padding: 5px 0;
+}
+
+.pickedChildRegiList {
+	display: flex;
+}
+
+.pickedChildRegiitem {
+	color: var(--color-white);
+  background-color: var(--color-orange400);
+  padding: 2px 6px;
+  border-radius: 13px;
+  margin: 4px 4px 0 0;
 }

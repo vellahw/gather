@@ -72,7 +72,7 @@
 		    
 		    <label class="joinlabel" for="userPw">⁕ 비밀번호</label>
 		    <div class="userPwContainer">
-			    <input type="password" id="userPw" class="basicInput _join step1" placeholder="8-14자까지 입력 가능합니다." maxlength="14">
+			    <input type="password" id="userPw" class="basicInput _join step1" placeholder="8-14자까지 입력 가능합니다.">
 			    <button type="button" class="showPw" data-src="/resources/img/login/eyeIcon.png">
 			    	<img class="pwBtnImg" alt="비밀번호 표시 버튼" />
 			    </button>
@@ -111,11 +111,11 @@
 			  <div id="appendRegiNum" class="append userRegiNum"></div>
 			  
 		    <label class="joinlabel" for="userNick">⁕ 닉네임</label>
-		    <input type="text" id="userNick" class="basicInput _join" placeholder="게더에서 사용할 닉네임을 입력해주세요!">
+		    <input type="text" id="userNick" class="basicInput _join" placeholder="게더에서 사용할 닉네임을 입력해주세요! (최대 10자)" maxlength="10">
 			  <div id="appendNick" class="append userNick"></div>
 			  
 			  <label class="joinlabel" for="userSelf">자기소개</label>
-		    <input type="text" id="userSelf" class="basicInput _join" placeholder="취향, 가치관 등을 나타내보세요!">
+		    <input type="text" id="userSelf" class="basicInput _join" placeholder="취향, 가치관 등을 나타내보세요! (최대 100자)" maxlength="100">
 		    
 		    <div class="btnContainer">
 			  	<button type="button" class="waybtn prev" onclick="prevSection('step2')">이전</button>
@@ -153,7 +153,7 @@
 				<div class="user">
 					<p class="nickname"></p>
 					<p class="selfIntro"></p>
-					<div class="pickedRegi">
+					<div class="pickedRegiContianer">
 						<h3>선호하는 모임 지역</h3>
 						<ul class="regiList">
 						</ul>
