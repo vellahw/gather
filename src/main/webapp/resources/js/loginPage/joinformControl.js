@@ -5,10 +5,15 @@ document.addEventListener('DOMContentLoaded', function () {
   const userPw = document.getElementById('userPw');
   const pwConfirm = document.getElementById('pwConfirm');
 
-  pwBtnImg.src = showIconSrc;
+  pwBtnImg.src = showIconSrc; // 비밀번호 표시 버튼 이미지 src
   
+  /**
+   * 240210 장한원
+   * 비밀번호 표시, 숨김 버튼
+   */
   showPwBtn.addEventListener('click', ()=>{
     showPwBtn.classList.toggle('active');
+
     if(showPwBtn.classList.contains('active')) {
       pwBtnImg.src = '/resources/img/login/eyeHideIcon.png';
       userPw.type = 'text';
@@ -19,8 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
       userPw.type = 'password';
       pwConfirm.type = 'password';
     }
-    
-  })
+  });
 
 
 });
@@ -54,11 +58,15 @@ const toggleForm = function(formId) {
  */
 const controlStyleAndAppendWarning = function(element, appendId, appendText) {
   const idContainer = document.querySelector('.userIdContainer');
+  const pwContainer = document.querySelector('.userPwContainer');
 
-  if(appendId != 'appendId') {
-    element.style.marginBottom = '10px';
-  } else {
+  // margin 수정
+  if(appendId == 'appendId') {
     idContainer.style.marginBottom = '10px';
+  } else if(appendId == 'appendPw') {
+    pwContainer.style.marginBottom = '10px';
+  } else {
+    element.style.marginBottom = '10px';
   }
 
   appendWarning(appendId, appendText); // login.js에 있는 함수 호출
@@ -90,10 +98,33 @@ const joinFormCheck = function(step) {
 
       return false;
     
+    } else if(userPw.value){
+      let returnValue = true;
+
+      if(userPw.value.length < 8) {
+        controlStyleAndAppendWarning(userPw, 'appendPw', '비밀번호는 최소 8자 이상 입력해주세요.');
+        returnValue = false;
+      } else if(userPw.value != pwConfirm.value) {
+        controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', '비밀번호가 일치하지 않습니다.');
+        returnValue = false;
+      }
+
+      return returnValue;
+
     } else if(!pwConfirm.value) {
       controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', '비밀번호가 일치하지 않습니다.');
 
       return false;
+    
+    } else if(pwConfirm.value) {
+      let returnValue = true;
+
+      if(pwConfirm.value != userPw.value) {
+        controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', '비밀번호가 일치하지 않습니다.');
+        returnValue = false;
+      }
+      
+      return returnValue;
 
     } else if(!cellNum.value || cellNum.value.length <= 11) {
       controlStyleAndAppendWarning(cellNum, 'appendCell', '올바른 핸드폰번호를 입력해주세요.');
@@ -158,7 +189,11 @@ const inputChangeHandler = function() {
 
   userPw.addEventListener('change', ()=>{
     if(userPw.value) {
-      hideWarning('.userPw');
+      if(userPw.value.length < 8) {
+        controlStyleAndAppendWarning(userPw, 'appendPw', '비밀번호는 최소 8자 이상 입력해주세요.');
+      } else {
+        hideWarning('.userPw');
+      }
     }
   });
 
