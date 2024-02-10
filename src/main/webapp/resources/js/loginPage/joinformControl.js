@@ -123,7 +123,7 @@ const joinFormCheck = function(step) {
         controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', '비밀번호가 일치하지 않습니다.');
         returnValue = false;
       }
-      
+
       return returnValue;
 
     } else if(!cellNum.value || cellNum.value.length <= 11) {
@@ -341,10 +341,71 @@ const nextSection = function(step) {
     }
   } else if (step == 'step3') {
     showStep(signupStep4);
+    if(pickedRegiListForStep4){
+      showUserPickedRegi(pickedRegiListForStep4, regiList);
+    }
   }
 }
 
+/**
+ * 버튼 클릭시 다음(이전) 폼 보여주는 함수
+ */
 const showStep = function(stepElement) {
   signupContainer.classList.remove('_act');
   stepElement.classList.add('_act');
+}
+
+
+/**
+ * 유저가 선택한 선호 지역을 보여주는 함수
+ */
+const showUserPickedRegi = function(pickedList, regiList) {
+  const parentNameList = [];
+
+  // 사용자의 선호지역 데이터 가공
+  pickedList.forEach(item => {
+    regiList.forEach(data => {
+      if(data.REGI_CODE == item.parentCode) {
+        parentNameList.push({
+            'parentName' : data.REGI_NAME
+          , 'parentCode' : item.parentCode
+          , 'regiName' : item.regiName
+        });
+      }
+    });
+  });
+
+  let previousValue;
+
+  parentNameList.forEach((current, index)=> {
+    // 부모지역 생성
+    if (index === 0) {
+      previousValue = current.parentCode; // 이전값 현재 값으로 초기화
+
+      createParent(current);
+
+      return;
+    }
+
+    // 현재 parentCode가 이전 parentCode와 같을 땐 요소 생성X
+    if (current.parentCode === previousValue) {
+      return;
+    }
+
+    createParent(current);
+
+    previousValue = current.parentCode; // 이전값 현재 값으로 초기화
+
+    // 자식지역 생성
+    const regiName = current.regiName;
+    const regiItemTag = document.createElement('li');
+    regiItemTag.innerHTML = regiName;
+    regiItemTag.className = 'regiItem';
+
+    const targetParent = document.querySelector(`ul[data-step4-pcode="${current.parentCode}"]`);
+    targetParent.appendChild(regiItemTag);
+
+  });
+
+
 }

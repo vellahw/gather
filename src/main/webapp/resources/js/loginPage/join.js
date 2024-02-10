@@ -55,7 +55,7 @@ const btnOnclick = function() {
       },
       body: JSON.stringify({
         data: data,
-        regi: regiCheckArr
+        regi: pickedRegiCode
       }),
     })
     .then(() => {
@@ -77,29 +77,13 @@ const btnOnclick = function() {
  * 선호 지역 데이터 처리
  * login.js에서 호출함
  */
-const controlRegiData = function() {
+const regiList = []; // 지역 데이터 list
 
-  // fetch("/gether/gatRegi.com", {
-  //   method: 'POST', // 요청 메서드 설정
-  //   headers: {
-  //     'Content-Type': 'application/json' // 요청 헤더 설정
-  //   },
-  //   body: JSON.stringify({}) // 요청 바디에 데이터 포함
-  // })
-  // .then(response => response.json())
-  // .then(data => {
-  //   // 서버에서 받아온 JSON 데이터를 사용
-  //   console.log(data);
-  //   // 받아온 데이터를 활용하여 추가적인 처리 수행
-  // })
-  // .catch(error => {
-  //   console.error('데이터를 받아오는 중 오류 발생:', error);
-  // });
+const controlRegiData = function() {
 
   const regiData = document.getElementById('regi').value;
   const cleanedData = regiData.replace(/[[\]\ ]/g, '');
   const splitData = cleanedData.split("},{");
-  const regiList = []; // 선호지역 데이터 list
 
   splitData.forEach(item => {
       // 중괄호 제거 후, 쉼표로 데이터 분리
@@ -113,6 +97,7 @@ const controlRegiData = function() {
       });
 
       regiList.push(map);
+
   });
 
   let parentCodeList = [];
@@ -134,6 +119,24 @@ const controlRegiData = function() {
 
   showChildRegi(newParentCodeList);
 
+  // fetch("/gether/gatRegi.com", {
+  //   method: 'POST', // 요청 메서드 설정
+  //   headers: {
+  //     'Content-Type': 'application/json' // 요청 헤더 설정
+  //   },
+  //   body: JSON.stringify({}) // 요청 바디에 데이터 포함
+  // })
+  // .then(response => response.json())
+  // .then(data => {
+  //   // 서버에서 받아온 JSON 데이터를 사용
+  //   console.log(data);
+  //   // 받아온 데이터를 활용하여 추가적인 처리 수행
+  // })
+  // .catch(error => {
+  //   console.error('데이터를 받아오는 중 오류 발생:', error);
+  // });
+
+  
 }
 
 
@@ -151,6 +154,7 @@ const createNode = function(item) {
   const parentRegiNameNode = document.createElement('span');
   parentRegiNameNode.className = 'parent';
   parentRegiNameNode.innerHTML = item.REGI_NAME;
+  parentRegiNameNode.dataset.rcode = item.PARENTS_CODE;
 
   parentRegiWrap.appendChild(parentRegiNameNode)
   parentRegiNode.appendChild(parentRegiWrap);
@@ -175,42 +179,72 @@ const createChildRegi = function(item, pcode) {
     childRegi.className = 'child';
     childRegi.textContent = item.REGI_NAME;
     childRegi.dataset.regiCode = item.REGI_CODE;
+
     childRegi.addEventListener('click', handleChange);
+    container.appendChild(childRegi)
     
     const targetElement = document.querySelector(`ul[data-pcode="${pcode}"]`);
-    
-    container.appendChild(childRegi)
     targetElement.appendChild(container);
   }
 }
 
-/* 지역 선택시 동작 함수 */
-let regiCheckArr = [];
+/** 
+  * 자식 지역을 선택했을 때의 동작 함수 
+  * 배열에 선택한 자식지역을 담음
+*/
+let pickedRegiCode = []; // 서버 통신을 위한 REGI_CODE 데이터
+let pickedRegiListForStep4 = []; // step4 폼을 위한 리스트
 
-// onchange 이벤트를 감지하여 처리하는 함수 정의
+/* 클릭 이벤트 콜백 함수 */
 const handleChange = function(event) {
-	event.stopPropagation()
+	event.stopPropagation();
+
   const target = event.target;
   target.classList.toggle('clicked');
 
   const regiCode = target.getAttribute('data-regi-code');
-
   const classList = target.classList;
   
   if(classList.contains('clicked')) {
-    regiCheckArr.push({ 'REGI_CODE': regiCode });
-  } else {  
-    for (let i = 0; i < regiCheckArr.length; i++) {
-      if (regiCheckArr[i]['REGI_CODE'] === regiCode) {
-        regiCheckArr.splice(i, 1);
+    
+    pickedRegiCode.push({ 'REGI_CODE': regiCode });
+
+    pickedRegiListForStep4.push({'regiName': target.innerText, 'parentCode': regiCode.substring(0,1)});
+
+  } else { // 클릭 해제한 데이터 배열에서 삭제
+
+    // pickedRegiCode[]
+    for (let i = 0; i < pickedRegiCode.length; i++) {
+      if (pickedRegiCode[i]['REGI_CODE'] === regiCode) {
+        pickedRegiCode.splice(i, 1);
+        
         break;
       }
     }
+
+    // pickedRegiListForStep4[]
+    for (let i = 0; i < pickedRegiListForStep4.length; i++) {
+
+      if (pickedRegiListForStep4[i]['regiName'] === target.innerText) {
+        pickedRegiListForStep4.splice(i, 1);
+        
+        break;
+
+      } else if (pickedRegiListForStep4[i]['parentCode'] === regiCode.substring(0,1)) {
+        pickedRegiListForStep4.splice(i, 1);
+        
+        break;
+      }
+
+    }
+
   }
 };
 
 
-/* 자식 지역 이벤트 리스너 */
+/*
+ * 자식 지역 클릭 시 class toggle
+*/
 const showChildRegi = function(parentCodeList) {
  
   parentCodeList.forEach((pcode, i) => {
@@ -218,33 +252,17 @@ const showChildRegi = function(parentCodeList) {
     const targetElement = document.querySelector(`span[data-code="${pcode}"]`);
     
     targetElement.addEventListener('click', (event)=>{
-      event.stopPropagation()
-      const parentNameElement = document.querySelector(`span .parent`);
+
+      event.stopPropagation();
+
+      const parentNameElement = document.querySelector(`span[data-rcode="${pcode}"]`);
       const childElement = document.querySelector(`ul[data-pcode="${pcode}"]`);
+
       targetElement.classList.toggle('parentWrap_active');
       parentNameElement.classList.toggle('parent_active');
       childElement.classList.toggle('level2_active');
+
     });
   });
-
-}
-
-const checkRegi = function(regi) {
-
-  const regiCode = regi.getAttribute('data-regi-code');
-  const isChecked = regi.checked;
-
-  if (isChecked) {
-
-    regiCheckArr.push({ 'REGI_CODE': regiCode });
-
-  } else {
-
-    for (let i = 0; i < regiCheckArr.length; i++) {
-      if (regiCheckArr[i]['REGI_CODE'] === regiCode) {
-        regiCheckArr.splice(i, 1);
-        break;
-      }
-    }
-  }
+  
 }

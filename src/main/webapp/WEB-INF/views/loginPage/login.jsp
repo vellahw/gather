@@ -153,9 +153,15 @@
 				<div class="user">
 					<p class="nickname"></p>
 					<p class="selfIntro"></p>
+					<div class="pickedRegi">
+						<h3>선호하는 모임 지역</h3>
+						<ul class="regiList">
+						</ul>
+					</div>
+					
 				</div>
 			</div>
-			<div class="btnContainer" style="margin-top: 90px;">
+			<div class="btnContainer" style="margin-top: 34px;">
 			  <button type="button" class="waybtn prev" onclick="prevSection('step4')">이전</button>
 			  <button type="button" class="waybtn next" id="submit">확인</button>
 		  </div>

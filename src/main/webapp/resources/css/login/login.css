@@ -523,3 +523,11 @@ form {
 	color: var(--color-gray500);
   font-size: 14px;
 }
+
+.pickedRegi{
+	margin-top: 35px;
+} 
+
+.pickedRegi > h3 {
+	font-size: 14px;
+}
