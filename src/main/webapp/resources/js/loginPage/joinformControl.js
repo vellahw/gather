@@ -365,8 +365,6 @@ const showStep = function(stepElement) {
  */
 const showUserPickedRegi = function(pickedList, regiList) {
 
-  console.log(pickedList);
-
   let parentNameList = [];
 
   // 사용자의 선호지역 데이터 가공
@@ -399,11 +397,13 @@ const showUserPickedRegi = function(pickedList, regiList) {
       return;
     }
 
+    createParent(current);
+
     previousValue = current.parentCode; // 이전값 현재 값으로 초기화
+
   });
 
   // 자식 지역 생성
-
   pickedList.forEach(current => {
     const regiName = current.regiName;
     
