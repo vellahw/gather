@@ -60,7 +60,7 @@
 		  </div>
 	
 		<div class="loginContainer" id="signupContainer">
-		  <form id="signupForm" class="signupForm" method="post" autocomplete="off">
+		  <form id="signupForm" class="signupForm" method="post">
 		    <h2 class="LoginHead">회원가입</h2>
 		    <label class="joinlabel" for="userId">⁕ 아이디</label>
 		    <div class="userIdContainer step1">

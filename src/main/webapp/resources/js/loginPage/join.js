@@ -479,10 +479,14 @@ const btnOnclick = function() {
               const authmailContainer = document.querySelector('.authmailContainer');
               authmailContainer.style.display = 'block';
 
-              startTimer(); // 타이머
+              authmailBtn.textContent = '재전송'
 
-              const authnumSubmitBtn = document.querySelector('.authmailSubmit');
+              startTimer(); // 타이머 시작
+
+              const authnumSubmitBtn = document.querySelector('.authmailSubmit'); // 인증 확인 버튼
+
               authnumSubmitBtn.addEventListener('click', ()=>{
+
                 const authNum = document.getElementById('authmail');
   
                 // 인증번호 불일치
@@ -498,15 +502,13 @@ const btnOnclick = function() {
                   document.querySelector('.authmailContainer').style.display = 'none'; // 인증번호 컨테이너 숨김
                   document.getElementById('userPw').focus();
                 }
-              })
+
+              });
             
             } else if(data == 'fail'){
 
               controlStyleAndAppendWarning(userId, 'appendId', '이메일을 다시 확인해주세요.');
             }
-
-            console.log("data : " + data);
-
           }
         );
       }
@@ -546,8 +548,9 @@ const btnOnclick = function() {
 
 
 /**
-  * 메일 인증 번호 타이머
-  */
+  * 240213 장한원
+  * 메일 인증 번호 유효시간 타이머
+*/
 let countdownInterval;
 function startTimer() {
   const timeInMinutes = 3;
@@ -555,6 +558,9 @@ function startTimer() {
 
   const timerDisplay = document.getElementById('timer');
   let currentTime = timeInSeconds;
+
+  clearInterval(countdownInterval); // 타이머 멈춤
+  timerDisplay.textContent = ''; // 타이머 표시 요소를 초기화
 
   // 초단위로 감소하는 타이머
   countdownInterval = setInterval(() => {
@@ -564,7 +570,7 @@ function startTimer() {
       if (currentTime <= 0) {
           clearInterval(countdownInterval);
 
-          timerDisplay.textContent = '00:00';
+          timerDisplay.textContent = '0:00';
 
           comAlert3(
               '인증 시간이 만료되었습니다.'
@@ -578,7 +584,10 @@ function startTimer() {
   }, 1000);
 }
 
-// 타이머 표시 업데이트 함수
+/* 
+ * 240213 장한원
+ * 타이머 표시 업데이트 함수
+*/
 function updateTimerDisplay(timeInSeconds) {
   const timerDisplay = document.getElementById('timer');
   const minutes = Math.floor(timeInSeconds / 60);
