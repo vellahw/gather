@@ -267,21 +267,16 @@ name:comAlert3
 Purpose:알럿창
 parameter:(title : 제목, icon:아이콘 , content: 내용 , button: 버튼 , okFn : 확인 후 함수)
 */ 
-function comAlert3(title, content, icon,  okFn){
+function comAlert3(title, content, icon,  okFn) {
     
-    swal({
-        title: title,
-        text: content,
-        icon: icon,
-        buttons:'확인',
-        }).then(function(isConfirm) {
-        if (isConfirm) {
-            okFn
-        } else {
-
-        }
-        })
-}
+  swal({ 
+    title: title,
+    text: content,                    
+    icon: icon,
+    button: "확인",
+    closeOnClickOutside: false
+    }).then(okFn);
+  }
 
 /* 
 240114 KSH
