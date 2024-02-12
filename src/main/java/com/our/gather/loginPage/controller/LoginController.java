@@ -84,24 +84,6 @@ public class LoginController {
 		return mv;
 	}
 
-	
-	@ResponseBody
-	@RequestMapping("/gether/gatRegi.com")
-	public ResponseEntity<String> insertNotify(@RequestBody Map<String, String> map, HttpSession session,
-			HttpServletRequest request, CommandMap commandMap) throws Exception {
-
-		List<Map<String, Object>> getRegi = commonService.getRegi(commandMap.getMap(), commandMap);
-
-		ObjectMapper objectMapper = new ObjectMapper();
-		// 데이터를 JSON 문자열로 변환
-		String json = objectMapper.writeValueAsString(getRegi);
-		
-
-		return ResponseEntity.ok()
-			    .contentType(MediaType.APPLICATION_JSON)
-			    .body(json);
-	}
-
 	// 아이디 중복 검사
 	@RequestMapping(value = "/gather/loginCheck.com", method = RequestMethod.POST)
 	@ResponseBody

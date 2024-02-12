@@ -72,7 +72,7 @@
 		    
 		    <label class="joinlabel" for="userPw">⁕ 비밀번호</label>
 		    <div class="userPwContainer">
-			    <input type="password" id="userPw" class="basicInput _join step1" placeholder="8-14자까지 입력 가능합니다.">
+			    <input type="password" id="userPw" class="basicInput _join step1" placeholder="영문, 숫자, 특수문자를 포함한 8~14자를 입력해주세요.">
 			    <button type="button" class="showPw" data-src="/resources/img/login/eyeIcon.png">
 			    	<img class="pwBtnImg" alt="비밀번호 표시 버튼" />
 			    </button>

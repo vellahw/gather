@@ -119,24 +119,6 @@ const controlRegiData = function() {
 
   showChildRegi(newParentCodeList);
 
-  // fetch("/gether/gatRegi.com", {
-  //   method: 'POST', // 요청 메서드 설정
-  //   headers: {
-  //     'Content-Type': 'application/json' // 요청 헤더 설정
-  //   },
-  //   body: JSON.stringify({}) // 요청 바디에 데이터 포함
-  // })
-  // .then(response => response.json())
-  // .then(data => {
-  //   // 서버에서 받아온 JSON 데이터를 사용
-  //   console.log(data);
-  //   // 받아온 데이터를 활용하여 추가적인 처리 수행
-  // })
-  // .catch(error => {
-  //   console.error('데이터를 받아오는 중 오류 발생:', error);
-  // });
-
-  
 }
 
 
