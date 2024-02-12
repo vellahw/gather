@@ -392,12 +392,8 @@ const showUserPickedRegi = function(pickedList, regiList) {
       return;
     }
 
-    // 부모 지역 생성
-    createParent(current);
-
     previousValue = current.parentCode; // 이전값 현재 값으로 초기화
   });
-
 
   // 자식 지역 생성
   pickedList.forEach(current => {
