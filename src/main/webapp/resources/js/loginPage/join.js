@@ -463,7 +463,7 @@ const btnOnclick = function() {
 
         hideWarning('.userId');
 
-        let email = $("#userId").val();        // 입력한 이메일
+        let email = $("#userId").val(); // 입력한 이메일
         
         comAjax(
             "GET"
@@ -475,9 +475,30 @@ const btnOnclick = function() {
             if(data != 'fail') {
               comAlert2(2,"이메일이 발송되었습니다.", null);
 
-              const authmailSubmitBtn = document.querySelector('.authmailContainer');
-              authmailSubmitBtn.style.display = 'block';
+              // 인증번호 입력하는 input
+              const authmailContainer = document.querySelector('.authmailContainer');
+              authmailContainer.style.display = 'block';
+
               startTimer(); // 타이머
+
+              const authnumSubmitBtn = document.querySelector('.authmailSubmit');
+              authnumSubmitBtn.addEventListener('click', ()=>{
+                const authNum = document.getElementById('authmail');
+  
+                // 인증번호 불일치
+                if(authNum.value != data) {
+                  // 경고문 띄움
+                  controlStyleAndAppendWarning(authNum, 'appendAuthnum', '인증번호가 틀립니다. 다시 확인해주세요.');
+                
+                // 인증번호 일치
+                } else {
+                  comAlert2(1, '인증 완료되었습니다');
+                  clearInterval(countdownInterval);
+                  hideWarning('.appendAuthnum'); // 경고문 숨김
+                  document.querySelector('.authmailContainer').style.display = 'none'; // 인증번호 컨테이너 숨김
+                  document.getElementById('userPw').focus();
+                }
+              })
             
             } else if(data == 'fail'){
 
@@ -527,6 +548,7 @@ const btnOnclick = function() {
 /**
   * 메일 인증 번호 타이머
   */
+let countdownInterval;
 function startTimer() {
   const timeInMinutes = 3;
   const timeInSeconds = timeInMinutes * 60;
@@ -535,7 +557,7 @@ function startTimer() {
   let currentTime = timeInSeconds;
 
   // 초단위로 감소하는 타이머
-  const countdownInterval = setInterval(() => {
+  countdownInterval = setInterval(() => {
       currentTime--;
       updateTimerDisplay(currentTime);
 
@@ -549,10 +571,9 @@ function startTimer() {
             , null, 'warning'
             , function(){
                 document.querySelector('.authmailContainer').style.display = 'none';
+                document.querySelector('#authmail').value = '';
               }
           );
-
-         
       }
   }, 1000);
 }

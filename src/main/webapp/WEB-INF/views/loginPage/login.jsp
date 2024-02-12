@@ -75,9 +75,10 @@
 			     <span id="timer"></span>
 		     </div>
 		     <div class="authmailInput step1">
-			     <input type="text" id="authmail" class="basicInput _join" placeholder="인증번호를 입력해주세요.">
+			     <input type="text" id="authmail" class="basicInput _join" placeholder="인증번호를 입력해주세요." maxlength="6">
 		    	 <button type="button" class="authmailSubmit authmailBtn_style">확인</button>
 		     </div>
+		     <div id="appendAuthnum" class="append appendAuthnum"></div>
 		   </div>
 		    
 		    <label class="joinlabel" for="userPw">⁕ 비밀번호</label>
