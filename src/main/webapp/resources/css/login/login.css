@@ -231,11 +231,11 @@ form {
   margin-bottom: 20px;
 }
 
-_append {
-	margin-bottom: 10px;
+.append-margin-bottom {
+	margin-bottom: 10px !important;
 }
 
-#userId, #authmail {
+#userId, #authnum {
 	margin: 0;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;

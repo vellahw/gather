@@ -132,19 +132,22 @@ const showStep = function(stepElement) {
 
 /**
  * admin: 장한원
- * 유효성검사 경고 문구 append 컨트롤 함수
+ * 유효성검사 경고 문구 띄우는 함수
 */
 const controlStyleAndAppendWarning = function(element, appendId, appendText) {
   const idContainer = document.querySelector('.userIdContainer');
   const pwContainer = document.querySelector('.userPwContainer');
+  const authmailInput = document.querySelector('.authmailInput');
 
   // margin 수정
   if(appendId == 'appendId') {
-    idContainer.style.marginBottom = '10px';
+    idContainer.classList.add('append-margin-bottom');
   } else if(appendId == 'appendPw') {
-    pwContainer.style.marginBottom = '10px';
+    pwContainer.classList.add('append-margin-bottom');
+  } else if(appendId == 'appendAuthnum') {
+    authmailInput.classList.add('append-margin-bottom');
   } else {
-    element.style.marginBottom = '10px';
+    element.classList.add('append-margin-bottom');
   }
 
   appendWarning(appendId, appendText); // login.js에 있는 함수 호출
@@ -153,10 +156,32 @@ const controlStyleAndAppendWarning = function(element, appendId, appendText) {
 }
 
 /**
+ * admin: 장한원
+ * 유효성검사 경고 문구 숨기는 함수
+*/
+const hideWarning = function(className) {
+  const appendNode = document.querySelector(className);
+  
+  const idContainer = document.querySelector('.userIdContainer');
+  const pwContainer = document.querySelector('.userPwContainer');
+  
+  if(className == '.userId') {
+    idContainer.classList.remove('append-margin-bottom');
+  } else if(className == '.userPw') {
+    pwContainer.classList.remove('append-margin-bottom');
+  } else {
+    document.querySelector(className).classList.remove('append-margin-bottom');
+  }
+
+  appendNode.style.display = 'none';
+}
+
+/**
  * admin 장한원
  * 유효성 검사 함수
 */
 let isNickUsed; // 닉네임 중복 여부 저장
+let isAuth = 'N';
 
 const joinFormCheck = function(step) {
 
@@ -164,13 +189,19 @@ const joinFormCheck = function(step) {
   if(step == 'step1') {
     const userId = document.getElementById('userId');
     const userIdContainer = document.querySelector('.userIdContainer');
+    const authnum = document.getElementById('authnum');
     const userPw = document.getElementById('userPw');
     const pwConfirm = document.getElementById('pwConfirm');
     const cellNum = document.getElementById('userCell');
 
     if(!userId.value) {
-      controlStyleAndAppendWarning(userIdContainer, 'appendId', '아이디(이메일)을 입력해주세요.');
+      controlStyleAndAppendWarning(userId, 'appendId', '아이디(이메일)을 입력해주세요.');
 
+      return false;
+ 
+    } else if(!checkId(userId.value)){ 
+      controlStyleAndAppendWarning(userId, 'appendId', '올바른 이메일 형식을 입력해주세요.');
+        
       return false;
 
     } else if(!userPw.value){
@@ -178,6 +209,28 @@ const joinFormCheck = function(step) {
 
       return false;
     
+    } else if(userPw.value) {
+
+      const isValidInput = (value) => {
+        const regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+        return regex.test(value);
+      };
+
+      if(userPw.value.length > 14) {
+        controlStyleAndAppendWarning(userPw, 'appendPw', '최대 14자까지 설정 가능합니다.');
+        return false;
+      }
+      
+      if(userPw.value.length < 8) {
+        controlStyleAndAppendWarning(userPw, 'appendPw', '최소 8자 이상 입력해주세요.');
+        return false;
+      }
+      
+      if (!isValidInput(userPw.value)) {
+        controlStyleAndAppendWarning(userPw, 'appendPw', '영문+숫자+특수문자 조합으로 입력해주세요.');
+        return false;
+      }
+      
     } else if(!pwConfirm.value) {
       controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', '비밀번호가 일치하지 않습니다.');
 
@@ -190,6 +243,23 @@ const joinFormCheck = function(step) {
 
     } else if(!cellNum.value || cellNum.value.length <= 11) {
       controlStyleAndAppendWarning(cellNum, 'appendCell', '올바른 핸드폰번호를 입력해주세요.');
+
+      return false;
+    
+    } else if(!authnum.value){
+      controlStyleAndAppendWarning(authnum, 'appendAuthnum', '인증번호를 입력해주세요.');
+
+      return false;
+
+    } else if(isAuth == 'N') {
+      comAlert3(
+        '이메일을 인증해주세요'
+      , null
+      , 'warning'
+      , function(){
+          document.getElementById('userId').focus();
+        }
+      );
 
       return false;
 
@@ -235,6 +305,8 @@ const joinFormCheck = function(step) {
  * 각 input에 change 이벤트 부여
  */
 const inputChangeHandler = function() {
+  const userId = document.getElementById('userId');
+  const authnum = document.getElementById('authnum');
   const userPw = document.getElementById('userPw');
   const pwConfirm = document.getElementById('pwConfirm');
   const userCell = document.getElementById('userCell');
@@ -243,14 +315,30 @@ const inputChangeHandler = function() {
   const userRegiNum2 = document.getElementById('userRegiNum2');
   const userNickname = document.getElementById('userNick');
 
+  // 엔터 누르면 버튼 클릭
+  userId.addEventListener('keyup', enterKeyupEvent);
+  authnum.addEventListener('keyup', enterKeyupEvent);
+
+  userId.addEventListener('change', ()=>{
+    if(!checkId(userId.value)){ 
+      controlStyleAndAppendWarning(userId, 'appendId', '올바른 이메일 형식을 입력해주세요.');
+      
+      return false;
+
+    } else {
+      hideWarning('.userId');
+    }
+  })
+
   userPw.addEventListener('input', (e)=>{
-    
+
     if(e.target.value.length > 14) {
       controlStyleAndAppendWarning(userPw, 'appendPw', '최대 14자까지 설정 가능합니다.');
       e.target.value = e.target.value.substring(0, 14);
     } else {
       hideWarning('.userPw');
     }
+
   });
 
   userPw.addEventListener('change', (e)=>{
@@ -260,11 +348,16 @@ const inputChangeHandler = function() {
       return regex.test(value);
     };
 
-    if(inputValue.length > 1 && inputValue.length < 8) {
-      controlStyleAndAppendWarning(userPw, 'appendPw', '최소 8자 이상 입력해주세요.');
-    } else if (!isValidInput(inputValue)) {
-      controlStyleAndAppendWarning(userPw, 'appendPw', '영문+숫자+특수문자 조합으로 입력해주세요.');
+    if(inputValue) {
+      if(inputValue.length < 8) {
+        controlStyleAndAppendWarning(userPw, 'appendPw', '최소 8자 이상 입력해주세요.');
+      }
+
+      if (!isValidInput(inputValue)) {
+        controlStyleAndAppendWarning(userPw, 'appendPw', '영문+숫자+특수문자 조합으로 입력해주세요.');
+      }
     }
+
   });
 
   pwConfirm.addEventListener('change', ()=>{
@@ -322,6 +415,10 @@ const inputChangeHandler = function() {
   userRegiNum.addEventListener('input', (e)=>{
     e.target.value = e.target.value
       .replace(/[^0-9]+$/g, '');
+
+    if(e.target.value.length == 6) {
+      userRegiNum2.focus();
+    }
   });
 
   userRegiNum2.addEventListener('change', ()=>{
@@ -370,10 +467,13 @@ const inputChangeHandler = function() {
   });
 }
 
-// 경고문구 숨김처리
-const hideWarning = function(className) {
-  const appendNode = document.querySelector(className);
-  appendNode.style.display = 'none';
+const enterKeyupEvent = function(event) {
+  const clickTargetSelector = event.target.dataset.clickTarget;
+
+  if(event.code === 'NumpadEnter' || event.code === 'Enter') {
+    event.preventDefault();
+    document.querySelector(clickTargetSelector).click();
+  }
 }
 
 /**
@@ -385,7 +485,7 @@ const btnOnclick = function() {
   const step2Btn = document.getElementById('next2');
   const step3Btn = document.getElementById('next3');
   const submitBtn = document.getElementById('submit');
-  const authmailBtn = document.querySelector('.authmail');
+  const authmailBtn = document.querySelector('.authmail'); // '이메일 인증' 버튼
 
   let firstArr = [];
   let data;
@@ -433,11 +533,12 @@ const btnOnclick = function() {
     const userId = document.getElementById('userId');
 
     if(!checkId(userId.value)){ 
-
       controlStyleAndAppendWarning(userId, 'appendId', '올바른 이메일 형식을 입력해주세요.');
       
       return false;
 
+    } else {
+      hideWarning('.userId');
     }
 
     // 아이디(이메일) 중복 검사
@@ -471,10 +572,12 @@ const btnOnclick = function() {
           , null
           , null
           , function(data){
+          
+          	console.log(data);
 
             if(data != 'fail') {
               comAlert2(2,"이메일이 발송되었습니다.", null);
-
+	
               // 인증번호 입력하는 input
               const authmailContainer = document.querySelector('.authmailContainer');
               authmailContainer.style.display = 'block';
@@ -483,11 +586,12 @@ const btnOnclick = function() {
 
               startTimer(); // 타이머 시작
 
-              const authnumSubmitBtn = document.querySelector('.authmailSubmit'); // 인증 확인 버튼
+              const authnumSubmitBtn = document.querySelector('button.authmailSubmit'); // 인증 확인 버튼
 
+              // '확인' 버튼 클릭 이벤트
               authnumSubmitBtn.addEventListener('click', ()=>{
 
-                const authNum = document.getElementById('authmail');
+                const authNum = document.getElementById('authnum');
   
                 // 인증번호 불일치
                 if(authNum.value != data) {
@@ -496,11 +600,19 @@ const btnOnclick = function() {
                 
                 // 인증번호 일치
                 } else {
-                  comAlert2(1, '인증 완료되었습니다');
-                  clearInterval(countdownInterval);
-                  hideWarning('.appendAuthnum'); // 경고문 숨김
-                  document.querySelector('.authmailContainer').style.display = 'none'; // 인증번호 컨테이너 숨김
-                  document.getElementById('userPw').focus();
+                  comAlert3(
+                    '인증 완료되었습니다'
+                  , null
+                  , 'success'
+                  , function(){
+                      document.getElementById('userPw').focus();
+                      document.querySelector('.authmailContainer').style.display = 'none'; // 인증번호 컨테이너 숨김
+                      hideWarning('.appendAuthnum'); // 경고문 숨김
+                      clearInterval(countdownInterval);
+                    }
+                  );
+
+                  isAuth = 'Y'; // 인증 유무 저장
                 }
 
               });
@@ -577,7 +689,7 @@ function startTimer() {
             , null, 'warning'
             , function(){
                 document.querySelector('.authmailContainer').style.display = 'none';
-                document.querySelector('#authmail').value = '';
+                document.querySelector('#authnum').value = '';
               }
           );
       }
@@ -756,7 +868,7 @@ const handleChange = function(event) {
  * 자식 지역 클릭 시 class toggle
 */
 const showChildRegi = function(parentCodeList) {
- 
+
   parentCodeList.forEach((pcode, i) => {
 
     const targetElement = document.querySelector(`span[data-code="${pcode}"]`);
@@ -774,11 +886,11 @@ const showChildRegi = function(parentCodeList) {
 
     });
   });
-  
 }
 
 
 /**
+ * 240211
  * 유저가 선택한 선호 지역을 보여주는 함수
  */
 const showUserPickedRegi = function(pickedList, regiList) {
@@ -835,6 +947,7 @@ const showUserPickedRegi = function(pickedList, regiList) {
   });
 }
 
+// 유저가 선택한 부모 지역 만드는 함수
 const createParent = function(current) {
   const regiList = document.querySelector('.regiList');
 

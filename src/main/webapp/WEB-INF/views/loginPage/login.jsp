@@ -64,18 +64,27 @@
 		    <h2 class="LoginHead">회원가입</h2>
 		    <label class="joinlabel" for="userId">⁕ 아이디</label>
 		    <div class="userIdContainer step1">
-			    <input type="text" id="userId" class="basicInput _join" placeholder="이메일 형식으로 입력해주세요.">
+			    <input type="text"
+			     			 id="userId"
+			      		 class="basicInput _join"
+			       		 data-click-target=".authmail"
+			        	 placeholder="이메일 형식으로 입력해주세요.">
 		    	<button type="button" class="authmail authmailBtn_style">이메일 인증</button>
 		    </div>
 		    <div id="appendId" class="append userId"></div>
 		    
 		   <div class="authmailContainer">
  		     <div class="authmailLabel">
-	 		     <label class="joinlabel" for="authmail">⁕ 인증번호 입력</label>
+	 		     <label class="joinlabel" for="authnum">⁕ 인증번호 입력</label>
 			     <span id="timer"></span>
 		     </div>
 		     <div class="authmailInput step1">
-			     <input type="text" id="authmail" class="basicInput _join" placeholder="인증번호를 입력해주세요." maxlength="6">
+			     <input type="text"
+			     				id="authnum"
+			     				class="basicInput _join"
+			     				data-click-target=".authmailSubmit"
+			     				placeholder="인증번호를 입력해주세요."
+			     				maxlength="6">
 		    	 <button type="button" class="authmailSubmit authmailBtn_style">확인</button>
 		     </div>
 		     <div id="appendAuthnum" class="append appendAuthnum"></div>
