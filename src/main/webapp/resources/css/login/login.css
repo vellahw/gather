@@ -231,7 +231,11 @@ form {
   margin-bottom: 20px;
 }
 
-#userId, #authMail {
+_append {
+	margin-bottom: 10px;
+}
+
+#userId, #authmail {
 	margin: 0;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
@@ -264,6 +268,19 @@ form {
 .authmailLabel {
 	justify-content: left;
   display: flex;
+}
+
+.authmailLabel > .joinlabel {
+	animation: colorChangeAdvanced 2s infinite 
+					  linear
+					  alternate;
+}
+
+@keyframes colorChangeAdvanced {
+    0% {color: #FFD4B5;}
+    25% {color: #FFAE73;}
+    50% {color: #FD8731;}
+    100% {color: #FF5B37;}
 }
 
 .authmailLabel > span{

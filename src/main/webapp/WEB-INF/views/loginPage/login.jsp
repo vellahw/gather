@@ -71,8 +71,8 @@
 		    
 		   <div class="authmailContainer">
  		     <div class="authmailLabel">
-	 		     <label class="joinlabel" for="authMail">⁕ 인증번호 입력</label>
-			     <span>02:33</span>
+	 		     <label class="joinlabel" for="authmail">⁕ 인증번호 입력</label>
+			     <span id="timer"></span>
 		     </div>
 		     <div class="authmailInput step1">
 			     <input type="text" id="authmail" class="basicInput _join" placeholder="인증번호를 입력해주세요.">
