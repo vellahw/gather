@@ -209,7 +209,7 @@ name:comAlert2
 Purpose:알럿창
 parameter:(type : 알럿타입 , title : 제목, content: 내용 , okFun : 확인 후 function
 */ 
-function comAlert2(type, title, content, icon, button , okFun){
+function comAlert2(type, title, content, button , okFun){
 
     //타입별 처리 실시 (1=일반/2=성공/3=경고/4=실패/5=확인 후 function)
 
@@ -253,7 +253,7 @@ function comAlert2(type, title, content, icon, button , okFun){
         swal({ 
             title: title,
             text: content,                    
-            icon: icon,
+            icon: "success",
             button: button,
             closeOnClickOutside: false
         }).then(okFun);
@@ -267,21 +267,16 @@ name:comAlert3
 Purpose:알럿창
 parameter:(title : 제목, icon:아이콘 , content: 내용 , button: 버튼 , okFn : 확인 후 함수)
 */ 
-function comAlert3(title, content, icon,  okFn){
+function comAlert3(title, content, icon,  okFn) {
     
-    swal({
-        title: title,
-        text: content,
-        icon: icon,
-        buttons:'확인',
-        }).then(function(isConfirm) {
-        if (isConfirm) {
-            okFn
-        } else {
-
-        }
-        })
-}
+  swal({ 
+    title: title,
+    text: content,                    
+    icon: icon,
+    button: "확인",
+    closeOnClickOutside: false
+    }).then(okFn);
+  }
 
 /* 
 240114 KSH
