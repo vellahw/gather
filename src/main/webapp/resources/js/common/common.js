@@ -1,3 +1,22 @@
+/**
+ * name:comRemoveArray
+ * Purpose: 배열 겹치는 값 삭제
+ * parameter: (arr : 배열명, key: 비교 키)
+ */
+function comRemoveArray(arr, key) {
+  let uniqueKeys = new Set();
+  let uniqueElements = [];
+
+  arr.forEach(item => {
+      if (!uniqueKeys.has(item[key])) {
+          uniqueKeys.add(item[key]);
+          uniqueElements.push(item);
+      }
+  });
+
+  return uniqueElements;
+}
+
 /* 
 240124 hanwon
 name:comAjax
