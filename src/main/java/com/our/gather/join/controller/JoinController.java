@@ -3,13 +3,18 @@ package com.our.gather.join.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.annotation.Resource;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +30,9 @@ public class JoinController {
 
 	@Resource(name = "JoinService")
 	private JoinService joinService;
+	
+	@Autowired
+    private JavaMailSender mailSender;
 
 	// 아이디 중복 검사
 	@RequestMapping(value = "/gather/checkidDo.com")
@@ -81,5 +89,43 @@ public class JoinController {
 	        System.out.println("error : " + e.getMessage());
 	        return ResponseEntity.ok("fail");
 	    }
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/gather/mailCheck", method = RequestMethod.GET)
+	public String emailAuth(String email) {		
+		Random random = new Random();
+		int checkNum = random.nextInt(888888) + 111111;
+		
+		System.out.println("이메일 데이터 전송 확인");
+	    System.out.println("이메일 : " + email);
+	    System.out.println("인증번호 : " + checkNum);
+		/* 이메일 보내기 */
+        String setFrom = "vs8170@naver.com";
+        String toMail = email;
+        String title = "'GATHER' 인증 이메일 입니다.";
+        String content = 
+                "'GATHER'를 방문해주셔서 감사합니다." +
+                "<br><br>" + 
+                "인증 번호는 " + checkNum + "입니다." + 
+                "<br>" + 
+                "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+        
+        try {
+            
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+            helper.setFrom(setFrom);
+            helper.setTo(toMail);
+            helper.setSubject(title);
+            helper.setText(content,true);
+            mailSender.send(message);
+            
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        return Integer.toString(checkNum);
+ 
 	}
 }

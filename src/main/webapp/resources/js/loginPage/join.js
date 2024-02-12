@@ -44,6 +44,30 @@ const btnOnclick = function() {
     selfIntroNode.innerHTML = userSelfIntro;
     data = Object.assign({}, firstArr[0], secondArr[0]);
   });
+
+/**
+ * 240212 KSH
+ * 이메일 인증
+ */
+$(".authmailBtn").click(function(){
+
+  comAlert2(2,"이메일이 발송되었습니다.", null);
+    
+  let email = $("#userId").val();        // 입력한 이메일
+  
+  comAjax(
+      "GET"
+    , "/gather/mailCheck?email=" + email
+    , null
+    , null
+    , function(data){
+            
+      console.log("data : " + data);
+
+    }
+  );
+  
+});
   
   // 마지막 확인 버튼
   submitBtn.addEventListener('click' , ()=>{
