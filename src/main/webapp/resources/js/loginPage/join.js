@@ -230,7 +230,7 @@ const joinFormCheck = function(step) {
         controlStyleAndAppendWarning(userPw, 'appendPw', '영문+숫자+특수문자 조합으로 입력해주세요.');
         return false;
       }
-      
+
     } else if(!pwConfirm.value) {
       controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', '비밀번호가 일치하지 않습니다.');
 
@@ -430,6 +430,10 @@ const inputChangeHandler = function() {
   userRegiNum2.addEventListener('input', (e)=>{
     e.target.value = e.target.value
       .replace(/[^0-9]+$/g, '');
+
+    if(e.target.value.length == 1) {
+      userNickname.focus();
+    }
   })
 
   userNickname.addEventListener('change', ()=>{
@@ -457,12 +461,15 @@ const inputChangeHandler = function() {
         } else if(result == 0) {
           isNickUsed = result;
           hideWarning('.userId');
+
+          if(userNickname.value.length == 10) {
+            document.getElementById('userSelf').focus();
+          }
         }
       })
       .catch(error => {
         console.error('데이터를 받아오는 중 오류 발생:', error);
       });
-    
     }
   });
 }
