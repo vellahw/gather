@@ -302,9 +302,13 @@ const prevSection = function(step) {
     signupStep3.classList.remove('_act');
     signupStep2.classList.add('_act');
 
+    
+
   } else if(step == 'step4') {
     signupStep4.classList.remove('_act');
     signupStep3.classList.add('_act');
+
+    removeCreatedElements();
   }
 }
 
@@ -360,7 +364,10 @@ const showStep = function(stepElement) {
  * 유저가 선택한 선호 지역을 보여주는 함수
  */
 const showUserPickedRegi = function(pickedList, regiList) {
-  const parentNameList = [];
+
+  console.log(pickedList);
+
+  let parentNameList = [];
 
   // 사용자의 선호지역 데이터 가공
   pickedList.forEach(item => {
@@ -400,6 +407,7 @@ const showUserPickedRegi = function(pickedList, regiList) {
 
 
   // 자식 지역 생성
+
   pickedList.forEach(current => {
     const regiName = current.regiName;
     
@@ -430,4 +438,11 @@ const createParent = function(current) {
   parentList.appendChild(parentName);
   parentList.appendChild(childRegiListTag);
   regiList.append(parentList);
+}
+
+function removeCreatedElements() {
+  const parentRegiItems = document.querySelectorAll('.parentRegiItem');
+  parentRegiItems.forEach(item => {
+      item.parentNode.removeChild(item);
+  });
 }
