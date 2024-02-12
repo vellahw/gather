@@ -42,14 +42,20 @@ public class JoinController {
     private HttpServletRequest request;
 
     // 아이디 중복 검사
-    @RequestMapping(value = "/gather/checkidDo.com")
-    @ResponseBody // 자바객체를 다시 HTTP 응답 바디로 변환
-    public Map<String, Object> checkId(@RequestBody HashMap<String, Object> param) throws Exception {
-
-        Map<String, Object> result = joinService.checkId(param);
-
-        return result;
-    }
+	  @RequestMapping(value = "/gather/checkidDo.com")
+	  @ResponseBody // 자바객체를 다시 HTTP 응답 바디로 변환
+	  public ResponseEntity<String> checkId(@RequestBody Map<String, Object> param) throws Exception {
+		
+		  Map<String, Object> result = joinService.checkId(param);
+		
+		  ObjectMapper objectMapper = new ObjectMapper();
+		  // 데이터를 JSON 문자열로 변환
+		  String json = objectMapper.writeValueAsString(result);
+		
+		   return ResponseEntity.ok()
+			     .contentType(MediaType.APPLICATION_JSON)
+			      .body(json);
+	  }
 
     // 닉네임 중복 검사
     @ResponseBody
@@ -107,6 +113,7 @@ public class JoinController {
         System.out.println("이메일 데이터 전송 확인");
         System.out.println("이메일 : " + email);
         System.out.println("인증번호 : " + checkNum);
+      
         /* 이메일 보내기 */
         String setFrom = "vs8170@naver.com";
         String toMail = email;
