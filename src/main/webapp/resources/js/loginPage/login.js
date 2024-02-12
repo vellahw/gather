@@ -244,11 +244,13 @@ document.addEventListener('DOMContentLoaded', function () {
   
   /* join.js의 지역 데이터 처리 & 노드 생성 함수 */
   controlRegiData();
+
+  /* join.js의 폼의 input에 대한 change 이벤트 함수 */
+  inputChangeHandler();
   
   /* join.js의 회원가입 처리 함수 */
 	btnOnclick();
 
-  inputChangeHandler();
 
 });
 

@@ -76,7 +76,7 @@ form {
 	position: absolute;
 }
 
-#signupStep3, #signupStep4 {
+#signupContainer, #signupStep3, #signupStep4 {
 	overflow: scroll;
 }
 
@@ -231,7 +231,7 @@ form {
   margin-bottom: 20px;
 }
 
-#userId {
+#userId, #authMail {
 	margin: 0;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
@@ -239,7 +239,7 @@ form {
   width: 70%;
 }
 
-.authmailBtn {
+.authmailBtn_style {
 	width: 25%;
   padding: 15px;
   border: 1px solid var(--primary);
@@ -255,6 +255,28 @@ form {
 
 .authmailBtn:hover {
 	background-color: var(--color-orange500);
+}
+
+.authmailContainer {
+	display: none;
+}
+
+.authmailLabel {
+	justify-content: left;
+  display: flex;
+}
+
+.authmailLabel > span{
+  font-size: 14px;
+  color: var(--primary);
+  padding-left: 13px;
+}
+
+.authmailInput {
+	display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 ._join {
