@@ -10,6 +10,10 @@ import com.our.gather.common.dao.AbstractDao;
 @Repository("JoinDao")
 public class JoinDao extends AbstractDao {
 
+	// 회원 선호카테고리 중복확인
+	public String makeUserNumb() throws Exception {
+		return (String) selectOne("join.makeUserNumb");
+	}
 	// 회원가입
 	public void joinUs(Map<String, Object> map, CommandMap commandMap) throws Exception {
 		insert("join.joinUs", map);

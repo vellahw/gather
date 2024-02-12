@@ -60,7 +60,7 @@ public class JoinController {
 
 	        joinService.userJoin(param, commandMap, request);
 	        
-	        String userNumb = (String) param.get("USER_NUMB");
+	        String userNumb = (String) commandMap.get("USER_NUMB");
 
 	        if (jsonArray != null) {
 	        	
