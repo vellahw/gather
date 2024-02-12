@@ -8,8 +8,10 @@ import java.util.Random;
 import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -18,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.join.service.JoinService;
 
@@ -43,17 +45,19 @@ public class JoinController {
 	}
 
 	// 닉네임 중복 검사
-	@RequestMapping(value = "/gather/checknickDo.com")
 	@ResponseBody
-	public ModelAndView checkNickname(@RequestBody HashMap<String, Object> param) throws Exception {
-
-		ModelAndView mv = new ModelAndView("jsonView");
-
+	@RequestMapping("/gather/checknickDo.com")
+	public ResponseEntity<String> checkNickname(@RequestBody Map<String, Object> param) throws Exception {
+		
 		Map<String, Object> result = joinService.checkNick(param);
-
-		mv.addObject("result", result);
-
-		return mv;
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		// 데이터를 JSON 문자열로 변환
+		String json = objectMapper.writeValueAsString(result);
+		
+		return ResponseEntity.ok()
+			    .contentType(MediaType.APPLICATION_JSON)
+			    .body(json);
 	}
 
 	@RequestMapping(value = "/gather/joinDo.com", method = RequestMethod.POST)
