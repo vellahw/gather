@@ -5,7 +5,6 @@
 <link rel="stylesheet" href="/resources/css/login/login.css">
 <script src="/resources/js/loginPage/login.js"></script>
 <script src="/resources/js/loginPage/join.js"></script>
-<script src="/resources/js/loginPage/joinformControl.js"></script>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
 
 <div class="backGroundContainer">
