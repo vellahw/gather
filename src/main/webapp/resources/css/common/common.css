@@ -28,8 +28,8 @@
 }
 
 input.basicInput:focus {
-  outline: 1px solid var(--primary);
-  border: 1px solid var(--color-white);
+  /* outline: 1px solid var(--primary); */
+  border: 1px solid var(--primary);
 }
 
 

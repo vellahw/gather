@@ -5,11 +5,11 @@
 <link rel="stylesheet" href="/resources/css/login/login.css">
 <script src="/resources/js/loginPage/login.js"></script>
 <script src="/resources/js/loginPage/join.js"></script>
-<script src="/resources/js/loginPage/joinform.js"></script>
+<script src="/resources/js/loginPage/joinformControl.js"></script>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
 
 <div class="backGroundContainer">
-  <ul>
+  <ul class="backGroundList">
 	  <c:forEach var="Bimag" items="${Bimag}">
 	  <li>
 		  <div class="backgroundItem">
@@ -63,17 +63,33 @@
 		<div class="loginContainer" id="signupContainer">
 		  <form id="signupForm" class="signupForm" method="post" autocomplete="off">
 		    <h2 class="LoginHead">회원가입</h2>
-		    <label class="joinlabel" for="userId">아이디</label>
-		    <input type="text" id="userId" class="basicInput _join">
-		    <label class="joinlabel" for="userPw">비밀번호</label>
-		    <input type="password" id="userPw" class="basicInput _join">
-		    <label class="joinlabel" for="pwConfirm">비밀번호 확인</label>
-		    <input type="password" id="pwConfirm" class="basicInput _join">
-		    <label class="joinlabel" for="userCell">핸드폰번호</label>
-		    <input type="text" id="userCell" class="basicInput _join">
+		    <label class="joinlabel" for="userId">⁕ 아이디</label>
+		    <div class="userIdContainer step1">
+			    <input type="text" id="userId" class="basicInput _join" placeholder="이메일 형식으로 입력해주세요.">
+		    	<button type="button" class="authmailBtn">이메일 인증</button>
+		    </div>
+		    <div id="appendId" class="append userId"></div>
+		    
+		    <label class="joinlabel" for="userPw">⁕ 비밀번호</label>
+		    <div class="userPwContainer">
+			    <input type="password" id="userPw" class="basicInput _join step1" placeholder="8-14자까지 입력 가능합니다.">
+			    <button type="button" class="showPw" data-src="/resources/img/login/eyeIcon.png">
+			    	<img class="pwBtnImg" alt="비밀번호 표시 버튼" />
+			    </button>
+		    </div>
+		    <div id="appendPw" class="append userPw"></div>
+		    
+		    <label class="joinlabel" for="pwConfirm">⁕ 비밀번호 확인</label>
+		    <input type="password" id="pwConfirm" class="basicInput _join step1" maxlength="14">
+		    <div id="appendPwConfirm" class="append pwConfirm"></div>
+		    
+		    <label class="joinlabel" for="userCell">⁕ 핸드폰번호</label>
+		    <input type="text" id="userCell" class="basicInput _join step1" placeholder="숫자만 입력해주세요." maxlength="13">
+		    <div id="appendCell" class="append userCell"></div>
+		    
 		    <div class="btnContainer">
-			    <button type="button" class="waybtn prev" onclick="prevSection('step2')">이전</button>
-			    <button type="button" class="waybtn next" id="next" onclick="nextSection('step2')">다음</button>
+			    <button type="button" class="waybtn prev" onclick="prevSection('step1')">이전</button>
+			    <button type="button" class="waybtn next" id="next" onclick="nextSection('step1')">다음</button>
 		    </div>
 		  </form>
 		</div>
@@ -82,52 +98,44 @@
 		<div class="loginContainer" id="signupStep2">
 		  <form>
 		    <h2 class="LoginHead">회원가입</h2>
-		    <label class="joinlabel" for="userName">이름</label>
+		    <label class="joinlabel" for="userName">⁕ 이름</label>
 		    <input type="text" id="userName" class="basicInput _join">
-			  <label class="joinlabel" for="user-regi">주민등록번호</label>
+		    <div id="appendName" class="append userName"></div>
+		    
+			  <label class="joinlabel" for="userRegiNum">⁕ 주민등록번호</label>
 			  <div class="reginumbWrap">
-			    <input type="text" id="user-regi" class="basicInput _join regi">-
-			    <input type="text" id="user-regi2" class="basicInput _join regi2">
+			    <input type="text" id="userRegiNum" class="basicInput _join regi" maxlength="6">-
+			    <input type="text" id="userRegiNum2" class="basicInput _join regi2" maxlength="1">
 			    <span>●●●●●●</span>
 			  </div>
-		    <label class="joinlabel" for="user-nick">닉네임</label>
-		    <input type="text" id="user-nick" class="basicInput _join" placeholder="게더에서 사용할 닉네임을 입력해주세요!">
-			  <label class="joinlabel" for="user-self">자기소개</label>
-		    <input type="text" id="user-self" class="basicInput _join" placeholder="취향, 가치관 등을 나타내보세요!">
+			  <div id="appendRegiNum" class="append userRegiNum"></div>
+			  
+		    <label class="joinlabel" for="userNick">⁕ 닉네임</label>
+		    <input type="text" id="userNick" class="basicInput _join" placeholder="게더에서 사용할 닉네임을 입력해주세요! (최대 10자)" maxlength="10">
+			  <div id="appendNick" class="append userNick"></div>
+			  
+			  <label class="joinlabel" for="userSelf">자기소개</label>
+		    <input type="text" id="userSelf" class="basicInput _join" placeholder="취향, 가치관 등을 나타내보세요! (최대 100자)" maxlength="100">
 		    
 		    <div class="btnContainer">
-			  	<button type="button" class="waybtn prev" onclick="prevSection('step3')">이전</button>
-			  	<button type="button" class="waybtn next" id="next2" onclick="nextSection('step3')">다음</button>
+			  	<button type="button" class="waybtn prev" onclick="prevSection('step2')">이전</button>
+			  	<button type="button" class="waybtn next" id="next2" onclick="nextSection('step2')">다음</button>
 		  	</div>
 		  </form>
 		</div>
 		<div class="loginContainer" id="signupStep3">
-		  <form method="post" action="/signup">
+		  <form>
 		    <h2 class="LoginHead">회원가입</h2>
 		    <div class="regionArea">
 		    	<p>어느 지역에서 모이고 싶으신가요?</p>
 		    	<p>선호하는 지역을 선택해주세요.</p>
 		    	<div class="regionBox">
-		    		<div class="level1">
-			    		<c:forEach var="r" items="${regi}">
-								<c:if test="${r.REGI_LEVL == '1'}">
-									<div class="R_1" data-code="${r.PARENTS_CODE}">${r.REGI_NAME}</div>
-								</c:if>
-			    		</c:forEach>
-		    		</div>
-		    		<div class="level2">
-		    			<c:forEach var="r" items="${regi}">
-								<c:if test="${r.REGI_LEVL == '2'}">
-									<label class="ccc" for="${r.REGI_CODE}">${r.REGI_NAME}</label>
-									<input type="checkbox" id="${r.REGI_CODE}" class="child" data-regi-code="${r.REGI_CODE}" onchange="checkRegi(this)" />
-								</c:if>
-			    		</c:forEach>
-		    		</div>
+		    		<ul class="level1"></ul>
 		    	</div>
 		    </div>
 		    <div class="btnContainer">
-			  	<button type="button" class="waybtn prev" onclick="prevSection('step4')">이전</button>
-			  	<button type="button" class="waybtn next" id="next3" onclick="nextSection('step4')">다음</button>
+			  	<button type="button" class="waybtn prev" onclick="prevSection('step3')">이전</button>
+			  	<button type="button" class="waybtn next" id="next3" onclick="nextSection('step3')">다음</button>
 		  	</div>
 		  </form>
 		</div>
@@ -145,10 +153,16 @@
 				<div class="user">
 					<p class="nickname"></p>
 					<p class="selfIntro"></p>
+					<div class="pickedRegiContianer">
+						<h3>선호하는 모임 지역</h3>
+						<ul class="regiList">
+						</ul>
+					</div>
+					
 				</div>
 			</div>
-			<div class="btnContainer" style="margin-top: 90px;">
-			  <button type="button" class="waybtn prev" onclick="prevSection('step5')">이전</button>
+			<div class="btnContainer" style="margin-top: 34px;">
+			  <button type="button" class="waybtn prev" onclick="prevSection('step4')">이전</button>
 			  <button type="button" class="waybtn next" id="submit">확인</button>
 		  </div>
 		</div>
@@ -165,3 +179,4 @@
 		</div>
   
 </div>
+<input type="hidden" id="regi" value="${regi}" />

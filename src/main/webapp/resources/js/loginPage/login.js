@@ -109,32 +109,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }                  
   }
 
-                          
-  /*
-    안내문구 띄우는 함수
-    parameter: (text: 띄울 문구)
-  */ 
-
-  function appendWarning(text) {
-    const appendArea = document.getElementById('append');
-    appendArea.style.display = 'block';
-    appendArea.innerHTML = text; 
-    appendArea.style.marginBottom = '10px';
-  }
-  
-  // 이메일 입력값 유효성 검사 함수
-  function checkId(email) {
-    var pattern = /^[0-9a-zA-Z가-힣]([-_.]?[0-9a-zA-Z가-힣])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    if(!pattern.test(email)) {
-       return false;
-    }
-    return true;
-  }
-
   // 아이디(이메일) 입력 검사
-  userIdForm.addEventListener("change", function(num){
-    if(checkId(userIdForm.value) == false){ 
-      appendWarning("올바른 이메일 형식을 입력해주세요.");
+  userIdForm.addEventListener("change", () => {
+    if(!checkId(userIdForm.value)){ 
+      appendWarning('append', "올바른 이메일 형식을 입력해주세요.");
     } else {
       appendArea.style.display = 'none';
     }
@@ -154,16 +132,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 아이디 입력 input이 비었는지 검사
     if(USER_IDXX == '' || null || undefined) {
-    userIdForm.focus();
-    appendWarning("아이디를 입력해주세요.");
-    return false;
+      userIdForm.focus();
+      appendWarning('append', "아이디를 입력해주세요.");
+      return false;
 		// 아이디(이메일) 형식 검사
     } else if(checkId(userIdForm.value) == false){ 
-      appendWarning("올바른 이메일 형식을 입력해주세요.");
+      appendWarning('append', "올바른 이메일 형식을 입력해주세요.");
       return false;
     // 비밀번호 입력 검사   
     } else if(PASS_WORD == '' || null || undefined){
-      appendWarning("비밀번호를 입력해주세요.");
+      appendWarning('append', "비밀번호를 입력해주세요.");
       return false;
     }
 
@@ -239,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         } else {
 
-          appendWarning("아이디 또는 비밀번호가 일치하지 않습니다.");
+          appendWarning('append', "아이디 또는 비밀번호가 일치하지 않습니다.");
           document.getElementById('USER_IDXX').focus();
 
         }
@@ -264,9 +242,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
   setInterval(slideImages, 5000); // 5초에 한 번씩 슬라이딩
   
-  // showChildRegi();
+  /* join.js의 지역 데이터 처리 & 노드 생성 함수 */
+  controlRegiData();
   
   /* join.js의 회원가입 처리 함수 */
 	btnOnclick();
 
+  inputChangeHandler();
+
 });
+
+/*
+  유효성 검사 문구 띄우는 함수
+  parameter: (id: 추가되는 공간 요소의 id, text: 띄울 문구)
+*/ 
+function appendWarning(id, text) {
+  const appendArea = document.getElementById(id);
+  appendArea.style.display = 'block';
+  appendArea.innerHTML = text; 
+  appendArea.style.marginBottom = '10px';
+}
+    
+// 이메일 입력값 유효성 검사 함수
+function checkId(email) {
+  const pattern = /^[0-9a-zA-Z가-힣]([-_.]?[0-9a-zA-Z가-힣])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+  if(!pattern.test(email)) {
+      return false;
+  }
+  return true;
+}

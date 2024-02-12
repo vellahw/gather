@@ -38,8 +38,8 @@
          <div class="heartWrap">
               <input type="hidden" data-like-id="${detail.MOIM_IDXX}" value="${detail.LIKE_YSNO}" id="heartYN"/>
                <div class="heartContainer">
-                 <input type="checkbox" id="${detail.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
-                  <label class="detailHeart" for="${detail.MOIM_IDXX}"></label>
+                 <input  class="heart-box" type="checkbox" id="${detail.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
+                  <label class="heartIcon detailHeart" for="${detail.MOIM_IDXX}"></label>
             <input id="realCount" type="hidden" data-realCount-id="${detail.MOIM_IDXX}" value="${detail.LIKE_COUNT}" >
                   <span id="showCount" class="heartCount detailC" data-ShowCount-id="${detail.MOIM_IDXX}"></span>
                </div>

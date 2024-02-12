@@ -2,7 +2,7 @@
  * 240204 장한원
  * 회원가입 기능
  */
-function btnOnclick() {
+const btnOnclick = function() {
   const step1Btn = document.getElementById('next');
   const step2Btn = document.getElementById('next2');
   const step3Btn = document.getElementById('next3');
@@ -24,11 +24,11 @@ function btnOnclick() {
   
   step2Btn.addEventListener('click', ()=>{
     const userName = document.getElementById('userName').value;
-    const userRegi1 = document.getElementById('user-regi').value;
-    const userRegi2 = document.getElementById('user-regi2').value;
+    const userRegi1 = document.getElementById('userRegiNum').value;
+    const userRegi2 = document.getElementById('userRegiNum2').value;
     const userRegiNum = userRegi1 + userRegi2;
-    const userNickname = document.getElementById('user-nick').value;
-    const userSelfIntro = document.getElementById('user-self').value;
+    const userNickname = document.getElementById('userNick').value;
+    const userSelfIntro = document.getElementById('userSelf').value;
     const nicknameNode = document.querySelector('.nickname');
     const selfIntroNode = document.querySelector('.selfIntro');
 
@@ -43,8 +43,6 @@ function btnOnclick() {
     nicknameNode.innerHTML = userNickname;
     selfIntroNode.innerHTML = userSelfIntro;
     data = Object.assign({}, firstArr[0], secondArr[0]);
-
-    console.log(data)
   });
   
   // 마지막 확인 버튼
@@ -57,7 +55,7 @@ function btnOnclick() {
       },
       body: JSON.stringify({
         data: data,
-        regi: regiCheckArr
+        regi: pickedRegiCode
       }),
     })
     .then(() => {
@@ -69,63 +67,202 @@ function btnOnclick() {
           location.href = "/gather/login.com"
         });
     });
-
   });
 
 }
 
-// function showChildRegi() {
-//   const level1 = document.querySelectorAll('.R_1');
+
+/**
+ * 240207 장한원
+ * 선호 지역 데이터 처리
+ * login.js에서 호출함
+ */
+const regiList = []; // 지역 데이터 list
+
+const controlRegiData = function() {
+
+  const regiData = document.getElementById('regi').value;
+  const cleanedData = regiData.replace(/[[\]\ ]/g, '');
+  const splitData = cleanedData.split("},{");
+
+  splitData.forEach(item => {
+      // 중괄호 제거 후, 쉼표로 데이터 분리
+      const keyValuePairs = item.replace("{", "").replace("}", "").split(",");
+      const map = {};
+
+      keyValuePairs.forEach(pair => {
+          // 등호를 기준으로 키와 값을 나누어 맵에 추가
+          const [key, value] = pair.split("=");
+          map[key] = value;
+      });
+
+      regiList.push(map);
+
+  });
+
+  let parentCodeList = [];
+  regiList.forEach(item => {
+    parentCodeList.push(item.PARENTS_CODE);
+    const regiCode = item.REGI_CODE;
+
+    // 부모 지역에 대한 로직
+    if(regiCode.length == 1) {
+      createNode(item);
+
+    // 자식 지역에 대한 로직
+    } else if(regiCode.length > 1) {
+      createChildRegi(item, item.PARENTS_CODE);
+    }
+  });
+
+  let newParentCodeList = [...new Set(parentCodeList)];
+
+  showChildRegi(newParentCodeList);
+
+  // fetch("/gether/gatRegi.com", {
+  //   method: 'POST', // 요청 메서드 설정
+  //   headers: {
+  //     'Content-Type': 'application/json' // 요청 헤더 설정
+  //   },
+  //   body: JSON.stringify({}) // 요청 바디에 데이터 포함
+  // })
+  // .then(response => response.json())
+  // .then(data => {
+  //   // 서버에서 받아온 JSON 데이터를 사용
+  //   console.log(data);
+  //   // 받아온 데이터를 활용하여 추가적인 처리 수행
+  // })
+  // .catch(error => {
+  //   console.error('데이터를 받아오는 중 오류 발생:', error);
+  // });
+
   
-//   level1.forEach((parent, i) => {
+}
 
-//     let pCode = parent.getAttribute('data-code')
 
-//     parent.addEventListener('mouseover', ()=> {
-//         let childRegi = document.querySelectorAll(`div[data-pcode="${pCode}"]`);
-//         const level2Container = document.querySelector('.level2');
-
-//         childRegi.forEach(child => {
-//           child.style.display = 'flex';
-//         });
-//     });
+/* 부모 지역 노드 생성 및 자식 지역 노드 생성 함수 */
+const createNode = function(item) {
+  // 부모 지역 담을 태그
+  const parentRegiNode = document.createElement('li');
+  parentRegiNode.className = 'regionList';
   
-//     parent.addEventListener('mouseleave', (e)=> {
-//       let childRegi = document.querySelectorAll(`div[data-pcode="${pCode}"]`);
-//       childRegi.forEach(child => {
-//         child.style.display = 'none';
-//       });
-//     });
+  // 부모 지역 노드
+  const parentRegiWrap = document.createElement('span');
+  parentRegiWrap.className = 'parentWrap'
+  parentRegiWrap.dataset.code = item.PARENTS_CODE;
 
-//   })
+  const parentRegiNameNode = document.createElement('span');
+  parentRegiNameNode.className = 'parent';
+  parentRegiNameNode.innerHTML = item.REGI_NAME;
+  parentRegiNameNode.dataset.rcode = item.PARENTS_CODE;
+
+  parentRegiWrap.appendChild(parentRegiNameNode)
+  parentRegiNode.appendChild(parentRegiWrap);
+
+  //자식 노드 생성 (checkbox들을 담을 div)
+  const childRegiNode = document.createElement('ul');
+  childRegiNode.className = 'level2';
+  childRegiNode.dataset.pcode = item.PARENTS_CODE;
   
+  document.querySelector('.level1').appendChild(parentRegiNode); 
+  parentRegiNode.appendChild(childRegiNode);
+}
+
+
+/* 자식 지역 체크박스 생성 함수 */
+const createChildRegi = function(item, pcode) {
+  if(item.PARENTS_CODE == pcode) {
+    const container = document.createElement('li');
+
+    const childRegi = document.createElement('button');
+    childRegi.type = 'button';
+    childRegi.className = 'child';
+    childRegi.textContent = item.REGI_NAME;
+    childRegi.dataset.regiCode = item.REGI_CODE;
+
+    childRegi.addEventListener('click', handleChange);
+    container.appendChild(childRegi)
+    
+    const targetElement = document.querySelector(`ul[data-pcode="${pcode}"]`);
+    targetElement.appendChild(container);
+  }
+}
+
+/** 
+  * 자식 지역을 선택했을 때의 동작 함수 
+  * 배열에 선택한 자식지역을 담음
+*/
+let pickedRegiCode = []; // 서버 통신을 위한 REGI_CODE 데이터
+let pickedRegiListForStep4 = []; // step4 폼을 위한 리스트
+
+/* 클릭 이벤트 콜백 함수 */
+const handleChange = function(event) {
+	event.stopPropagation();
+
+  const target = event.target;
+  target.classList.toggle('clicked');
+
+  const regiCode = target.getAttribute('data-regi-code');
+  const classList = target.classList;
   
+  if(classList.contains('clicked')) {
+    
+    pickedRegiCode.push({ 'REGI_CODE': regiCode });
 
+    pickedRegiListForStep4.push({'regiName': target.innerText, 'parentCode': regiCode.substring(0,1)});
 
-//   // let childRegi = document.querySelectorAll(`div[data-pcode="${parentCode}"]`);
-  
-//   // for (let i = 0; i < childRegi.length; i++) {
-//   //   childRegi[i].style.display = 'flex !important';
-//   // }
-// }
+  } else { // 클릭 해제한 데이터 배열에서 삭제
 
-let regiCheckArr = [];
-
-function checkRegi(regi) {
-  const regiCode = regi.dataset.regiCode;
-  const isChecked = regi.checked;
-
-  if (isChecked) {
-
-    regiCheckArr.push({ 'REGI_CODE': regiCode });
-
-  } else {
-
-    for (let i = 0; i < regiCheckArr.length; i++) {
-      if (regiCheckArr[i]['REGI_CODE'] === regiCode) {
-        regiCheckArr.splice(i, 1);
+    // pickedRegiCode[]
+    for (let i = 0; i < pickedRegiCode.length; i++) {
+      if (pickedRegiCode[i]['REGI_CODE'] === regiCode) {
+        pickedRegiCode.splice(i, 1);
+        
         break;
       }
     }
+
+    // pickedRegiListForStep4[]
+    for (let i = 0; i < pickedRegiListForStep4.length; i++) {
+
+      if (pickedRegiListForStep4[i]['regiName'] === target.innerText) {
+        pickedRegiListForStep4.splice(i, 1);
+        
+        break;
+
+      } else if (pickedRegiListForStep4[i]['parentCode'] === regiCode.substring(0,1)) {
+        pickedRegiListForStep4.splice(i, 1);
+        
+        break;
+      }
+
+    }
+
   }
+};
+
+
+/*
+ * 자식 지역 클릭 시 class toggle
+*/
+const showChildRegi = function(parentCodeList) {
+ 
+  parentCodeList.forEach((pcode, i) => {
+
+    const targetElement = document.querySelector(`span[data-code="${pcode}"]`);
+    
+    targetElement.addEventListener('click', (event)=>{
+
+      event.stopPropagation();
+
+      const parentNameElement = document.querySelector(`span[data-rcode="${pcode}"]`);
+      const childElement = document.querySelector(`ul[data-pcode="${pcode}"]`);
+
+      targetElement.classList.toggle('parentWrap_active');
+      parentNameElement.classList.toggle('parent_active');
+      childElement.classList.toggle('level2_active');
+
+    });
+  });
+  
 }

@@ -16,6 +16,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.service.CommonService;
@@ -41,21 +44,21 @@ public class LoginController {
 
 	@Resource(name = "JoinService")
 	private JoinService joinService;
-	
+
 	@Resource(name = "CommonService")
 	private CommonService commonService;
-	
+
 	@Autowired
 	private NaverLoginVO naverLoginVO;
 
 	@Autowired
 	private KakaoLoginVO kakaoLoginVO;
-	
+
 	@Autowired
 	private GoogleLoginVO googleLoginVO;
 
 	private String apiResult = null;
-	
+
 	// 로그인 폼
 	@RequestMapping(value = "/gather/login.com", method = RequestMethod.GET)
 	public ModelAndView loginForm(CommandMap commandMap, HttpSession session) throws Exception {
@@ -68,10 +71,10 @@ public class LoginController {
 
 		String kakaoAuthUrl = kakaoLoginVO.getAuthorizationUrl(session);
 		mv.addObject("urlKakao", kakaoAuthUrl);
-		
+
 		String googleAuthUrl = googleLoginVO.getAuthorizationUrl(session);
 		mv.addObject("urlGoogle", googleAuthUrl);
-		
+
 		List<Map<String, Object>> getRegi = commonService.getRegi(commandMap.getMap(), commandMap);
 		mv.addObject("regi", getRegi);
 
@@ -79,6 +82,24 @@ public class LoginController {
 		mv.addObject("Bimag", loginBackImg);
 
 		return mv;
+	}
+
+	
+	@ResponseBody
+	@RequestMapping("/gether/gatRegi.com")
+	public ResponseEntity<String> insertNotify(@RequestBody Map<String, String> map, HttpSession session,
+			HttpServletRequest request, CommandMap commandMap) throws Exception {
+
+		List<Map<String, Object>> getRegi = commonService.getRegi(commandMap.getMap(), commandMap);
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		// 데이터를 JSON 문자열로 변환
+		String json = objectMapper.writeValueAsString(getRegi);
+		
+
+		return ResponseEntity.ok()
+			    .contentType(MediaType.APPLICATION_JSON)
+			    .body(json);
 	}
 
 	// 아이디 중복 검사
@@ -292,14 +313,14 @@ public class LoginController {
 			mv.addObject("USER_GNDR", session.getAttribute("USER_GNDR"));
 
 			mv.addObject("result", "success");
-			
+
 			LocalDateTime now = LocalDateTime.now();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 			System.out.println("<------------------------------Login Success!!!!!-------------------------->");
-			System.out.println(
-					"DateTime:" + now.format(formatter) + "\nUSER_NUMB :" + session.getAttribute("USER_NUMB"));
+			System.out
+					.println("DateTime:" + now.format(formatter) + "\nUSER_NUMB :" + session.getAttribute("USER_NUMB"));
 			System.out.println("<-------------------------------------------------------------------------->");
-			
+
 		} else {
 
 			Map<String, Object> map = loginService.login(naverLogin);
@@ -346,14 +367,14 @@ public class LoginController {
 				mv.addObject("USER_GNDR", session.getAttribute("USER_GNDR"));
 
 				mv.addObject("result", "success");
-				
+
 				LocalDateTime now = LocalDateTime.now();
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 				System.out.println("<------------------------------Login Success!!!!!-------------------------->");
 				System.out.println(
 						"DateTime:" + now.format(formatter) + "\nUSER_NUMB :" + session.getAttribute("USER_NUMB"));
 				System.out.println("<-------------------------------------------------------------------------->");
-				
+
 			}
 
 		}
@@ -381,7 +402,7 @@ public class LoginController {
 		jsonObj = (JSONObject) jsonParser.parse(apiResult);
 		JSONObject response_obj = (JSONObject) jsonObj.get("kakao_account");
 		JSONObject response_obj2 = (JSONObject) response_obj.get("profile");
-		
+
 		String email = (String) response_obj.get("email");
 		String nick = (String) response_obj2.get("nickname");
 		String profile = (String) response_obj2.get("profile_image_url");
@@ -390,7 +411,7 @@ public class LoginController {
 
 		kakaoLogin.put("USER_IDXX", email);
 		kakaoLogin.put("PASS_WORD", "KAKAO:" + jsonObj.get("id"));
-		
+
 		int result = loginService.loginCheck(kakaoLogin);
 
 		if (result == 0) {
@@ -399,18 +420,17 @@ public class LoginController {
 			session.setAttribute("USER_IDXX", email);
 			session.setAttribute("USER_NICK", nick);
 			session.setAttribute("USER_IMAG", profile);
-			
+
 			mv.addObject("api", "kakao");
 			mv.addObject("firstTime", "Y");
 			mv.addObject("USER_NICK", nick);
 			mv.addObject("USER_IMAG", profile);
 			mv.addObject("result", "success");
-			
-			
+
 		} else {
-			
+
 			Map<String, Object> map = loginService.login(kakaoLogin);
-			
+
 			if (map.get("BANN_YSNO").equals("Y")) { // 정지된 사용자
 
 				mv.addObject("api", "kakao");
@@ -424,7 +444,7 @@ public class LoginController {
 				mv.addObject("result", "fail");
 
 			} else {
-				
+
 				LocalDate today = LocalDate.now();
 				int todayYear = today.getYear();
 
@@ -464,7 +484,7 @@ public class LoginController {
 				mv.addObject("TYPE_CODE", session.getAttribute("TYPE_CODE"));
 				mv.addObject("USER_NAME", session.getAttribute("USER_NAME"));
 				mv.addObject("USER_NICK", session.getAttribute("USER_NICK"));
-				mv.addObject("USER_IMAG",profile);
+				mv.addObject("USER_IMAG", profile);
 				mv.addObject("USER_BIRTH", session.getAttribute("USER_BIRTH"));
 				mv.addObject("USER_JUMIN2", session.getAttribute("USER_JUMIN2"));
 				mv.addObject("USER_AGEE", session.getAttribute("USER_AGEE"));
@@ -472,18 +492,18 @@ public class LoginController {
 				mv.addObject("USER_GNDR", session.getAttribute("USER_GNDR"));
 
 				mv.addObject("result", "success");
-				
+
 				LocalDateTime now = LocalDateTime.now();
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 				System.out.println("<------------------------------Login Success!!!!!-------------------------->");
 				System.out.println(
 						"DateTime:" + now.format(formatter) + "\nUSER_NUMB :" + session.getAttribute("USER_NUMB"));
 				System.out.println("<-------------------------------------------------------------------------->");
-				
+
 			}
 
 		}
-		
+
 		System.out.println("결과 : " + result);
 
 		// 프로필 조회
@@ -492,7 +512,6 @@ public class LoginController {
 
 		return mv;
 	}
-	
 
 	// 로그아웃
 	@RequestMapping(value = "/gather/logoutDo.com", method = RequestMethod.GET)

@@ -289,8 +289,6 @@ document.addEventListener("DOMContentLoaded", function(){
    */
   if(sessionStorage.getItem("USER_NUMB") == null) { // 로그인X
 
-    debugger;
-
     if(detail.ENDD_YSNO == 'N') {
       document.querySelector('.loginPlz').style.display = 'block';
     }
