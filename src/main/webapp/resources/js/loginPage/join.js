@@ -169,7 +169,7 @@ const createNode = function(item) {
 }
 
 
-/* 자식 지역 체크박스 생성 함수 */
+/* 자식 지역 버튼 생성 함수 */
 const createChildRegi = function(item, pcode) {
   if(item.PARENTS_CODE == pcode) {
     const container = document.createElement('li');
@@ -209,7 +209,11 @@ const handleChange = function(event) {
     
     pickedRegiCode.push({ 'REGI_CODE': regiCode });
 
-    pickedRegiListForStep4.push({'regiName': target.innerText, 'parentCode': regiCode.substring(0,1)});
+    pickedRegiListForStep4.push({ 
+        'regiName': target.innerText
+      , 'parentCode': regiCode.substring(0,1)
+      , 'regiCode' : regiCode 
+    });
 
   } else { // 클릭 해제한 데이터 배열에서 삭제
 
@@ -237,7 +241,6 @@ const handleChange = function(event) {
       }
 
     }
-
   }
 };
 

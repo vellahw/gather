@@ -410,7 +410,7 @@ const showUserPickedRegi = function(pickedList, regiList) {
     const targetParent = document.querySelector(`ul[data-step4-child="${current.parentCode}"]`);
 
     targetParent.appendChild(regiItemTag);
-  })
+  });
 }
 
 const createParent = function(current) {
