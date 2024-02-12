@@ -100,34 +100,15 @@ const joinFormCheck = function(step) {
 
       return false;
     
-    } else if(userPw.value){
-      let returnValue = true;
-
-      if(userPw.value.length < 8) {
-        controlStyleAndAppendWarning(userPw, 'appendPw', '최소 8자 이상의 비밀번호를 입력해주세요.');
-        returnValue = false;
-
-      } else if(userPw.value != pwConfirm.value) {
-        controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', '비밀번호가 일치하지 않습니다.');
-        returnValue = false;
-      }
-
-      return returnValue;
-
     } else if(!pwConfirm.value) {
       controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', '비밀번호가 일치하지 않습니다.');
 
       return false;
     
-    } else if(pwConfirm.value) {
-      let returnValue = true;
-
-      if(pwConfirm.value != userPw.value) {
-        controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', '비밀번호가 일치하지 않습니다.');
-        returnValue = false;
-      }
-
-      return returnValue;
+    } if(pwConfirm.value != userPw.value) {
+      controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', '비밀번호가 일치하지 않습니다.');
+      
+      return false;
 
     } else if(!cellNum.value || cellNum.value.length <= 11) {
       controlStyleAndAppendWarning(cellNum, 'appendCell', '올바른 핸드폰번호를 입력해주세요.');
@@ -195,6 +176,7 @@ const inputChangeHandler = function() {
   });
 
   userPw.addEventListener('input', (e)=>{
+    
     if(e.target.value.length > 14) {
       controlStyleAndAppendWarning(userPw, 'appendPw', '최대 14자까지 설정 가능합니다.');
       e.target.value = e.target.value.substring(0, 14);
@@ -202,6 +184,22 @@ const inputChangeHandler = function() {
       hideWarning('.userPw');
     }
   });
+
+  userPw.addEventListener('change', (e)=>{
+    const inputValue = e.target.value;
+    const isValidInput = (value) => {
+      const regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+      return regex.test(value);
+    };
+
+    if(inputValue.length > 1 && inputValue.length < 8) {
+      controlStyleAndAppendWarning(userPw, 'appendPw', '최소 8자 이상 입력해주세요.');
+    } else if (!isValidInput(inputValue)) {
+      controlStyleAndAppendWarning(userPw, 'appendPw', '영문+숫자+특수문자 조합으로 입력해주세요.');
+    }
+  });
+
+
 
   pwConfirm.addEventListener('change', ()=>{
     if(userPw.value != pwConfirm.value) {
@@ -286,9 +284,9 @@ const inputChangeHandler = function() {
       })
       .then(response => response.json())
       .then((data) => {
-        console.log(JSON.stringify(data.RESULT));
 
         const result = JSON.stringify(data.RESULT);
+
         if(result == 1) {
           isNickUsed = result;
           controlStyleAndAppendWarning(userNickname, 'appendNick', '이미 사용중인 닉네임입니다.');
@@ -297,6 +295,7 @@ const inputChangeHandler = function() {
           isNickUsed = result;
           hideWarning('.userNick');
         }
+
       })
       .catch(error => {
         console.error('데이터를 받아오는 중 오류 발생:', error);
