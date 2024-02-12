@@ -244,7 +244,6 @@ const handleChange = function(event) {
   }
 };
 
-
 /*
  * 자식 지역 클릭 시 class toggle
 */
