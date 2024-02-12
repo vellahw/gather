@@ -209,7 +209,7 @@ name:comAlert2
 Purpose:알럿창
 parameter:(type : 알럿타입 , title : 제목, content: 내용 , okFun : 확인 후 function
 */ 
-function comAlert2(type, title, content, button , okFun){
+function comAlert2(type, title, content, icon, button , okFun){
 
     //타입별 처리 실시 (1=일반/2=성공/3=경고/4=실패/5=확인 후 function)
 
@@ -253,7 +253,7 @@ function comAlert2(type, title, content, button , okFun){
         swal({ 
             title: title,
             text: content,                    
-            icon: "success",
+            icon: icon,
             button: button,
             closeOnClickOutside: false
         }).then(okFun);

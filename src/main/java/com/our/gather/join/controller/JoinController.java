@@ -140,7 +140,7 @@ public class JoinController {
         }catch(Exception e) {
         	
             e.printStackTrace();
-            String error = "이메일이 올바른지 확인해 주세요."; 
+            String error = "fail"; 
             
             return error;
             
