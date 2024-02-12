@@ -243,11 +243,6 @@ const inputChangeHandler = function() {
   const userRegiNum2 = document.getElementById('userRegiNum2');
   const userNickname = document.getElementById('userNick');
 
-  // userId.addEventListener('change', ()=>{
-  //   if(userId.value) {
-  //   }
-  // });
-
   userPw.addEventListener('input', (e)=>{
     
     if(e.target.value.length > 14) {
@@ -445,8 +440,6 @@ const btnOnclick = function() {
 
     }
 
-    hideWarning('.userId');
-
     // 아이디(이메일) 중복 검사
     fetch("/gather/checkidDo.com", {
       method: "POST",
@@ -463,9 +456,38 @@ const btnOnclick = function() {
       const result = JSON.stringify(data.RESULT);
 
       if(result == 1) {
+
         controlStyleAndAppendWarning(userId, 'appendId', '이미 사용중인 아이디(이메일)입니다.');
+
       } else if(result == 0) {
-        hideWarning('.userNick');
+
+        hideWarning('.userId');
+
+        let email = $("#userId").val();        // 입력한 이메일
+        
+        comAjax(
+            "GET"
+          , "/gather/mailCheck?email=" + email
+          , null
+          , null
+          , function(data){
+
+            if(data != 'fail') {
+              comAlert2(2,"이메일이 발송되었습니다.", null);
+
+              const authmailSubmitBtn = document.querySelector('.authmailContainer');
+              authmailSubmitBtn.style.display = 'block';
+              startTimer(); // 타이머
+            
+            } else if(data == 'fail'){
+
+              controlStyleAndAppendWarning(userId, 'appendId', '이메일을 다시 확인해주세요.');
+            }
+
+            console.log("data : " + data);
+
+          }
+        );
       }
 
     })
@@ -473,30 +495,8 @@ const btnOnclick = function() {
       console.error('데이터를 받아오는 중 오류 발생:', error);
     });
 
-
-    // comAlert2(2,"이메일이 발송되었습니다.", null);
-      
-    // let email = $("#userId").val();        // 입력한 이메일
-    
-    // comAjax(
-    //     "GET"
-    //   , "/gather/mailCheck?email=" + email
-    //   , null
-    //   , null
-    //   , function(data){
-        
-    //     const authmailSubmitBtn = document.querySelector('.authmailContainer');
-    //     authmailSubmitBtn.style.display = 'block';
-
-              
-    //     console.log("data : " + data);
-
-    //   }
-    // );
   });
 
-
-  
   // 마지막 확인 버튼
   submitBtn.addEventListener('click' , ()=>{
 
@@ -522,6 +522,50 @@ const btnOnclick = function() {
   });
 
 }
+
+
+/**
+  * 메일 인증 번호 타이머
+  */
+function startTimer() {
+  const timeInMinutes = 3;
+  const timeInSeconds = timeInMinutes * 60;
+
+  const timerDisplay = document.getElementById('timer');
+  let currentTime = timeInSeconds;
+
+  // 초단위로 감소하는 타이머
+  const countdownInterval = setInterval(() => {
+      currentTime--;
+      updateTimerDisplay(currentTime);
+
+      if (currentTime <= 0) {
+          clearInterval(countdownInterval);
+
+          timerDisplay.textContent = '00:00';
+
+          comAlert3(
+              '인증 시간이 만료되었습니다.'
+            , null, 'warning'
+            , function(){
+                document.querySelector('.authmailContainer').style.display = 'none';
+              }
+          );
+
+         
+      }
+  }, 1000);
+}
+
+// 타이머 표시 업데이트 함수
+function updateTimerDisplay(timeInSeconds) {
+  const timerDisplay = document.getElementById('timer');
+  const minutes = Math.floor(timeInSeconds / 60);
+  const seconds = timeInSeconds % 60;
+
+  timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+} 
+
 
 
 /**
