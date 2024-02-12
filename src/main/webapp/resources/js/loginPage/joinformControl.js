@@ -78,6 +78,8 @@ const controlStyleAndAppendWarning = function(element, appendId, appendText) {
  * admin 장한원
  * 유효성 검사 함수
 */
+let isNickUsed; // 닉네임 중복 여부 저장
+
 const joinFormCheck = function(step) {
 
   // 첫번째 스탭
@@ -158,6 +160,10 @@ const joinFormCheck = function(step) {
 
       return false;
 
+    } else if(isNickUsed == 1) {
+      
+      return false;
+
     } else {
 
       return true;
@@ -229,7 +235,6 @@ const inputChangeHandler = function() {
   });
 
   userName.addEventListener('input', (e)=>{
-
     const inputValue = e.target.value;
     const isValidInput = (value) => {
       const regex = /^[ㄱ-ㅎ가-힣a-zA-Z]+$/;
@@ -268,7 +273,35 @@ const inputChangeHandler = function() {
 
   userNickname.addEventListener('change', ()=>{
     if(userNickname.value) {
-      hideWarning('.userNick');
+
+      // 닉네임 중복 검사
+      fetch("/gather/checknickDo.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          USER_NICK: userNickname.value,
+        }),
+      })
+      .then(response => response.json())
+      .then((data) => {
+        console.log(JSON.stringify(data.RESULT));
+
+        const result = JSON.stringify(data.RESULT);
+        if(result == 1) {
+          isNickUsed = result;
+          controlStyleAndAppendWarning(userNickname, 'appendNick', '이미 사용중인 닉네임입니다.');
+
+        } else if(result == 0) {
+          isNickUsed = result;
+          hideWarning('.userNick');
+        }
+      })
+      .catch(error => {
+        console.error('데이터를 받아오는 중 오류 발생:', error);
+      });
+    
     }
   });
 
@@ -301,8 +334,6 @@ const prevSection = function(step) {
   } else if(step == 'step3') {
     signupStep3.classList.remove('_act');
     signupStep2.classList.add('_act');
-
-    
 
   } else if(step == 'step4') {
     signupStep4.classList.remove('_act');
