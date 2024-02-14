@@ -4,11 +4,13 @@ document.addEventListener('DOMContentLoaded', function () {
   const pwBtnImg = showPwBtn.querySelector('.pwBtnImg');
   const userPw = document.getElementById('userPw');
   const pwConfirm = document.getElementById('pwConfirm');
-
+  const basicItem = document.querySelectorAll('.basicItem');
+  
   pwBtnImg.src = showIconSrc; // 비밀번호 표시 버튼 이미지 src
   
   /**
    * 240210 장한원
+   * step1
    * 비밀번호 표시, 숨김 버튼
    */
   showPwBtn.addEventListener('click', ()=>{
@@ -26,6 +28,237 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+  basicItem.forEach(item => {
+    item.addEventListener('click', (e)=>{
+      console.log(e.target.src)
+    })
+  })
+
+
+  const step1Btn = document.getElementById('next');
+  const step2Btn = document.getElementById('next2');
+  const submitBtn = document.getElementById('submit');
+  const authmailBtn = document.querySelector('.authmail'); // '이메일 인증' 버튼
+
+  let firstArr = [];
+  let data;
+
+  /**
+   * admin: 장한원
+   * step1 -> step2로 가는 '다음' 버튼
+   */
+  step1Btn.addEventListener('click', ()=>{
+    const userId = document.getElementById('userId').value;
+    const userPw = document.getElementById('userPw').value;
+    const userCellNum = document.getElementById('userCell').value;
+    
+    firstArr.push({
+      USER_IDXX : userId
+      , PASS_WORD : userPw
+      , CELL_NUMB : userCellNum
+    });
+  });
+  
+  
+  /**
+   * admin: 장한원
+   * step2 -> step3로 가는 '다음' 버튼
+   */
+  step2Btn.addEventListener('click', ()=>{
+    const userName = document.getElementById('userName').value;
+    const userRegi1 = document.getElementById('userRegiNum').value;
+    const userRegi2 = document.getElementById('userRegiNum2').value;
+    const userRegiNum = userRegi1 + userRegi2;
+    const userNickname = document.getElementById('userNick').value;
+    const userSelfIntro = document.getElementById('userSelf').value;
+    const nicknameNode = document.querySelector('.nickname');
+    const selfIntroNode = document.querySelector('.selfIntro');
+
+    const secondArr = [{
+        USER_NAME : userName
+    	,	REGI_NUMB : userRegiNum
+    	, USER_NICK : userNickname
+    	, SELF_INTR : userSelfIntro
+    }];
+
+    
+    nicknameNode.innerHTML = userNickname;
+    selfIntroNode.innerHTML = userSelfIntro;
+    data = Object.assign({}, firstArr[0], secondArr[0]);
+  });
+
+/**
+ * 240212 KSH 장한원
+ * step1
+ * 이메일 인증
+ */
+  authmailBtn.addEventListener('click' , ()=>{
+    const userId = document.getElementById('userId');
+
+    if(!checkId(userId.value)){ 
+      controlStyleAndAppendWarning(userId, 'appendId', '올바른 이메일 형식을 입력해주세요.');
+      
+      return false;
+
+    } else {
+      hideWarning('.userId');
+    }
+
+    // 아이디(이메일) 중복 검사
+    fetch("/gather/checkidDo.com", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        USER_IDXX: userId.value,
+      }),
+    })
+    .then(response => response.json())
+    .then((data) => {
+
+      const result = JSON.stringify(data.RESULT);
+
+      if(result == 1) {
+
+        controlStyleAndAppendWarning(userId, 'appendId', '이미 사용중인 아이디(이메일)입니다.');
+
+      } else if(result == 0) {
+
+        hideWarning('.userId');
+
+        let email = $("#userId").val(); // 입력한 이메일
+        
+        comAjax(
+            "GET"
+          , "/gather/mailCheck?email=" + email
+          , null
+          , null
+          , function(data){
+          
+          	console.log(data);
+
+            if(data != 'fail') {
+              comAlert2(2,"이메일이 발송되었습니다.", null);
+	
+              // 인증번호 입력하는 input
+              const authmailContainer = document.querySelector('.authmailContainer');
+              authmailContainer.style.display = 'block';
+
+              authmailBtn.textContent = '재전송'
+
+              startTimer(); // 타이머 시작
+
+              const authnumSubmitBtn = document.querySelector('button.authmailSubmit'); // 인증 확인 버튼
+
+              // '확인' 버튼 클릭 이벤트
+              authnumSubmitBtn.addEventListener('click', ()=>{
+
+                const authNum = document.getElementById('authnum');
+  
+                // 인증번호 불일치
+                if(authNum.value != data) {
+                  // 경고문 띄움
+                  controlStyleAndAppendWarning(authNum, 'appendAuthnum', '인증번호가 틀립니다. 다시 확인해주세요.');
+                
+                // 인증번호 일치
+                } else {
+                  comAlert3(
+                    '인증 완료되었습니다'
+                  , null
+                  , 'success'
+                  , function(){
+                      document.getElementById('userPw').focus();
+                      document.querySelector('.authmailContainer').style.display = 'none'; // 인증번호 컨테이너 숨김
+                      hideWarning('.appendAuthnum'); // 경고문 숨김
+                      clearInterval(countdownInterval);
+                    }
+                  );
+
+                  isAuth = 'Y'; // 인증 유무 저장
+                }
+
+              });
+            
+            } else if(data == 'fail'){
+
+              controlStyleAndAppendWarning(userId, 'appendId', '이메일을 다시 확인해주세요.');
+            }
+          }
+        );
+      }
+
+    })
+    .catch(error => {
+      console.error('데이터를 받아오는 중 오류 발생:', error);
+    });
+
+  });
+
+  /**
+   * 240214 장한원
+   * step4
+   * 기본 프로필 이미지 요소 생성
+   */
+  const profileImgList = document.querySelector('.profileImgList');
+
+  for (let i = 1; i < 8; i++) {
+    profileImgList.dataset.value = `basicProfile${i}`;
+
+    const item = document.createElement('div');
+    const imgWrap = document.createElement('div');
+    const imgTag = document.createElement('img');
+
+    item.classList.add('basicProfileItem');
+    
+    imgWrap.classList.add('profileImgWrap');
+    imgWrap.classList.add('basic-p');
+    
+    imgTag.src = `/resources/img/basic/profile/basicProfile${i}.png`;
+    imgTag.dataset.value = `basicProfile${i}`;
+    imgTag.classList.add('profileImg');
+    imgTag.classList.add('basic-p');
+
+
+    item.appendChild(imgWrap);
+    imgWrap.appendChild(imgTag);
+    profileImgList.appendChild(item);
+  }
+
+  profileImgList.addEventListener('click', (event)=>{
+    if(event.target.matches('[data-value]')){
+      console.log(event.target.dataset.value);
+    }
+  })
+
+
+  /*
+   * admin: 장한원
+   * step4
+   * 마지막 확인 버튼
+  */
+  submitBtn.addEventListener('click' , ()=>{
+
+    fetch("/gather/joinDo.com", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        data: data,
+        regi: pickedRegiCode
+      }),
+    })
+    .then(() => {
+      comAlert2(5
+        ,"회원가입 완료!"
+        , data.USER_NICK + "님 가입을 환영합니다!"
+        , "로그인 하러 가기"
+        , function(){
+          location.href = "/gather/login.com"
+        });
+    });
+  });
 
 });
 
@@ -488,180 +721,7 @@ const enterKeyupEvent = function(event) {
  * 회원가입 기능
  */
 const btnOnclick = function() {
-  const step1Btn = document.getElementById('next');
-  const step2Btn = document.getElementById('next2');
-  const step3Btn = document.getElementById('next3');
-  const submitBtn = document.getElementById('submit');
-  const authmailBtn = document.querySelector('.authmail'); // '이메일 인증' 버튼
-
-  let firstArr = [];
-  let data;
-
-  step1Btn.addEventListener('click', ()=>{
-    const userId = document.getElementById('userId').value;
-    const userPw = document.getElementById('userPw').value;
-    const userCellNum = document.getElementById('userCell').value;
-    
-    firstArr.push({
-      USER_IDXX : userId
-      , PASS_WORD : userPw
-      , CELL_NUMB : userCellNum
-    });
-  });
   
-  step2Btn.addEventListener('click', ()=>{
-    const userName = document.getElementById('userName').value;
-    const userRegi1 = document.getElementById('userRegiNum').value;
-    const userRegi2 = document.getElementById('userRegiNum2').value;
-    const userRegiNum = userRegi1 + userRegi2;
-    const userNickname = document.getElementById('userNick').value;
-    const userSelfIntro = document.getElementById('userSelf').value;
-    const nicknameNode = document.querySelector('.nickname');
-    const selfIntroNode = document.querySelector('.selfIntro');
-
-    const secondArr = [{
-        USER_NAME : userName
-    	,	REGI_NUMB : userRegiNum
-    	, USER_NICK : userNickname
-    	, SELF_INTR : userSelfIntro
-    }];
-
-    
-    nicknameNode.innerHTML = userNickname;
-    selfIntroNode.innerHTML = userSelfIntro;
-    data = Object.assign({}, firstArr[0], secondArr[0]);
-  });
-
-/**
- * 240212 KSH
- * 이메일 인증
- */
-  authmailBtn.addEventListener('click' , ()=>{
-    const userId = document.getElementById('userId');
-
-    if(!checkId(userId.value)){ 
-      controlStyleAndAppendWarning(userId, 'appendId', '올바른 이메일 형식을 입력해주세요.');
-      
-      return false;
-
-    } else {
-      hideWarning('.userId');
-    }
-
-    // 아이디(이메일) 중복 검사
-    fetch("/gather/checkidDo.com", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        USER_IDXX: userId.value,
-      }),
-    })
-    .then(response => response.json())
-    .then((data) => {
-
-      const result = JSON.stringify(data.RESULT);
-
-      if(result == 1) {
-
-        controlStyleAndAppendWarning(userId, 'appendId', '이미 사용중인 아이디(이메일)입니다.');
-
-      } else if(result == 0) {
-
-        hideWarning('.userId');
-
-        let email = $("#userId").val(); // 입력한 이메일
-        
-        comAjax(
-            "GET"
-          , "/gather/mailCheck?email=" + email
-          , null
-          , null
-          , function(data){
-          
-          	console.log(data);
-
-            if(data != 'fail') {
-              comAlert2(2,"이메일이 발송되었습니다.", null);
-	
-              // 인증번호 입력하는 input
-              const authmailContainer = document.querySelector('.authmailContainer');
-              authmailContainer.style.display = 'block';
-
-              authmailBtn.textContent = '재전송'
-
-              startTimer(); // 타이머 시작
-
-              const authnumSubmitBtn = document.querySelector('button.authmailSubmit'); // 인증 확인 버튼
-
-              // '확인' 버튼 클릭 이벤트
-              authnumSubmitBtn.addEventListener('click', ()=>{
-
-                const authNum = document.getElementById('authnum');
-  
-                // 인증번호 불일치
-                if(authNum.value != data) {
-                  // 경고문 띄움
-                  controlStyleAndAppendWarning(authNum, 'appendAuthnum', '인증번호가 틀립니다. 다시 확인해주세요.');
-                
-                // 인증번호 일치
-                } else {
-                  comAlert3(
-                    '인증 완료되었습니다'
-                  , null
-                  , 'success'
-                  , function(){
-                      document.getElementById('userPw').focus();
-                      document.querySelector('.authmailContainer').style.display = 'none'; // 인증번호 컨테이너 숨김
-                      hideWarning('.appendAuthnum'); // 경고문 숨김
-                      clearInterval(countdownInterval);
-                    }
-                  );
-
-                  isAuth = 'Y'; // 인증 유무 저장
-                }
-
-              });
-            
-            } else if(data == 'fail'){
-
-              controlStyleAndAppendWarning(userId, 'appendId', '이메일을 다시 확인해주세요.');
-            }
-          }
-        );
-      }
-
-    })
-    .catch(error => {
-      console.error('데이터를 받아오는 중 오류 발생:', error);
-    });
-
-  });
-
-  // 마지막 확인 버튼
-  submitBtn.addEventListener('click' , ()=>{
-
-    fetch("/gather/joinDo.com", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        data: data,
-        regi: pickedRegiCode
-      }),
-    })
-    .then(() => {
-      comAlert2(5
-        ,"회원가입 완료!"
-        , data.USER_NICK + "님 가입을 환영합니다!"
-        , "로그인 하러 가기"
-        , function(){
-          location.href = "/gather/login.com"
-        });
-    });
-  });
 
 }
 
@@ -980,3 +1040,4 @@ function removeCreatedElements() {
       item.parentNode.removeChild(item);
   });
 }
+

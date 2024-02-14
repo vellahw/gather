@@ -170,6 +170,13 @@
 				<div class="p-updateBtn">
 					<img src="/resources/img/icon/pencile.png" class="p-updateIcon" alt="프사수정버튼">
 				</div>
+				<div class="profileImgContainer">
+						<div class="profileImgList"></div>
+						<label class="upload">
+							<img src="/resources/img/icon/addIcon.png" alt="프로필 이미지 업로드 버튼">
+							<input type="file" />
+						</label>
+					</div>
 				<div class="user">
 					<p class="nickname"></p>
 					<p class="selfIntro"></p>
