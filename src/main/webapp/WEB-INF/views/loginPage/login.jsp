@@ -60,24 +60,34 @@
 		  </div>
 	
 		<div class="loginContainer" id="signupContainer">
-		  <form id="signupForm" class="signupForm" method="post" autocomplete="off">
+		  <form id="signupForm" class="signupForm" method="post">
 		    <h2 class="LoginHead">회원가입</h2>
 		    <label class="joinlabel" for="userId">⁕ 아이디</label>
 		    <div class="userIdContainer step1">
-			    <input type="text" id="userId" class="basicInput _join" placeholder="이메일 형식으로 입력해주세요.">
+			    <input type="text"
+			     			 id="userId"
+			      		 class="basicInput _join"
+			       		 data-click-target=".authmail"
+			        	 placeholder="이메일 형식으로 입력해주세요.">
 		    	<button type="button" class="authmail authmailBtn_style">이메일 인증</button>
 		    </div>
 		    <div id="appendId" class="append userId"></div>
 		    
 		   <div class="authmailContainer">
  		     <div class="authmailLabel">
-	 		     <label class="joinlabel" for="authmail">⁕ 인증번호 입력</label>
+	 		     <label class="joinlabel" for="authnum">⁕ 인증번호 입력</label>
 			     <span id="timer"></span>
 		     </div>
 		     <div class="authmailInput step1">
-			     <input type="text" id="authmail" class="basicInput _join" placeholder="인증번호를 입력해주세요.">
+			     <input type="text"
+			     				id="authnum"
+			     				class="basicInput _join"
+			     				data-click-target=".authmailSubmit"
+			     				placeholder="인증번호를 입력해주세요."
+			     				maxlength="6">
 		    	 <button type="button" class="authmailSubmit authmailBtn_style">확인</button>
 		     </div>
+		     <div id="appendAuthnum" class="append appendAuthnum"></div>
 		   </div>
 		    
 		    <label class="joinlabel" for="userPw">⁕ 비밀번호</label>
@@ -160,6 +170,13 @@
 				<div class="p-updateBtn">
 					<img src="/resources/img/icon/pencile.png" class="p-updateIcon" alt="프사수정버튼">
 				</div>
+				<div class="profileImgContainer">
+						<div class="profileImgList"></div>
+						<label class="upload">
+							<img src="/resources/img/icon/addIcon.png" alt="프로필 이미지 업로드 버튼">
+							<input type="file" />
+						</label>
+					</div>
 				<div class="user">
 					<p class="nickname"></p>
 					<p class="selfIntro"></p>
