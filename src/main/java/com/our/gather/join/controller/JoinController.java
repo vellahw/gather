@@ -104,6 +104,17 @@ public class JoinController {
         }
     }
     
+    public ResponseEntity<String> fileTest(@RequestBody Map<String, Object> requestBody) {
+    		try {
+            
+
+            return ResponseEntity.ok("success");
+        } catch (Exception e) {
+            System.out.println("error : " + e.getMessage());
+            return ResponseEntity.ok("fail");
+        }
+    }
+    
     @ResponseBody
     @RequestMapping(value = "/gather/mailCheck", method = RequestMethod.GET)
     public String emailAuth(String email) throws IOException {        

@@ -51,6 +51,8 @@ public class FileUtils {
 				
 				if (map.get("USER_NUMB") != null) {
 					
+					System.out.println("이년이?@  " + listMap);
+					
 					File file = new File(realPath + "upload/profile/" + map.get("USER_NUMB") + "/" + storedFileName);
 					multipartFile.transferTo(file); // 프로필폴더에 업로드 처리
 					
@@ -97,6 +99,7 @@ public class FileUtils {
 				listMap.put("FILE_OGNM", originalFileName);
 				listMap.put("FILE_SVNM", storedFileName);
 				listMap.put("FILE_SIZE", multipartFile.getSize());
+				
 				list.add(listMap);
 
 			}

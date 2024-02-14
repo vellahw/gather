@@ -40,6 +40,10 @@ public class JoinServiceImpl implements JoinService {
 			try {
 				
 				List<Map<String, Object>> flist = fileUtils.fileInsert(map, request, session);
+
+				System.out.println("없으면 돌아야됨");
+				
+				map.put("USER_NUMB", userNumbString);
 	
 				for (int i = 0, size = flist.size(); i < size; i++) {
 					
@@ -48,6 +52,7 @@ public class JoinServiceImpl implements JoinService {
 					if (!flist.get(i).get("FILE_SEQC").equals("XXX")) {
 	
 						map.put("FILE_SVNM", flist.get(i).get("FILE_SVNM"));
+						
 						
 					}
 				}
