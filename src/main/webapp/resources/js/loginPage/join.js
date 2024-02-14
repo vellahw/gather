@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function () {
     })
   })
 
-
   const step1Btn = document.getElementById('next');
   const step2Btn = document.getElementById('next2');
   const submitBtn = document.getElementById('submit');
@@ -140,8 +139,8 @@ document.addEventListener('DOMContentLoaded', function () {
           	console.log(data);
 
             if(data != 'fail') {
-              comAlert2(2,"이메일이 발송되었습니다.", null);
-	
+              comAlert3("이메일이 발송되었습니다.", null, "success", function(){ document.getElementById('authnum').focus(); });
+
               // 인증번호 입력하는 input
               const authmailContainer = document.querySelector('.authmailContainer');
               authmailContainer.style.display = 'block';
@@ -230,16 +229,44 @@ document.addEventListener('DOMContentLoaded', function () {
    * 240214 장한원
    * 기본 프로필 사진 선택 시 동작
    */
+  let imgValue;
+
   profileImgList.addEventListener('click', (event)=>{
     if(event.target.matches('[data-value]')){
       const tagetData = event.target.getAttribute('data-value');
       document.querySelector('.preview').src = `/resources/img/basic/profile/${tagetData}.png`;
 
-      const imgValue = { FILE_SVNM : `${tagetData}.png` };
-
-      joinUserData = Object.assign({}, firstUserData, secondUserData, imgValue); // 회원가입 전송 데이터 가공
+      imgValue = { FILE_SVNM : `${document.querySelector('.preview').src}.png` };
     }
   });
+
+  /**
+   * 240214 장한원
+   * 프로필 파일 직접 업로드 시 동작
+   */
+  const chooseImgInput = document.getElementById('chooseImg');
+  chooseImgInput.addEventListener('change', (e)=>{
+    const reader = new FileReader();
+      reader.onload = ({ target }) => {
+      document.querySelector('.preview').src = target.result;
+    };
+    
+    reader.readAsDataURL(chooseImgInput.files[0]);
+
+    let formData = new FormData(); // 새로운 폼 객체 생성
+    formData.append('FILE_SVNM', chooseImgInput.files[0]); // 폼 데이터를 스크립트로 추가
+
+    fetch('https://httpbin.org/post', {
+      method: 'POST',
+      cache: 'no-cache',
+      body: formData // body 부분에 폼데이터 변수를 할당
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+    
+    });
 
 
   /*
@@ -248,6 +275,10 @@ document.addEventListener('DOMContentLoaded', function () {
    * 마지막 확인 버튼
   */
   submitBtn.addEventListener('click' , ()=>{
+    
+    joinUserData = Object.assign({}, firstUserData, secondUserData, imgValue); // 회원가입 전송 데이터 가공
+    console.log(joinUserData)
+
 
     fetch("/gather/joinDo.com", {
       method: "POST",
@@ -267,6 +298,9 @@ document.addEventListener('DOMContentLoaded', function () {
         , function(){
           location.href = "/gather/login.com"
         });
+    })
+    .catch(error => {
+      console.error('오류 발생:', error);
     });
   });
 
@@ -725,16 +759,6 @@ const enterKeyupEvent = function(event) {
     document.querySelector(clickTargetSelector).click();
   }
 }
-
-/**
- * 240204 장한원
- * 회원가입 기능
- */
-const btnOnclick = function() {
-  
-
-}
-
 
 /**
   * 240213 장한원
