@@ -232,14 +232,14 @@ document.addEventListener('DOMContentLoaded', function () {
    */
   profileImgList.addEventListener('click', (event)=>{
     if(event.target.matches('[data-value]')){
+      const tagetData = event.target.getAttribute('data-value');
+      document.querySelector('.preview').src = `/resources/img/basic/profile/${tagetData}.png`;
 
-      const imgValue = { FILE_SVNM : `${event.target.dataset.value}.png` }
+      const imgValue = { FILE_SVNM : `${tagetData}.png` };
 
-      joinUserData = Object.assign({}, firstUserData, secondUserData, imgValue);
-      
-      console.log(joinUserData);
+      joinUserData = Object.assign({}, firstUserData, secondUserData, imgValue); // 회원가입 전송 데이터 가공
     }
-  })
+  });
 
 
   /*
