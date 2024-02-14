@@ -7,7 +7,7 @@
 	<select id="hashTag" parameterType='hashmap'
 	   resultType="hashmap">
 	   <![CDATA[
-		SELECT /* common.hashTag */
+		SELECT  /* NOT_SQL_LOG */
 		       HASH_IDXX
 		   	 , HASH_SEQC
 		     , HASH_TAGG
@@ -182,7 +182,7 @@
 			) AA
 		) AAA
 		WHERE
-			AAA.RNUM BETWEEN #{START} AND #{END}
+			AAA.RNUM BETWEEN #{startRow} AND #{lastRow}
 		]]>
 	</sql>
 

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.our.gather.common.common.CommandMap;
+import com.our.gather.common.common.Pager;
 import com.our.gather.moimGather.dao.GatherDao;
 
 @Service("GatherService")
@@ -35,7 +36,7 @@ public class GatherServiceImpl implements GatherService {
 	
 	//게더리스트
 	@Override
-	public List<Map<String, Object>> getGatherList(Map<String, Object> map, HttpSession session, CommandMap commandMap)
+	public List<Map<String, Object>> getGatherList(Map<String, Object> map, HttpSession session, CommandMap commandMap, Pager pager)
 			throws Exception {
 		// TODO Auto-generated method stub
 
@@ -43,8 +44,12 @@ public class GatherServiceImpl implements GatherService {
 
 			commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 		}
+		
+		Long totalCount =  gatherDao.getGatherCount(map, commandMap);
+		pager.setRow();
+		pager.setNum(totalCount);
 
-		return gatherDao.getGatherList(map, commandMap, session);
+		return gatherDao.getGatherList(map, commandMap, session, pager);
 	}
 	
 	

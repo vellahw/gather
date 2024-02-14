@@ -217,6 +217,9 @@
     (게더Search쿼리)
     -->
    <select id="getGather" parameterType="hashmap" resultType="hashmap">
+   	  <if test="startRow != null">
+         <include refid="common.pagingPre"></include>
+      </if>
       <![CDATA[
        	SELECT /*mainPage.getGather*/
        			*
@@ -278,7 +281,8 @@
 		      </if>
 		      <if test="WEATH_CATE != null">
 		      	 <![CDATA[
-		         	 AND CATE_IDXX IN ]]>
+		         	 AND CATE_IDXX IN 
+		         	 ]]>
 		         	  <foreach collection="WEATH_CATE" item="WEATH_CATE" open="(" separator="," close=")">
 		       			 #{WEATH_CATE}
 		    		  </foreach>
@@ -311,7 +315,58 @@
       	   WHERE ROWNUM <= 12
       	]]>
       </if>
+      <if test="startRow != null">
+         <include refid="common.pagingPost"></include>
+      </if>
    </select>
+   
+   <select id="getGatherCount" parameterType="hashmap" resultType="int">
+   	 <![CDATA[
+   	 
+        SELECT /*mainPage.getGatherCount*/
+        	   COUNT(*) 
+          FROM VW_GATHER
+         WHERE 1=1
+        ]]>
+        <if test="MOIM_IDXX != null">
+         <![CDATA[
+           AND GATH_IDXX = #{MOIM_IDXX}
+           ]]>
+        </if>
+        <if test="CATE_IDXX != null and CATE_IDXX != 'all'">
+         <![CDATA[
+           AND CATE_IDXX LIKE '%'||#{CATE_IDXX}||'%'
+            ]]>
+        </if>
+        <if test="WEATH_CATE != null">
+         <![CDATA[
+           AND CATE_IDXX IN
+            ]]>
+            <foreach collection="WEATH_CATE" item="WEATH_CATE" open="(" separator="," close=")">
+                #{WEATH_CATE}
+            </foreach>
+        </if>
+        <if test="CITY_CODE != null">
+         <![CDATA[
+           AND REGI_CODE LIKE '%'||#{CITY_CODE}||'%'
+            ]]>
+        </if>
+        <if test="KEYY_WORD != null">
+         <![CDATA[
+           AND (REGI_NAME    LIKE '%'||#{KEYY_WORD}||'%')
+		    OR (PREGI_NAME   LIKE '%'||#{KEYY_WORD}||'%')
+		    OR (CHILD_CATE   LIKE '%'||#{KEYY_WORD}||'%')
+		    OR (PARENTS_CATE LIKE '%'||#{KEYY_WORD}||'%')
+		    OR (GATH_TITL    LIKE '%'||#{KEYY_WORD}||'%')
+		    OR (GATH_CNTT    LIKE '%'||#{KEYY_WORD}||'%')
+		    OR (USER_NICK    LIKE '%'||#{KEYY_WORD}||'%')
+		    OR GATH_IDXX IN (SELECT HASH_IDXX 
+		         	           FROM TB_HASHTG 
+		         	          WHERE HASH_TAGG LIKE '%'||#{KEYY_WORD}||'%')  
+            
+            ]]>
+        </if>
+	</select>
    
     <!-- 게더 이미지 -->
 	<select id="getGatherImg" parameterType='hashmap'
