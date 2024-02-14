@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.aspectj.weaver.patterns.IfPointcut.IfFalsePointcut;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class JoinServiceImpl implements JoinService {
 	private FileUtils fileUtils;
 
 	@Override
-	public void userJoin(Map<String, Object> map, CommandMap commandMap, HttpServletRequest request) throws Exception {
+	public void userJoin(Map<String, Object> map, CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception {
 
 		String userNumbString = joinDao.makeUserNumb();
 		map.put("USER_NUMB", userNumbString);
@@ -38,14 +39,14 @@ public class JoinServiceImpl implements JoinService {
 
 			try {
 				
+				List<Map<String, Object>> flist = fileUtils.fileInsert(map, request, session);
+
 				System.out.println("없으면 돌아야됨");
 				
 				map.put("USER_NUMB", userNumbString);
-				
-				List<Map<String, Object>> flist = fileUtils.fileInsert(map, request);
 	
 				for (int i = 0, size = flist.size(); i < size; i++) {
-	
+					
 					commonDao.comFileInsert(flist.get(i));
 	
 					if (!flist.get(i).get("FILE_SEQC").equals("XXX")) {

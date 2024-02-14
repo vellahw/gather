@@ -263,7 +263,7 @@ public class LoginController {
 			commandMap.put("ANSR_CODE", "N/A");
 			commandMap.put("FILE_SVNM", response.get("profile_image"));
 
-			joinService.userJoin(commandMap.getMap(), commandMap, request);
+			joinService.userJoin(commandMap.getMap(), commandMap, request, session);
 
 			Map<String, Object> map = loginService.login(naverLogin);
 

@@ -29,7 +29,7 @@
 	    INSERT INTO TM_FILEXM (
 			       , FILE_IDXX     /* 파일 번호 / 파일 유형(각 PK) */
 			       , FILE_SEQC     /* 파일 번호2(001) */
-			       , USER_IDXX     /* 파일 올린 사용자번호 */
+			       , USER_NUMB     /* 파일 올린 사용자번호 */
 			       , FILE_OGNM     /* 원본 파일명 */
 			       , FILE_SVNM     /* 저장 파일명 */
 			       , FILE_SIZE     /* 파일 사이즈 */
@@ -53,7 +53,7 @@
 		            </if>
 		            <![CDATA[
 			       
-			       , #{USER_IDXX}   /* 파일 올린 사용자번호 */
+			       , #{USER_NUMB}   /* 파일 올린 사용자번호 */
 			       , #{FILE_OGNM}   /* 원본 파일명 */
 			       , #{FILE_SVNM}   /* 저장 파일명 */
 			       , #{FILE_SIZE}   /* 파일 사이즈 */
