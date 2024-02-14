@@ -46,6 +46,7 @@ public class GatherServiceImpl implements GatherService {
 		}
 		
 		Long totalCount =  gatherDao.getGatherCount(map, commandMap);
+		
 		pager.setRow();
 		pager.setNum(totalCount);
 

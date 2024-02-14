@@ -51,8 +51,6 @@ public class MainController {
 		ModelAndView mv2 = new ModelAndView("/listPage/listPage");
 		mv2.setViewName("listPage");
 		
-		ModelAndView mv3 = new ModelAndView("/searchPage/searchPage");
-		mv3.setViewName("searchPage");
 
 		List<Map<String, Object>> pCate = commonService.pCate(commandMap.getMap(), commandMap);
 		List<Map<String, Object>> cCate = commonService.cCate(commandMap.getMap(), commandMap);
@@ -60,12 +58,9 @@ public class MainController {
 		mv1.addObject("cCate", cCate);
 		mv2.addObject("pCate", pCate);
 		mv2.addObject("cCate", cCate);
-		mv3.addObject("pCate", pCate);
-		mv3.addObject("cCate", cCate);
-		mv3.addObject("KEYY_WORD", KEYY_WORD);
+		mv2.addObject("KEYY_WORD", KEYY_WORD);
 		
 		mv2.addObject("pager", pager);
-		mv3.addObject("pager", pager);
 		
 		if(session.getAttribute("USER_NUMB") != null) {
 			
@@ -73,10 +68,8 @@ public class MainController {
 			
 			mv1.addObject("notify", notify);
 			mv2.addObject("notify", notify);
-			mv3.addObject("notify", notify);
 			mv1.addObject("notiCount", notify.size());
 			mv2.addObject("notiCount", notify.size());
-			mv3.addObject("notiCount", notify.size());
 			
 		}
 		
@@ -86,14 +79,12 @@ public class MainController {
 			
 			mv1.addObject("moimType", moimType);
 			mv2.addObject("moimType", moimType);
-			mv3.addObject("moimType", moimType);
 		}
 
 		if (LIST_TYPE == null) {
 			
 			mv1.addObject("moimType", "게더"); //모임타입
 			mv2.addObject("moimType", "게더");
-			mv3.addObject("moimType", "게더");
 
 			if (CATE_IDXX == null && KEYY_WORD == null) {
 
@@ -121,9 +112,9 @@ public class MainController {
 			} else if(CATE_IDXX == null && KEYY_WORD != null) {
 				
 				commandMap.put("KEYY_WORD", KEYY_WORD);
-				mv3.addObject("list",  gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //게더 키워드 검색 리스트
+				mv2.addObject("list",  gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //게더 키워드 검색 리스트
 				
-				return mv3;
+				return mv2;
 				
 			}
 			
@@ -157,9 +148,9 @@ public class MainController {
 		     } else if (CATE_IDXX == null && KEYY_WORD != null) {
 				
 				commandMap.put("KEYY_WORD", KEYY_WORD);
-				mv3.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //추후 클럽으로 변경
+				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //추후 클럽으로 변경
 				
-				return mv3;
+				return mv2;
 				
 			}
 			
@@ -193,9 +184,9 @@ public class MainController {
 			} else if (CATE_IDXX == null && KEYY_WORD != null) {
 				
 				commandMap.put("KEYY_WORD", KEYY_WORD);
-				mv3.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //추후 챌린지로 변경
+				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //추후 챌린지로 변경
 				
-				return mv3;
+				return mv2;
 				
 			}
 			

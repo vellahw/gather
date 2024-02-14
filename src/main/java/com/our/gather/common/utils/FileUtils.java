@@ -7,7 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -17,7 +20,7 @@ public class FileUtils {
 	private static final String filePath = "/resources/img/";
 
 	
-	public List<Map<String, Object>> fileInsert(Map<String, Object> map, HttpServletRequest request) throws Exception {
+	public List<Map<String, Object>> fileInsert(Map<String, Object> map, HttpServletRequest request, HttpSession session) throws Exception {
 
 		String realPath = "";
 		String savePath = filePath;
@@ -59,6 +62,7 @@ public class FileUtils {
 					}
 					
 					listMap.put("FILE_IDXX", map.get("USER_NUMB"));
+					listMap.put("USER_NUMB", map.get("USER_NUMB"));
 					listMap.put("FILE_PATH", file);
 					
 				} else if (map.get("GATH_IDXX") != null) {
@@ -67,6 +71,7 @@ public class FileUtils {
 					multipartFile.transferTo(file); // 게더폴더에 업로드 처리
 					
 					listMap.put("FILE_IDXX", map.get("GATH_IDXX"));
+					listMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 					listMap.put("FILE_PATH", file);
 
 				} else if (map.get("CLUB_IDXX") != null) {
@@ -75,6 +80,7 @@ public class FileUtils {
 					multipartFile.transferTo(file); // 게더폴더에 업로드 처리
 					
 					listMap.put("FILE_IDXX", map.get("CLUB_IDXX"));
+					listMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 					listMap.put("FILE_PATH", file);
 					
 				} else if (map.get("CHAL_IDXX") != null) {
@@ -83,6 +89,7 @@ public class FileUtils {
 					multipartFile.transferTo(file); // 게더폴더에 업로드 처리
 					
 					listMap.put("FILE_IDXX", map.get("CHAL_IDXX"));
+					listMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 					listMap.put("FILE_PATH", file);
 				
 				} 

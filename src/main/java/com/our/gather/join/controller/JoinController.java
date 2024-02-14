@@ -12,6 +12,7 @@ import java.util.Random;
 import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -74,14 +75,14 @@ public class JoinController {
 
     @RequestMapping(value = "/gather/joinDo.com", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> userJoin(@RequestBody Map<String, Object> requestBody, HttpServletRequest request, CommandMap commandMap) throws Exception {
+    public ResponseEntity<String> userJoin(@RequestBody Map<String, Object> requestBody, HttpServletRequest request, CommandMap commandMap, HttpSession session) throws Exception {
 
         try {
             
             Map<String, Object> param = (Map<String, Object>) requestBody.get("data");
             List<Map<String, String>> jsonArray = (List<Map<String, String>>) requestBody.get("regi");
 
-            joinService.userJoin(param, commandMap, request);
+            joinService.userJoin(param, commandMap, request, session);
             
             String userNumb = (String) commandMap.get("USER_NUMB");
 

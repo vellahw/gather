@@ -17,7 +17,12 @@
 <div class="contentsContainer">
   <div class="contentsWrap">
 	  <h1 class="areaTitle">
+	  	<c:if test="${CATE_NAME ne null}">
 		  <c:out value="${CATE_NAME}" />
+		</c:if>
+		<c:if test="${KEYY_WORD ne null}">
+		  <span style = "color:#fd8731; font-weight: bold">'${KEYY_WORD}'&nbsp;</span><span>의 검색 결과</span>
+		</c:if>
 		  <span class="moimMakeArea">
 		    <button type="button" class="hashtag"><c:out value="${moimType}" /> 만들기</button>
 		  </span>	  
@@ -99,5 +104,29 @@
 		 	<div class="none">조회된 결과가 없습니다.</div>
 		</c:otherwise>
 	</c:choose>
+</div>
+
+<div>
+   <nav aria-label="Page navigation example">
+      <ul class="pagination">
+         <li class="page-item"  value="${pager.pre}" id="pre">
+           <a class="page-link" href="/gather.com?page=${pager.page-1}" aria-label="Previous">
+             <span aria-hidden="true">&laquo;</span>
+           </a>
+         </li>
+  
+         <c:forEach var="i" begin="${pager.startNum}" end="${pager.lastNum}">
+            <li class="page-item ${pager.page==i? 'active':''}">
+                <a class="page-link" href="/gather.com?page=${i}">${i}</a>
+             </li>
+         </c:forEach>
+                    
+         <li class="page-item ${pager.next?'':'disabled'}" id="next">
+             <a class="page-link" href="/gather.com?page=${pager.page+1}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+          </li>
+       </ul>
+    </nav>
 </div>
 </body>
