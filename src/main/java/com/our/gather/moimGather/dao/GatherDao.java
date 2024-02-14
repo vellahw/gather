@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Repository;
 
 import com.our.gather.common.common.CommandMap;
+import com.our.gather.common.common.Pager;
 import com.our.gather.common.dao.AbstractDao;
 import com.our.gather.common.oracleFunction.OracleFunction;
 
@@ -65,7 +66,7 @@ public class GatherDao extends AbstractDao {
 
 	// 게더추출
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> getGatherList(Map<String, Object> map, CommandMap commandMap, HttpSession session)
+	public List<Map<String, Object>> getGatherList(Map<String, Object> map, CommandMap commandMap, HttpSession session, Pager pager)
 			throws Exception {
 
 		List<Map<String, Object>> getGatherList = (List<Map<String, Object>>) selectList("gather.getGather", map);
@@ -174,6 +175,10 @@ public class GatherDao extends AbstractDao {
 		List<Map<String, Object>> getGatherImg = (List<Map<String, Object>>) selectList("gather.getGatherImg", map);
 
 		return getGatherImg;
+	}
+	
+	public Long getGatherCount(Map<String, Object> map, CommandMap commandMap) throws Exception {
+	    return Long.parseLong(selectOne("gather.getGatherCount", map).toString());
 	}
 
 	// 로그인 맴버 현재 상태

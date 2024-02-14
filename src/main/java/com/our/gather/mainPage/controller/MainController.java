@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.our.gather.common.common.CommandMap;
+import com.our.gather.common.common.Pager;
 import com.our.gather.common.oracleFunction.OracleFunction;
 import com.our.gather.common.service.CommonService;
 import com.our.gather.mainPage.service.MainService;
@@ -42,7 +43,7 @@ public class MainController {
 	public ModelAndView main(@RequestParam(value = "type", required = false) String LIST_TYPE,
 							 @RequestParam(value = "cate", required = false) String CATE_IDXX,
 							 @RequestParam(value = "keyword", required = false) String KEYY_WORD,
-							 HttpSession session, CommandMap commandMap, Model model) throws Exception {
+							 HttpSession session, CommandMap commandMap, Model model, Pager pager) throws Exception {
 
 		ModelAndView mv1 = new ModelAndView("/mainPage/mainPage");
 		mv1.setViewName("mainPage");
@@ -62,6 +63,9 @@ public class MainController {
 		mv3.addObject("pCate", pCate);
 		mv3.addObject("cCate", cCate);
 		mv3.addObject("KEYY_WORD", KEYY_WORD);
+		
+		mv2.addObject("pager", pager);
+		mv3.addObject("pager", pager);
 		
 		if(session.getAttribute("USER_NUMB") != null) {
 			
@@ -110,14 +114,14 @@ public class MainController {
 
 				}
 
-				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //게더 카테고리검색 리스트
+				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //게더 카테고리검색 리스트
 				
 				return mv2;
 
 			} else if(CATE_IDXX == null && KEYY_WORD != null) {
 				
 				commandMap.put("KEYY_WORD", KEYY_WORD);
-				mv3.addObject("list",  gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //게더 키워드 검색 리스트
+				mv3.addObject("list",  gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //게더 키워드 검색 리스트
 				
 				return mv3;
 				
@@ -146,14 +150,14 @@ public class MainController {
 
 				}
 
-				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //추후 클럽으로 변경
+				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //추후 클럽으로 변경
 				
 				return mv2;
 
 		     } else if (CATE_IDXX == null && KEYY_WORD != null) {
 				
 				commandMap.put("KEYY_WORD", KEYY_WORD);
-				mv3.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //추후 클럽으로 변경
+				mv3.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //추후 클럽으로 변경
 				
 				return mv3;
 				
@@ -182,14 +186,14 @@ public class MainController {
 
 				}
 
-				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //추후 챌린지로 변경
+				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //추후 챌린지로 변경
 				
 				return mv2;
 
 			} else if (CATE_IDXX == null && KEYY_WORD != null) {
 				
 				commandMap.put("KEYY_WORD", KEYY_WORD);
-				mv3.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //추후 챌린지로 변경
+				mv3.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //추후 챌린지로 변경
 				
 				return mv3;
 				
@@ -206,7 +210,7 @@ public class MainController {
 	@RequestMapping(value = "/getWeatherMoim.com", method = RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView getWeatherMoim(@RequestBody Map<String, String> requestBody, CommandMap commandMap,
-			HttpSession session) throws Exception {
+			HttpSession session, Pager pager) throws Exception {
 
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("jsonView");
@@ -273,15 +277,15 @@ public class MainController {
 
 		if (moimType.equals("gt")) {
 
-			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
+			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager));
 
 		} else if (moimType.equals("cb")) {
 			
-			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
+			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager));
 
 		} else if (moimType.equals("ch")) {
 			
-			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
+			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager));
 
 		}
 
@@ -292,7 +296,7 @@ public class MainController {
 	@RequestMapping(value = "/getCurrentRegionMoim.com", method = RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView getCurrentRegionMoim(@RequestBody Map<String, String> requestBody, CommandMap commandMap,
-			HttpSession session) throws Exception {
+			HttpSession session, Pager pager) throws Exception {
 
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("jsonView");
@@ -304,15 +308,15 @@ public class MainController {
 
 		if (moimType.equals("gt")) {
 
-			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
+			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager));
 
 		} else if (moimType.equals("cb")) {
 			
-			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
+			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager));
 
 		} else if (moimType.equals("ch")) {
 			
-			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
+			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager));
 
 		}
 

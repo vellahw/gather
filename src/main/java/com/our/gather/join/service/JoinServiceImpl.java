@@ -57,8 +57,6 @@ public class JoinServiceImpl implements JoinService {
 			}
 		}
 
-		System.out.println("왔떠염  " + map.get("FILE_SVNM"));
-		
 		joinDao.joinUs(map, commandMap);
 
 	}

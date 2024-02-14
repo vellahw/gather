@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import com.our.gather.common.common.CommandMap;
+import com.our.gather.common.common.Pager;
 
 public interface GatherService {
 
@@ -14,7 +15,7 @@ public interface GatherService {
 			throws Exception;
 
 	// 게더 리스트
-	List<Map<String, Object>> getGatherList(Map<String, Object> map, HttpSession session, CommandMap commandMap)
+	List<Map<String, Object>> getGatherList(Map<String, Object> map, HttpSession session, CommandMap commandMap, Pager pager)
 			throws Exception;
 	
 	//게더 상세보기
