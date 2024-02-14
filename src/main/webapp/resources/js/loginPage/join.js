@@ -40,8 +40,9 @@ document.addEventListener('DOMContentLoaded', function () {
   const submitBtn = document.getElementById('submit');
   const authmailBtn = document.querySelector('.authmail'); // '이메일 인증' 버튼
 
-  let firstArr = [];
-  let data;
+  let firstUserData;
+  let secondUserData;
+  let joinUserData;
 
   /**
    * admin: 장한원
@@ -52,14 +53,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const userPw = document.getElementById('userPw').value;
     const userCellNum = document.getElementById('userCell').value;
     
-    firstArr.push({
-      USER_IDXX : userId
+    firstUserData ={
+        USER_IDXX : userId
       , PASS_WORD : userPw
       , CELL_NUMB : userCellNum
-    });
+    };
   });
   
-  
+
   /**
    * admin: 장한원
    * step2 -> step3로 가는 '다음' 버튼
@@ -74,17 +75,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const nicknameNode = document.querySelector('.nickname');
     const selfIntroNode = document.querySelector('.selfIntro');
 
-    const secondArr = [{
+    secondUserData = {
         USER_NAME : userName
     	,	REGI_NUMB : userRegiNum
     	, USER_NICK : userNickname
     	, SELF_INTR : userSelfIntro
-    }];
+    };
 
     
     nicknameNode.innerHTML = userNickname;
     selfIntroNode.innerHTML = userSelfIntro;
-    data = Object.assign({}, firstArr[0], secondArr[0]);
+    
   });
 
 /**
@@ -228,6 +229,12 @@ document.addEventListener('DOMContentLoaded', function () {
   profileImgList.addEventListener('click', (event)=>{
     if(event.target.matches('[data-value]')){
       console.log(event.target.dataset.value);
+
+      const imgValue = { FILE_SVNM : event.target.dataset.value }
+
+      joinUserData = Object.assign({}, firstUserData, secondUserData, imgValue);
+      
+      console.log(joinUserData);
     }
   })
 
