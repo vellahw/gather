@@ -226,17 +226,20 @@ document.addEventListener('DOMContentLoaded', function () {
     profileImgList.appendChild(item);
   }
 
+  /**
+   * 240214 장한원
+   * 기본 프로필 사진 선택 시 동작
+   */
   profileImgList.addEventListener('click', (event)=>{
     if(event.target.matches('[data-value]')){
-      console.log(event.target.dataset.value);
+      const tagetData = event.target.getAttribute('data-value');
+      document.querySelector('.preview').src = `/resources/img/basic/profile/${tagetData}.png`;
 
-      const imgValue = { FILE_SVNM : event.target.dataset.value }
+      const imgValue = { FILE_SVNM : `${tagetData}.png` };
 
-      joinUserData = Object.assign({}, firstUserData, secondUserData, imgValue);
-      
-      console.log(joinUserData);
+      joinUserData = Object.assign({}, firstUserData, secondUserData, imgValue); // 회원가입 전송 데이터 가공
     }
-  })
+  });
 
 
   /*
@@ -252,14 +255,14 @@ document.addEventListener('DOMContentLoaded', function () {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        data: data,
+        data: joinUserData,
         regi: pickedRegiCode
       }),
     })
     .then(() => {
       comAlert2(5
         ,"회원가입 완료!"
-        , data.USER_NICK + "님 가입을 환영합니다!"
+        , joinUserData.USER_NICK + "님 가입을 환영합니다!"
         , "로그인 하러 가기"
         , function(){
           location.href = "/gather/login.com"
@@ -444,6 +447,23 @@ const joinFormCheck = function(step) {
         
       return false;
 
+    } else if(isAuth == 'N') {
+      comAlert3(
+        '이메일을 인증해주세요'
+      , null
+      , 'warning'
+      , function(){
+          document.getElementById('userId').focus();
+        }
+      );
+
+      return false;
+
+    } else if(!authnum.value){
+      controlStyleAndAppendWarning(authnum, 'appendAuthnum', '인증번호를 입력해주세요.');
+
+      return false;
+
     } else if(!userPw.value){
       controlStyleAndAppendWarning(userPw, 'appendPw', '비밀번호를 입력해주세요.');
 
@@ -486,23 +506,6 @@ const joinFormCheck = function(step) {
 
       return false;
     
-    } else if(!authnum.value){
-      controlStyleAndAppendWarning(authnum, 'appendAuthnum', '인증번호를 입력해주세요.');
-
-      return false;
-
-    } else if(isAuth == 'N') {
-      comAlert3(
-        '이메일을 인증해주세요'
-      , null
-      , 'warning'
-      , function(){
-          document.getElementById('userId').focus();
-        }
-      );
-
-      return false;
-
     } else {
       return true;
     }
