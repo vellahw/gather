@@ -82,11 +82,10 @@ public class JoinController {
         try {
             
             Map<String, Object> param = (Map<String, Object>) requestBody.get("data");
-            Map<String, Object> file = (Map<String, Object>) requestBody.get("file");
-            System.out.println("파일이오 ㅠㅠㅠ  " + file);
-            List<Map<String, String>> jsonArray = (List<Map<String, String>>) requestBody.get("regi");
+            System.out.println("파일이오 ㅠㅠㅠ  " + request);
 
             joinService.userJoin(param, commandMap, request, session);
+            List<Map<String, String>> jsonArray = (List<Map<String, String>>) requestBody.get("regi");
             
             String userNumb = (String) commandMap.get("USER_NUMB");
 

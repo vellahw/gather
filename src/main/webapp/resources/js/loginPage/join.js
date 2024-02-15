@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const pwBtnImg = showPwBtn.querySelector('.pwBtnImg');
   const userPw = document.getElementById('userPw');
   const pwConfirm = document.getElementById('pwConfirm');
-  const basicItem = document.querySelectorAll('.basicItem');
   
   pwBtnImg.src = showIconSrc; // 비밀번호 표시 버튼 이미지 src
   
@@ -27,12 +26,6 @@ document.addEventListener('DOMContentLoaded', function () {
       pwConfirm.type = 'password';
     }
   });
-
-  basicItem.forEach(item => {
-    item.addEventListener('click', (e)=>{
-      console.log(e.target.src)
-    })
-  })
 
   const step1Btn = document.getElementById('next');
   const step2Btn = document.getElementById('next2');
@@ -76,9 +69,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     secondUserData = {
         USER_NAME : userName
-    	,	REGI_NUMB : userRegiNum
-    	, USER_NICK : userNickname
-    	, SELF_INTR : userSelfIntro
+       ,   REGI_NUMB : userRegiNum
+       , USER_NICK : userNickname
+       , SELF_INTR : userSelfIntro
     };
 
     
@@ -136,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
           , null
           , function(data){
           
-          	console.log(data);
+             console.log(data);
 
             if(data != 'fail') {
               comAlert3("이메일이 발송되었습니다.", null, "success", function(){ document.getElementById('authnum').focus(); });
@@ -259,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function () {
     formData.append('file', file, file.name);
 
     for (let key of formData.keys()) {
-      console.log('forDAta 입니당  ' + key, ":", formData.get(key));
+      console.log('formData 입니당  ' + key, ":", formData.get(key));
     }
   });
 
@@ -549,9 +542,9 @@ const joinFormCheck = function(step) {
   // 두 번째 스탭
   } else if(step == 'step2') {
     const userName = document.getElementById('userName');
-  	const userRegiNum = document.getElementById('userRegiNum');
-  	const userRegiNum2 = document.getElementById('userRegiNum2');
-  	const userNickname = document.getElementById('userNick');
+     const userRegiNum = document.getElementById('userRegiNum');
+     const userRegiNum2 = document.getElementById('userRegiNum2');
+     const userNickname = document.getElementById('userNick');
 
     if(!userName.value) {
       controlStyleAndAppendWarning(userName, 'appendName', '이름을 입력해주세요.');
@@ -920,7 +913,7 @@ let pickedRegiListForStep4 = []; // step4 폼을 위한 리스트
 
 /* 클릭 이벤트 콜백 함수 */
 const handleChange = function(event) {
-	event.stopPropagation();
+   event.stopPropagation();
 
   const target = event.target;
   target.classList.toggle('clicked');
@@ -1076,4 +1069,3 @@ function removeCreatedElements() {
       item.parentNode.removeChild(item);
   });
 }
-
