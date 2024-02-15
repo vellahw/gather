@@ -80,11 +80,11 @@ public class JoinController {
 
     @RequestMapping(value = "/gather/joinDo.com", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> userJoin(@RequestParam("file") MultipartFile file,  @RequestParam("data") String userData, @RequestParam("regi") String regiData, HttpServletRequest request, CommandMap commandMap, HttpSession session) throws Exception {
+    public ResponseEntity<String> userJoin(@RequestParam("data") String userData, @RequestParam("regi") String regiData, HttpServletRequest request, CommandMap commandMap, HttpSession session) throws Exception {
 
         try {
             
-        	System.out.println("file이에용  " + file);
+        	System.out.println("file이에용  " + request);
         	System.out.println("userData이에용  " + userData);
         	System.out.println("regiData이에용  " + regiData);
         	
@@ -103,7 +103,6 @@ public class JoinController {
                 }
                 resultRegiData.add(resultMap);
             }
-
 
             joinService.userJoin(resultUserData, commandMap, request, session);
             

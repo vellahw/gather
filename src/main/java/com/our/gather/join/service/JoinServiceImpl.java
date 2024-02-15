@@ -35,8 +35,7 @@ public class JoinServiceImpl implements JoinService {
 		map.put("USER_NUMB", userNumbString);
 		commandMap.put("USER_NUMB", userNumbString);
 		
-		System.out.println("ㅠㅠㅠ  " + map);
-		System.out.println("ㅠㅠㅠ commandMap  " + commandMap);
+		System.out.println("맵!  " + map);
 		
 		if(map.get("FILE_SVNM") == null) {
 
@@ -57,8 +56,9 @@ public class JoinServiceImpl implements JoinService {
 					
 					commonDao.comFileInsert(flist.get(i));
 	
-					if (!flist.get(i).get("FILE_SEQC").equals("XXX")) {
-	
+					if (flist.get(i).get("FILE_SEQC") == null) {
+						
+						System.out.println("지금의 맵 : " + map);
 						map.put("FILE_SVNM", flist.get(i).get("FILE_SVNM"));
 						
 						
