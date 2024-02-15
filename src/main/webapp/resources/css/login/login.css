@@ -375,6 +375,7 @@ form {
 .pro {
 	width: 90px;
 	height: 90px;
+	border: 4px solid var(--color-white);
 }
 
 .bubble {
@@ -525,6 +526,15 @@ form {
   background-color: var(--color-orange300);
   width: calc(100% + 30px * 2);
   transform: translate(-30px, -20px);
+}
+
+.bg-preview {
+	display: none;
+	width: 150px;
+}
+
+.show-bg {
+	display: block;
 }
 
 .p-updateBtn {

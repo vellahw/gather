@@ -93,7 +93,7 @@
 		    
 		    <label class="joinlabel" for="userPw">⁕ 비밀번호</label>
 		    <div class="userPwContainer">
-			    <input type="password" id="userPw" class="basicInput _join step1" placeholder="영문, 숫자, 특수문자를 포함한 8~14자를 입력해주세요.">
+			    <input type="password" id="userPw" class="basicInput _join step1" placeholder="영문, 숫자, 특수문자를 포함한 8~14자를 입력해주세요." maxlength="14">
 			    <button type="button" class="showPw" data-src="/resources/img/login/eyeIcon.png">
 			    	<img class="pwBtnImg" alt="비밀번호 표시 버튼" />
 			    </button>
@@ -101,11 +101,11 @@
 		    <div id="appendPw" class="append userPw"></div>
 		    
 		    <label class="joinlabel" for="pwConfirm">⁕ 비밀번호 확인</label>
-		    <input type="password" id="pwConfirm" class="basicInput _join step1" maxlength="14">
+		    <input type="password" id="pwConfirm" class="basicInput _join step1 appendPwConfirm" maxlength="14">
 		    <div id="appendPwConfirm" class="append pwConfirm"></div>
 		    
 		    <label class="joinlabel" for="userCell">⁕ 핸드폰번호</label>
-		    <input type="text" id="userCell" class="basicInput _join step1" placeholder="숫자만 입력해주세요." maxlength="13">
+		    <input type="text" id="userCell" class="basicInput _join step1 appendCell" placeholder="숫자만 입력해주세요." maxlength="13">
 		    <div id="appendCell" class="append userCell"></div>
 		    
 		    <div class="btnContainer">
@@ -164,7 +164,13 @@
 	<!-- <form action="/gather/joinDo.com" method="post" enctype="multipart/form-data"> -->
 		<div class="loginContainer" id="signupStep4">
 			<div class="bubble">이대로 프로필을 생성할까요?</div>
-			<div class="mypage-bg"></div>
+			<div class="mypage-bg">
+				<img class="bg-preview" alt="배경이미지" />
+				<label class="upload">
+					<img src="/resources/img/icon/addIcon.png" alt="프로필 이미지 업로드 버튼">
+					<input type="file" name="wallpaper" id="choosebg" accept="image/*" />
+				</label>
+			</div>
 			<div class="container" style="transform: translateY(-60px);">
 				<div class="profileImgWrap pro">
 					<img class="profileImg preview" src="/resources/img/basic/profile/profile.jpg" alt="프로필사진"/>

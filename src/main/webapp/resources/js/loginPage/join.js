@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const signupStep3 = document.getElementById('signupStep3');
   const signupStep4 = document.getElementById('signupStep4');
 
+  let userGender;
+
   /* 
   * 240215: 장한원
   * 이전/다음 버튼 클릭 이벤트(수정)
@@ -157,9 +159,24 @@ document.addEventListener('DOMContentLoaded', function () {
        , SELF_INTR : userSelfIntro
     };
 
-    
     nicknameNode.innerHTML = userNickname;
     selfIntroNode.innerHTML = userSelfIntro;
+
+
+    /* 유저의 성별에 따른 기본 프로필 사진 설정 */
+    if(userRegi2.value%2 == 0) {
+      userGender == 'W';
+    } else {
+      userGender == 'M';
+    }
+
+    const profileImgPreview = document.querySelector('.preview');
+
+    if(userGender == 'W') {
+      profileImgPreview.src = '/resources/img/basic/profile/basic-w.png'
+    } else if(userGender == 'M') {
+      profileImgPreview.src = '/resources/img/basic/profile/basic-m.png'
+    }
     
   });
 
@@ -521,8 +538,7 @@ function removeCreatedElements() {
       item.parentNode.removeChild(item);
   });
 }
-
-
+  
   /**
    * 240214 장한원
    * step4
@@ -574,19 +590,41 @@ function removeCreatedElements() {
    */
   let formData = new FormData(); // 새로운 폼 객체 생성
   let file;
+  let bgImg;
 
   const chooseImgInput = document.getElementById('chooseImg');
-  chooseImgInput.addEventListener('change', (e)=>{
+  const choosebg =  document.getElementById('choosebg');
+
+  /* 프로필 사진 */
+  chooseImgInput.addEventListener('change', ()=>{
     const reader = new FileReader();
-      reader.onload = ({ target }) => {
+    reader.onload = ({ target }) => {
       document.querySelector('.preview').src = target.result;
     };
     
     reader.readAsDataURL(chooseImgInput.files[0]);
     
     file = chooseImgInput.files[0];
+  })
+  
+  /* 배경 사진 */
+  choosebg.addEventListener('change', ()=>{ 
 
+    const bgPreview = document.querySelector('.bg-preview');
+    bgPreview.classList.add('show-bg');
+
+    const reader = new FileReader();
+    reader.onload = ({ target }) => {
+      bgPreview.src = target.result;
+    };
+    
+    reader.readAsDataURL(choosebg.files[0]);
+    
+    bgImg = choosebg.files[0];
+    
   });
+
+  
 
   /*
    * admin: 장한원
@@ -595,19 +633,21 @@ function removeCreatedElements() {
   */
   submitBtn.addEventListener('click' , ()=>{
     if(!file){
+
       joinUserData = Object.assign({}, firstUserData, secondUserData, imgValue); // 회원가입 전송 데이터 가공
       formData.append('data', JSON.stringify(joinUserData));
       formData.append('regi', JSON.stringify(pickedRegiCode));
 
-      console.log(JSON.stringify(joinUserData));
-    } 
-      else if(file) {
+    } else if(file) {
         joinUserData = Object.assign({}, firstUserData, secondUserData);
         
         formData.append('data', JSON.stringify(joinUserData));
         formData.append('file', file);
         formData.append('regi', JSON.stringify(pickedRegiCode));
     }
+
+    formData.append('wallPaper', bgImg);
+
 
     fetch("/gather/joinDo.com", {
       method: "POST",
@@ -746,17 +786,17 @@ const joinFormCheck = function(step) {
       }
 
     } else if(!pwConfirm.value) {
-      controlStyleAndAppendWarning(pwConfirm, 'pwConfirm', '비밀번호가 일치하지 않습니다.');
+      controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', '비밀번호가 일치하지 않습니다.');
 
       return false;
     
     } if(pwConfirm.value != userPw.value) {
-      controlStyleAndAppendWarning(pwConfirm, 'pwConfirm', '비밀번호가 일치하지 않습니다.');
+      controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', '비밀번호가 일치하지 않습니다.');
       
       return false;
 
     } else if(!cellNum.value || cellNum.value.length <= 11) {
-      controlStyleAndAppendWarning(cellNum, 'userCell', '올바른 핸드폰번호를 입력해주세요.');
+      controlStyleAndAppendWarning(cellNum, 'appendCell', '올바른 핸드폰번호를 입력해주세요.');
 
       return false;
     
@@ -791,7 +831,6 @@ const joinFormCheck = function(step) {
       return false;
 
     } else {
-
       return true;
     }
   }
@@ -827,16 +866,22 @@ const inputChangeHandler = function() {
     }
   })
 
-  userPw.addEventListener('input', (e)=>{
-
-    if(e.target.value.length > 14) {
-      controlStyleAndAppendWarning(userPw, 'appendPw', '최대 14자까지 설정 가능합니다.');
-      e.target.value = e.target.value.substring(0, 14);
+  userPw.addEventListener('keyup', (event)=>{
+    if (event.getModifierState("CapsLock")) {
+      controlStyleAndAppendWarning(userPw, 'appendPw', 'Caps Lock이 활성화된 상태입니다.');
     } else {
       hideWarning('.userPw');
     }
-
   });
+
+  // userPw.addEventListener('input', (e)=>{
+  //   if(e.target.value.length > 14) {
+  //     controlStyleAndAppendWarning(userPw, 'appendPw', '최대 14자까지 설정 가능합니다.');
+  //     e.target.value = e.target.value.substring(0, 14);
+  //   } else {
+  //     hideWarning('.userPw');
+  //   }
+  // });
 
   userPw.addEventListener('change', (e)=>{
     const inputValue = e.target.value;
@@ -849,7 +894,7 @@ const inputChangeHandler = function() {
       if(inputValue.length < 8) {
         controlStyleAndAppendWarning(userPw, 'appendPw', '최소 8자 이상 입력해주세요.');
       }
-
+      
       if (!isValidInput(inputValue)) {
         controlStyleAndAppendWarning(userPw, 'appendPw', '영문+숫자+특수문자 조합으로 입력해주세요.');
       }
@@ -860,6 +905,14 @@ const inputChangeHandler = function() {
   pwConfirm.addEventListener('change', ()=>{
     if(userPw.value != pwConfirm.value) {
       controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', '비밀번호가 일치하지 않습니다.');
+    } else {
+      hideWarning('.pwConfirm');
+    }
+  });
+
+  pwConfirm.addEventListener('keyup', (event)=>{
+    if (event.getModifierState("CapsLock")) {
+      controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', 'Caps Lock이 활성화된 상태입니다.');
     } else {
       hideWarning('.pwConfirm');
     }
@@ -1002,7 +1055,7 @@ const controlStyleAndAppendWarning = function(element, appendId, appendText) {
   } else if(appendId == 'appendAuthnum') {
     authmailInput.classList.add('append-margin-bottom');
   } else {
-    element.classList.add('append-margin-bottom');
+    document.querySelector('.'+ appendId).classList.add('append-margin-bottom');
   }
 
   appendWarning(appendId, appendText); // login.js에 있는 함수 호출
