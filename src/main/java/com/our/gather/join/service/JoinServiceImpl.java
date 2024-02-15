@@ -36,6 +36,7 @@ public class JoinServiceImpl implements JoinService {
 		commandMap.put("USER_NUMB", userNumbString);
 		
 		System.out.println("ㅠㅠㅠ  " + map);
+		System.out.println("ㅠㅠㅠ commandMap  " + commandMap);
 		
 		if(map.get("FILE_SVNM") == null) {
 
