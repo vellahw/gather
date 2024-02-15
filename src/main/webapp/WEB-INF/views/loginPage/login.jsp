@@ -109,8 +109,8 @@
 		    <div id="appendCell" class="append userCell"></div>
 		    
 		    <div class="btnContainer">
-			    <button type="button" class="waybtn prev" onclick="prevSection('step1')">이전</button>
-			    <button type="button" class="waybtn next" id="next" onclick="nextSection('step1')">다음</button>
+			    <button type="button" class="waybtn prev" id="prev">이전</button>
+			    <button type="button" class="waybtn next" id="next" >다음</button>
 		    </div>
 		  </form>
 		</div>
@@ -139,8 +139,8 @@
 		    <input type="text" id="userSelf" class="basicInput _join" placeholder="취향, 가치관 등을 나타내보세요! (최대 100자)" maxlength="100">
 		    
 		    <div class="btnContainer">
-			  	<button type="button" class="waybtn prev" onclick="prevSection('step2')">이전</button>
-			  	<button type="button" class="waybtn next" id="next2" onclick="nextSection('step2')">다음</button>
+			  	<button type="button" class="waybtn prev" id="prev2">이전</button>
+			  	<button type="button" class="waybtn next" id="next2">다음</button>
 		  	</div>
 		  </form>
 		</div>
@@ -155,8 +155,8 @@
 		    	</div>
 		    </div>
 		    <div class="btnContainer">
-			  	<button type="button" class="waybtn prev" onclick="prevSection('step3')">이전</button>
-			  	<button type="button" class="waybtn next" id="next3" onclick="nextSection('step3')">다음</button>
+			  	<button type="button" class="waybtn prev" id="prev3">이전</button>
+			  	<button type="button" class="waybtn next" id="next3">다음</button>
 		  	</div>
 		  </form>
 		</div>
@@ -172,7 +172,7 @@
 				<div class="p-updateBtn">
 					<img src="/resources/img/icon/pencile.png" class="p-updateIcon" alt="프사수정버튼">
 				</div>
-				<div class="profileImgContainer">
+				<div class="profileImgContainer popup">
 						<div class="profileImgList"></div>
 						<label class="upload">
 							<img src="/resources/img/icon/addIcon.png" alt="프로필 이미지 업로드 버튼">
@@ -191,7 +191,7 @@
 				</div>
 			</div>
 			<div class="btnContainer" style="margin-top: 34px;">
-			  <button type="button" class="waybtn prev" onclick="prevSection('step4')">이전</button>
+			  <button type="button" class="waybtn prev" id="prev4">이전</button>
 			  <button type="submit" class="waybtn next" id="submit">확인</button>
 		  </div>
 		</div>

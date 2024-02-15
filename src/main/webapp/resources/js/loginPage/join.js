@@ -18,15 +18,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* 
   * 240215: 장한원
-  * [다음(확인)] 버튼 클릭시 동작 (수정)
+  * 이전/다음 버튼 클릭 이벤트(수정)
   */
   btnContainer.forEach(btn=>{
     btn.addEventListener('click', (event)=>{
       const target = event.target;
+      const btnId = target.id; // 클릭한 버튼 아이디
+
+      /* 다음 버튼 */
       if(target.matches('.next')) {
-        const btnId = target.id;
-        
+
         if(btnId == 'next') {
+
           if (joinFormCheck('step1')) {
 
             showStep(signupStep2);
@@ -41,21 +44,47 @@ document.addEventListener('DOMContentLoaded', function () {
             needMarginList.forEach(item => {
               item.style.marginBottom = '20px';
             });
-      
           }
+
         } else if(btnId == 'next2'){
+
           if (joinFormCheck('step2')) {
             showStep(signupStep3);
           }
+
         } else if(btnId == 'next3') {
+
           showStep(signupStep4);
           if(pickedRegiListForStep4){
             showUserPickedRegi(pickedRegiListForStep4, regiList);
           }
         }
 
+      /* 이전버튼 */
       } else if(target.matches('.prev')){
-        console.log("prev!")
+
+        if(btnId == 'prev') {
+
+          signupContainer.classList.remove('_act');
+          loginForm.classList.add('_act');
+      
+        } else if(btnId == 'prev2') {
+
+          signupStep2.classList.remove('_act');
+          signupContainer.classList.add('_act');
+      
+        } else if(btnId == 'prev3') {
+
+          signupStep3.classList.remove('_act');
+          signupStep2.classList.add('_act');
+      
+        } else if(btnId == 'prev4') {
+
+          signupStep4.classList.remove('_act');
+          signupStep3.classList.add('_act');
+      
+          removeCreatedElements();
+        }
       }
     });
   });
@@ -612,6 +641,37 @@ function removeCreatedElements() {
 });
 
 
+/* 
+ * admin: 장한원
+ * 로그인/회원가입 폼 전환을 담당
+*/
+const toggleForm = function(formId) {
+  const loginForm = document.getElementById('loginForm');
+  const findIdForm = document.getElementById('findIdForm');
+  const findPwForm = document.getElementById('findPwForm');
+  const signupContainer = document.getElementById('signupContainer');
+
+  loginForm.classList.remove('_act');
+
+  if (formId === 'findIdForm') {
+    findIdForm.classList.add('_act');
+  } else if (formId === 'findPwForm') {
+    findPwForm.classList.add('_act');
+  } else if(formId === 'signupForm') {
+    signupContainer.classList.add('_act');
+    loginForm.classList.remove('_act');
+  }
+}
+
+
+/**
+ * 버튼 클릭시 다음(이전) 폼 보여주는 함수
+ */
+const showStep = function(stepElement) {
+  signupContainer.classList.remove('_act');
+  stepElement.classList.add('_act');
+}
+
 
 /**
  * admin 장한원
@@ -655,6 +715,7 @@ const joinFormCheck = function(step) {
 
     } else if(!authnum.value){
       controlStyleAndAppendWarning(authnum, 'appendAuthnum', '인증번호를 입력해주세요.');
+      document.getElementById('authnum').focus();
 
       return false;
 
@@ -686,17 +747,17 @@ const joinFormCheck = function(step) {
       }
 
     } else if(!pwConfirm.value) {
-      controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', '비밀번호가 일치하지 않습니다.');
+      controlStyleAndAppendWarning(pwConfirm, 'pwConfirm', '비밀번호가 일치하지 않습니다.');
 
       return false;
     
     } if(pwConfirm.value != userPw.value) {
-      controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', '비밀번호가 일치하지 않습니다.');
+      controlStyleAndAppendWarning(pwConfirm, 'pwConfirm', '비밀번호가 일치하지 않습니다.');
       
       return false;
 
     } else if(!cellNum.value || cellNum.value.length <= 11) {
-      controlStyleAndAppendWarning(cellNum, 'appendCell', '올바른 핸드폰번호를 입력해주세요.');
+      controlStyleAndAppendWarning(cellNum, 'userCell', '올바른 핸드폰번호를 입력해주세요.');
 
       return false;
     
@@ -911,6 +972,11 @@ const inputChangeHandler = function() {
   });
 }
 
+
+/**
+ * admin: 장한원
+ * 엔터키 이벤트
+ */
 const enterKeyupEvent = function(event) {
   const clickTargetSelector = event.target.dataset.clickTarget;
 
@@ -945,13 +1011,13 @@ const controlStyleAndAppendWarning = function(element, appendId, appendText) {
   element.focus();
 }
 
+
 /**
  * admin: 장한원
  * 유효성검사 경고 문구 숨기는 함수
 */
 const hideWarning = function(className) {
   const appendNode = document.querySelector(className);
-  
   const idContainer = document.querySelector('.userIdContainer');
   const pwContainer = document.querySelector('.userPwContainer');
   
@@ -1014,105 +1080,3 @@ function updateTimerDisplay(timeInSeconds) {
 
   timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 } 
-
-
-
-/* 
- * admin: 장한원
- * 로그인/회원가입 폼 전환을 담당
-*/
-const toggleForm = function(formId) {
-  const loginForm = document.getElementById('loginForm');
-  const findIdForm = document.getElementById('findIdForm');
-  const findPwForm = document.getElementById('findPwForm');
-  const signupContainer = document.getElementById('signupContainer');
-
-  loginForm.classList.remove('_act');
-
-  if (formId === 'findIdForm') {
-    findIdForm.classList.add('_act');
-  } else if (formId === 'findPwForm') {
-    findPwForm.classList.add('_act');
-  } else if(formId === 'signupForm') {
-    signupContainer.classList.add('_act');
-    loginForm.classList.remove('_act');
-  }
-}
-
-/* 
- * admin: 장한원
- * [이전] 버튼 클릭시 동작
-*/
-const prevSection = function(step) {
-  const loginForm = document.getElementById('loginForm');
-  const signupContainer = document.getElementById('signupContainer');
-  const signupStep2 = document.getElementById('signupStep2');
-  const signupStep3 = document.getElementById('signupStep3');
-  const signupStep4 = document.getElementById('signupStep4');
-
-  if(step == 'step1') {
-    signupContainer.classList.remove('_act');
-    loginForm.classList.add('_act');
-
-  } else if(step == 'step2') {
-    signupStep2.classList.remove('_act');
-    signupContainer.classList.add('_act');
-
-  } else if(step == 'step3') {
-    signupStep3.classList.remove('_act');
-    signupStep2.classList.add('_act');
-
-  } else if(step == 'step4') {
-    signupStep4.classList.remove('_act');
-    signupStep3.classList.add('_act');
-
-    removeCreatedElements();
-  }
-}
-
-/* 
- * admin: 장한원
- * [다음(확인)] 버튼 클릭시 동작
-*/
-const nextSection = function(step) {
-  const signupContainer = document.getElementById('signupContainer');
-  const signupStep2 = document.getElementById('signupStep2');
-  const signupStep3 = document.getElementById('signupStep3');
-  const signupStep4 = document.getElementById('signupStep4');
-
-  if (step == 'step1') {
-    if (joinFormCheck('step1')) {
-
-      showStep(signupStep2);
-
-      const appendList = document.querySelectorAll('.append');
-      const needMarginList = document.querySelectorAll('.step1');
-      
-      appendList.forEach(element => {
-        element.style.display = 'none';
-      });
-      
-      needMarginList.forEach(item => {
-        item.style.marginBottom = '20px';
-      });
-
-    }
-  } else if (step == 'step2') {
-    if (joinFormCheck('step2')) {
-      showStep(signupStep3);
-    }
-  } else if (step == 'step3') {
-    showStep(signupStep4);
-    if(pickedRegiListForStep4){
-      showUserPickedRegi(pickedRegiListForStep4, regiList);
-    }
-  }
-}
-
-/**
- * 버튼 클릭시 다음(이전) 폼 보여주는 함수
- */
-const showStep = function(stepElement) {
-  signupContainer.classList.remove('_act');
-  stepElement.classList.add('_act');
-}

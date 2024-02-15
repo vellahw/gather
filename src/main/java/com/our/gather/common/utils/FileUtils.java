@@ -19,13 +19,12 @@ public class FileUtils {
 	
 	private static final String filePath = "/resources/img/upload/";
 
-	
 	public List<Map<String, Object>> fileInsert(Map<String, Object> map, HttpServletRequest request, HttpSession session) throws Exception {
 
 		String realPath = "";
 		String savePath = filePath;
 
-		realPath = request.getRealPath(savePath);
+		realPath = request.getServletContext().getRealPath(savePath);
 
 		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
 		
@@ -57,19 +56,23 @@ public class FileUtils {
 				if (map.get("USER_NUMB") != null) {
 					
 					String profileFolderPath = realPath + "profile/" + map.get("USER_NUMB") + "/";
-                    File profileFolder = new File(profileFolderPath);
-                    if (!profileFolder.exists()) {
-                        profileFolder.mkdirs(); //
-                    }
-                    File file = new File(profileFolderPath + storedFileName);
-                    multipartFile.transferTo(file); 
+          File profileFolder = new File(profileFolderPath);
+          
+          if (!profileFolder.exists()) {
+            profileFolder.mkdirs(); //
+          }
+          
+          File file = new File(profileFolderPath + storedFileName);
+          multipartFile.transferTo(file); 
                     
-                    listMap.put("FILE_PATH", file);
+          listMap.put("FILE_PATH", file);
 					listMap.put("FILE_IDXX", map.get("USER_NUMB"));
 					listMap.put("USER_NUMB", map.get("USER_NUMB"));
 					
 					System.out.println("여기2 :" + file);
 					listMap.put("FILE_PATH", file);
+
+					System.out.println("fileUtils의 listMap이에용 " + listMap);
 					
 					System.out.println("여기3: " + listMap);
 					
@@ -134,7 +137,7 @@ public class FileUtils {
 				list.add(listMap);
 				
 				System.out.println("으아앙  " + listMap);
-				
+
 			}
 			
 		}

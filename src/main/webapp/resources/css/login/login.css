@@ -555,8 +555,8 @@ form {
 	transform: translate(70px, -22px);
 }
 
-.profileImgContainer::after {
-	background-color: var(--color-gray100);
+.profileImgContainer.popup::after {
+	content:""; position: absolute; top: 21px; right: -30px; border-left: 30px solid #000; border-top: 10px solid transparent; border-bottom: 10px solid transparent;
 }
 
 .profileImgList {
