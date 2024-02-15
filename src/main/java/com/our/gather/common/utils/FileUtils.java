@@ -24,11 +24,9 @@ public class FileUtils {
 		String realPath = "";
 		String savePath = filePath;
 
-		realPath = request.getRealPath(savePath);
+		realPath = request.getServletContext().getRealPath(savePath);
 
 		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
-		
-		System.out.println("ddddd "+multipartHttpServletRequest);
 
 		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
 
@@ -52,10 +50,17 @@ public class FileUtils {
 				
 				if (map.get("USER_NUMB") != null) {
 					
-					System.out.println("으아앙  " + listMap);
-					
 					File file = new File(realPath + "upload/profile/" + map.get("USER_NUMB") + "/" + storedFileName);
-					multipartFile.transferTo(file); // 프로필폴더에 업로드 처리
+					
+					System.out.println("=============fileUtils의 file이에용 " + file);
+					
+					try {
+						multipartFile.transferTo(file); // 프로필폴더에 업로드 처리
+						
+					} catch (Exception e) {
+						System.out.println("transferTo 오류!! "+e.getMessage());
+					}
+					
 					
 					// 배경 이미지는 input type = "file" name = "wallPaper" 로
 					if (multipartFile.getName().equals("wallPaper")) {
@@ -67,6 +72,8 @@ public class FileUtils {
 					listMap.put("FILE_IDXX", map.get("USER_NUMB"));
 					listMap.put("USER_NUMB", map.get("USER_NUMB"));
 					listMap.put("FILE_PATH", file);
+
+					System.out.println("fileUtils의 listMap이에용 " + listMap);
 					
 				} else if (map.get("GATH_IDXX") != null) {
 					
@@ -102,6 +109,8 @@ public class FileUtils {
 				listMap.put("FILE_SIZE", multipartFile.getSize());
 				
 				list.add(listMap);
+				
+				System.out.println("fileUtils의 list " + list);
 
 			}
 		}
