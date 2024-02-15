@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if(btnId == 'next') {
 
           if (joinFormCheck('step1')) {
+
             showStep(signupStep2);
       
             const appendList = document.querySelectorAll('.append');
@@ -57,7 +58,6 @@ document.addEventListener('DOMContentLoaded', function () {
           if(pickedRegiListForStep4){
             showUserPickedRegi(pickedRegiListForStep4, regiList);
           }
-
         }
 
       /* 이전버튼 */
@@ -152,9 +152,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     secondUserData = {
         USER_NAME : userName
-    	,	REGI_NUMB : userRegiNum
-    	, USER_NICK : userNickname
-    	, SELF_INTR : userSelfIntro
+       ,   REGI_NUMB : userRegiNum
+       , USER_NICK : userNickname
+       , SELF_INTR : userSelfIntro
     };
 
     
@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function () {
           , null
           , function(data){
           
-          	console.log(data);
+             console.log(data);
 
             if(data != 'fail') {
               comAlert3("이메일이 발송되었습니다.", null, "success", function(){ document.getElementById('authnum').focus(); });
@@ -606,6 +606,8 @@ function removeCreatedElements() {
 
     }
 
+    console.log(formData);
+
     formData.append('regi', JSON.stringify(pickedRegiCode));
 
     fetch("/gather/joinDo.com", {
@@ -637,6 +639,7 @@ function removeCreatedElements() {
   });
 
 });
+
 
 /* 
  * admin: 장한원
@@ -765,9 +768,9 @@ const joinFormCheck = function(step) {
   // 두 번째 스탭
   } else if(step == 'step2') {
     const userName = document.getElementById('userName');
-  	const userRegiNum = document.getElementById('userRegiNum');
-  	const userRegiNum2 = document.getElementById('userRegiNum2');
-  	const userNickname = document.getElementById('userNick');
+     const userRegiNum = document.getElementById('userRegiNum');
+     const userRegiNum2 = document.getElementById('userRegiNum2');
+     const userNickname = document.getElementById('userNick');
 
     if(!userName.value) {
       controlStyleAndAppendWarning(userName, 'appendName', '이름을 입력해주세요.');
