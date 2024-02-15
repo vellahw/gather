@@ -212,8 +212,6 @@ document.addEventListener('DOMContentLoaded', function () {
           , null
           , function(data){
           
-             console.log(data);
-
             if(data != 'fail') {
               comAlert3("이메일이 발송되었습니다.", null, "success", function(){ document.getElementById('authnum').focus(); });
 
@@ -605,8 +603,6 @@ function removeCreatedElements() {
         formData.append('file', file);
 
     }
-
-    console.log(formData);
 
     formData.append('regi', JSON.stringify(pickedRegiCode));
 
