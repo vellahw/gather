@@ -165,8 +165,8 @@
 			<div class="bubble">이대로 프로필을 생성할까요?</div>
 			<div class="mypage-bg">
 				<img class="bg-preview" alt="배경이미지" />
-				<label class="upload">
-					<img src="/resources/img/icon/addIcon.png" alt="프로필 이미지 업로드 버튼">
+				<label class="upload bg-update">
+					<img src="/resources/img/icon/addIcon.png" alt="배경 이미지 업로드 버튼">
 					<input type="file" name="wallpaper" id="choosebg" accept="image/*" />
 				</label>
 			</div>
@@ -178,12 +178,13 @@
 					<img src="/resources/img/icon/pencile.png" class="p-updateIcon" alt="프사수정버튼">
 				</div>
 				<div class="profileImgContainer popup">
-						<div class="profileImgList"></div>
-						<label class="upload">
-							<img src="/resources/img/icon/addIcon.png" alt="프로필 이미지 업로드 버튼">
-							<input type="file" name="FILE_SVNM" id="chooseImg" accept="image/*" />
-						</label>
-					</div>
+					<div class="profileImgList"></div>
+					<label class="upload">
+						<img src="/resources/img/icon/addIcon.png" alt="프로필 이미지 업로드 버튼">
+						<input type="file" name="FILE_SVNM" id="chooseImg" accept="image/*" />
+					</label>
+					<p>기본 프로필로 설정하기</p>
+				</div>
 				<div class="user">
 					<p class="nickname"></p>
 					<p class="selfIntro"></p>

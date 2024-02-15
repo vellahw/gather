@@ -533,6 +533,12 @@ form {
 	width: 150px;
 }
 
+.bg-update {
+  transform: translate(183px, 130px) !important;
+  width: 32px !important;
+  height: 32px !important;
+}
+
 .show-bg {
 	display: block;
 }
@@ -560,13 +566,20 @@ form {
   visibility: visible;
   background-color: var(--color-gray100);
 	padding: 7px;
-	width: 240px;
+	width: 218px;
+	height: 140px;
 	border-radius: 16px;
 	transform: translate(70px, -22px);
 }
 
 .profileImgContainer.popup::after {
-	content:""; position: absolute; top: 21px; right: -30px; border-left: 30px solid #000; border-top: 10px solid transparent; border-bottom: 10px solid transparent;
+	content: "";
+  position: absolute;
+  top: -12px;
+  left: 0px;
+  border-bottom: 30px solid var(--color-gray100);
+  border-right: 10px solid transparent;
+  border-left: 10px solid transparent;
 }
 
 .profileImgList {
@@ -584,14 +597,26 @@ form {
 
 .basic-p {
 	width: 44px;
-	height: 44px
+	height: 44px;
 }
 
 .upload {
-	width: 44px;
-	height: 44px;
+	width: 40px;
+	height: 40px;
 	display: inline-flex;
 	cursor: pointer;
+	transform: translate(79px, -46px);
+}
+
+.profileImgContainer > p {
+	font-size: 12px;
+	transform: translate(0px, -33px);
+	transition: font-weight 0.3s;
+	cursor: pointer;
+}
+
+.profileImgContainer>p:hover {
+	font-weight: 500;
 }
 
 label.upload > img {

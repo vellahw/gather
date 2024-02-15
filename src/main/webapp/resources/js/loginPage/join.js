@@ -562,8 +562,6 @@ const showUserPickedRegi = function(pickedList, regiList) {
     imgTag.src = `/resources/img/basic/profile/basicProfile${i}.png`;
     imgTag.dataset.value = `basicProfile${i}`;
     imgTag.classList.add('profileImg');
-    imgTag.classList.add('basic-p');
-
 
     item.appendChild(imgWrap);
     imgWrap.appendChild(imgTag);
