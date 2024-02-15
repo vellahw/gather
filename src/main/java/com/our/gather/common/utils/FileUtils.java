@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 public class FileUtils {
 	private static final String filePath = "/resources/img/";
 
-	
 	public List<Map<String, Object>> fileInsert(Map<String, Object> map, HttpServletRequest request, HttpSession session) throws Exception {
 
 		String realPath = "";
@@ -54,13 +53,7 @@ public class FileUtils {
 					
 					System.out.println("=============fileUtils의 file이에용 " + file);
 					
-					try {
-						multipartFile.transferTo(file); // 프로필폴더에 업로드 처리
-						
-					} catch (Exception e) {
-						System.out.println("transferTo 오류!! "+e.getMessage());
-					}
-					
+					multipartFile.transferTo(file); // 프로필폴더에 업로드 처리
 					
 					// 배경 이미지는 input type = "file" name = "wallPaper" 로
 					if (multipartFile.getName().equals("wallPaper")) {
