@@ -212,6 +212,8 @@ document.addEventListener('DOMContentLoaded', function () {
           , null
           , function(data){
           
+            console.log('인증번호: '+ data);
+
             if(data != 'fail') {
               comAlert3("이메일이 발송되었습니다.", null, "success", function(){ document.getElementById('authnum').focus(); });
 
@@ -594,21 +596,22 @@ function removeCreatedElements() {
   submitBtn.addEventListener('click' , ()=>{
     if(!file){
       joinUserData = Object.assign({}, firstUserData, secondUserData, imgValue); // 회원가입 전송 데이터 가공
+      formData.append('data', JSON.stringify(joinUserData));
+      formData.append('regi', JSON.stringify(pickedRegiCode));
+
+      console.log(JSON.stringify(joinUserData));
     } 
       else if(file) {
         joinUserData = Object.assign({}, firstUserData, secondUserData);
         
         formData.append('data', JSON.stringify(joinUserData));
-
         formData.append('file', file);
-
+        formData.append('regi', JSON.stringify(pickedRegiCode));
     }
-
-    formData.append('regi', JSON.stringify(pickedRegiCode));
 
     fetch("/gather/joinDo.com", {
       method: "POST",
-      body: formData,
+      body: formData
     })
     .then(response => {
       if (!response.ok) {

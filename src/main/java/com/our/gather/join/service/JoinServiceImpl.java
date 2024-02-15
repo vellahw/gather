@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.aspectj.weaver.patterns.IfPointcut.IfFalsePointcut;
 import org.springframework.stereotype.Service;
 
 import com.our.gather.common.common.CommandMap;

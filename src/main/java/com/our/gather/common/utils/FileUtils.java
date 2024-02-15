@@ -60,21 +60,23 @@ public class FileUtils {
 					}
 
 					File file = new File(profileFolderPath + storedFileName);
+					
 					multipartFile.transferTo(file);
 
-					listMap.put("FILE_PATH", file);
 					listMap.put("FILE_IDXX", map.get("USER_NUMB"));
 					listMap.put("USER_NUMB", map.get("USER_NUMB"));
 					listMap.put("FILE_PATH", filePath + "profile/" + map.get("USER_NUMB") + "/" + storedFileName);
-					listMap.put("FILE_PATH", file);
 
 				} else if (map.get("GATH_IDXX") != null) {
 
 					String profileFolderPath = realPath + "gather/" + map.get("GATH_IDXX") + "/";
+					
 					File profileFolder = new File(profileFolderPath);
+					
 					if (!profileFolder.exists()) {
 						profileFolder.mkdirs();
 					}
+					
 					File file = new File(profileFolderPath + storedFileName);
 					multipartFile.transferTo(file);
 
