@@ -40,13 +40,18 @@ public class JoinServiceImpl implements JoinService {
 		
 		if(map.get("FILE_SVNM") == null) {
 
+			System.out.println("없으면 돌아야됨");
+			
 			try {
 				
-				List<Map<String, Object>> flist = fileUtils.fileInsert(map, request, session);
-
-				System.out.println("없으면 돌아야됨");
-				
 				map.put("USER_NUMB", userNumbString);
+				
+				System.out.println("없으면 돌아야됨2");
+				
+				List<Map<String, Object>> flist = fileUtils.fileInsert(map, request, session);
+				
+				System.out.println("파일리스트" + flist);
+				
 	
 				for (int i = 0, size = flist.size(); i < size; i++) {
 					

@@ -9,47 +9,48 @@
 
 <div class="backGroundContainer">
   <ul class="backGroundList">
-	  <c:forEach var="Bimag" items="${Bimag}">
-	  <li>
-		  <div class="backgroundItem">
-		    <img src="<c:out value="${Bimag.BACK_IMGG}"/>" class="backGroundImg">
-		  </div>
-	  </li>
-	  </c:forEach>
+     <c:forEach var="Bimag" items="${Bimag}">
+     <li>
+        <div class="backgroundItem">
+          <img src="<c:out value="${Bimag.BACK_IMGG}"/>" class="backGroundImg">
+        </div>
+     </li>
+     </c:forEach>
   </ul>
 
   <div class="formContainer">
     <!-- 로그인 폼 -->
     <div class="loginContainer _act" id="loginForm">
-	  	<form action="/gather/loginDo.com" method="post">
-	  		<h2 class="LoginHead">로그인</h2>
-	  		<input type="text" class="basicInput" name="USER_IDXX" id="USER_IDXX" placeholder="아이디(이메일 형식)">
-	  		<input type="password" class="basicInput" name="PASS_WORD" id="PASS_WORD" placeholder="비밀번호">
-	  		<div id="append" class="append"></div>
-	  		<button type="submit" class="basicInput btn">로그인</button>
-	  		<div class="additionalButtons">
-	  			<button type="button" onclick="toggleForm('findIdForm')" class="findIdButton">아이디 찾기</button>
-	  			<button type="button" onclick="toggleForm('findPwForm')" class="findIdButton">비밀번호 찾기</button>
-	  			<button type="button" onclick="toggleForm('signupForm')" class="signupButton">회원가입</button>
-	  		</div>
-   		</form>
-	
-	  	<div class="socialButtons">
-		  	<div id="naverIdLogin"></div>
-	  	  <button id="naverLogin" onclick="location.href='${urlNaver}'"class="loginButton naver">
-	  	    <img class="navericon" src="/resources/img/icon/loginApi/naver.png">
-	  			네이버 로그인
-	  	  </button>
-	  	  <button class="loginButton kakao" onclick="location.href='${urlKakao}'">
-	  			<img class="kakaoicon" src="/resources/img/icon/loginApi/kakao.png" alt="Kakao Icon">
-	   			카카오 로그인
-	  		</button>
-	  		<button class="Login google" onclick="location.href='${urlGoogle}'">
-	  			<img class="googleicon" src="/resources/img/icon/loginApi/google.png" alt="Google Icon">
-	   			구글 로그인
-	  		</button>
-	  	</div>
-	  </div>
+        <form action="/gather/loginDo.com" method="post">
+           <h2 class="LoginHead">로그인</h2>
+           <input type="text" class="basicInput" name="USER_IDXX" id="USER_IDXX" placeholder="아이디(이메일 형식)">
+           <input type="password" class="basicInput" name="PASS_WORD" id="PASS_WORD" placeholder="비밀번호">
+           <div id="append" class="append"></div>
+           <button type="submit" class="basicInput btn">로그인</button>
+           <div class="additionalButtons">
+              <button type="button" onclick="toggleForm('findIdForm')" class="findIdButton">아이디 찾기</button>
+              <button type="button" onclick="toggleForm('findPwForm')" class="findIdButton">비밀번호 찾기</button>
+              <button type="button" onclick="toggleForm('signupForm')" class="signupButton">회원가입</button>
+           </div>
+         </form>
+   
+        <div class="socialButtons">
+           <div id="naverIdLogin"></div>
+          <button id="naverLogin" onclick="location.href='${urlNaver}'"class="loginButton naver">
+            <img class="navericon" src="/resources/img/icon/loginApi/naver.png">
+              네이버 로그인
+          </button>
+          <button class="loginButton kakao" onclick="location.href='${urlKakao}'">
+              <img class="kakaoicon" src="/resources/img/icon/loginApi/kakao.png" alt="Kakao Icon">
+               카카오 로그인
+           </button>
+           <button class="Login google" onclick="location.href='${urlGoogle}'">
+              <img class="googleicon" src="/resources/img/icon/loginApi/google.png" alt="Google Icon">
+               구글 로그인
+           </button>
+        </div>
+     </div>
+
 
 		  <div id="findIdForm" class="findIdForm">
 		    <form action="/findId" method="post">
@@ -204,7 +205,7 @@
 			  <button type="submit">비밀번호 찾기</button>
 		  </form>
 
-		</div>
+      </div>
   
 </div>
 <input type="hidden" id="regi" value="${regi}" />
