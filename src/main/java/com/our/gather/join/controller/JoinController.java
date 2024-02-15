@@ -23,7 +23,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.our.gather.common.common.CommandMap;
@@ -80,6 +82,8 @@ public class JoinController {
         try {
             
             Map<String, Object> param = (Map<String, Object>) requestBody.get("data");
+            Map<String, Object> file = (Map<String, Object>) requestBody.get("file");
+            System.out.println("파일이오 ㅠㅠㅠ  " + file);
             List<Map<String, String>> jsonArray = (List<Map<String, String>>) requestBody.get("regi");
 
             joinService.userJoin(param, commandMap, request, session);
@@ -96,17 +100,6 @@ public class JoinController {
                     joinService.insertRegi(commandMap.getMap(), commandMap);
                 }
             }
-
-            return ResponseEntity.ok("success");
-        } catch (Exception e) {
-            System.out.println("error : " + e.getMessage());
-            return ResponseEntity.ok("fail");
-        }
-    }
-    
-    public ResponseEntity<String> fileTest(@RequestBody Map<String, Object> requestBody) {
-    		try {
-            
 
             return ResponseEntity.ok("success");
         } catch (Exception e) {
