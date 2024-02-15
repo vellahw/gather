@@ -84,10 +84,6 @@ public class JoinController {
 
         try {
             
-        	System.out.println("file이에용  " + request);
-        	System.out.println("userData이에용  " + userData);
-        	System.out.println("regiData이에용  " + regiData);
-        	
         	// JSON 데이터 처리
             ObjectMapper objectMapper = new ObjectMapper();
             

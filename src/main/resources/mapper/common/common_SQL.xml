@@ -24,10 +24,10 @@
 	 ]]>
 	 </select>
 	
-	<insert id="insertFile" parameterType="hashMap">
+	<insert id="fileInsert" parameterType="hashMap">
   		<![CDATA[
 	    INSERT INTO TM_FILEXM (
-			       , FILE_IDXX     /* 파일 번호 / 파일 유형(각 PK) */
+			         FILE_IDXX     /* 파일 번호 / 파일 유형(각 PK) */
 			       , FILE_SEQC     /* 파일 번호2(001) */
 			       , USER_NUMB     /* 파일 올린 사용자번호 */
 			       , FILE_OGNM     /* 원본 파일명 */
@@ -58,7 +58,7 @@
 			       , #{FILE_SVNM}   /* 저장 파일명 */
 			       , #{FILE_SIZE}   /* 파일 사이즈 */
 			       , #{FILE_PATH}   /* 파일 경로 */
-			       , #{DELT_YSNO}   /* 삭제 여부 */
+			       , 'N'  /* 삭제 여부 */
 			       , SYSDATE        /* 파일 등록일 */
 	         )
  		 ]]>

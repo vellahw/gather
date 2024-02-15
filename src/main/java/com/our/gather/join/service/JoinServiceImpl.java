@@ -35,21 +35,14 @@ public class JoinServiceImpl implements JoinService {
 		map.put("USER_NUMB", userNumbString);
 		commandMap.put("USER_NUMB", userNumbString);
 		
-		System.out.println("맵!  " + map);
-		
 		if(map.get("FILE_SVNM") == null) {
 
-			System.out.println("없으면 돌아야됨");
-			
 			try {
 				
 				map.put("USER_NUMB", userNumbString);
 				
-				System.out.println("없으면 돌아야됨2");
-				
 				List<Map<String, Object>> flist = fileUtils.fileInsert(map, request, session);
 				
-				System.out.println("파일리스트" + flist);
 				
 	
 				for (int i = 0, size = flist.size(); i < size; i++) {
@@ -58,9 +51,7 @@ public class JoinServiceImpl implements JoinService {
 	
 					if (flist.get(i).get("FILE_SEQC") == null) {
 						
-						System.out.println("지금의 맵 : " + map);
 						map.put("FILE_SVNM", flist.get(i).get("FILE_SVNM"));
-						
 						
 					}
 				}
