@@ -1,6 +1,5 @@
 package com.our.gather.join.service;
 
-import java.io.Console;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,104 +19,91 @@ import com.our.gather.join.dao.JoinDao;
 @Service("JoinService")
 public class JoinServiceImpl implements JoinService {
 
-	@Resource(name = "CommonDao")
-	private CommonDao commonDao;
+   @Resource(name = "CommonDao")
+   private CommonDao commonDao;
 
-	@Resource(name = "JoinDao")
-	private JoinDao joinDao;
+   @Resource(name = "JoinDao")
+   private JoinDao joinDao;
 
-	@Resource(name = "fileUtils")
-	private FileUtils fileUtils;
+   @Resource(name = "fileUtils")
+   private FileUtils fileUtils;
 
-	@Override
-	public void userJoin(Map<String, Object> map, CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception {
+   @Override
+   public void userJoin(Map<String, Object> map, CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception {
 
-		String userNumbString = joinDao.makeUserNumb();
-		map.put("USER_NUMB", userNumbString);
-		commandMap.put("USER_NUMB", userNumbString);
-		
-		System.out.println("맵!  " + map);
-		
-		if(map.get("FILE_SVNM") == null) {
+      String userNumbString = joinDao.makeUserNumb();
+      map.put("USER_NUMB", userNumbString);
+      commandMap.put("USER_NUMB", userNumbString);
+      
+      if(map.get("FILE_SVNM") == null) {
 
-			System.out.println("없으면 돌아야됨");
-			
-			try {
-				
-				map.put("USER_NUMB", userNumbString);
-				
-				System.out.println("없으면 돌아야됨2");
-				
-				List<Map<String, Object>> flist = fileUtils.fileInsert(map, request, session);
-				
-				System.out.println("파일리스트" + flist);
-				
-				int size = flist.size();
-				
-				for (int i = 0;  i < size; i++) {
-					
-					if (flist.get(i).get("FILE_SEQC") == null) {
-						
-						map.put("FILE_SVNM", flist.get(i).get("FILE_SVNM"));
-						System.out.println("지금의 맵 : " + map);
-						
-					}
-					
-					
-					Map<String, Object> paramMap = flist.get(i);
-					commonDao.comFileInsert(paramMap);
-				}
-	
-			} catch (Exception e) {
+         try {
+            
+            map.put("USER_NUMB", userNumbString);
+            
+            List<Map<String, Object>> flist = fileUtils.fileInsert(map, request, session);
+   
+            for (int i = 0, size = flist.size(); i < size; i++) {
+               
+               commonDao.comFileInsert(flist.get(i));
+   
+               if (flist.get(i).get("FILE_SEQC") == null) {
+                  
+                  map.put("FILE_SVNM", flist.get(i).get("FILE_SVNM"));
+                  
+               }
+            }
+   
+         } catch (Exception e) {
+            
+   
+         }
+      }
 
-				System.out.println("JoinServiceImpl.userJoin() 오류발생!! " + e.getMessage());				
-			}
-		}
+      joinDao.joinUs(map, commandMap);
 
-		joinDao.joinUs(map, commandMap);
+   }
 
-	}
+   // 선호 카테고리 저장
+   @Override
+   public void inertCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
 
-	// 선호 카테고리 저장
-	@Override
-	public void inertCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
+      Map<String, Object> hsMap = new HashMap<>();
 
-		Map<String, Object> hsMap = new HashMap<>();
+      hsMap.put("CATE_IDXX", map.get("CATE_IDXX"));
+      hsMap.put("USER_NUMB", map.get("USER_NUMB"));
 
-		hsMap.put("CATE_IDXX", map.get("CATE_IDXX"));
-		hsMap.put("USER_NUMB", map.get("USER_NUMB"));
+      int result = joinDao.checkCategoryIsin(hsMap);
 
-		int result = joinDao.checkCategoryIsin(hsMap);
+      if (result == 0) {
 
-		if (result == 0) {
+         joinDao.inertCate(map, commandMap);
 
-			joinDao.inertCate(map, commandMap);
+      } else {
 
-		} else {
+         joinDao.updateNewstCate(map, commandMap);
+      }
 
-			joinDao.updateNewstCate(map, commandMap);
-		}
+   }
 
-	}
+   // 선호 카테고리 저장
+   @Override
+   public void insertRegi(Map<String, Object> map, CommandMap commandMap) throws Exception {
 
-	// 선호 카테고리 저장
-	@Override
-	public void insertRegi(Map<String, Object> map, CommandMap commandMap) throws Exception {
+      joinDao.insertRegi(map, commandMap);
 
-		joinDao.insertRegi(map, commandMap);
+   }
 
-	}
+   // 아이디 중복 검사
+   @Override
+   public Map<String, Object> checkId(Map<String, Object> map) throws Exception {
+      return joinDao.checkId(map);
+   }
 
-	// 아이디 중복 검사
-	@Override
-	public Map<String, Object> checkId(Map<String, Object> map) throws Exception {
-		return joinDao.checkId(map);
-	}
-
-	// 닉네임 중복 검사
-	@Override
-	public Map<String, Object> checkNick(Map<String, Object> map) throws Exception {
-		return joinDao.checkNick(map);
-	}
+   // 닉네임 중복 검사
+   @Override
+   public Map<String, Object> checkNick(Map<String, Object> map) throws Exception {
+      return joinDao.checkNick(map);
+   }
 
 }
