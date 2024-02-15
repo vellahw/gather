@@ -159,7 +159,8 @@
 		  	</div>
 		  </form>
 		</div>
-		
+	
+	<!-- <form action="/gather/joinDo.com" method="post" enctype="multipart/form-data"> -->
 		<div class="loginContainer" id="signupStep4">
 			<div class="bubble">이대로 프로필을 생성할까요?</div>
 			<div class="mypage-bg"></div>
@@ -190,10 +191,10 @@
 			</div>
 			<div class="btnContainer" style="margin-top: 34px;">
 			  <button type="button" class="waybtn prev" onclick="prevSection('step4')">이전</button>
-			  <button type="button" class="waybtn next" id="submit">확인</button>
+			  <button type="submit" class="waybtn next" id="submit">확인</button>
 		  </div>
 		</div>
-		
+	<!-- </form> -->
 		
 	
 		  <form id="findPwForm" action="/findPw" method="post">

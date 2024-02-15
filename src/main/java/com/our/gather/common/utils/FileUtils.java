@@ -28,6 +28,8 @@ public class FileUtils {
 		realPath = request.getRealPath(savePath);
 
 		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+		
+		System.out.println("ddddd "+multipartHttpServletRequest);
 
 		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
 
@@ -51,7 +53,7 @@ public class FileUtils {
 				
 				if (map.get("USER_NUMB") != null) {
 					
-					System.out.println("이년이?@  " + listMap);
+					System.out.println("으아앙  " + listMap);
 					
 					File file = new File(realPath + "upload/profile/" + map.get("USER_NUMB") + "/" + storedFileName);
 					multipartFile.transferTo(file); // 프로필폴더에 업로드 처리

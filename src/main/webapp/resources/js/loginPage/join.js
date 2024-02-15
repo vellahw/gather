@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const tagetData = event.target.getAttribute('data-value');
       document.querySelector('.preview').src = `/resources/img/basic/profile/${tagetData}.png`;
 
-      imgValue = { FILE_SVNM : `${document.querySelector('.preview').src}.png` };
+      imgValue = { FILE_SVNM : `${tagetData}.png` };
     }
   });
 
@@ -244,6 +244,8 @@ document.addEventListener('DOMContentLoaded', function () {
    * 240214 장한원
    * 프로필 파일 직접 업로드 시 동작
    */
+  let formData = new FormData(); // 새로운 폼 객체 생성
+  
   const chooseImgInput = document.getElementById('chooseImg');
   chooseImgInput.addEventListener('change', (e)=>{
     const reader = new FileReader();
@@ -253,21 +255,13 @@ document.addEventListener('DOMContentLoaded', function () {
     
     reader.readAsDataURL(chooseImgInput.files[0]);
 
-    let formData = new FormData(); // 새로운 폼 객체 생성
-    formData.append('FILE_SVNM', chooseImgInput.files[0]); // 폼 데이터를 스크립트로 추가
+    file = chooseImgInput.files[0];
+    formData.append('file', file, file.name);
 
-    fetch('https://httpbin.org/post', {
-      method: 'POST',
-      cache: 'no-cache',
-      body: formData // body 부분에 폼데이터 변수를 할당
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      });
-    
-    });
-
+    for (let key of formData.keys()) {
+      console.log('forDAta 입니당  ' + key, ":", formData.get(key));
+    }
+  });
 
   /*
    * admin: 장한원
@@ -275,11 +269,18 @@ document.addEventListener('DOMContentLoaded', function () {
    * 마지막 확인 버튼
   */
   submitBtn.addEventListener('click' , ()=>{
-    
-    joinUserData = Object.assign({}, firstUserData, secondUserData, imgValue); // 회원가입 전송 데이터 가공
-    console.log(joinUserData)
+    if(imgValue){
+      joinUserData = Object.assign({}, firstUserData, secondUserData, imgValue); // 회원가입 전송 데이터 가공
+    } else if(file) {
+      joinUserData = Object.assign({}, firstUserData, secondUserData, {"file": formData }); // 회원가입 전송 데이터 가공
+    }
+    console.log('joinUserData입니당  '+ JSON.stringify(joinUserData))
 
-
+    // formData.append(
+    //   'data',
+    //   new Blob([JSON.stringify(joinUserData)], { type: 'application/json' })
+    // );
+  
     fetch("/gather/joinDo.com", {
       method: "POST",
       headers: {
@@ -287,25 +288,26 @@ document.addEventListener('DOMContentLoaded', function () {
       },
       body: JSON.stringify({
         data: joinUserData,
-        regi: pickedRegiCode
+        regi: pickedRegiCode,
+        file: formData
       }),
     })
-    .then(() => {
-      comAlert2(5
-        ,"회원가입 완료!"
-        , joinUserData.USER_NICK + "님 가입을 환영합니다!"
-        , "로그인 하러 가기"
-        , function(){
-          location.href = "/gather/login.com"
-        });
+    .then((data) => {
+      if(data == 'success') {
+        comAlert2(5
+          ,"회원가입 완료!"
+          , joinUserData.USER_NICK + "님 가입을 환영합니다!"
+          , "로그인 하러 가기"
+          , function(){
+            location.href = "/gather/login.com"
+          });
+      } else {
+        console.log("오류 발생")
+      }
     })
-    .catch(error => {
-      console.error('오류 발생:', error);
-    });
   });
 
 });
-
 
 /* 
  * admin: 장한원
