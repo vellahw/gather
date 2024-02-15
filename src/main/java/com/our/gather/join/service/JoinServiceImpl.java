@@ -1,5 +1,6 @@
 package com.our.gather.join.service;
 
+import java.io.Console;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,23 +52,25 @@ public class JoinServiceImpl implements JoinService {
 				
 				System.out.println("파일리스트" + flist);
 				
-	
-				for (int i = 0, size = flist.size(); i < size; i++) {
+				int size = flist.size();
+				
+				for (int i = 0;  i < size; i++) {
 					
-					commonDao.comFileInsert(flist.get(i));
-	
 					if (flist.get(i).get("FILE_SEQC") == null) {
 						
-						System.out.println("지금의 맵 : " + map);
 						map.put("FILE_SVNM", flist.get(i).get("FILE_SVNM"));
-						
+						System.out.println("지금의 맵 : " + map);
 						
 					}
+					
+					
+					Map<String, Object> paramMap = flist.get(i);
+					commonDao.comFileInsert(paramMap);
 				}
 	
 			} catch (Exception e) {
-				
-	
+
+				System.out.println("JoinServiceImpl.userJoin() 오류발생!! " + e.getMessage());				
 			}
 		}
 
