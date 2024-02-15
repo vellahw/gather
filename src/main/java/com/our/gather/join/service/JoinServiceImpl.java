@@ -42,8 +42,6 @@ public class JoinServiceImpl implements JoinService {
 				map.put("USER_NUMB", userNumbString);
 				
 				List<Map<String, Object>> flist = fileUtils.fileInsert(map, request, session);
-				
-				
 	
 				for (int i = 0, size = flist.size(); i < size; i++) {
 					

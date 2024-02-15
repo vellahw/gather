@@ -47,9 +47,6 @@ public class FileUtils {
 				originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
 				storedFileName = CommonUtils.getRandomString() + originalFileExtension;
 
-				System.out.println("오리지널네임 " + originalFileName);
-				System.out.println("저장네임 " + storedFileName);
-
 				listMap = new HashMap<String, Object>();
 
 				if (map.get("USER_NUMB") != null) {
