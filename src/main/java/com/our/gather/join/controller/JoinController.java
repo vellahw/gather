@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.join.service.JoinService;
@@ -77,22 +80,38 @@ public class JoinController {
 
     @RequestMapping(value = "/gather/joinDo.com", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> userJoin(@RequestBody Map<String, Object> requestBody, HttpServletRequest request, CommandMap commandMap, HttpSession session) throws Exception {
+    public ResponseEntity<String> userJoin(@RequestParam("file") MultipartFile file,  @RequestParam("data") String userData, @RequestParam("regi") String regiData, HttpServletRequest request, CommandMap commandMap, HttpSession session) throws Exception {
 
         try {
             
-            Map<String, Object> param = (Map<String, Object>) requestBody.get("data");
-            Map<String, Object> file = (Map<String, Object>) requestBody.get("file");
-            System.out.println("파일이오 ㅠㅠㅠ  " + file);
-            List<Map<String, String>> jsonArray = (List<Map<String, String>>) requestBody.get("regi");
+        	System.out.println("file이에용  " + file);
+        	System.out.println("userData이에용  " + userData);
+        	System.out.println("regiData이에용  " + regiData);
+        	
+        	// JSON 데이터 처리
+            ObjectMapper objectMapper = new ObjectMapper();
+            
+            Map<String, Object> resultUserData = objectMapper.readValue(userData, new TypeReference<Map<String, Object>>() {});
+            
+            List<Map<String, String>> resultRegiData = new ArrayList<>();
+            List<Map<String, Object>> regiDataList = objectMapper.readValue(regiData, new TypeReference<List<Map<String, Object>>>() {});
 
-            joinService.userJoin(param, commandMap, request, session);
+            for (Map<String, Object> map : regiDataList) {
+                Map<String, String> resultMap = new HashMap<>();
+                for (Map.Entry<String, Object> entry : map.entrySet()) {
+                    resultMap.put(entry.getKey(), entry.getValue().toString());
+                }
+                resultRegiData.add(resultMap);
+            }
+
+
+            joinService.userJoin(resultUserData, commandMap, request, session);
             
             String userNumb = (String) commandMap.get("USER_NUMB");
 
-            if (jsonArray != null) {
+            if (resultRegiData != null) {
                 
-                for (Map<String, String> item : jsonArray) {
+                for (Map<String, String> item : resultRegiData) {
                     
                     commandMap.put("USER_NUMB", userNumb);
                     commandMap.put("REGI_CODE", item.get("REGI_CODE"));

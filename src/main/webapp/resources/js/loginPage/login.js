@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function () {
   setInterval(slideImages, 5000); // 5초에 한 번씩 슬라이딩
   
   /* join.js의 지역 데이터 처리 & 노드 생성 함수 */
-  controlRegiData();
+  // controlRegiData();
 
   /* join.js의 폼의 input에 대한 change 이벤트 함수 */
   inputChangeHandler();

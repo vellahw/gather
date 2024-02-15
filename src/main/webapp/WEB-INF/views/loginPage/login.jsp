@@ -175,7 +175,7 @@
 						<div class="profileImgList"></div>
 						<label class="upload">
 							<img src="/resources/img/icon/addIcon.png" alt="프로필 이미지 업로드 버튼">
-							<input type="file" name="FILE_SVNM" id="chooseImg"  accept=".png, .jpeg .jpg .gif" />
+							<input type="file" name="FILE_SVNM" id="chooseImg" accept="image/*" />
 						</label>
 					</div>
 				<div class="user">
