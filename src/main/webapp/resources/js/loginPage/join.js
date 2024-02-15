@@ -10,13 +10,13 @@ document.addEventListener('DOMContentLoaded', function () {
   let pickedRegiCode = []; // 서버 통신을 위한 REGI_CODE 데이터
   let pickedRegiListForStep4 = []; // step4 폼을 위한 리스트
 
+  let userGender; // 유저 성별 정보
+
   const btnContainer = document.querySelectorAll('.btnContainer');
   const signupContainer = document.getElementById('signupContainer');
   const signupStep2 = document.getElementById('signupStep2');
   const signupStep3 = document.getElementById('signupStep3');
   const signupStep4 = document.getElementById('signupStep4');
-
-  let userGender;
 
   /* 
   * 240215: 장한원
@@ -162,22 +162,23 @@ document.addEventListener('DOMContentLoaded', function () {
     nicknameNode.innerHTML = userNickname;
     selfIntroNode.innerHTML = userSelfIntro;
 
-
     /* 유저의 성별에 따른 기본 프로필 사진 설정 */
-    if(userRegi2.value%2 == 0) {
-      userGender == 'W';
-    } else {
-      userGender == 'M';
+    if(userRegi2%2 == 0) {
+      userGender = 'W';
+    } else if(userRegi2%2 == 1) {
+      userGender = 'M';
     }
 
     const profileImgPreview = document.querySelector('.preview');
 
     if(userGender == 'W') {
       profileImgPreview.src = '/resources/img/basic/profile/basic-w.png'
+      profileImgPreview.dataset.gender = 'W'
     } else if(userGender == 'M') {
       profileImgPreview.src = '/resources/img/basic/profile/basic-m.png'
+      profileImgPreview.dataset.gender = 'M'
     }
-    
+
   });
 
 /**
@@ -513,31 +514,31 @@ const showUserPickedRegi = function(pickedList, regiList) {
 }
 
 // 유저가 선택한 부모 지역 만드는 함수
-const createParent = function(current) {
-  const regiList = document.querySelector('.regiList');
+  const createParent = function(current) {
+    const regiList = document.querySelector('.regiList');
 
-  const parentList = document.createElement('ul');
-  parentList.dataset.step4Pcode = current.parentCode;
-  parentList.className = 'parentRegiItem';
+    const parentList = document.createElement('ul');
+    parentList.dataset.step4Pcode = current.parentCode;
+    parentList.className = 'parentRegiItem';
 
-  const childRegiListTag = document.createElement('ul'); // 자식 li 담는 ul
-  childRegiListTag.className = 'pickedChildRegiList';
-  childRegiListTag.dataset.step4Child = current.parentCode;
-  
-  const parentName = document.createElement('span');
-  parentName.innerHTML = current.parentName;
+    const childRegiListTag = document.createElement('ul'); // 자식 li 담는 ul
+    childRegiListTag.className = 'pickedChildRegiList';
+    childRegiListTag.dataset.step4Child = current.parentCode;
+    
+    const parentName = document.createElement('span');
+    parentName.innerHTML = current.parentName;
 
-  parentList.appendChild(parentName);
-  parentList.appendChild(childRegiListTag);
-  regiList.append(parentList);
-}
+    parentList.appendChild(parentName);
+    parentList.appendChild(childRegiListTag);
+    regiList.append(parentList);
+  }
 
-function removeCreatedElements() {
-  const parentRegiItems = document.querySelectorAll('.parentRegiItem');
-  parentRegiItems.forEach(item => {
-      item.parentNode.removeChild(item);
-  });
-}
+  function removeCreatedElements() {
+    const parentRegiItems = document.querySelectorAll('.parentRegiItem');
+    parentRegiItems.forEach(item => {
+        item.parentNode.removeChild(item);
+    });
+  }
   
   /**
    * 240214 장한원
@@ -589,7 +590,7 @@ function removeCreatedElements() {
    * 프로필 파일 직접 업로드 시 동작
    */
   let formData = new FormData(); // 새로운 폼 객체 생성
-  let file;
+  let profile;
   let bgImg;
 
   const chooseImgInput = document.getElementById('chooseImg');
@@ -604,7 +605,7 @@ function removeCreatedElements() {
     
     reader.readAsDataURL(chooseImgInput.files[0]);
     
-    file = chooseImgInput.files[0];
+    profile = chooseImgInput.files[0];
   })
   
   /* 배경 사진 */
@@ -632,17 +633,24 @@ function removeCreatedElements() {
    * 마지막 확인 버튼
   */
   submitBtn.addEventListener('click' , ()=>{
-    if(!file){
+    const userGender = document.querySelector('.preview').getAttribute('data-gender');
+
+    if(!profile){
+      if(userGender == 'W') {
+        imgValue = { 'FILE_SVNM' : 'basic-w.png' };
+      } else if(userGender == 'M') {
+        imgValue = { 'FILE_SVNM' : 'basic-m.png' };
+      }
 
       joinUserData = Object.assign({}, firstUserData, secondUserData, imgValue); // 회원가입 전송 데이터 가공
       formData.append('data', JSON.stringify(joinUserData));
       formData.append('regi', JSON.stringify(pickedRegiCode));
 
-    } else if(file) {
+    } else if(profile) {
         joinUserData = Object.assign({}, firstUserData, secondUserData);
         
         formData.append('data', JSON.stringify(joinUserData));
-        formData.append('file', file);
+        formData.append('file', profile);
         formData.append('regi', JSON.stringify(pickedRegiCode));
     }
 
@@ -1010,7 +1018,7 @@ const inputChangeHandler = function() {
 
         } else if(result == 0) {
           isNickUsed = result;
-          hideWarning('.userId');
+          hideWarning('.userNick');
 
           if(userNickname.value.length == 10) {
             document.getElementById('userSelf').focus();

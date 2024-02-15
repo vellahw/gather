@@ -132,7 +132,7 @@
 			  <div id="appendRegiNum" class="append userRegiNum"></div>
 			  
 		    <label class="joinlabel" for="userNick">⁕ 닉네임</label>
-		    <input type="text" id="userNick" class="basicInput _join" placeholder="게더에서 사용할 닉네임을 입력해주세요! (최대 10자)" maxlength="10">
+		    <input type="text" id="userNick" class="basicInput _join appendNick" placeholder="게더에서 사용할 닉네임을 입력해주세요! (최대 10자)" maxlength="10">
 			  <div id="appendNick" class="append userNick"></div>
 			  
 			  <label class="joinlabel" for="userSelf">자기소개</label>
@@ -161,7 +161,6 @@
 		  </form>
 		</div>
 	
-	<!-- <form action="/gather/joinDo.com" method="post" enctype="multipart/form-data"> -->
 		<div class="loginContainer" id="signupStep4">
 			<div class="bubble">이대로 프로필을 생성할까요?</div>
 			<div class="mypage-bg">
@@ -173,7 +172,7 @@
 			</div>
 			<div class="container" style="transform: translateY(-60px);">
 				<div class="profileImgWrap pro">
-					<img class="profileImg preview" src="/resources/img/basic/profile/profile.jpg" alt="프로필사진"/>
+					<img class="profileImg preview" alt="프로필사진"/>
 				</div>
 				<div class="p-updateBtn">
 					<img src="/resources/img/icon/pencile.png" class="p-updateIcon" alt="프사수정버튼">
@@ -201,8 +200,6 @@
 			  <button type="submit" class="waybtn next" id="submit">확인</button>
 		  </div>
 		</div>
-	<!-- </form> -->
-		
 	
 		  <form id="findPwForm" action="/findPw" method="post">
 			  <h2 id="LoginHead">비밀번호 찾기</h2>
