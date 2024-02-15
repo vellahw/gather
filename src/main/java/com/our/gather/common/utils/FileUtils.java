@@ -52,6 +52,7 @@ public class FileUtils {
 				if (map.get("USER_NUMB") != null) {
 
 					String profileFolderPath = realPath + "profile/" + map.get("USER_NUMB") + "/";
+
 					File profileFolder = new File(profileFolderPath);
 
 					if (!profileFolder.exists()) {
@@ -61,10 +62,8 @@ public class FileUtils {
 					File file = new File(profileFolderPath + storedFileName);
 					multipartFile.transferTo(file);
 
-					listMap.put("FILE_PATH", file);
 					listMap.put("FILE_IDXX", map.get("USER_NUMB"));
 					listMap.put("USER_NUMB", map.get("USER_NUMB"));
-
 					listMap.put("FILE_PATH", filePath + "profile/" + map.get("USER_NUMB") + "/" + storedFileName);
 
 				} else if (map.get("GATH_IDXX") != null) {
@@ -108,7 +107,6 @@ public class FileUtils {
 					listMap.put("FILE_IDXX", map.get("CHAL_IDXX"));
 					listMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 					listMap.put("FILE_PATH", filePath + "challenge/" + map.get("CHAL_IDXX") + "/" + storedFileName);
-
 				}
 
 				if (multipartFile.getName().equals("wallPaper")) {
