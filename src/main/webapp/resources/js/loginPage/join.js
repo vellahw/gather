@@ -4,8 +4,62 @@ document.addEventListener('DOMContentLoaded', function () {
   const pwBtnImg = showPwBtn.querySelector('.pwBtnImg');
   const userPw = document.getElementById('userPw');
   const pwConfirm = document.getElementById('pwConfirm');
-  
-  pwBtnImg.src = showIconSrc; // 비밀번호 표시 버튼 이미지 src
+
+  pwBtnImg.src = showIconSrc; // 비밀번호 표시 버튼 이미지 초기화
+
+  let pickedRegiCode = []; // 서버 통신을 위한 REGI_CODE 데이터
+  let pickedRegiListForStep4 = []; // step4 폼을 위한 리스트
+
+  const btnContainer = document.querySelectorAll('.btnContainer');
+  const signupContainer = document.getElementById('signupContainer');
+  const signupStep2 = document.getElementById('signupStep2');
+  const signupStep3 = document.getElementById('signupStep3');
+  const signupStep4 = document.getElementById('signupStep4');
+
+  /* 
+  * 240215: 장한원
+  * [다음(확인)] 버튼 클릭시 동작 (수정)
+  */
+  btnContainer.forEach(btn=>{
+    btn.addEventListener('click', (event)=>{
+      const target = event.target;
+      if(target.matches('.next')) {
+        const btnId = target.id;
+        
+        if(btnId == 'next') {
+          if (joinFormCheck('step1')) {
+
+            showStep(signupStep2);
+      
+            const appendList = document.querySelectorAll('.append');
+            const needMarginList = document.querySelectorAll('.step1');
+            
+            appendList.forEach(element => {
+              element.style.display = 'none';
+            });
+            
+            needMarginList.forEach(item => {
+              item.style.marginBottom = '20px';
+            });
+      
+          }
+        } else if(btnId == 'next2'){
+          if (joinFormCheck('step2')) {
+            showStep(signupStep3);
+          }
+        } else if(btnId == 'next3') {
+          showStep(signupStep4);
+          if(pickedRegiListForStep4){
+            showUserPickedRegi(pickedRegiListForStep4, regiList);
+          }
+        }
+
+      } else if(target.matches('.prev')){
+        console.log("prev!")
+      }
+    });
+  });
+
   
   /**
    * 240210 장한원
@@ -69,9 +123,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     secondUserData = {
         USER_NAME : userName
-    	,	REGI_NUMB : userRegiNum
-    	, USER_NICK : userNickname
-    	, SELF_INTR : userSelfIntro
+       ,   REGI_NUMB : userRegiNum
+       , USER_NICK : userNickname
+       , SELF_INTR : userSelfIntro
     };
 
     
@@ -129,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function () {
           , null
           , function(data){
           
-          	console.log(data);
+             console.log(data);
 
             if(data != 'fail') {
               comAlert3("이메일이 발송되었습니다.", null, "success", function(){ document.getElementById('authnum').focus(); });
@@ -189,6 +243,10 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
 
+  /**
+   * 240207 장한원
+   * 선호 지역 데이터 처리
+   */
   const regiList = []; // 지역 데이터 list
 
   const regiData = document.getElementById('regi').value;
@@ -210,109 +268,100 @@ document.addEventListener('DOMContentLoaded', function () {
 
   });
 
-    /* 부모 지역 노드 생성 및 자식 지역 노드 생성 함수 */
-const createNode = function(item) {
-  // 부모 지역 담을 태그
-  const parentRegiNode = document.createElement('li');
-  parentRegiNode.className = 'regionList';
-  
-  // 부모 지역 노드
-  const parentRegiWrap = document.createElement('span');
-  parentRegiWrap.className = 'parentWrap'
-  parentRegiWrap.dataset.code = item.PARENTS_CODE;
-
-  const parentRegiNameNode = document.createElement('span');
-  parentRegiNameNode.className = 'parent';
-  parentRegiNameNode.innerHTML = item.REGI_NAME;
-  parentRegiNameNode.dataset.rcode = item.PARENTS_CODE;
-
-  parentRegiWrap.appendChild(parentRegiNameNode)
-  parentRegiNode.appendChild(parentRegiWrap);
-
-  //자식 노드 생성 (checkbox들을 담을 div)
-  const childRegiNode = document.createElement('ul');
-  childRegiNode.className = 'level2';
-  childRegiNode.dataset.pcode = item.PARENTS_CODE;
-  
-  document.querySelector('.level1').appendChild(parentRegiNode); 
-  parentRegiNode.appendChild(childRegiNode);
-}
-
-/** 
-  * 자식 지역을 선택했을 때의 동작 함수 
-  * 배열에 선택한 자식지역을 담음
-*/
-let pickedRegiCode = []; // 서버 통신을 위한 REGI_CODE 데이터
-let pickedRegiListForStep4 = []; // step4 폼을 위한 리스트
-
-/* 클릭 이벤트 콜백 함수 */
-const handleChange = function(event) {
-	event.stopPropagation();
-
-  const target = event.target;
-  target.classList.toggle('clicked');
-
-  const regiCode = target.getAttribute('data-regi-code');
-  const classList = target.classList;
-  
-  if(classList.contains('clicked')) {
+  /* 부모 지역 노드 생성 및 자식 지역 노드 생성 함수 */
+  const createNode = function(item) {
+    // 부모 지역 담을 태그
+    const parentRegiNode = document.createElement('li');
+    parentRegiNode.className = 'regionList';
     
-    pickedRegiCode.push({ 'REGI_CODE': regiCode });
+    // 부모 지역 노드
+    const parentRegiWrap = document.createElement('span');
+    parentRegiWrap.className = 'parentWrap'
+    parentRegiWrap.dataset.code = item.PARENTS_CODE;
 
-    pickedRegiListForStep4.push({ 
-        'regiName': target.innerText
-      , 'parentCode': regiCode.substring(0,1)
-      , 'regiCode' : regiCode 
-    });
+    const parentRegiNameNode = document.createElement('span');
+    parentRegiNameNode.className = 'parent';
+    parentRegiNameNode.innerHTML = item.REGI_NAME;
+    parentRegiNameNode.dataset.rcode = item.PARENTS_CODE;
 
-  } else { // 클릭 해제한 데이터 배열에서 삭제
+    parentRegiWrap.appendChild(parentRegiNameNode)
+    parentRegiNode.appendChild(parentRegiWrap);
 
-    // pickedRegiCode[]
-    for (let i = 0; i < pickedRegiCode.length; i++) {
-      if (pickedRegiCode[i]['REGI_CODE'] === regiCode) {
-        pickedRegiCode.splice(i, 1);
-        
-        break;
-      }
-    }
+    //자식 노드 생성 (checkbox들을 담을 div)
+    const childRegiNode = document.createElement('ul');
+    childRegiNode.className = 'level2';
+    childRegiNode.dataset.pcode = item.PARENTS_CODE;
+    
+    document.querySelector('.level1').appendChild(parentRegiNode); 
+    parentRegiNode.appendChild(childRegiNode);
+  }
 
-    // pickedRegiListForStep4[]
-    for (let i = 0; i < pickedRegiListForStep4.length; i++) {
+  /* 클릭 이벤트 콜백 함수 */
+  const handleChange = function(event) {
+    event.stopPropagation();
 
-      if (pickedRegiListForStep4[i]['regiName'] === target.innerText) {
-        pickedRegiListForStep4.splice(i, 1);
-        
-        break;
+    const target = event.target;
+    target.classList.toggle('clicked');
 
-      } else if (pickedRegiListForStep4[i]['parentCode'] === regiCode.substring(0,1)) {
-        pickedRegiListForStep4.splice(i, 1);
-        
-        break;
+    const regiCode = target.getAttribute('data-regi-code');
+    const classList = target.classList;
+    
+    if(classList.contains('clicked')) {
+      
+      pickedRegiCode.push({ 'REGI_CODE': regiCode });
+
+      pickedRegiListForStep4.push({ 
+          'regiName': target.innerText
+        , 'parentCode': regiCode.substring(0,1)
+        , 'regiCode' : regiCode 
+      });
+
+    } else { // 클릭 해제한 데이터 배열에서 삭제
+
+      // pickedRegiCode[]
+      for (let i = 0; i < pickedRegiCode.length; i++) {
+        if (pickedRegiCode[i]['REGI_CODE'] === regiCode) {
+          pickedRegiCode.splice(i, 1);
+          
+          break;
+        }
       }
 
+      // pickedRegiListForStep4[]
+      for (let i = 0; i < pickedRegiListForStep4.length; i++) {
+
+        if (pickedRegiListForStep4[i]['regiName'] === target.innerText) {
+          pickedRegiListForStep4.splice(i, 1);
+          
+          break;
+
+        } else if (pickedRegiListForStep4[i]['parentCode'] === regiCode.substring(0,1)) {
+          pickedRegiListForStep4.splice(i, 1);
+          
+          break;
+        }
+      }
+    }
+  };
+
+  /* 자식 지역 버튼 생성 함수 */
+  const createChildRegi = function(item, pcode) {
+    if(item.PARENTS_CODE == pcode) {
+      const container = document.createElement('li');
+
+      const childRegi = document.createElement('button');
+      childRegi.type = 'button';
+      childRegi.className = 'child';
+      childRegi.textContent = item.REGI_NAME;
+      childRegi.dataset.regiCode = item.REGI_CODE;
+
+      childRegi.addEventListener('click', handleChange);
+      container.appendChild(childRegi)
+      
+      const targetElement = document.querySelector(`ul[data-pcode="${pcode}"]`);
+      targetElement.appendChild(container);
     }
   }
-};
-
-/* 자식 지역 버튼 생성 함수 */
-const createChildRegi = function(item, pcode) {
-  if(item.PARENTS_CODE == pcode) {
-    const container = document.createElement('li');
-
-    const childRegi = document.createElement('button');
-    childRegi.type = 'button';
-    childRegi.className = 'child';
-    childRegi.textContent = item.REGI_NAME;
-    childRegi.dataset.regiCode = item.REGI_CODE;
-
-    childRegi.addEventListener('click', handleChange);
-    container.appendChild(childRegi)
-    
-    const targetElement = document.querySelector(`ul[data-pcode="${pcode}"]`);
-    targetElement.appendChild(container);
-  }
-}
-
 
   let parentCodeList = [];
   regiList.forEach(item => {
@@ -528,6 +577,8 @@ function removeCreatedElements() {
 
     }
 
+    console.log(formData);
+
     formData.append('regi', JSON.stringify(pickedRegiCode));
 
     fetch("/gather/joinDo.com", {
@@ -558,20 +609,9 @@ function removeCreatedElements() {
     });
   });
 
-
-/**
- * 240207 장한원
- * 선호 지역 데이터 처리
- * login.js에서 호출함
- */
-
-const controlRegiData = function() {
-  
-
-}
-
-
 });
+
+
 
 /**
  * admin 장한원
@@ -667,9 +707,9 @@ const joinFormCheck = function(step) {
   // 두 번째 스탭
   } else if(step == 'step2') {
     const userName = document.getElementById('userName');
-  	const userRegiNum = document.getElementById('userRegiNum');
-  	const userRegiNum2 = document.getElementById('userRegiNum2');
-  	const userNickname = document.getElementById('userNick');
+     const userRegiNum = document.getElementById('userRegiNum');
+     const userRegiNum2 = document.getElementById('userRegiNum2');
+     const userNickname = document.getElementById('userNick');
 
     if(!userName.value) {
       controlStyleAndAppendWarning(userName, 'appendName', '이름을 입력해주세요.');
