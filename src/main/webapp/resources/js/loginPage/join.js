@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const pwBtnImg = showPwBtn.querySelector('.pwBtnImg');
   const userPw = document.getElementById('userPw');
   const pwConfirm = document.getElementById('pwConfirm');
-  const basicItem = document.querySelectorAll('.basicItem');
   
   pwBtnImg.src = showIconSrc; // 비밀번호 표시 버튼 이미지 src
   
@@ -27,12 +26,6 @@ document.addEventListener('DOMContentLoaded', function () {
       pwConfirm.type = 'password';
     }
   });
-
-  basicItem.forEach(item => {
-    item.addEventListener('click', (e)=>{
-      console.log(e.target.src)
-    })
-  })
 
   const step1Btn = document.getElementById('next');
   const step2Btn = document.getElementById('next2');
