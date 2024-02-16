@@ -4,8 +4,9 @@
 :root {
   --color-white: #fff;
   --color-black: #171717;
-  --color-gray500: #939393;
   --color-gray100 : #D7D7D7;
+  --color-gray500: #939393;
+  --color-gray600: #535353;
   --color-red : #FD5631;
   --primary: #FD8731;
   --color-orange100 : #FFF0E5;
@@ -44,7 +45,7 @@ input {
   outline: none;
 }
 
-input[type=file]::file-selector-button {
+/* input[type=file]::file-selector-button {
   width: 100px;
   height: 28px;
   background-color: var(--color-orange300); 
@@ -54,7 +55,7 @@ input[type=file]::file-selector-button {
   margin-right: 25px;
   margin-left:0px;
   color: #fff;
-}
+} */
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,

@@ -523,32 +523,58 @@ form {
 
 .mypage-bg {
 	height: calc(32% + 20px);
-  background-color: var(--color-orange300);
+  background-color: #FBAF77;
   width: calc(100% + 30px * 2);
   transform: translate(-30px, -20px);
+  position: relative;
 }
 
 .bg-preview {
 	display: none;
-	width: 150px;
+	width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.9);
 }
 
 .bg-update {
-  transform: translate(183px, 130px) !important;
-  width: 32px !important;
-  height: 32px !important;
+  width: 40px !important;
+  height: 40px !important;
+  position: absolute;
+  bottom: 28px;
+  right: 30px;
+  background-color: rgba(147, 147, 147, 0.6);
+  border-radius: 50%;
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.bg-update img {
+	width: 26px;
+	height: 26px;
 }
 
 .show-bg {
 	display: block;
 }
 
+.bg-remove {
+	display: none;
+	bottom: 28px;
+  right: 68px;
+}
+
 .p-updateBtn {
-	width: 26px;
-	height: 26px;
+	width: 24px;
+	height: 24px;
 	border-radius: 50%;
 	overflow: hidden;
-	background-color: var(--color-gray100);
+	background-color: var(--primary);
   border: 3px solid var(--color-white);
   display: flex;
   justify-content: center;
@@ -557,22 +583,35 @@ form {
 }
 
 .p-updateIcon {
-	width: 16px;
+	width: 12px;
   object-fit: contain;
 }
 
 .profileImgContainer {
-	opacity: 1;
-  visibility: visible;
-  background-color: var(--color-gray100);
-	padding: 7px;
-	width: 218px;
-	height: 140px;
+  position: absolute;
+	top: 241px;
+  left: 112px;
+	opacity: 0;
+  visibility: hidden;
+  background-color: var(--color-white);
+	padding: 0px;
+	width: 228px;
+	height: 0px;
 	border-radius: 16px;
-	transform: translate(70px, -22px);
+	transition: all 0.3s;
+	border-top-left-radius: 0px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 15px;
 }
 
-.profileImgContainer.popup::after {
+.p_visible {
+	z-index: 1;
+	opacity: 1;
+  visibility: visible;
+  padding: 12px;
+  height: 140px;
+}
+
+/* .profileImgContainer.popup::after {
 	content: "";
   position: absolute;
   top: -12px;
@@ -580,7 +619,7 @@ form {
   border-bottom: 30px solid var(--color-gray100);
   border-right: 10px solid transparent;
   border-left: 10px solid transparent;
-}
+} */
 
 .profileImgList {
 	display: inline-flex;
@@ -593,25 +632,44 @@ form {
 .basicProfileItem {
 	margin: 5px;
 	cursor: pointer;
+	flex: 0 0 20%;
 }
 
 .basic-p {
-	width: 44px;
-	height: 44px;
+	width: 46px;
+	height: 46px;
+}
+
+.basic-p:hover {
+	filter: brightness(0.9);
 }
 
 .upload {
-	width: 40px;
-	height: 40px;
-	display: inline-flex;
-	cursor: pointer;
-	transform: translate(79px, -46px);
+	width: 46px;
+  height: 46px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: rgba(147, 147, 147, 0.6);
+  border-radius: 50%;
+  transform: translate(83px, -50px);
+  transition: all 0.3s;
+}
+
+label.upload > img {
+	width: 30px;
+  height: 30px;
+}
+
+.upload:hover,
+.bg-update:hover {
+	backdrop-filter: brightness(0.8);
 }
 
 .profileImgContainer > p {
 	font-size: 12px;
-	transform: translate(0px, -33px);
-	transition: font-weight 0.3s;
+	transform: translate(0px, -40px);
 	cursor: pointer;
 }
 
@@ -619,29 +677,40 @@ form {
 	font-weight: 500;
 }
 
-label.upload > img {
-	width: 100%;
-	height: 100%;
-}
-
-label.upload > input[type="file"] {
-	display: none;
+input[type="file"]#choosebg,
+input[type="file"]#chooseImg {
+	position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
 }
 
 .user {
 	text-align: left;
   padding: 0 6px;
-  transform: translateY(-20px);
+  transform: translateY(-80px);
 }
 
-.nickname {
+.user > .nickname {
 	font-size: 18px;
   font-weight: 600;
-  line-height: 34px;
+  line-height: 11px;
 }
 
-.selfIntro {
+.user > p {
+  line-height: 32px;
+}
+
+.user > .id {
+	font-size: 12px;
 	color: var(--color-gray500);
+}
+
+.user > .selfIntro {
+	color: var(--color-gray600);
   font-size: 14px;
 }
 
@@ -649,26 +718,36 @@ label.upload > input[type="file"] {
 	margin-top: 35px;
 } 
 
+.pickedRegiContianer > h3 {
+	font-size: 17px;
+}
+
+.pickedRegiContianer > h3 > img{
+	height: 13px;
+}
+
 .pickedRegi > h3 {
 	font-size: 14px;
 }
+
 
 .regiList {
 	font-size: 14px;
 }
 
 .parentRegiItem {
-	padding: 5px 0;
+	padding: 6px 0;
 }
 
 .pickedChildRegiList {
 	display: flex;
+	flex-wrap: wrap;
 }
 
 .pickedChildRegiitem {
-	color: var(--color-white);
-  background-color: var(--color-orange400);
+	color: var(--color-gray500);
+  background-color: #eee;
   padding: 2px 6px;
   border-radius: 13px;
-  margin: 4px 4px 0 0;
+  margin: 4px 4px 4px 0;
 }

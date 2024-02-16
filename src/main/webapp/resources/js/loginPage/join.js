@@ -148,8 +148,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const userRegi2 = document.getElementById('userRegiNum2').value;
     const userRegiNum = userRegi1 + userRegi2;
     const userNickname = document.getElementById('userNick').value;
+    const userIdValue = document.getElementById('userId').value;
     const userSelfIntro = document.getElementById('userSelf').value;
     const nicknameNode = document.querySelector('.nickname');
+    const idNode = document.querySelector('.id');
     const selfIntroNode = document.querySelector('.selfIntro');
 
     secondUserData = {
@@ -161,6 +163,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     nicknameNode.innerHTML = userNickname;
     selfIntroNode.innerHTML = userSelfIntro;
+    idNode.innerHTML = `@${userIdValue}`;
 
     /* 유저의 성별에 따른 기본 프로필 사진 설정 */
     if(userRegi2%2 == 0) {
@@ -568,6 +571,34 @@ const showUserPickedRegi = function(pickedList, regiList) {
     profileImgList.appendChild(item);
   }
 
+
+  /**
+   * 240216 장한원
+   * 프로필 사진 수정 버튼(기본 프사 팝업 열림)
+   */
+  const profileUpdateBtn = document.getElementById('p-updateBtn');
+  profileUpdateBtn.addEventListener('click', ()=>{
+    document.querySelector('.profileImgContainer').classList.toggle('p_visible');
+    document.querySelector('.user').classList.toggle('_pointer');
+
+    const resetBtn = document.getElementById('reset');
+    resetBtn.addEventListener('click', (event)=>{
+      //event.stopPropagation();
+
+      const profileImgPreview = document.querySelector('.preview');
+
+      if(userGender == 'W') {
+        profileImgPreview.src = '/resources/img/basic/profile/basic-w.png'
+        profileImgPreview.dataset.gender = 'W'
+      } else if(userGender == 'M') {
+        profileImgPreview.src = '/resources/img/basic/profile/basic-m.png'
+        profileImgPreview.dataset.gender = 'M'
+      }
+
+    });
+  });
+
+
   /**
    * 240214 장한원
    * 기본 프로필 사진 선택 시 동작
@@ -587,73 +618,101 @@ const showUserPickedRegi = function(pickedList, regiList) {
    * 240214 장한원
    * 프로필 파일 직접 업로드 시 동작
    */
-  let formData = new FormData(); // 새로운 폼 객체 생성
-  let profile;
-  let bgImg;
+  let formData = new FormData(); // 서버로 전송할 폼 객체 생성
+  let profile; // 업로드한 프로필 사진 값
+  let bgImg; // 업로드한 배경 사진 값
 
   const chooseImgInput = document.getElementById('chooseImg');
   const choosebg =  document.getElementById('choosebg');
+  const bgPreview = document.querySelector('.bg-preview');
 
-  /* 프로필 사진 */
-  chooseImgInput.addEventListener('change', ()=>{
-    const reader = new FileReader();
-    reader.onload = ({ target }) => {
-      document.querySelector('.preview').src = target.result;
-    };
-    
-    reader.readAsDataURL(chooseImgInput.files[0]);
-    
-    profile = chooseImgInput.files[0];
-  })
+  /* 프로필 사진 업로드 */
+  chooseImgInput.addEventListener('change', (e)=>{
+
+    if (e.target.files.length === 0) {
+      return;
+    } else {
+      const reader = new FileReader();
+      reader.onload = ({ target }) => {
+        document.querySelector('.preview').src = target.result;
+      };
+      
+      reader.readAsDataURL(chooseImgInput.files[0]);
+      
+      profile = chooseImgInput.files[0];
+    }
+
+  });
   
-  /* 배경 사진 */
-  choosebg.addEventListener('change', ()=>{ 
 
-    const bgPreview = document.querySelector('.bg-preview');
-    bgPreview.classList.add('show-bg');
+  /* 배경 사진 업로드 */
+  choosebg.addEventListener('change', (e)=>{ 
 
-    const reader = new FileReader();
-    reader.onload = ({ target }) => {
-      bgPreview.src = target.result;
-    };
+    if (e.target.files.length === 0) {
+      return;
+    } else {
+      bgPreview.classList.add('show-bg');
+
+      const reader = new FileReader();
+      reader.onload = ({ target }) => {
+        bgPreview.src = target.result;
+      };
+
+      reader.readAsDataURL(choosebg.files[0]);
     
-    reader.readAsDataURL(choosebg.files[0]);
-    
-    bgImg = choosebg.files[0];
+      bgImg = choosebg.files[0];
+
+      console.log(choosebg.files[0])
+    }
     
   });
 
-  
+  /* 배경 사진 원래대로 되돌리기(삭제) */
+  if(bgPreview.classList.contains('show-bg')) {
+    const removeBgImg =  document.getElementById('bg-remove');
+    removeBgImg.style.display = 'block';
 
+    removeBgImg.addEventListener('click', ()=>{
+      bgPreview.src = '';
+    });
+  }
+
+  
   /*
    * admin: 장한원
    * step4
    * 마지막 확인 버튼
   */
   submitBtn.addEventListener('click' , ()=>{
+
     const userGender = document.querySelector('.preview').getAttribute('data-gender');
 
-    if(!profile){
+    // 아무런 프사도 선택하지 않았을 때
+    if(!profile && !imgValue){
       if(userGender == 'W') {
         imgValue = { 'FILE_SVNM' : 'basic-w.png' };
       } else if(userGender == 'M') {
         imgValue = { 'FILE_SVNM' : 'basic-m.png' };
       }
 
-      joinUserData = Object.assign({}, firstUserData, secondUserData, imgValue); // 회원가입 전송 데이터 가공
-      formData.append('data', JSON.stringify(joinUserData));
-      formData.append('regi', JSON.stringify(pickedRegiCode));
+      joinUserData = Object.assign({}, firstUserData, secondUserData, imgValue); // 유저가 입력한 폼 데이터 가공
 
+    // 기본 제공하는 프사 선택
+    } else if(imgValue) {
+      joinUserData = Object.assign({}, firstUserData, secondUserData, imgValue); // 유저가 입력한 폼 데이터 가공
+
+    // 프사 직접 업로드
     } else if(profile) {
-        joinUserData = Object.assign({}, firstUserData, secondUserData);
-        
-        formData.append('data', JSON.stringify(joinUserData));
-        formData.append('file', profile);
-        formData.append('regi', JSON.stringify(pickedRegiCode));
+      joinUserData = Object.assign({}, firstUserData, secondUserData); // 유저가 입력한 폼 데이터 가공
+      formData.append('file', profile); // 프로필 사진
     }
 
-    formData.append('wallPaper', bgImg);
+    if(bgImg) {
+      formData.append('wallPaper', bgImg); // 배경사진
+    }
 
+    formData.append('data', JSON.stringify(joinUserData)); // 유저가 입력한 폼 값
+    formData.append('regi', JSON.stringify(pickedRegiCode)); // 유저가 선택한 선호 지역값
 
     fetch("/gather/joinDo.com", {
       method: "POST",
@@ -908,8 +967,8 @@ const inputChangeHandler = function() {
 
   });
 
-  pwConfirm.addEventListener('change', ()=>{
-    if(userPw.value != pwConfirm.value) {
+  pwConfirm.addEventListener('change', (e)=>{
+    if(userPw.value != e.target.value) {
       controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', '비밀번호가 일치하지 않습니다.');
     } else {
       hideWarning('.pwConfirm');

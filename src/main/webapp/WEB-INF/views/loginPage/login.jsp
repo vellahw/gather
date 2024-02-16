@@ -164,38 +164,48 @@
 		<div class="loginContainer" id="signupStep4">
 			<div class="bubble">이대로 프로필을 생성할까요?</div>
 			<div class="mypage-bg">
-				<img class="bg-preview" alt="배경이미지" />
-				<label class="upload bg-update">
-					<img src="/resources/img/icon/addIcon.png" alt="배경 이미지 업로드 버튼">
-					<input type="file" name="wallpaper" id="choosebg" accept="image/*" />
+				<img class="bg-preview" alt="배경 이미지" />
+				<label for="choosebg" class="bg-update">
+				  <img src="/resources/img/icon/addIcon.png" class="p-updateIcon" alt="배경 이미지 추가하기">
+					<input type="file" name="wallPaper" id="choosebg" accept="image/*" />
 				</label>
+				<div aria-label="배경 이미지 삭제하기" id="bg-remove" class="bg-update bg-remove">
+					<img src="/resources/img/icon/deleteIcon.png" class="p-updateIcon" alt="배경 이미지 삭제 아이콘">
+				</div>
+				
 			</div>
-			<div class="container" style="transform: translateY(-60px);">
+			
+			<div class="container" style="max-width: 100px; transform: translateY(-60px);">
 				<div class="profileImgWrap pro">
 					<img class="profileImg preview" alt="프로필사진"/>
 				</div>
-				<div class="p-updateBtn">
-					<img src="/resources/img/icon/pencile.png" class="p-updateIcon" alt="프사수정버튼">
+				<div id="p-updateBtn" class="p-updateBtn">
+					<img src="/resources/img/icon/pencil-w.png" class="p-updateIcon" alt="프로필 사진 수정하기">
 				</div>
-				<div class="profileImgContainer popup">
-					<div class="profileImgList"></div>
-					<label class="upload">
-						<img src="/resources/img/icon/addIcon.png" alt="프로필 이미지 업로드 버튼">
-						<input type="file" name="FILE_SVNM" id="chooseImg" accept="image/*" />
-					</label>
-					<p>기본 프로필로 설정하기</p>
-				</div>
-				<div class="user">
-					<p class="nickname"></p>
-					<p class="selfIntro"></p>
-					<div class="pickedRegiContianer">
-						<h3>선호하는 모임 지역</h3>
-						<ul class="regiList">
-						</ul>
-					</div>
-					
+			</div>	
+			
+			<div class="profileImgContainer popup">
+				<div class="profileImgList"></div>
+				<label for="chooseImg" class="upload">
+					<img src="/resources/img/icon/addIcon.png" alt="프로필 이미지 직접 업로드">
+					<input type="file" name="FILE_SVNM" id="chooseImg" accept="image/*" />
+				</label>
+				<p id="reset">기본 프로필로 설정하기</p>
+			</div>
+				
+			<div class="user">
+				<p class="nickname"></p>
+				<p class="id"></p>
+				<p class="selfIntro"></p>
+				<div class="pickedRegiContianer">
+					<h3>
+						<img src="/resources/img/icon/detail/location_detail.png" alt="지역 아이콘" />
+						선호하는 모임 지역
+					</h3>
+					<ul class="regiList"></ul>
 				</div>
 			</div>
+			
 			<div class="btnContainer" style="margin-top: 34px;">
 			  <button type="button" class="waybtn prev" id="prev4">이전</button>
 			  <button type="submit" class="waybtn next" id="submit">확인</button>
