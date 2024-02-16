@@ -662,7 +662,6 @@ const showUserPickedRegi = function(pickedList, regiList) {
     
       bgImg = choosebg.files[0];
 
-      console.log(choosebg.files[0])
     }
     
   });
@@ -697,17 +696,21 @@ const showUserPickedRegi = function(pickedList, regiList) {
 
       joinUserData = Object.assign({}, firstUserData, secondUserData, imgValue); // 유저가 입력한 폼 데이터 가공
 
+    }
     // 기본 제공하는 프사 선택
-    } else if(imgValue) {
+    
+    if(imgValue) {
       joinUserData = Object.assign({}, firstUserData, secondUserData, imgValue); // 유저가 입력한 폼 데이터 가공
-
+    }
+    
     // 프사 직접 업로드
-    } else if(profile) {
+    if(profile) {
       joinUserData = Object.assign({}, firstUserData, secondUserData); // 유저가 입력한 폼 데이터 가공
       formData.append('file', profile); // 프로필 사진
     }
 
     if(bgImg) {
+      console.log('있어염')
       formData.append('wallPaper', bgImg); // 배경사진
     }
 
