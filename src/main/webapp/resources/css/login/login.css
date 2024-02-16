@@ -108,6 +108,12 @@ form {
   width: 50px;
 }
 
+#signupStep4 {
+  display: flex;
+  justify-content: center;
+}
+
+
 
 ._act {
 	width: 400px !important;
@@ -346,7 +352,8 @@ form {
 .btnContainer {
 	justify-content: space-between;
   display: flex;
-  padding: 0 4px 0 4px;
+  padding: 0 4px 20px 4px;
+  transform: translateY(-20px)
 }
 
 .waybtn {
