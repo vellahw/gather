@@ -628,6 +628,9 @@ const showUserPickedRegi = function(pickedList, regiList) {
       document.querySelector('.preview').src = `/resources/img/basic/profile/${tagetData}.png`;
 
       imgValue = { FILE_SVNM : `${tagetData}.png` };
+
+      // 프로필 사진 관련 데이터 비움
+      profile = '';
     }
   });
 
@@ -691,7 +694,7 @@ const showUserPickedRegi = function(pickedList, regiList) {
   removeBgImg.addEventListener('click', ()=>{
     bgPreview.removeAttribute('src');
     bgPreview.removeAttribute('alt');
-    bgPreview.style.display = 'none';
+    bgPreview.classList.add('none-bg');
   });
   
   /*
@@ -712,8 +715,8 @@ const showUserPickedRegi = function(pickedList, regiList) {
       joinUserData = Object.assign({}, firstUserData, secondUserData, imgValue); // 유저가 입력한 폼 데이터 가공
 
     }
-    // 기본 제공하는 프사 선택
     
+    // 기본 제공하는 프사 선택
     if(imgValue) {
       joinUserData = Object.assign({}, firstUserData, secondUserData, imgValue); // 유저가 입력한 폼 데이터 가공
     }
