@@ -18,7 +18,7 @@ public class Pager {
 	  public Pager (Criteria cri, int total) { 
 		  
 	      this.cri = cri;
-	      this.total = total; //전체 페이지!
+	      this.total = total; //전체 페이지
 	      this.endPage = (int)(Math.ceil(cri.getPageNum() / 5.0)) * 5; //페이지 끝 번호
 	      this.startPage = this.endPage -4; //페이지 시작 번호
 	      int realEnd = (int)(Math.ceil((total * 1.0) / cri.getAmount())); //진짜 끝 페이지
