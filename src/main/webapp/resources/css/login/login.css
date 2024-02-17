@@ -618,6 +618,10 @@ textarea#userSelf {
 	display: block;
 }
 
+.none-bg {
+	display: none;
+}
+
 .bg-remove {
 	display: none;
 	bottom: 28px;

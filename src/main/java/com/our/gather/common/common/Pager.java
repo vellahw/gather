@@ -3,8 +3,8 @@ package com.our.gather.common.common;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-@Data
 @Slf4j
+@Data
 public class Pager {
 
 	private int pageCount; // 하단 출력 페이지 번호
