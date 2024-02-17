@@ -19,7 +19,7 @@ public class GatherServiceImpl implements GatherService {
 	@Resource(name = "GatherDao")
 	private GatherDao gatherDao;
 
-	//게더 메인리스트
+	// 게더 메인리스트
 	@Override
 	public List<Map<String, Object>> mainGather(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception {
@@ -33,8 +33,8 @@ public class GatherServiceImpl implements GatherService {
 
 		return gatherDao.mainGather(map, commandMap, session);
 	}
-	
-	//게더리스트
+
+	// 게더리스트
 	@Override
 	public List<Map<String, Object>> getGatherList(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception {
@@ -44,49 +44,49 @@ public class GatherServiceImpl implements GatherService {
 
 			commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 		}
-		
+
 		return gatherDao.getGatherList(map, commandMap, session);
 	}
-	
-	
-	//게더 상세보기
+
+	// 게더 상세보기
 	@Override
-	public Map<String, Object> getGatherDetail(Map<String, Object> map, HttpSession session, CommandMap commandMap) throws Exception {
+	public Map<String, Object> getGatherDetail(Map<String, Object> map, HttpSession session, CommandMap commandMap)
+			throws Exception {
 		// TODO Auto-generated method stub
-		
+
 		if (session.getAttribute("USER_NUMB") != null) {
 
 			commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
-			
+
 		}
-		
+
 		return gatherDao.getGatherDetail(map, commandMap, session);
 	}
-	
-	//게더 이미지
+
+	// 게더 이미지
 	@Override
 	public List<Map<String, Object>> getGatherImg(Map<String, Object> map, CommandMap commandMap) throws Exception {
 		// TODO Auto-generated method stub
 
 		return gatherDao.getGatherImg(map, commandMap);
 	}
-	
-	//게더 맴버 리스트
+
+	// 게더 맴버 리스트
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED)
-	public List<Map<String, Object>> getGatherMember(Map<String, Object> map, CommandMap commandMap, HttpSession session) throws Exception {
+	public List<Map<String, Object>> getGatherMember(Map<String, Object> map, CommandMap commandMap,
+			HttpSession session) throws Exception {
 		// TODO Auto-generated method stub
-		
+
 		return gatherDao.getGatherMember(map, commandMap, session);
 	}
-	
-	
-	//로그인 한 회원의 게더 참여 상황.
+
+	// 로그인 한 회원의 게더 참여 상황.
 	@Override
 	public Map<String, Object> getGatherYourState(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception {
 		// TODO Auto-generated method stub
-		
+
 		if (session.getAttribute("USER_NUMB") != null) {
 
 			commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
@@ -95,7 +95,13 @@ public class GatherServiceImpl implements GatherService {
 
 		return gatherDao.getGatherYourState(map, commandMap, session);
 	}
-	
+
+	// 게더 마감
+	public int getGatherCount(Map<String, Object> map, CommandMap commandMap) throws Exception {
+		
+		return gatherDao.getGatherCount(map, commandMap);
+	}
+
 	// 게더 마감
 	@Override
 	@Transactional(isolation = Isolation.SERIALIZABLE)

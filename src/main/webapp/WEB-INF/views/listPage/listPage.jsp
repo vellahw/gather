@@ -108,46 +108,41 @@
 	</c:choose>
 </div>
 
-<div>
-   <nav aria-label="Page navigation example">
-      <ul class="pagination">
-         <li class="page-item"  value="${pager.pre}" id="pre">
-         	<c:if test="${cate ne null}">
-            	<a class="page-link" href="/gather.com?cate=${cate}&page=${pager.page-1}" aria-label="Previous">
-             	<span aria-hidden="true">&laquo;</span>
-           		</a>
-            </c:if>
-            <c:if test="${keyword ne null}">
-            	<a class="page-link" href="/gather.com?keyword=${keyword}page=${pager.page-1}" aria-label="Previous">
-             	<span aria-hidden="true">&laquo;</span>
-           		</a>
-            </c:if>
-         </li>
-  
-         <c:forEach var="i" begin="${pager.startNum}" end="${pager.lastNum}">
-            <li class="page-item ${pager.page==i? 'active':''}">
-            	<c:if test="${cate ne null}">
-                	<a class="page-link" href="/gather.com?cate=${cate}&page=${i}">${i}</a>
-                </c:if>
-                <c:if test="${keyword ne null}">
-                	<a class="page-link" href="/gather.com?keyword=${keyword}&page=${i}">${i}</a>
-                </c:if>
-             </li>
+   <div class="page_wrap">
+   <div class="page_nation">
+      <ul>
+         <c:if test="${pageMaker.prev}">
+            <li class="arrow prev">
+               <a href="${pageMaker.startPage - 1 }"></a>
+            </li>
+         </c:if>
+         
+         <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+            <li ${pageMaker.cri.pageNum == num ? "active":""}>
+         <c:if test="${CATE_IDXX ne null and moimCode eq null}">
+               <a href="/gather.com?cate=${CATE_IDXX}&pageNum=${num}"<c:if test="${pageMaker.cri.pageNum == num}">class="act"</c:if>>${num}</a>
+         </c:if>
+         <c:if test="${CATE_IDXX ne null and moimCode ne null}">
+         		<a href="/gather.com?type=${moimCode}&cate=${CATE_IDXX}&pageNum=${num}"<c:if test="${pageMaker.cri.pageNum == num}">class="act"</c:if>>${num}</a>
+         </c:if>
+         <c:if test="${KEYY_WORD ne null and moimCode eq null}">
+         	<a href="/gather.com?keyword=${KEYY_WORD}&pageNum=${num}"<c:if test="${pageMaker.cri.pageNum == num}">class="act"</c:if>>${num}</a>
+         </c:if>
+       	 <c:if test="${KEYY_WORD ne null and moimCode ne null}">
+            <a href="/gather.com?type=${moimCode}&keyword=${KEYY_WORD}&pageNum=${num}"<c:if test="${pageMaker.cri.pageNum == num}">class="act"</c:if>>${num}</a>
+         </c:if>
+            </li>
          </c:forEach>
-                    
-         <li class="page-item ${pager.next?'':'disabled'}" id="next">
-             <c:if test="${cate ne null}">
-            	<a class="page-link" href="/gather.com?cate=${cate}&page=${pager.page+1}" aria-label="Previous">
-             	<span aria-hidden="true">&laquo;</span>
-           		</a>
-            </c:if>
-            <c:if test="${keyword ne null}">
-            	<a class="page-link" href="/gather.com?keyword=${keyword}page=${pager.page+1}" aria-label="Previous">
-             	<span aria-hidden="true">&laquo;</span>
-           		</a>
-            </c:if>
-          </li>
-       </ul>
-    </nav>
+                           
+         <c:if test="${pageMaker.next}">
+            <li class="arrow next">
+               <a href="${pageMaker.endPage + 1 }"></a>
+            </li>
+         </c:if>
+      </ul>   
+   </div>
+   </div>
+
+<div>
 </div>
 </body>

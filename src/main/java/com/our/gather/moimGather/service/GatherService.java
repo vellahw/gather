@@ -17,26 +17,27 @@ public interface GatherService {
 	// 게더 리스트
 	List<Map<String, Object>> getGatherList(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception;
-	
-	//게더 상세보기
+
+	// 게더 상세보기
 	Map<String, Object> getGatherDetail(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception;
-	
-	//게더 이미지
+
+	// 게더 이미지
 	List<Map<String, Object>> getGatherImg(Map<String, Object> map, CommandMap commandMap) throws Exception;
-	
-	
-	//게더 멤버
+
+	// 게더 멤버
 	List<Map<String, Object>> getGatherMember(Map<String, Object> map, CommandMap commandMap, HttpSession session)
 			throws Exception;
-	
-	
-	//로그인 회원 현재 게더 참여상태
+
+	// 로그인 회원 현재 게더 참여상태
 	Map<String, Object> getGatherYourState(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception;
-	
-	
-	//게더마감
+
+	// 로그인 회원 현재 게더 참여상태
+	int getGatherCount(Map<String, Object> map, CommandMap commandMap)
+			throws Exception;
+
+	// 게더마감
 	void setGatherEnd(Map<String, Object> map) throws Exception;
-	
+
 }
