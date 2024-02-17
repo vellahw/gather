@@ -177,8 +177,8 @@ public class GatherDao extends AbstractDao {
 		return getGatherImg;
 	}
 	
-	public Long getGatherCount(Map<String, Object> map, CommandMap commandMap) throws Exception {
-	    return Long.parseLong(selectOne("gather.getGatherCount", map).toString());
+	public int getGatherCount(Map<String, Object> map, CommandMap commandMap) throws Exception {
+	    return Integer.parseInt(selectOne("gather.getGatherCount", map).toString());
 	}
 
 	// 로그인 맴버 현재 상태

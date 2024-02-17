@@ -11,12 +11,10 @@ public class Criteria {
 	
 	 private int pageNum; //페이지 번호
      private int amount; //한 페이지 당 보여줄 데이터 수
-     private String type;
-     private String keyword;
      
      // 한 페이지에서 보여줄 데이터 개수 : 12
      public Criteria() {
-        this(1, 12);
+        this(1, 16);
      }
      
      // 변수에 저장

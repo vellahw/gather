@@ -6,8 +6,8 @@
 
 <div class="categoryContainer" id="categoryContainer">
     <div class="categoryList">
-        <div class="categoryItem" onClick="cateOnclick('all');">
-            <div class="categoryLink">전체</div>
+        <div class="categoryItem" onClick="cateOnclick('all');" data-code="all">
+            <div class="categoryLink" >전체</div>
         </div>
 
         <c:forEach var="parentsCate" items="${pCate}">

@@ -217,15 +217,15 @@
     (게더Search쿼리)
     -->
    <select id="getGather" parameterType="hashmap" resultType="hashmap">
-   	  <if test="startRow != null">
+   	  <if test="pageNum != null">
          <include refid="common.pagingPre"></include>
       </if>
       <![CDATA[
        	SELECT /*mainPage.getGather*/
        			*
 		  FROM (  
-		       	  SELECT /*mainPage.getGather*/              
-		                  GATH_IDXX AS MOIM_IDXX										   	/* 게더아이디 */
+		       	  SELECT  ROW_NUMBER() OVER (ORDER BY REGG_DATE DESC) RNUM         
+		                , GATH_IDXX AS MOIM_IDXX										   	/* 게더아이디 */
 		                , GATH_TITL AS MOIM_TITL										   	/* 게더 제목 */
 		                , GATH_CNTT AS MOIM_CNTT								           	/* 게더 내용 */
 		                , GATH_IMAG AS MOIM_IMAG								            /* 게더 대표 이미지 */
@@ -315,40 +315,22 @@
       	   WHERE ROWNUM <= 12
       	]]>
       </if>
-      <if test="lastRow != null">
+      <if test="pageNum != null">
          <include refid="common.pagingPost"></include>
       </if>
    </select>
    
-   <select id="getGatherCount" parameterType="hashmap" resultType="long">
+   <select id="getGatherCount" parameterType="hashmap" resultType="int">
    	 <![CDATA[
    	 
         SELECT /*mainPage.getGatherCount*/
-        	   COUNT(*) 
+        	   COUNT(*) AS MOIM_COUNT
           FROM VW_GATHER
          WHERE 1=1
         ]]>
-        <if test="MOIM_IDXX != null">
-         <![CDATA[
-           AND GATH_IDXX = #{MOIM_IDXX}
-           ]]>
-        </if>
         <if test="CATE_IDXX != null and CATE_IDXX != 'all'">
          <![CDATA[
            AND CATE_IDXX LIKE '%'||#{CATE_IDXX}||'%'
-            ]]>
-        </if>
-        <if test="WEATH_CATE != null">
-         <![CDATA[
-           AND CATE_IDXX IN
-            ]]>
-            <foreach collection="WEATH_CATE" item="WEATH_CATE" open="(" separator="," close=")">
-                #{WEATH_CATE}
-            </foreach>
-        </if>
-        <if test="CITY_CODE != null">
-         <![CDATA[
-           AND REGI_CODE LIKE '%'||#{CITY_CODE}||'%'
             ]]>
         </if>
         <if test="KEYY_WORD != null">

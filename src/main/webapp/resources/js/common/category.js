@@ -31,17 +31,25 @@ document.addEventListener("DOMContentLoaded", function(){
   240124 강승현
   해당 카테고리 진입시 active
   */
-  const PCATE_CODE = document.querySelectorAll('#pcode');
   const params = new URL(location.href).searchParams;
   const cate = params.get('cate');  
 
-  if (cate) {
+  if (cate != 'all') {
+
     const pcate = cate.substring(0, 1);
     document.querySelector(`div[data-code="${pcate}"`).classList.add('active'); 
-    if(cate.length == 3){  
+
+    if(cate.length == 3){ 
+
       document.querySelector(`li[data-code2="${cate}"`).classList.add('active');
+
     }
-  }   
+
+  } else {
+
+    document.querySelector(`div[data-code="all"`).classList.add('active'); 
+
+  } 
 });
 
 /*
@@ -55,7 +63,7 @@ function cateOnclick(cateCode) {
   const comType = comWhereIam().moimType || ""; // 기본값으로 빈 문자열 사용
 
   // URL에서 모든 type 및 cate 파라미터를 제거
-  const newURL = currentURL.replace(/(\?|&)type=[^&]*/g, '').replace(/(\?|&)cate=[^&]*/g, '').replace(/(\?|&)keyword=[^&]*/g, '');
+  const newURL = currentURL.replace(/(\?|&)type=[^&]*/g, '').replace(/(\?|&)cate=[^&]*/g, '').replace(/(\?|&)keyword=[^&]*/g, '').replace(/(\?|&)pageNum=[^&]*/g, '');
 
   // type 및 cate 파라미터가 함께 추가되도록 조작
   if (comType !== "gt") {

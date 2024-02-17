@@ -167,22 +167,21 @@
 	<!-- 전자정부 페이징 -->
 	<sql id="pagingPre">
 		<![CDATA[
-		SELECT
-			AAA.*
-		FROM(
-			SELECT
-				COUNT(*) OVER() AS TOTAL_COUNT,
-				AA.*
-			FROM(
+	   SELECT
+              AAA.*
+         FROM
+             (SELECT 
+                     AA.*
+                FROM (
 		]]>
 	</sql>
 	
 	<sql id="pagingPost">
 		<![CDATA[
-			) AA
-		) AAA
-		WHERE
-			AAA.RNUM BETWEEN #{startRow} AND #{lastRow}
+			 )AA
+          )AAA
+         WHERE
+             (#{pageNum} -1)* #{amount} <AAA.RNUM  AND AAA.RNUM <= #{pageNum} * #{amount}
 		]]>
 	</sql>
 
