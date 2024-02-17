@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -43,7 +44,8 @@ public class MainController {
 	public ModelAndView main(@RequestParam(value = "type", required = false) String LIST_TYPE,
 							 @RequestParam(value = "cate", required = false) String CATE_IDXX,
 							 @RequestParam(value = "keyword", required = false) String KEYY_WORD,
-							 HttpSession session, CommandMap commandMap, Model model, Pager pager) throws Exception {
+							 HttpSession session, CommandMap commandMap, Model model, Pager pager,
+							 HttpServletRequest request) throws Exception {
 
 		ModelAndView mv1 = new ModelAndView("/mainPage/mainPage");
 		mv1.setViewName("mainPage");
@@ -59,7 +61,6 @@ public class MainController {
 		mv2.addObject("pCate", pCate);
 		mv2.addObject("cCate", cCate);
 		mv2.addObject("KEYY_WORD", KEYY_WORD);
-		
 		mv2.addObject("pager", pager);
 		
 		if(session.getAttribute("USER_NUMB") != null) {
@@ -104,7 +105,8 @@ public class MainController {
 					mv2.addObject("CATE_NAME", result);
 
 				}
-
+				
+				mv2.addObject("cate", CATE_IDXX); //게더 카테고리검색 리스트
 				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //게더 카테고리검색 리스트
 				
 				return mv2;
@@ -112,6 +114,7 @@ public class MainController {
 			} else if(CATE_IDXX == null && KEYY_WORD != null) {
 				
 				commandMap.put("KEYY_WORD", KEYY_WORD);
+				mv2.addObject("keyword", KEYY_WORD); //게더 카테고리검색 리스트
 				mv2.addObject("list",  gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //게더 키워드 검색 리스트
 				
 				return mv2;
@@ -140,7 +143,8 @@ public class MainController {
 					mv2.addObject("CATE_NAME", result);
 
 				}
-
+				
+				mv2.addObject("cate", CATE_IDXX); //게더 카테고리검색 리스트
 				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //추후 클럽으로 변경
 				
 				return mv2;
@@ -148,6 +152,7 @@ public class MainController {
 		     } else if (CATE_IDXX == null && KEYY_WORD != null) {
 				
 				commandMap.put("KEYY_WORD", KEYY_WORD);
+				mv2.addObject("keyword", KEYY_WORD);
 				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //추후 클럽으로 변경
 				
 				return mv2;
@@ -176,7 +181,8 @@ public class MainController {
 					mv2.addObject("CATE_NAME", result);
 
 				}
-
+				
+				mv2.addObject("cate", CATE_IDXX); //게더 카테고리검색 리스트
 				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //추후 챌린지로 변경
 				
 				return mv2;
@@ -184,6 +190,7 @@ public class MainController {
 			} else if (CATE_IDXX == null && KEYY_WORD != null) {
 				
 				commandMap.put("KEYY_WORD", KEYY_WORD);
+				mv2.addObject("keyword", KEYY_WORD);
 				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //추후 챌린지로 변경
 				
 				return mv2;

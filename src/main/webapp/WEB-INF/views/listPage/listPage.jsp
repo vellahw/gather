@@ -110,21 +110,40 @@
    <nav aria-label="Page navigation example">
       <ul class="pagination">
          <li class="page-item"  value="${pager.pre}" id="pre">
-           <a class="page-link" href="/gather.com?page=${pager.page-1}" aria-label="Previous">
-             <span aria-hidden="true">&laquo;</span>
-           </a>
+         	<c:if test="${cate ne null}">
+            	<a class="page-link" href="/gather.com?cate=${cate}&page=${pager.page-1}" aria-label="Previous">
+             	<span aria-hidden="true">&laquo;</span>
+           		</a>
+            </c:if>
+            <c:if test="${keyword ne null}">
+            	<a class="page-link" href="/gather.com?keyword=${keyword}page=${pager.page-1}" aria-label="Previous">
+             	<span aria-hidden="true">&laquo;</span>
+           		</a>
+            </c:if>
          </li>
   
          <c:forEach var="i" begin="${pager.startNum}" end="${pager.lastNum}">
             <li class="page-item ${pager.page==i? 'active':''}">
-                <a class="page-link" href="/gather.com?page=${i}">${i}</a>
+            	<c:if test="${cate ne null}">
+                	<a class="page-link" href="/gather.com?cate=${cate}&page=${i}">${i}</a>
+                </c:if>
+                <c:if test="${keyword ne null}">
+                	<a class="page-link" href="/gather.com?keyword=${keyword}&page=${i}">${i}</a>
+                </c:if>
              </li>
          </c:forEach>
                     
          <li class="page-item ${pager.next?'':'disabled'}" id="next">
-             <a class="page-link" href="/gather.com?page=${pager.page+1}" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
+             <c:if test="${cate ne null}">
+            	<a class="page-link" href="/gather.com?cate=${cate}&page=${pager.page+1}" aria-label="Previous">
+             	<span aria-hidden="true">&laquo;</span>
+           		</a>
+            </c:if>
+            <c:if test="${keyword ne null}">
+            	<a class="page-link" href="/gather.com?keyword=${keyword}page=${pager.page+1}" aria-label="Previous">
+             	<span aria-hidden="true">&laquo;</span>
+           		</a>
+            </c:if>
           </li>
        </ul>
     </nav>
