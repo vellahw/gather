@@ -698,8 +698,8 @@ label.upload > img {
 input[type="file"]#choosebg,
 input[type="file"]#chooseImg {
 	position: absolute;
-  width: 100%;
-  height: 100%;
+  width: 1px;
+  height: 1px;
   top: 0;
   left: 0;
   opacity: 0;
