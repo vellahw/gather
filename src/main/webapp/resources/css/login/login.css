@@ -372,7 +372,7 @@ form {
 }
 
 .waybtn:hover {
-	background-color: var(--color-gray500);
+	background-color: var(--color-gray200);
 }
 
 .waybtn.next:hover {

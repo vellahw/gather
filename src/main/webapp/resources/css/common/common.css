@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 /*========== 포인터 이벤트 막기 ==========*/
-._pointer {
+._pointer-none {
 	pointer-events: none!important;
 }
 

@@ -579,7 +579,7 @@ const showUserPickedRegi = function(pickedList, regiList) {
   const profileUpdateBtn = document.getElementById('p-updateBtn');
   profileUpdateBtn.addEventListener('click', ()=>{
     document.querySelector('.profileImgContainer').classList.toggle('p_visible');
-    document.querySelector('.user').classList.toggle('_pointer');
+    document.querySelector('.user').classList.toggle('_pointer-none');
 
     const resetBtn = document.getElementById('reset');
     resetBtn.addEventListener('click', (event)=>{
