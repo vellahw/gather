@@ -140,7 +140,10 @@
 			  <div id="appendNick" class="append_join userNick"></div>
 			  
 			  <label class="joinlabel" for="userSelf">자기소개</label>
-		    <input type="text" id="userSelf" class="basicInput _join" placeholder="취향, 가치관 등을 나타내보세요! (최대 100자)" maxlength="100">
+		    <textarea id="userSelf" 
+		    					class="basicInput _join"
+		    					placeholder="취향, 가치관 등을 나타내보세요! (최대 100자)"
+		    					maxlength="100"></textarea>
 		    
 		    <div class="btnContainer">
 			  	<button type="button" class="waybtn prev" id="prev2">이전</button>
@@ -195,7 +198,7 @@
 						<img src="/resources/img/icon/addIcon.png" alt="프로필 이미지 직접 업로드">
 						<input type="file" name="FILE_SVNM" id="chooseImg" accept="image/*" />
 					</label>
-					<p id="reset">기본 프로필로 설정하기</p>
+					<p id="reset">프로필 사진 삭제</p>
 				</div>
 					
 				<div class="user">

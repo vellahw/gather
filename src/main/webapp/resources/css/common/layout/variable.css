@@ -46,6 +46,11 @@ input {
   outline: none;
 }
 
+textarea {
+	resize: none;
+	outline: none;
+}
+
 /* input[type=file]::file-selector-button {
   width: 100px;
   height: 28px;

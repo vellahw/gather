@@ -25,4 +25,8 @@
   <definition name="detailPage" extends="mainPage">
     <put-attribute name="body" value="/WEB-INF/views/detailPage/detailPage.jsp"/>
   </definition>
+  
+  <definition name="moimRegister" extends="mainPage">
+    <put-attribute name="body" value="/WEB-INF/views/moimGather/moimRegister.jsp"/>
+  </definition>
 </tiles-definitions>
