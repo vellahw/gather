@@ -36,7 +36,7 @@ public class GatherServiceImpl implements GatherService {
 	
 	//게더리스트
 	@Override
-	public List<Map<String, Object>> getGatherList(Map<String, Object> map, HttpSession session, CommandMap commandMap, Pager pager)
+	public List<Map<String, Object>> getGatherList(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception {
 		// TODO Auto-generated method stub
 
@@ -45,12 +45,7 @@ public class GatherServiceImpl implements GatherService {
 			commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 		}
 		
-		Long totalCount =  gatherDao.getGatherCount(map, commandMap);
-		
-		pager.setRow();
-		pager.setNum(totalCount);
-
-		return gatherDao.getGatherList(map, commandMap, session, pager);
+		return gatherDao.getGatherList(map, commandMap, session);
 	}
 	
 	

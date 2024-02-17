@@ -44,7 +44,7 @@ public class MainController {
 	public ModelAndView main(@RequestParam(value = "type", required = false) String LIST_TYPE,
 							 @RequestParam(value = "cate", required = false) String CATE_IDXX,
 							 @RequestParam(value = "keyword", required = false) String KEYY_WORD,
-							 HttpSession session, CommandMap commandMap, Model model, Pager pager,
+							 HttpSession session, CommandMap commandMap, Model model,
 							 HttpServletRequest request) throws Exception {
 
 		ModelAndView mv1 = new ModelAndView("/mainPage/mainPage");
@@ -61,7 +61,6 @@ public class MainController {
 		mv2.addObject("pCate", pCate);
 		mv2.addObject("cCate", cCate);
 		mv2.addObject("KEYY_WORD", KEYY_WORD);
-		mv2.addObject("pager", pager);
 		
 		if(session.getAttribute("USER_NUMB") != null) {
 			
@@ -107,7 +106,7 @@ public class MainController {
 				}
 				
 				mv2.addObject("cate", CATE_IDXX); //게더 카테고리검색 리스트
-				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //게더 카테고리검색 리스트
+				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //게더 카테고리검색 리스트
 				
 				return mv2;
 
@@ -115,7 +114,7 @@ public class MainController {
 				
 				commandMap.put("KEYY_WORD", KEYY_WORD);
 				mv2.addObject("keyword", KEYY_WORD); //게더 카테고리검색 리스트
-				mv2.addObject("list",  gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //게더 키워드 검색 리스트
+				mv2.addObject("list",  gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //게더 키워드 검색 리스트
 				
 				return mv2;
 				
@@ -145,7 +144,7 @@ public class MainController {
 				}
 				
 				mv2.addObject("cate", CATE_IDXX); //게더 카테고리검색 리스트
-				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //추후 클럽으로 변경
+				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //추후 클럽으로 변경
 				
 				return mv2;
 
@@ -153,7 +152,7 @@ public class MainController {
 				
 				commandMap.put("KEYY_WORD", KEYY_WORD);
 				mv2.addObject("keyword", KEYY_WORD);
-				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //추후 클럽으로 변경
+				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //추후 클럽으로 변경
 				
 				return mv2;
 				
@@ -183,7 +182,7 @@ public class MainController {
 				}
 				
 				mv2.addObject("cate", CATE_IDXX); //게더 카테고리검색 리스트
-				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //추후 챌린지로 변경
+				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //추후 챌린지로 변경
 				
 				return mv2;
 
@@ -191,7 +190,7 @@ public class MainController {
 				
 				commandMap.put("KEYY_WORD", KEYY_WORD);
 				mv2.addObject("keyword", KEYY_WORD);
-				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager)); //추후 챌린지로 변경
+				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //추후 챌린지로 변경
 				
 				return mv2;
 				
@@ -275,15 +274,15 @@ public class MainController {
 
 		if (moimType.equals("gt")) {
 
-			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager));
+			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
 
 		} else if (moimType.equals("cb")) {
 			
-			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager));
+			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
 
 		} else if (moimType.equals("ch")) {
 			
-			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager));
+			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
 
 		}
 
@@ -306,15 +305,15 @@ public class MainController {
 
 		if (moimType.equals("gt")) {
 
-			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager));
+			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
 
 		} else if (moimType.equals("cb")) {
 			
-			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager));
+			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
 
 		} else if (moimType.equals("ch")) {
 			
-			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap, pager));
+			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
 
 		}
 

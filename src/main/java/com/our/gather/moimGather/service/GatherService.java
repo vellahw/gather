@@ -15,7 +15,7 @@ public interface GatherService {
 			throws Exception;
 
 	// 게더 리스트
-	List<Map<String, Object>> getGatherList(Map<String, Object> map, HttpSession session, CommandMap commandMap, Pager pager)
+	List<Map<String, Object>> getGatherList(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception;
 	
 	//게더 상세보기
