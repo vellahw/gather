@@ -329,14 +329,29 @@ form {
 .capslock {
 	visibility: hidden;
 	opacity: 0;
-	font-size: 12px;
-	background-color: var(--color-gray500);
-	color: #fff;
-	width: 70px;
+	position: absolute;
+  right: 0;
+  top: 43px;
+  padding: 5px;
+  font-size: 13px;
+  background-color: rgba(253, 135, 49, 0.8);
+  color: #fff;
+  width: 140px;
+  border-radius: 5px;
+  height: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 } 
 
-.capslock > span {
-	width: 130px;
+.capslock::after {
+  border-top: 0px solid transparent;
+  border-right: 11px solid transparent;
+  border-bottom: 11px solid rgba(253, 135, 49, 0.8);
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 6px;
 }
 
 .active {

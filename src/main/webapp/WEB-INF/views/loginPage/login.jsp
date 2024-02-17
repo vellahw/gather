@@ -97,10 +97,11 @@
 			    <button type="button" class="showPw" data-src="/resources/img/login/eyeIcon.png">
 			    	<img class="pwBtnImg" alt="비밀번호 표시 버튼" />
 			    </button>
+			    
+			    <div class="capslock">
+			    	<span>CapsLock이 켜져 있어요</span>
+			    </div>
 		    </div>
-		    <!-- <div class="capslock">
-		    	<span>CapsLock이 켜져 있어요</span>
-		    </div> -->
 		    <div id="appendPw" class="append_join userPw"></div>
 		    
 		    <label class="joinlabel" for="pwConfirm">⁕ 비밀번호 확인</label>

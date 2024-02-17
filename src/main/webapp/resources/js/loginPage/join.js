@@ -921,6 +921,10 @@ const inputChangeHandler = function() {
   userId.addEventListener('keyup', enterKeyupEvent);
   authnum.addEventListener('keyup', enterKeyupEvent);
 
+  // 캡스락 툴팁 띄움
+  userPw.addEventListener('keyup', showCapslockTooltip);
+  pwConfirm.addEventListener('keyup', showCapslockTooltip);
+
   userId.addEventListener('change', ()=>{
     if(!checkId(userId.value)){ 
       controlStyleAndAppendWarning(userId, 'appendId', '올바른 이메일 형식을 입력해주세요.');
@@ -932,21 +936,14 @@ const inputChangeHandler = function() {
     }
   })
 
-  // 캡스락 툴팁 띄움
-  userPw.addEventListener('keyup', (event)=>{
-    if (event.getModifierState("CapsLock")) {
-      document.querySelector('.capslock').classList.toggle('.show_hidden_element');
+  userPw.addEventListener('input', (event)=>{
+    if(event.target.value.length == 14) {
+      controlStyleAndAppendWarning(userPw, 'appendPw', '최대 14자까지 설정 가능합니다.');
+      event.target.value = event.target.value.substring(0, 14);
+    } else {
+      hideWarning('.userPw');
     }
   });
-
-  // userPw.addEventListener('input', (e)=>{
-  //   if(e.target.value.length > 14) {
-  //     controlStyleAndAppendWarning(userPw, 'appendPw', '최대 14자까지 설정 가능합니다.');
-  //     e.target.value = e.target.value.substring(0, 14);
-  //   } else {
-  //     hideWarning('.userPw');
-  //   }
-  // });
 
   userPw.addEventListener('change', (event)=>{
     const inputValue = event.target.value;
@@ -977,14 +974,6 @@ const inputChangeHandler = function() {
       hideWarning('.pwConfirm');
     }
   });
-
-  // pwConfirm.addEventListener('keyup', (event)=>{
-  //   if (event.getModifierState("CapsLock")) {
-  //     controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', 'Caps Lock이 활성화된 상태입니다.');
-  //   } else {
-  //     hideWarning('.pwConfirm');
-  //   }
-  // });
 
   // 핸드폰번호 - 숫자만 입력되게 + 자동 하이픈
   userCell.addEventListener('input', (e)=>{
@@ -1095,7 +1084,7 @@ const inputChangeHandler = function() {
 
 /**
  * admin: 장한원
- * 엔터키 이벤트
+ * 엔터키 감지 이벤트
  */
 const enterKeyupEvent = function(event) {
   const clickTargetSelector = event.target.dataset.clickTarget;
@@ -1103,6 +1092,21 @@ const enterKeyupEvent = function(event) {
   if(event.code === 'NumpadEnter' || event.code === 'Enter') {
     event.preventDefault();
     document.querySelector(clickTargetSelector).click();
+  }
+}
+
+
+/**
+ * 240217: 장한원
+ * 캡스락 감지 이벤트
+ */
+const showCapslockTooltip = function(event) {
+  const tooltip = document.querySelector('.capslock');
+  
+  if (event.getModifierState("CapsLock")) {
+    tooltip.classList.add('show_hidden_element');
+  } else {
+    tooltip.classList.remove('show_hidden_element');
   }
 }
 
