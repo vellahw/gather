@@ -636,6 +636,9 @@ const showUserPickedRegi = function(pickedList, regiList) {
       reader.onload = ({ target }) => {
         document.querySelector('.preview').src = target.result;
       };
+
+      // 업로드 했으면 팝업 닫음
+      document.querySelector('.profileImgContainer').classList.toggle('p_visible');
       
       reader.readAsDataURL(chooseImgInput.files[0]);
       

@@ -207,7 +207,7 @@
 					</div>
 				</div>
 				
-				<div class="btnContainer">
+				<div class="step4 btnContainer">
 				  <button type="button" class="waybtn prev" id="prev4">이전</button>
 				  <button type="submit" class="waybtn next" id="submit">확인</button>
 			  </div>

@@ -113,8 +113,6 @@ form {
   justify-content: center;
 }
 
-
-
 ._act {
 	width: 400px !important;
   opacity: 1 !important;
@@ -352,7 +350,11 @@ form {
 .btnContainer {
 	justify-content: space-between;
   display: flex;
-  padding: 0 4px 20px 4px;
+  padding: 0 4px 0px 4px;
+}
+
+.step4 {
+	padding: 0 4px 20px 4px;
   transform: translateY(-20px)
 }
 
@@ -362,10 +364,19 @@ form {
   padding: 8px 20px;
   font-size: 14px;
   border-radius: 17px;
+  transition: all 0.3s;
 }
 
 .next {
 	background-color: var(--primary);
+}
+
+.waybtn:hover {
+	background-color: var(--color-gray500);
+}
+
+.waybtn.next:hover {
+	background-color: var(--color-orange500);
 }
 
 .signupContainer {
