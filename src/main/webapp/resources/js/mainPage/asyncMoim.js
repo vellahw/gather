@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", function(){
         }
       },
       error: function(res, req) {
-        console.log("error : " + res, req);
+        console.log("error : " + JSON.stringify(res, req));
       }
     });
   }
@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function(){
         }
       },
       error: function(res, req) {
-        console.log("error : " + res, req);
+        console.log("error : " + JSON.stringify(res, req));
       }
     });
   }

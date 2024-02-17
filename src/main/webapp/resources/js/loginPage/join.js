@@ -27,6 +27,10 @@ document.addEventListener('DOMContentLoaded', function () {
       const target = event.target;
       const btnId = target.id; // 클릭한 버튼 아이디
 
+      const signupContainer = document.getElementById('signupContainer');
+      const signupStep2 = document.getElementById('signupStep2');
+      const signupStep3 = document.getElementById('signupStep3');
+
       /* 다음 버튼 */
       if(target.matches('.next')) {
 
@@ -36,27 +40,35 @@ document.addEventListener('DOMContentLoaded', function () {
 
             showStep(signupStep2);
       
-            const appendList = document.querySelectorAll('.append_join');
-            const needMarginList = document.querySelectorAll('.step1');
-            
-            appendList.forEach(element => {
-              element.style.display = 'none';
+            const appendNode = signupContainer.querySelectorAll('.append_join');
+            appendNode.forEach(element => {
+              element.innerHTML = '';
             });
             
-            needMarginList.forEach(item => {
-              item.style.marginBottom = '20px';
-            });
+            // needMarginList.forEach(item => {
+            //   item.style.marginBottom = '20px';
+            // });
           }
 
         } else if(btnId == 'next2'){
 
           if (joinFormCheck('step2')) {
             showStep(signupStep3);
+
+            const appendNode = signupStep2.querySelectorAll('.append_join');
+            appendNode.forEach(element => {
+              element.innerHTML = '';
+            });
           }
 
         } else if(btnId == 'next3') {
 
           showStep(signupStep4);
+          const appendNode = signupStep3.querySelectorAll('.append_join');
+          appendNode.forEach(element => {
+            element.innerHTML = '';
+          });
+
           if(pickedRegiListForStep4){
             showUserPickedRegi(pickedRegiListForStep4, regiList);
           }
@@ -572,6 +584,11 @@ const showUserPickedRegi = function(pickedList, regiList) {
   }
 
 
+  let formData = new FormData(); // 서버로 전송할 폼 객체 생성
+  let profile; // 업로드한 프로필 사진 값
+  let bgImg; // 업로드한 배경 사진 값
+  let imgValue; // FILE_SVNM 담을 값
+
   /**
    * 240216 장한원
    * 프로필 사진 수정 버튼(기본 프사 팝업 열림)
@@ -581,18 +598,20 @@ const showUserPickedRegi = function(pickedList, regiList) {
     document.querySelector('.profileImgContainer').classList.toggle('p_visible');
     document.querySelector('.user').classList.toggle('_pointer-none');
 
+    // '프로필 사진 삭제' 클릭
     const resetBtn = document.getElementById('reset');
-    resetBtn.addEventListener('click', (event)=>{
-      //event.stopPropagation();
+    resetBtn.addEventListener('click', ()=>{
+
+      // 프로필 사진 관련 데이터 비움
+      profile = '';
+      imgValue = '';
 
       const profileImgPreview = document.querySelector('.preview');
 
       if(userGender == 'W') {
         profileImgPreview.src = '/resources/img/basic/profile/basic-w.png'
-        profileImgPreview.dataset.gender = 'W'
       } else if(userGender == 'M') {
         profileImgPreview.src = '/resources/img/basic/profile/basic-m.png'
-        profileImgPreview.dataset.gender = 'M'
       }
 
     });
@@ -603,8 +622,6 @@ const showUserPickedRegi = function(pickedList, regiList) {
    * 240214 장한원
    * 기본 프로필 사진 선택 시 동작
    */
-  let imgValue;
-
   profileImgList.addEventListener('click', (event)=>{
     if(event.target.matches('[data-value]')){
       const tagetData = event.target.getAttribute('data-value');
@@ -618,10 +635,7 @@ const showUserPickedRegi = function(pickedList, regiList) {
    * 240214 장한원
    * 프로필 파일 직접 업로드 시 동작
    */
-  let formData = new FormData(); // 서버로 전송할 폼 객체 생성
-  let profile; // 업로드한 프로필 사진 값
-  let bgImg; // 업로드한 배경 사진 값
-
+  
   const chooseImgInput = document.getElementById('chooseImg');
   const choosebg =  document.getElementById('choosebg');
   const bgPreview = document.querySelector('.bg-preview');
@@ -647,6 +661,8 @@ const showUserPickedRegi = function(pickedList, regiList) {
 
   });
   
+  // 배경 사진 삭제(되돌리기) 버튼
+  const removeBgImg =  document.getElementById('bg-remove');
 
   /* 배경 사진 업로드 */
   choosebg.addEventListener('change', (e)=>{ 
@@ -665,20 +681,18 @@ const showUserPickedRegi = function(pickedList, regiList) {
     
       bgImg = choosebg.files[0];
 
+      if(bgPreview.classList.contains('show-bg')) {
+        removeBgImg.classList.add('show_flex_element');
+      }
     }
-    
   });
-
-  /* 배경 사진 원래대로 되돌리기(삭제) */
-  if(bgPreview.classList.contains('show-bg')) {
-    const removeBgImg =  document.getElementById('bg-remove');
-    removeBgImg.style.display = 'block';
-
-    removeBgImg.addEventListener('click', ()=>{
-      bgPreview.src = '';
-    });
-  }
-
+  
+  /* 배경 사진 삭제(되돌리기) */
+  removeBgImg.addEventListener('click', ()=>{
+    bgPreview.removeAttribute('src');
+    bgPreview.removeAttribute('alt');
+    bgPreview.style.display = 'none';
+  });
   
   /*
    * admin: 장한원
@@ -686,8 +700,6 @@ const showUserPickedRegi = function(pickedList, regiList) {
    * 마지막 확인 버튼
   */
   submitBtn.addEventListener('click' , ()=>{
-
-    const userGender = document.querySelector('.preview').getAttribute('data-gender');
 
     // 아무런 프사도 선택하지 않았을 때
     if(!profile && !imgValue){
@@ -713,7 +725,6 @@ const showUserPickedRegi = function(pickedList, regiList) {
     }
 
     if(bgImg) {
-      console.log('있어염')
       formData.append('wallPaper', bgImg); // 배경사진
     }
 

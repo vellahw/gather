@@ -455,6 +455,11 @@ form {
   }
 }
 
+textarea#userSelf {
+	border-radius: 10px;
+	height: 30px;
+}
+
 .regionArea {
 	text-align: left;
 }
@@ -616,8 +621,14 @@ form {
 .bg-remove {
 	display: none;
 	bottom: 28px;
-  right: 68px;
+  right: 78px;
 }
+
+.bg-remove > img {
+	width: 18px;
+	height: 18px;
+}
+
 
 .p-updateBtn {
 	width: 24px;
