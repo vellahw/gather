@@ -315,12 +315,12 @@
       	   WHERE ROWNUM <= 12
       	]]>
       </if>
-      <if test="startRow != null">
+      <if test="lastRow != null">
          <include refid="common.pagingPost"></include>
       </if>
    </select>
    
-   <select id="getGatherCount" parameterType="hashmap" resultType="int">
+   <select id="getGatherCount" parameterType="hashmap" resultType="long">
    	 <![CDATA[
    	 
         SELECT /*mainPage.getGatherCount*/
