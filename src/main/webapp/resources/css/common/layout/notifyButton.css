@@ -56,11 +56,10 @@
   opacity: 0; 
   z-index: -1; 
   height: 0px;  
-
   transition: all 0.3s ease-in-out;
   overflow: overlay;
   width: 380px;
-  padding: 28px;
+  padding: 0;
   border-radius: 28px;
   background: var(--color-orange300);
   position: fixed;

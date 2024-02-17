@@ -19,6 +19,7 @@ public class MoimGatherController {
 	public ModelAndView moimResister(CommandMap commandMap) {
 		
 		ModelAndView mv = new ModelAndView("/moimGather/moimRegister");
+		mv.setViewName("moimRegister");
 		
 		return mv;
 	}
