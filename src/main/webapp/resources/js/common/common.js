@@ -371,6 +371,12 @@ function comGoSomewhere(pageName, params) {
     
     break;
 
+    case 'register':
+
+    location.href = `/gather/register.com`
+    
+    break;
+    
   }
 
 }

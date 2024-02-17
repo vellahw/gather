@@ -15,7 +15,7 @@
 <%@ include file="../components/category.jsp"%>
 
 <div class="contentsContainer">
-  <div class="contentsWrap">
+  <div class="contentsHeader">
 	  <h1 class="areaTitle">
 	  	<c:if test="${CATE_NAME ne null}">
 		  <c:out value="${CATE_NAME}" />
@@ -23,10 +23,12 @@
 		<c:if test="${KEYY_WORD ne null}">
 		  <span style = "color:#fd8731; font-weight: bold">'${KEYY_WORD}'&nbsp;</span><span>의 검색 결과</span>
 		</c:if>
-		  <span class="moimMakeArea">
-		    <button type="button" class="hashtag"><c:out value="${moimType}" /> 만들기</button>
-		  </span>	  
 	  </h1>
+	  <% if(session.getAttribute("USER_NUMB") != null) { %>
+	    <button type="button" class="moimRegiBtn" onclick="comGoSomewhere('register')">
+	    	<c:out value="${moimType}" /> 개설하기
+	    </button>
+	  <% } %>
   </div>
 	<c:choose>
   	<c:when test="${fn:length(list) > 0 }">
