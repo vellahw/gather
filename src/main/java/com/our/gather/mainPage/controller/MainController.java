@@ -52,7 +52,6 @@ public class MainController {
 
 		ModelAndView mv2 = new ModelAndView("/listPage/listPage");
 		mv2.setViewName("listPage");
-		
 
 		List<Map<String, Object>> pCate = commonService.pCate(commandMap.getMap(), commandMap);
 		List<Map<String, Object>> cCate = commonService.cCate(commandMap.getMap(), commandMap);
