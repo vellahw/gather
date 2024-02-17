@@ -2,21 +2,21 @@
 
 /*========== 포인터 이벤트 막기 ==========*/
 ._pointer-none {
-	pointer-events: none!important;
+	pointer-events: none !important;
 }
 
 
 /*========== flexbox 수직수평 가운데 정렬 ==========*/
 .flexbox-items-center {
-	display: flex;
-	justify-content: center;
-  align-items: center;
+	display: flex !important;
+	justify-content: center !important;
+  align-items: center !important;
 }
 
 
 /*========== display block 처리 ==========*/
 .block_element {
-	display: block;
+	display: block !important;
 }
 
 
@@ -24,14 +24,14 @@
 	display none -> flex 될 때 사용
 */
 .show_flex_element {
-	display: flex;
+	display: flex !important;
 }
 
 
 /*========== visibility visible 처리 ==========*/
 .show_hidden_element {
-	visibility: visible;
-  opacity: 1;
+	visibility: visible !important;
+  opacity: 1 !important;
 }
 
 
