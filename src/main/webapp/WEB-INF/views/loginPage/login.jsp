@@ -25,7 +25,7 @@
            <h2 class="LoginHead">로그인</h2>
            <input type="text" class="basicInput" name="USER_IDXX" id="USER_IDXX" placeholder="아이디(이메일 형식)">
            <input type="password" class="basicInput" name="PASS_WORD" id="PASS_WORD" placeholder="비밀번호">
-           <div id="append" class="append"></div>
+           <div id="append" class="append_login"></div>
            <button type="submit" class="basicInput btn">로그인</button>
            <div class="additionalButtons">
               <button type="button" onclick="toggleForm('findIdForm')" class="findIdButton">아이디 찾기</button>
@@ -72,7 +72,7 @@
 			        	 placeholder="이메일 형식으로 입력해주세요.">
 		    	<button type="button" class="authmail authmailBtn_style">이메일 인증</button>
 		    </div>
-		    <div id="appendId" class="append userId"></div>
+		    <div id="appendId" class="append_join userId"></div>
 		    
 		   <div class="authmailContainer">
  		     <div class="authmailLabel">
@@ -88,7 +88,7 @@
 			     				maxlength="6">
 		    	 <button type="button" class="authmailSubmit authmailBtn_style">확인</button>
 		     </div>
-		     <div id="appendAuthnum" class="append appendAuthnum"></div>
+		     <div id="appendAuthnum" class="append_join appendAuthnum"></div>
 		   </div>
 		    
 		    <label class="joinlabel" for="userPw">⁕ 비밀번호</label>
@@ -98,15 +98,18 @@
 			    	<img class="pwBtnImg" alt="비밀번호 표시 버튼" />
 			    </button>
 		    </div>
-		    <div id="appendPw" class="append userPw"></div>
+		    <!-- <div class="capslock">
+		    	<span>CapsLock이 켜져 있어요</span>
+		    </div> -->
+		    <div id="appendPw" class="append_join userPw"></div>
 		    
 		    <label class="joinlabel" for="pwConfirm">⁕ 비밀번호 확인</label>
 		    <input type="password" id="pwConfirm" class="basicInput _join step1 appendPwConfirm" maxlength="14">
-		    <div id="appendPwConfirm" class="append pwConfirm"></div>
+		    <div id="appendPwConfirm" class="append_join pwConfirm"></div>
 		    
 		    <label class="joinlabel" for="userCell">⁕ 핸드폰번호</label>
 		    <input type="text" id="userCell" class="basicInput _join step1 appendCell" placeholder="숫자만 입력해주세요." maxlength="13">
-		    <div id="appendCell" class="append userCell"></div>
+		    <div id="appendCell" class="append_join userCell"></div>
 		    
 		    <div class="btnContainer">
 			    <button type="button" class="waybtn prev" id="prev">이전</button>
@@ -121,7 +124,7 @@
 		    <h2 class="LoginHead">회원가입</h2>
 		    <label class="joinlabel" for="userName">⁕ 이름</label>
 		    <input type="text" id="userName" class="basicInput _join">
-		    <div id="appendName" class="append userName"></div>
+		    <div id="appendName" class="append_join userName"></div>
 		    
 			  <label class="joinlabel" for="userRegiNum">⁕ 주민등록번호</label>
 			  <div class="reginumbWrap">
@@ -129,11 +132,11 @@
 			    <input type="text" id="userRegiNum2" class="basicInput _join regi2" maxlength="1">
 			    <span>●●●●●●</span>
 			  </div>
-			  <div id="appendRegiNum" class="append userRegiNum"></div>
+			  <div id="appendRegiNum" class="append_join userRegiNum"></div>
 			  
 		    <label class="joinlabel" for="userNick">⁕ 닉네임</label>
 		    <input type="text" id="userNick" class="basicInput _join appendNick" placeholder="게더에서 사용할 닉네임을 입력해주세요! (최대 10자)" maxlength="10">
-			  <div id="appendNick" class="append userNick"></div>
+			  <div id="appendNick" class="append_join userNick"></div>
 			  
 			  <label class="joinlabel" for="userSelf">자기소개</label>
 		    <input type="text" id="userSelf" class="basicInput _join" placeholder="취향, 가치관 등을 나타내보세요! (최대 100자)" maxlength="100">

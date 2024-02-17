@@ -141,9 +141,15 @@ form {
   border: 1px solid var(--color-orange500);
 }
 
-.append {
+.append_login {
   color: var(--color-red);
   font-size: 12px;
+}
+
+.append_join {
+	color: var(--color-red);
+  font-size: 12px;
+  height: 20px;
 }
 
 .additionalButtons {
@@ -227,7 +233,7 @@ form {
 	display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 6px;
 }
 
 .append-margin-bottom {
@@ -292,24 +298,22 @@ form {
 	display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
 }
 
 ._join {
-	margin-bottom: 20px;
+	/* margin-bottom: 0; */
 }
 
 .userPwContainer {
 	height: 49px;
-  margin-bottom: 20px;
 	position: relative;
+	margin-bottom: 6px;
 }
 
 #userPw {
 	width: calc(100% - 32px);
   position: absolute;
   left: 0;
-  margin-bottom: 0;
 }
 
 .showPw {
@@ -320,6 +324,19 @@ form {
 
 .showPw > img {
 	width: 23px;
+}
+
+.capslock {
+	visibility: hidden;
+	opacity: 0;
+	font-size: 12px;
+	background-color: var(--color-gray500);
+	color: #fff;
+	width: 70px;
+} 
+
+.capslock > span {
+	width: 130px;
 }
 
 .active {

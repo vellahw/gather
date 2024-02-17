@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             showStep(signupStep2);
       
-            const appendList = document.querySelectorAll('.append');
+            const appendList = document.querySelectorAll('.append_join');
             const needMarginList = document.querySelectorAll('.step1');
             
             appendList.forEach(element => {
@@ -841,11 +841,6 @@ const joinFormCheck = function(step) {
         return regex.test(value);
       };
 
-      if(userPw.value.length > 14) {
-        controlStyleAndAppendWarning(userPw, 'appendPw', '최대 14자까지 설정 가능합니다.');
-        return false;
-      }
-      
       if(userPw.value.length < 8) {
         controlStyleAndAppendWarning(userPw, 'appendPw', '최소 8자 이상 입력해주세요.');
         return false;
@@ -937,11 +932,10 @@ const inputChangeHandler = function() {
     }
   })
 
+  // 캡스락 툴팁 띄움
   userPw.addEventListener('keyup', (event)=>{
     if (event.getModifierState("CapsLock")) {
-      controlStyleAndAppendWarning(userPw, 'appendPw', 'Caps Lock이 활성화된 상태입니다.');
-    } else {
-      hideWarning('.userPw');
+      document.querySelector('.capslock').classList.toggle('.show_hidden_element');
     }
   });
 
@@ -954,8 +948,8 @@ const inputChangeHandler = function() {
   //   }
   // });
 
-  userPw.addEventListener('change', (e)=>{
-    const inputValue = e.target.value;
+  userPw.addEventListener('change', (event)=>{
+    const inputValue = event.target.value;
     const isValidInput = (value) => {
       const regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
       return regex.test(value);
@@ -964,30 +958,33 @@ const inputChangeHandler = function() {
     if(inputValue) {
       if(inputValue.length < 8) {
         controlStyleAndAppendWarning(userPw, 'appendPw', '최소 8자 이상 입력해주세요.');
+      } else {
+        hideWarning('.userPw');
       }
       
       if (!isValidInput(inputValue)) {
         controlStyleAndAppendWarning(userPw, 'appendPw', '영문+숫자+특수문자 조합으로 입력해주세요.');
+      } else {
+        hideWarning('.userPw');
       }
     }
-
   });
 
-  pwConfirm.addEventListener('change', (e)=>{
-    if(userPw.value != e.target.value) {
+  pwConfirm.addEventListener('change', (event)=>{
+    if(userPw.value != event.target.value) {
       controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', '비밀번호가 일치하지 않습니다.');
     } else {
       hideWarning('.pwConfirm');
     }
   });
 
-  pwConfirm.addEventListener('keyup', (event)=>{
-    if (event.getModifierState("CapsLock")) {
-      controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', 'Caps Lock이 활성화된 상태입니다.');
-    } else {
-      hideWarning('.pwConfirm');
-    }
-  });
+  // pwConfirm.addEventListener('keyup', (event)=>{
+  //   if (event.getModifierState("CapsLock")) {
+  //     controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', 'Caps Lock이 활성화된 상태입니다.');
+  //   } else {
+  //     hideWarning('.pwConfirm');
+  //   }
+  // });
 
   // 핸드폰번호 - 숫자만 입력되게 + 자동 하이픈
   userCell.addEventListener('input', (e)=>{
@@ -1119,17 +1116,17 @@ const controlStyleAndAppendWarning = function(element, appendId, appendText) {
   const authmailInput = document.querySelector('.authmailInput');
 
   // margin 수정
-  if(appendId == 'appendId') {
-    idContainer.classList.add('append-margin-bottom');
-  } else if(appendId == 'appendPw') {
-    pwContainer.classList.add('append-margin-bottom');
-  } else if(appendId == 'appendAuthnum') {
-    authmailInput.classList.add('append-margin-bottom');
-  } else {
-    document.querySelector('.'+ appendId).classList.add('append-margin-bottom');
-  }
+  // if(appendId == 'appendId') {
+  //   idContainer.classList.add('append-margin-bottom');
+  // } else if(appendId == 'appendPw') {
+  //   pwContainer.classList.add('append-margin-bottom');
+  // } else if(appendId == 'appendAuthnum') {
+  //   authmailInput.classList.add('append-margin-bottom');
+  // } else {
+  //   document.querySelector('.'+ appendId).classList.add('append-margin-bottom');
+  // }
 
-  appendWarning(appendId, appendText); // login.js에 있는 함수 호출
+  document.getElementById(appendId).innerHTML = appendText;
 
   element.focus();
 }
@@ -1144,15 +1141,15 @@ const hideWarning = function(className) {
   const idContainer = document.querySelector('.userIdContainer');
   const pwContainer = document.querySelector('.userPwContainer');
   
-  if(className == '.userId') {
-    idContainer.classList.remove('append-margin-bottom');
-  } else if(className == '.userPw') {
-    pwContainer.classList.remove('append-margin-bottom');
-  } else {
-    document.querySelector(className).classList.remove('append-margin-bottom');
-  }
+  // if(className == '.userId') {
+  //   idContainer.classList.remove('append-margin-bottom');
+  // } else if(className == '.userPw') {
+  //   pwContainer.classList.remove('append-margin-bottom');
+  // } else {
+  //   document.querySelector(className).classList.remove('append-margin-bottom');
+  // }
 
-  appendNode.style.display = 'none';
+  appendNode.innerHTML = '';
 }
 
 /**
