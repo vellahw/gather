@@ -25,7 +25,7 @@
            <h2 class="LoginHead">로그인</h2>
            <input type="text" class="basicInput" name="USER_IDXX" id="USER_IDXX" placeholder="아이디(이메일 형식)">
            <input type="password" class="basicInput" name="PASS_WORD" id="PASS_WORD" placeholder="비밀번호">
-           <div id="append" class="append"></div>
+           <div id="append" class="append_login"></div>
            <button type="submit" class="basicInput btn">로그인</button>
            <div class="additionalButtons">
               <button type="button" onclick="toggleForm('findIdForm')" class="findIdButton">아이디 찾기</button>
@@ -72,7 +72,7 @@
 			        	 placeholder="이메일 형식으로 입력해주세요.">
 		    	<button type="button" class="authmail authmailBtn_style">이메일 인증</button>
 		    </div>
-		    <div id="appendId" class="append userId"></div>
+		    <div id="appendId" class="append_join userId"></div>
 		    
 		   <div class="authmailContainer">
  		     <div class="authmailLabel">
@@ -88,25 +88,28 @@
 			     				maxlength="6">
 		    	 <button type="button" class="authmailSubmit authmailBtn_style">확인</button>
 		     </div>
-		     <div id="appendAuthnum" class="append appendAuthnum"></div>
+		     <div id="appendAuthnum" class="append_join appendAuthnum"></div>
 		   </div>
 		    
 		    <label class="joinlabel" for="userPw">⁕ 비밀번호</label>
 		    <div class="userPwContainer">
-			    <input type="password" id="userPw" class="basicInput _join step1" placeholder="영문, 숫자, 특수문자를 포함한 8~14자를 입력해주세요.">
+			    <input type="password" id="userPw" class="basicInput _join step1" placeholder="영문, 숫자, 특수문자를 포함한 8~14자를 입력해주세요." maxlength="14">
 			    <button type="button" class="showPw" data-src="/resources/img/login/eyeIcon.png">
 			    	<img class="pwBtnImg" alt="비밀번호 표시 버튼" />
 			    </button>
 		    </div>
-		    <div id="appendPw" class="append userPw"></div>
+		    <!-- <div class="capslock">
+		    	<span>CapsLock이 켜져 있어요</span>
+		    </div> -->
+		    <div id="appendPw" class="append_join userPw"></div>
 		    
 		    <label class="joinlabel" for="pwConfirm">⁕ 비밀번호 확인</label>
-		    <input type="password" id="pwConfirm" class="basicInput _join step1" maxlength="14">
-		    <div id="appendPwConfirm" class="append pwConfirm"></div>
+		    <input type="password" id="pwConfirm" class="basicInput _join step1 appendPwConfirm" maxlength="14">
+		    <div id="appendPwConfirm" class="append_join pwConfirm"></div>
 		    
 		    <label class="joinlabel" for="userCell">⁕ 핸드폰번호</label>
-		    <input type="text" id="userCell" class="basicInput _join step1" placeholder="숫자만 입력해주세요." maxlength="13">
-		    <div id="appendCell" class="append userCell"></div>
+		    <input type="text" id="userCell" class="basicInput _join step1 appendCell" placeholder="숫자만 입력해주세요." maxlength="13">
+		    <div id="appendCell" class="append_join userCell"></div>
 		    
 		    <div class="btnContainer">
 			    <button type="button" class="waybtn prev" id="prev">이전</button>
@@ -121,7 +124,7 @@
 		    <h2 class="LoginHead">회원가입</h2>
 		    <label class="joinlabel" for="userName">⁕ 이름</label>
 		    <input type="text" id="userName" class="basicInput _join">
-		    <div id="appendName" class="append userName"></div>
+		    <div id="appendName" class="append_join userName"></div>
 		    
 			  <label class="joinlabel" for="userRegiNum">⁕ 주민등록번호</label>
 			  <div class="reginumbWrap">
@@ -129,11 +132,11 @@
 			    <input type="text" id="userRegiNum2" class="basicInput _join regi2" maxlength="1">
 			    <span>●●●●●●</span>
 			  </div>
-			  <div id="appendRegiNum" class="append userRegiNum"></div>
+			  <div id="appendRegiNum" class="append_join userRegiNum"></div>
 			  
 		    <label class="joinlabel" for="userNick">⁕ 닉네임</label>
-		    <input type="text" id="userNick" class="basicInput _join" placeholder="게더에서 사용할 닉네임을 입력해주세요! (최대 10자)" maxlength="10">
-			  <div id="appendNick" class="append userNick"></div>
+		    <input type="text" id="userNick" class="basicInput _join appendNick" placeholder="게더에서 사용할 닉네임을 입력해주세요! (최대 10자)" maxlength="10">
+			  <div id="appendNick" class="append_join userNick"></div>
 			  
 			  <label class="joinlabel" for="userSelf">자기소개</label>
 		    <input type="text" id="userSelf" class="basicInput _join" placeholder="취향, 가치관 등을 나타내보세요! (최대 100자)" maxlength="100">
@@ -161,42 +164,58 @@
 		  </form>
 		</div>
 	
-	<!-- <form action="/gather/joinDo.com" method="post" enctype="multipart/form-data"> -->
 		<div class="loginContainer" id="signupStep4">
-			<div class="bubble">이대로 프로필을 생성할까요?</div>
-			<div class="mypage-bg"></div>
-			<div class="container" style="transform: translateY(-60px);">
-				<div class="profileImgWrap pro">
-					<img class="profileImg preview" src="/resources/img/basic/profile/profile.jpg" alt="프로필사진"/>
-				</div>
-				<div class="p-updateBtn">
-					<img src="/resources/img/icon/pencile.png" class="p-updateIcon" alt="프사수정버튼">
-				</div>
-				<div class="profileImgContainer popup">
-						<div class="profileImgList"></div>
-						<label class="upload">
-							<img src="/resources/img/icon/addIcon.png" alt="프로필 이미지 업로드 버튼">
-							<input type="file" name="FILE_SVNM" id="chooseImg" accept="image/*" />
-						</label>
-					</div>
-				<div class="user">
-					<p class="nickname"></p>
-					<p class="selfIntro"></p>
-					<div class="pickedRegiContianer">
-						<h3>선호하는 모임 지역</h3>
-						<ul class="regiList">
-						</ul>
+			<div style="width: 100%; height: 100%;">
+				<div class="bubble">이대로 프로필을 생성할까요?</div>
+				<div class="mypage-bg">
+					<img class="bg-preview" alt="배경 이미지" />
+					<label for="choosebg" class="bg-update">
+					  <img src="/resources/img/icon/addIcon.png" class="p-updateIcon" alt="배경 이미지 추가하기">
+						<input type="file" name="wallPaper" id="choosebg" accept="image/*" />
+					</label>
+					<div aria-label="배경 이미지 삭제하기" id="bg-remove" class="bg-update bg-remove">
+						<img src="/resources/img/icon/deleteIcon.png" class="p-updateIcon" alt="배경 이미지 삭제 아이콘">
 					</div>
 					
 				</div>
+				
+				<div class="container" style="max-width: 100px; transform: translateY(-60px);">
+					<div class="profileImgWrap pro">
+						<img class="profileImg preview" alt="프로필사진"/>
+					</div>
+					<div id="p-updateBtn" class="p-updateBtn">
+						<img src="/resources/img/icon/pencil-w.png" class="p-updateIcon" alt="프로필 사진 수정하기">
+					</div>
+				</div>	
+				
+				<div class="profileImgContainer popup">
+					<div class="profileImgList"></div>
+					<label for="chooseImg" class="upload">
+						<img src="/resources/img/icon/addIcon.png" alt="프로필 이미지 직접 업로드">
+						<input type="file" name="FILE_SVNM" id="chooseImg" accept="image/*" />
+					</label>
+					<p id="reset">기본 프로필로 설정하기</p>
+				</div>
+					
+				<div class="user">
+					<p class="nickname"></p>
+					<p class="id"></p>
+					<p class="selfIntro"></p>
+					<div class="pickedRegiContianer">
+						<h3>
+							<img src="/resources/img/icon/detail/location_detail.png" alt="지역 아이콘" />
+							선호하는 모임 지역
+						</h3>
+						<ul class="regiList"></ul>
+					</div>
+				</div>
+				
+				<div class="step4 btnContainer">
+				  <button type="button" class="waybtn prev" id="prev4">이전</button>
+				  <button type="submit" class="waybtn next" id="submit">확인</button>
+			  </div>
 			</div>
-			<div class="btnContainer" style="margin-top: 34px;">
-			  <button type="button" class="waybtn prev" id="prev4">이전</button>
-			  <button type="submit" class="waybtn next" id="submit">확인</button>
-		  </div>
 		</div>
-	<!-- </form> -->
-		
 	
 		  <form id="findPwForm" action="/findPw" method="post">
 			  <h2 id="LoginHead">비밀번호 찾기</h2>

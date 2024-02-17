@@ -40,7 +40,9 @@ public class FileUtils {
 		Map<String, Object> listMap = null;
 
 		while (iterator.hasNext()) {
+
 			multipartFile = multipartHttpServletRequest.getFile(iterator.next());
+
 			if (multipartFile.isEmpty() == false) {
 
 				originalFileName = multipartFile.getOriginalFilename();
@@ -49,74 +51,82 @@ public class FileUtils {
 
 				listMap = new HashMap<String, Object>();
 
-				if (map.get("USER_NUMB") != null) {
+				// 유저가 프사 직접 업로드
+				if (map.get("FILE_SVNM") == null) {
+					if (map.get("USER_NUMB") != null) {
 
-					String profileFolderPath = realPath + "profile/" + map.get("USER_NUMB") + "/";
+						String profileFolderPath = realPath + "profile/" + map.get("USER_NUMB") + "/";
 
-					File profileFolder = new File(profileFolderPath);
+						File profileFolder = new File(profileFolderPath);
 
-					if (!profileFolder.exists()) {
-						profileFolder.mkdirs(); //
+						if (!profileFolder.exists()) {
+							profileFolder.mkdirs(); //
+						}
+
+						File file = new File(profileFolderPath + storedFileName);
+
+						multipartFile.transferTo(file);
+
+						listMap.put("FILE_IDXX", map.get("USER_NUMB"));
+						listMap.put("USER_NUMB", map.get("USER_NUMB"));
+						listMap.put("FILE_PATH", filePath + "profile/" + map.get("USER_NUMB") + "/" + storedFileName);
+
+					} else if (map.get("GATH_IDXX") != null) {
+
+						String profileFolderPath = realPath + "gather/" + map.get("GATH_IDXX") + "/";
+
+						File profileFolder = new File(profileFolderPath);
+
+						if (!profileFolder.exists()) {
+							profileFolder.mkdirs();
+						}
+
+						File file = new File(profileFolderPath + storedFileName);
+						multipartFile.transferTo(file);
+
+						listMap.put("FILE_IDXX", map.get("GATH_IDXX"));
+						listMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
+						listMap.put("FILE_PATH", filePath + "gather/" + map.get("GATH_IDXX") + "/" + storedFileName);
+
+					} else if (map.get("CLUB_IDXX") != null) {
+
+						String profileFolderPath = realPath + "club/" + map.get("CLUB_IDXX") + "/";
+						File profileFolder = new File(profileFolderPath);
+						if (!profileFolder.exists()) {
+							profileFolder.mkdirs();
+						}
+						File file = new File(profileFolderPath + storedFileName);
+						multipartFile.transferTo(file);
+
+						listMap.put("FILE_IDXX", map.get("CLUB_IDXX"));
+						listMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
+						listMap.put("FILE_PATH", filePath + "club/" + map.get("CLUB_IDXX") + "/" + storedFileName);
+
+					} else if (map.get("CHAL_IDXX") != null) {
+
+						String profileFolderPath = realPath + "challenge/" + map.get("CHAL_IDXX") + "/";
+						File profileFolder = new File(profileFolderPath);
+						if (!profileFolder.exists()) {
+							profileFolder.mkdirs();
+						}
+						File file = new File(profileFolderPath + storedFileName);
+						multipartFile.transferTo(file);
+
+						listMap.put("FILE_IDXX", map.get("CHAL_IDXX"));
+						listMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
+						listMap.put("FILE_PATH", filePath + "challenge/" + map.get("CHAL_IDXX") + "/" + storedFileName);
 					}
+				}
 
-					File file = new File(profileFolderPath + storedFileName);
-					
-					multipartFile.transferTo(file);
+				// 유저가 배경사진 업로드
+				if (multipartFile.getName().equals("wallPaper")) {
 
+					listMap.put("FILE_SEQC", "XXX");
 					listMap.put("FILE_IDXX", map.get("USER_NUMB"));
 					listMap.put("USER_NUMB", map.get("USER_NUMB"));
 					listMap.put("FILE_PATH", filePath + "profile/" + map.get("USER_NUMB") + "/" + storedFileName);
 
-				} else if (map.get("GATH_IDXX") != null) {
-
-					String profileFolderPath = realPath + "gather/" + map.get("GATH_IDXX") + "/";
-					
-					File profileFolder = new File(profileFolderPath);
-					
-					if (!profileFolder.exists()) {
-						profileFolder.mkdirs();
-					}
-					
-					File file = new File(profileFolderPath + storedFileName);
-					multipartFile.transferTo(file);
-
-					listMap.put("FILE_IDXX", map.get("GATH_IDXX"));
-					listMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
-					listMap.put("FILE_PATH", filePath + "gather/" + map.get("GATH_IDXX") + "/" + storedFileName);
-
-				} else if (map.get("CLUB_IDXX") != null) {
-
-					String profileFolderPath = realPath + "club/" + map.get("CLUB_IDXX") + "/";
-					File profileFolder = new File(profileFolderPath);
-					if (!profileFolder.exists()) {
-						profileFolder.mkdirs();
-					}
-					File file = new File(profileFolderPath + storedFileName);
-					multipartFile.transferTo(file);
-
-					listMap.put("FILE_IDXX", map.get("CLUB_IDXX"));
-					listMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
-					listMap.put("FILE_PATH", filePath + "club/" + map.get("CLUB_IDXX") + "/" + storedFileName);
-
-				} else if (map.get("CHAL_IDXX") != null) {
-
-					String profileFolderPath = realPath + "challenge/" + map.get("CHAL_IDXX") + "/";
-					File profileFolder = new File(profileFolderPath);
-					if (!profileFolder.exists()) {
-						profileFolder.mkdirs();
-					}
-					File file = new File(profileFolderPath + storedFileName);
-					multipartFile.transferTo(file);
-
-					listMap.put("FILE_IDXX", map.get("CHAL_IDXX"));
-					listMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
-					listMap.put("FILE_PATH", filePath + "challenge/" + map.get("CHAL_IDXX") + "/" + storedFileName);
-				}
-
-				if (multipartFile.getName().equals("wallPaper")) {
-
-					listMap.put("FILE_SEQC", "XXX");
-
+					// 배경사진 업로드 X
 				} else {
 
 					listMap.put("FILE_SEQC", null);

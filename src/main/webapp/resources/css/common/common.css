@@ -1,5 +1,40 @@
 @charset "UTF-8";
 
+/*========== 포인터 이벤트 막기 ==========*/
+._pointer-none {
+	pointer-events: none!important;
+}
+
+
+/*========== flexbox 수직수평 가운데 정렬 ==========*/
+.flexbox-items-center {
+	display: flex;
+	justify-content: center;
+  align-items: center;
+}
+
+
+/*========== display block 처리 ==========*/
+.block_element {
+	display: block;
+}
+
+
+/*========== display flex 처리 ==========
+	display none -> flex 될 때 사용
+*/
+.show_flex_element {
+	display: flex;
+}
+
+
+/*========== visibility visible 처리 ==========*/
+.show_hidden_element {
+	visibility: visible;
+  opacity: 1;
+}
+
+
 /*========== 기본 버튼 스타일 ==========*/
 .basicBtn {
   width: 100%;

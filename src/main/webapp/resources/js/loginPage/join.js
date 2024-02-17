@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function () {
   let pickedRegiCode = []; // 서버 통신을 위한 REGI_CODE 데이터
   let pickedRegiListForStep4 = []; // step4 폼을 위한 리스트
 
+  let userGender; // 유저 성별 정보
+
   const btnContainer = document.querySelectorAll('.btnContainer');
   const signupContainer = document.getElementById('signupContainer');
   const signupStep2 = document.getElementById('signupStep2');
@@ -34,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             showStep(signupStep2);
       
-            const appendList = document.querySelectorAll('.append');
+            const appendList = document.querySelectorAll('.append_join');
             const needMarginList = document.querySelectorAll('.step1');
             
             appendList.forEach(element => {
@@ -146,8 +148,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const userRegi2 = document.getElementById('userRegiNum2').value;
     const userRegiNum = userRegi1 + userRegi2;
     const userNickname = document.getElementById('userNick').value;
+    const userIdValue = document.getElementById('userId').value;
     const userSelfIntro = document.getElementById('userSelf').value;
     const nicknameNode = document.querySelector('.nickname');
+    const idNode = document.querySelector('.id');
     const selfIntroNode = document.querySelector('.selfIntro');
 
     secondUserData = {
@@ -157,10 +161,27 @@ document.addEventListener('DOMContentLoaded', function () {
        , SELF_INTR : userSelfIntro
     };
 
-    
     nicknameNode.innerHTML = userNickname;
     selfIntroNode.innerHTML = userSelfIntro;
-    
+    idNode.innerHTML = `@${userIdValue}`;
+
+    /* 유저의 성별에 따른 기본 프로필 사진 설정 */
+    if(userRegi2%2 == 0) {
+      userGender = 'W';
+    } else if(userRegi2%2 == 1) {
+      userGender = 'M';
+    }
+
+    const profileImgPreview = document.querySelector('.preview');
+
+    if(userGender == 'W') {
+      profileImgPreview.src = '/resources/img/basic/profile/basic-w.png'
+      profileImgPreview.dataset.gender = 'W'
+    } else if(userGender == 'M') {
+      profileImgPreview.src = '/resources/img/basic/profile/basic-m.png'
+      profileImgPreview.dataset.gender = 'M'
+    }
+
   });
 
 /**
@@ -496,33 +517,32 @@ const showUserPickedRegi = function(pickedList, regiList) {
 }
 
 // 유저가 선택한 부모 지역 만드는 함수
-const createParent = function(current) {
-  const regiList = document.querySelector('.regiList');
+  const createParent = function(current) {
+    const regiList = document.querySelector('.regiList');
 
-  const parentList = document.createElement('ul');
-  parentList.dataset.step4Pcode = current.parentCode;
-  parentList.className = 'parentRegiItem';
+    const parentList = document.createElement('ul');
+    parentList.dataset.step4Pcode = current.parentCode;
+    parentList.className = 'parentRegiItem';
 
-  const childRegiListTag = document.createElement('ul'); // 자식 li 담는 ul
-  childRegiListTag.className = 'pickedChildRegiList';
-  childRegiListTag.dataset.step4Child = current.parentCode;
+    const childRegiListTag = document.createElement('ul'); // 자식 li 담는 ul
+    childRegiListTag.className = 'pickedChildRegiList';
+    childRegiListTag.dataset.step4Child = current.parentCode;
+    
+    const parentName = document.createElement('span');
+    parentName.innerHTML = current.parentName;
+
+    parentList.appendChild(parentName);
+    parentList.appendChild(childRegiListTag);
+    regiList.append(parentList);
+  }
+
+  function removeCreatedElements() {
+    const parentRegiItems = document.querySelectorAll('.parentRegiItem');
+    parentRegiItems.forEach(item => {
+        item.parentNode.removeChild(item);
+    });
+  }
   
-  const parentName = document.createElement('span');
-  parentName.innerHTML = current.parentName;
-
-  parentList.appendChild(parentName);
-  parentList.appendChild(childRegiListTag);
-  regiList.append(parentList);
-}
-
-function removeCreatedElements() {
-  const parentRegiItems = document.querySelectorAll('.parentRegiItem');
-  parentRegiItems.forEach(item => {
-      item.parentNode.removeChild(item);
-  });
-}
-
-
   /**
    * 240214 장한원
    * step4
@@ -545,13 +565,39 @@ function removeCreatedElements() {
     imgTag.src = `/resources/img/basic/profile/basicProfile${i}.png`;
     imgTag.dataset.value = `basicProfile${i}`;
     imgTag.classList.add('profileImg');
-    imgTag.classList.add('basic-p');
-
 
     item.appendChild(imgWrap);
     imgWrap.appendChild(imgTag);
     profileImgList.appendChild(item);
   }
+
+
+  /**
+   * 240216 장한원
+   * 프로필 사진 수정 버튼(기본 프사 팝업 열림)
+   */
+  const profileUpdateBtn = document.getElementById('p-updateBtn');
+  profileUpdateBtn.addEventListener('click', ()=>{
+    document.querySelector('.profileImgContainer').classList.toggle('p_visible');
+    document.querySelector('.user').classList.toggle('_pointer-none');
+
+    const resetBtn = document.getElementById('reset');
+    resetBtn.addEventListener('click', (event)=>{
+      //event.stopPropagation();
+
+      const profileImgPreview = document.querySelector('.preview');
+
+      if(userGender == 'W') {
+        profileImgPreview.src = '/resources/img/basic/profile/basic-w.png'
+        profileImgPreview.dataset.gender = 'W'
+      } else if(userGender == 'M') {
+        profileImgPreview.src = '/resources/img/basic/profile/basic-m.png'
+        profileImgPreview.dataset.gender = 'M'
+      }
+
+    });
+  });
+
 
   /**
    * 240214 장한원
@@ -572,42 +618,107 @@ function removeCreatedElements() {
    * 240214 장한원
    * 프로필 파일 직접 업로드 시 동작
    */
-  let formData = new FormData(); // 새로운 폼 객체 생성
-  let file;
+  let formData = new FormData(); // 서버로 전송할 폼 객체 생성
+  let profile; // 업로드한 프로필 사진 값
+  let bgImg; // 업로드한 배경 사진 값
 
   const chooseImgInput = document.getElementById('chooseImg');
+  const choosebg =  document.getElementById('choosebg');
+  const bgPreview = document.querySelector('.bg-preview');
+
+  /* 프로필 사진 업로드 */
   chooseImgInput.addEventListener('change', (e)=>{
-    const reader = new FileReader();
+
+    if (e.target.files.length === 0) {
+      return;
+    } else {
+      const reader = new FileReader();
       reader.onload = ({ target }) => {
-      document.querySelector('.preview').src = target.result;
-    };
-    
-    reader.readAsDataURL(chooseImgInput.files[0]);
-    
-    file = chooseImgInput.files[0];
+        document.querySelector('.preview').src = target.result;
+      };
+
+      // 업로드 했으면 팝업 닫음
+      document.querySelector('.profileImgContainer').classList.toggle('p_visible');
+      
+      reader.readAsDataURL(chooseImgInput.files[0]);
+      
+      profile = chooseImgInput.files[0];
+    }
 
   });
+  
 
+  /* 배경 사진 업로드 */
+  choosebg.addEventListener('change', (e)=>{ 
+
+    if (e.target.files.length === 0) {
+      return;
+    } else {
+      bgPreview.classList.add('show-bg');
+
+      const reader = new FileReader();
+      reader.onload = ({ target }) => {
+        bgPreview.src = target.result;
+      };
+
+      reader.readAsDataURL(choosebg.files[0]);
+    
+      bgImg = choosebg.files[0];
+
+    }
+    
+  });
+
+  /* 배경 사진 원래대로 되돌리기(삭제) */
+  if(bgPreview.classList.contains('show-bg')) {
+    const removeBgImg =  document.getElementById('bg-remove');
+    removeBgImg.style.display = 'block';
+
+    removeBgImg.addEventListener('click', ()=>{
+      bgPreview.src = '';
+    });
+  }
+
+  
   /*
    * admin: 장한원
    * step4
    * 마지막 확인 버튼
   */
   submitBtn.addEventListener('click' , ()=>{
-    if(!file){
-      joinUserData = Object.assign({}, firstUserData, secondUserData, imgValue); // 회원가입 전송 데이터 가공
-      formData.append('data', JSON.stringify(joinUserData));
-      formData.append('regi', JSON.stringify(pickedRegiCode));
 
-      console.log(JSON.stringify(joinUserData));
-    } 
-      else if(file) {
-        joinUserData = Object.assign({}, firstUserData, secondUserData);
-        
-        formData.append('data', JSON.stringify(joinUserData));
-        formData.append('file', file);
-        formData.append('regi', JSON.stringify(pickedRegiCode));
+    const userGender = document.querySelector('.preview').getAttribute('data-gender');
+
+    // 아무런 프사도 선택하지 않았을 때
+    if(!profile && !imgValue){
+      if(userGender == 'W') {
+        imgValue = { 'FILE_SVNM' : 'basic-w.png' };
+      } else if(userGender == 'M') {
+        imgValue = { 'FILE_SVNM' : 'basic-m.png' };
+      }
+
+      joinUserData = Object.assign({}, firstUserData, secondUserData, imgValue); // 유저가 입력한 폼 데이터 가공
+
     }
+    // 기본 제공하는 프사 선택
+    
+    if(imgValue) {
+      joinUserData = Object.assign({}, firstUserData, secondUserData, imgValue); // 유저가 입력한 폼 데이터 가공
+    }
+    
+    // 프사 직접 업로드
+    if(profile) {
+      joinUserData = Object.assign({}, firstUserData, secondUserData); // 유저가 입력한 폼 데이터 가공
+      formData.append('file', profile); // 프로필 사진
+    }
+
+    if(bgImg) {
+      console.log('있어염')
+      formData.append('wallPaper', bgImg); // 배경사진
+    }
+
+    formData.append('data', JSON.stringify(joinUserData)); // 유저가 입력한 폼 값
+    formData.append('regi', JSON.stringify(pickedRegiCode)); // 유저가 선택한 선호 지역값
 
     fetch("/gather/joinDo.com", {
       method: "POST",
@@ -730,11 +841,6 @@ const joinFormCheck = function(step) {
         return regex.test(value);
       };
 
-      if(userPw.value.length > 14) {
-        controlStyleAndAppendWarning(userPw, 'appendPw', '최대 14자까지 설정 가능합니다.');
-        return false;
-      }
-      
       if(userPw.value.length < 8) {
         controlStyleAndAppendWarning(userPw, 'appendPw', '최소 8자 이상 입력해주세요.');
         return false;
@@ -746,17 +852,17 @@ const joinFormCheck = function(step) {
       }
 
     } else if(!pwConfirm.value) {
-      controlStyleAndAppendWarning(pwConfirm, 'pwConfirm', '비밀번호가 일치하지 않습니다.');
+      controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', '비밀번호가 일치하지 않습니다.');
 
       return false;
     
     } if(pwConfirm.value != userPw.value) {
-      controlStyleAndAppendWarning(pwConfirm, 'pwConfirm', '비밀번호가 일치하지 않습니다.');
+      controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', '비밀번호가 일치하지 않습니다.');
       
       return false;
 
     } else if(!cellNum.value || cellNum.value.length <= 11) {
-      controlStyleAndAppendWarning(cellNum, 'userCell', '올바른 핸드폰번호를 입력해주세요.');
+      controlStyleAndAppendWarning(cellNum, 'appendCell', '올바른 핸드폰번호를 입력해주세요.');
 
       return false;
     
@@ -791,7 +897,6 @@ const joinFormCheck = function(step) {
       return false;
 
     } else {
-
       return true;
     }
   }
@@ -827,19 +932,24 @@ const inputChangeHandler = function() {
     }
   })
 
-  userPw.addEventListener('input', (e)=>{
-
-    if(e.target.value.length > 14) {
-      controlStyleAndAppendWarning(userPw, 'appendPw', '최대 14자까지 설정 가능합니다.');
-      e.target.value = e.target.value.substring(0, 14);
-    } else {
-      hideWarning('.userPw');
+  // 캡스락 툴팁 띄움
+  userPw.addEventListener('keyup', (event)=>{
+    if (event.getModifierState("CapsLock")) {
+      document.querySelector('.capslock').classList.toggle('.show_hidden_element');
     }
-
   });
 
-  userPw.addEventListener('change', (e)=>{
-    const inputValue = e.target.value;
+  // userPw.addEventListener('input', (e)=>{
+  //   if(e.target.value.length > 14) {
+  //     controlStyleAndAppendWarning(userPw, 'appendPw', '최대 14자까지 설정 가능합니다.');
+  //     e.target.value = e.target.value.substring(0, 14);
+  //   } else {
+  //     hideWarning('.userPw');
+  //   }
+  // });
+
+  userPw.addEventListener('change', (event)=>{
+    const inputValue = event.target.value;
     const isValidInput = (value) => {
       const regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
       return regex.test(value);
@@ -848,22 +958,33 @@ const inputChangeHandler = function() {
     if(inputValue) {
       if(inputValue.length < 8) {
         controlStyleAndAppendWarning(userPw, 'appendPw', '최소 8자 이상 입력해주세요.');
+      } else {
+        hideWarning('.userPw');
       }
-
+      
       if (!isValidInput(inputValue)) {
         controlStyleAndAppendWarning(userPw, 'appendPw', '영문+숫자+특수문자 조합으로 입력해주세요.');
+      } else {
+        hideWarning('.userPw');
       }
     }
-
   });
 
-  pwConfirm.addEventListener('change', ()=>{
-    if(userPw.value != pwConfirm.value) {
+  pwConfirm.addEventListener('change', (event)=>{
+    if(userPw.value != event.target.value) {
       controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', '비밀번호가 일치하지 않습니다.');
     } else {
       hideWarning('.pwConfirm');
     }
   });
+
+  // pwConfirm.addEventListener('keyup', (event)=>{
+  //   if (event.getModifierState("CapsLock")) {
+  //     controlStyleAndAppendWarning(pwConfirm, 'appendPwConfirm', 'Caps Lock이 활성화된 상태입니다.');
+  //   } else {
+  //     hideWarning('.pwConfirm');
+  //   }
+  // });
 
   // 핸드폰번호 - 숫자만 입력되게 + 자동 하이픈
   userCell.addEventListener('input', (e)=>{
@@ -957,7 +1078,7 @@ const inputChangeHandler = function() {
 
         } else if(result == 0) {
           isNickUsed = result;
-          hideWarning('.userId');
+          hideWarning('.userNick');
 
           if(userNickname.value.length == 10) {
             document.getElementById('userSelf').focus();
@@ -995,17 +1116,17 @@ const controlStyleAndAppendWarning = function(element, appendId, appendText) {
   const authmailInput = document.querySelector('.authmailInput');
 
   // margin 수정
-  if(appendId == 'appendId') {
-    idContainer.classList.add('append-margin-bottom');
-  } else if(appendId == 'appendPw') {
-    pwContainer.classList.add('append-margin-bottom');
-  } else if(appendId == 'appendAuthnum') {
-    authmailInput.classList.add('append-margin-bottom');
-  } else {
-    element.classList.add('append-margin-bottom');
-  }
+  // if(appendId == 'appendId') {
+  //   idContainer.classList.add('append-margin-bottom');
+  // } else if(appendId == 'appendPw') {
+  //   pwContainer.classList.add('append-margin-bottom');
+  // } else if(appendId == 'appendAuthnum') {
+  //   authmailInput.classList.add('append-margin-bottom');
+  // } else {
+  //   document.querySelector('.'+ appendId).classList.add('append-margin-bottom');
+  // }
 
-  appendWarning(appendId, appendText); // login.js에 있는 함수 호출
+  document.getElementById(appendId).innerHTML = appendText;
 
   element.focus();
 }
@@ -1020,15 +1141,15 @@ const hideWarning = function(className) {
   const idContainer = document.querySelector('.userIdContainer');
   const pwContainer = document.querySelector('.userPwContainer');
   
-  if(className == '.userId') {
-    idContainer.classList.remove('append-margin-bottom');
-  } else if(className == '.userPw') {
-    pwContainer.classList.remove('append-margin-bottom');
-  } else {
-    document.querySelector(className).classList.remove('append-margin-bottom');
-  }
+  // if(className == '.userId') {
+  //   idContainer.classList.remove('append-margin-bottom');
+  // } else if(className == '.userPw') {
+  //   pwContainer.classList.remove('append-margin-bottom');
+  // } else {
+  //   document.querySelector(className).classList.remove('append-margin-bottom');
+  // }
 
-  appendNode.style.display = 'none';
+  appendNode.innerHTML = '';
 }
 
 /**
