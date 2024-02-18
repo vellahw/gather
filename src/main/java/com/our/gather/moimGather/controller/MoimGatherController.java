@@ -22,18 +22,17 @@ public class MoimGatherController {
 	@Resource(name = "GatherService")
 	private GatherService gatherService;
 	
-	
 	@RequestMapping(value = "/gather/register.com")
 	public ModelAndView moimResister(CommandMap commandMap) throws Exception {
 		
 		ModelAndView mv = new ModelAndView("/moimGather/moimRegister");
 		mv.setViewName("moimRegister");
 		
-		List<Map<String, Object>> pCate = commonService.pCate(commandMap.getMap(), commandMap);
-		List<Map<String, Object>> cCate = commonService.cCate(commandMap.getMap(), commandMap);
+		List<Map<String, Object>> cate = commonService.getCate(commandMap.getMap(), commandMap);
+		List<Map<String, Object>> regi = commonService.getRegi(commandMap.getMap(), commandMap);
 		
-		mv.addObject("pCate", pCate);
-		mv.addObject("cCate", cCate);
+		mv.addObject("cate", cate);
+		mv.addObject("regi", regi);
 		
 		return mv;
 	}
