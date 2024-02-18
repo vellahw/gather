@@ -20,7 +20,32 @@
 						<span aria-label="필수 입력값입니다.">*</span>
 						게더의 주제를 선택해주세요
 					</h3>
-					<div class=" _row">
+					<div class="categoryContainer" id="categoryContainer">
+					    <c:forEach var="parentsCate" items="${pCate}">
+					    	<c:set var="parentsCode" value="${parentsCate.CATE_CODE}" />
+					      <input id="pcode" type="hidden" value="${parentsCate.CATE_CODE}"/>
+					      <div class="categoryItem" data-code="${parentsCode}">
+					        <button class="categoryLink">
+					          <img src="${parentsCate.IMAG_SRCC}" class="categoryIcon" alt="카테고리 이미지"/>
+					          <c:out value="${parentsCate.CATE_NAME}"/>
+					        </button>
+					        <div class="childCateListWrap">
+					          <ul class="childCateList">
+					          	<c:forEach var="childCate" items="${cCate}">
+					            	<c:set var="childCode" value="${childCate.PARENTS_CODE}" />
+					              <input id="ccode"type="hidden" value="${childCate.CATE_CODE}"/>
+					              <c:if test="${parentsCode == childCode}">
+						              <button class="childCateItem" data-code2="${childCate.CATE_CODE}">
+						                <c:out value="${childCate.CATE_NAME}" />
+						    	        </button>
+					              </c:if>
+					             </c:forEach>
+					          </ul>
+					        </div>
+					      </div>
+					  	</c:forEach>
+					</div>
+					<!-- <div class=" _row">
 						<label for="moimParentCate">상위 카테고리</label>
 						<select id="moimParentCate">
 							<option>부모카테</option>
@@ -29,7 +54,7 @@
 						<select id="moimChildCate">
 							<option>자식 카테</option>
 						</select>
-					</div>
+					</div> -->
 				</div>
 				
 				<div class="eachInputWrap">
