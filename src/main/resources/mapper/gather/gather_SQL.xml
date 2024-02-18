@@ -224,7 +224,7 @@
        	SELECT /*mainPage.getGather*/
        			*
 		  FROM (  
-		       	  SELECT  ROW_NUMBER() OVER (ORDER BY REGG_DATE DESC) RNUM         
+		       	  SELECT  ROW_NUMBER() OVER (ORDER BY REGG_DATE, MOIM_TIME, GATH_IDXX DESC) RNUM         
 		                , GATH_IDXX AS MOIM_IDXX										   	/* 게더아이디 */
 		                , GATH_TITL AS MOIM_TITL										   	/* 게더 제목 */
 		                , GATH_CNTT AS MOIM_CNTT								           	/* 게더 내용 */
@@ -307,7 +307,6 @@
 		         ]]>
 		      </if>
 		      	<![CDATA[
-		      	ORDER BY REGG_DATE
 		      	)
 		      	]]>
       <if test="WEATH_CATE != null || CITY_CODE != null">

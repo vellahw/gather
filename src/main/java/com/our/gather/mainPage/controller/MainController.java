@@ -64,8 +64,21 @@ public class MainController {
 		mv2.addObject("pCate", pCate);
 		mv2.addObject("cCate", cCate);
 		
-		mv2.addObject("CATE_IDXX", CATE_IDXX);
-		mv2.addObject("KEYY_WORD", KEYY_WORD);
+		if(CATE_IDXX != null) {
+			
+			mv2.addObject("CATE_IDXX", CATE_IDXX);
+			
+		} else {
+			
+			mv2.addObject("CATE_IDXX", "all");
+			
+		}
+		
+		if(KEYY_WORD != null) {
+			
+			mv2.addObject("KEYY_WORD", KEYY_WORD);
+			
+		} 
 		
 		if(session.getAttribute("USER_NUMB") != null) {
 			

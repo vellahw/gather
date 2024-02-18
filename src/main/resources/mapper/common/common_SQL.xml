@@ -7,7 +7,7 @@
 	<select id="hashTag" parameterType='hashmap'
 	   resultType="hashmap">
 	   <![CDATA[
-		SELECT  /* NOT_SQL_LOG */
+		SELECT  /* common.hashTag NOT_SQL_LOG */
 		       HASH_IDXX
 		   	 , HASH_SEQC
 		     , HASH_TAGG
@@ -110,6 +110,24 @@
 	            , SUBSTR(COMD_CODE,'1','1')  AS PARENTS_CODE							/* 부모 지역 코드 */
 	            , COMD_CODE AS REGI_CODE												/* 부모 지역 코드 */
 	    		, COMD_NAME AS REGI_NAME   											    /* 부모 지역 이름 */
+			FROM TB_CODEXD
+	  	   WHERE COMM_CODE = 'REGI_CODE'
+		ORDER BY COMD_CODE
+	 ]]>
+	 </select>
+	 
+	 <!-- 카테고리검색 -->
+	<select id="getCate" parameterType='hashmap'
+	   resultType="hashmap">
+	   <![CDATA[
+	   	  SELECT /*common.getCate*/
+                  CASE WHEN LENGTH(COMD_CODE) = 1
+                            THEN 1
+                       ELSE 2
+                   END AS REGI_LEVL                                                     /* 지역 레벨 */
+	            , SUBSTR(COMD_CODE,'1','1')  AS PARENTS_CODE							/* 부모 지역 코드 */
+	            , COMD_CODE AS CATE_CODE												/* 부모 지역 코드 */
+	    		, COMD_NAME AS CATE_NAME   											    /* 부모 지역 이름 */
 			FROM TB_CODEXD
 	  	   WHERE COMM_CODE = 'REGI_CODE'
 		ORDER BY COMD_CODE

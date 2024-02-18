@@ -3,16 +3,13 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 
    <!-- Appenders -->
-   <appender name="console" class="org.apache.log4j.ConsoleAppender">
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d %5p [%c] %m%n" />
-        </layout>   
-    </appender>
-    
     <appender name="console-infolog" class="org.apache.log4j.ConsoleAppender">
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d %5p %m%n" />
-        </layout>   
+        </layout>
+        <filter class="com.our.gather.common.interceptor.SQLFilter">
+        	<param name="excludedKeyword" value="NOT_SQL_LOG"/>
+        </filter>   
     </appender>
    
    <!-- Application Loggers -->
@@ -32,10 +29,5 @@
       <priority value="off"/>
       <appender-ref ref="console" />
    </root>
-
-	<filter class="com.our.gather.common.interceptor.SQLFilter" name="SQLFilter" />
-	<appender name="console" class="org.apache.log4j.ConsoleAppender">
-		<filter ref="SQLFilter" />
-	</appender>
    
 </log4j:configuration>
