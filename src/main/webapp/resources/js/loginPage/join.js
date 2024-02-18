@@ -153,6 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
   /**
    * admin: 장한원
    * step2 -> step3로 가는 '다음' 버튼
+   * 폼 기입 내용 미리보기
    */
   step2Btn.addEventListener('click', ()=>{
     const userName = document.getElementById('userName').value;
@@ -175,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     nicknameNode.innerHTML = userNickname;
     selfIntroNode.innerHTML = userSelfIntro;
-    idNode.innerHTML = `@${userIdValue}`;
+    idNode.innerHTML = `${userIdValue}`;
 
     /* 유저의 성별에 따른 기본 프로필 사진 설정 */
     if(userRegi2%2 == 0) {
@@ -624,7 +625,9 @@ const showUserPickedRegi = function(pickedList, regiList) {
    */
   profileImgList.addEventListener('click', (event)=>{
     if(event.target.matches('[data-value]')){
-      const tagetData = event.target.getAttribute('data-value');
+      const target = event.target;
+      const tagetData = target.getAttribute('data-value');
+
       document.querySelector('.preview').src = `/resources/img/basic/profile/${tagetData}.png`;
 
       imgValue = { FILE_SVNM : `${tagetData}.png` };
