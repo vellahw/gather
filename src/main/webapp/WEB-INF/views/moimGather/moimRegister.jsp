@@ -7,6 +7,8 @@
 <script src="/resources/summernote/summernote-lite.js"></script>
 <script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d204e67062ee2684baf0eaa95db96a85&libraries=services"></script>
 
 <div class="registerContainer">
 	<div class="innerContainer">
@@ -53,11 +55,22 @@
 					</h3>
 					<div class=" _row">
 		        <label for="date" >최소 인원</label>
-		        <input type="date" class="form-control" name="MO_DEADLINE" id="date">
+		        <input type="text" class="form-control" name="MO_DEADLINE" id="date">
 		        <label for="MO_DEADTIME" >최대 인원</label>
-		        <input type="time" class="form-control" name="MO_DEADTIME" id="date2">
+		        <input type="text" class="form-control" name="MO_DEADTIME" id="date2">
 					</div>
-				</div>			
+				</div>
+				
+				<div class="eachInputWrap">
+					<h3>
+		        <span aria-label="필수 입력값입니다.">*</span>
+						어디에서 모일까요?
+					</h3>
+          <button type="button" class="searchMap">주소 검색</button>
+          <input type="text" class="moimRegion" id="moimRegion" readonly="readonly">
+          <input type="text" class="moimRegion" id="moimDetailAddress" placeholder="상세주소를 입력해주세요.">
+          <div id="map" style="width:500px;height:400px; margin-top: 10px;"></div>
+				</div>
 				
 				<div class="eachInputWrap">			
 					<label class="eachLabel" for="moimContent">
