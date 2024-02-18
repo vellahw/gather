@@ -450,7 +450,10 @@ document.addEventListener("DOMContentLoaded", function(){
 
     // 모임 미참여
     } else if(yourStateValue == 'null'){
-      joinMoimBtn.style.display = 'block';
+      if(detail.ENDD_YSNO == 'N') {
+        joinMoimBtn.style.display = 'block';
+      }
+
       updateButtonUI(detail.APPR_YSNO, 'fresh');
 
     }
