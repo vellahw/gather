@@ -34,22 +34,23 @@ document.addEventListener("DOMContentLoaded", function(){
   const params = new URL(location.href).searchParams;
   const cate = params.get('cate');  
 
-  if (cate != 'all') {
+    if (cate != 'all') {
 
-    const pcate = cate.substring(0, 1);
-    document.querySelector(`div[data-code="${pcate}"`).classList.add('active'); 
+      const pcate = cate.substring(0, 1);
+      document.querySelector(`div[data-code="${pcate}"`).classList.add('active'); 
 
-    if(cate.length == 3){ 
+      if(cate.length == 3){ 
 
-      document.querySelector(`li[data-code2="${cate}"`).classList.add('active');
+        document.querySelector(`li[data-code2="${cate}"`).classList.add('active');
+
+      }
+
+    } else {
+
+      document.querySelector(`div[data-code="all"`).classList.add('active'); 
 
     }
-
-  } else {
-
-    document.querySelector(`div[data-code="all"`).classList.add('active'); 
-
-  } 
+  
 });
 
 /*
@@ -60,26 +61,16 @@ document.addEventListener("DOMContentLoaded", function(){
 function cateOnclick(cateCode) {
 
   const currentURL = location.href;
-  const comType = comWhereIam().moimType || ""; // 기본값으로 빈 문자열 사용
+  const params = new URL(location.href).searchParams;
+  const comType = params.get('type'); 
 
   // URL에서 모든 type 및 cate 파라미터를 제거
   const newURL = currentURL.replace(/(\?|&)type=[^&]*/g, '').replace(/(\?|&)cate=[^&]*/g, '').replace(/(\?|&)keyword=[^&]*/g, '').replace(/(\?|&)pageNum=[^&]*/g, '');
 
   // type 및 cate 파라미터가 함께 추가되도록 조작
-  if (comType !== "gt") {
-    makeParam(newURL, '&', 'type=' + encodeURIComponent(comType) + '&cate=' + encodeURIComponent(cateCode));
+  if (comType) {
+    location.href = newURL + '?type=' + comType + '&cate=' + cateCode;
   } else {
-    makeParam(newURL, '?', 'cate=' + encodeURIComponent(cateCode));
+    location.href = newURL +  '?cate=' + cateCode;
   }
-}
-
-function makeParam(currentURL, char, paramStr) {
-
-  let newURL = currentURL;
-
-  // URL에 파라미터가 이미 존재하면 추가, 없으면 새로운 파라미터 생성
-  newURL += (newURL.includes('?') ? '&' : '?') + paramStr;
-
-  location.href = newURL;
-
 }

@@ -56,8 +56,6 @@ document.addEventListener("DOMContentLoaded", function(){
         var cityCode = city[cityName];
         var weather = (data.weather[0].icon).substr(0, 2); //날씨코드
         var temp = Number((data.main.temp).toFixed(1));
-        console.log(typeof(temp));
-        console.log("온도"+temp+"\n날씨"+weather);
                   
         //tempArea.innerHTML = temp;
   
