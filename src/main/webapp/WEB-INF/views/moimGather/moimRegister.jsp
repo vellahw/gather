@@ -21,7 +21,7 @@
 						게더의 주제를 선택해주세요
 					</h3>
 					<div class="categoryContainer" id="categoryContainer">
-					    <c:forEach var="parentsCate" items="${pCate}">
+						<c:forEach var="parentsCate" items="${pCate}">
 					    	<c:set var="parentsCode" value="${parentsCate.CATE_CODE}" />
 					      <input id="pcode" type="hidden" value="${parentsCate.CATE_CODE}"/>
 					      <div class="categoryItem" data-code="${parentsCode}">
@@ -43,18 +43,8 @@
 					          </ul>
 					        </div>
 					      </div>
-					  	</c:forEach>
+						</c:forEach>
 					</div>
-					<!-- <div class=" _row">
-						<label for="moimParentCate">상위 카테고리</label>
-						<select id="moimParentCate">
-							<option>부모카테</option>
-						</select>
-						<label for="moimChildCate">하위 카테고리</label>
-						<select id="moimChildCate">
-							<option>자식 카테</option>
-						</select>
-					</div> -->
 				</div>
 				
 				<div class="eachInputWrap">
