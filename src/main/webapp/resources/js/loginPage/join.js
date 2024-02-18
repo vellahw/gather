@@ -665,7 +665,7 @@ const showUserPickedRegi = function(pickedList, regiList) {
   });
   
   // 배경 사진 삭제(되돌리기) 버튼
-  const removeBgImg =  document.getElementById('bg-remove');
+  const removeBgImgBtn =  document.getElementById('bg-remove');
 
   /* 배경 사진 업로드 */
   choosebg.addEventListener('change', (e)=>{ 
@@ -686,15 +686,16 @@ const showUserPickedRegi = function(pickedList, regiList) {
       bgImg = choosebg.files[0];
 
       if(bgPreview.classList.contains('show-bg')) {
-        removeBgImg.classList.add('show_flex_element');
+        removeBgImgBtn.classList.add('show_flex_element');
       }
     }
   });
   
   /* 배경 사진 삭제(되돌리기) */
-  removeBgImg.addEventListener('click', ()=>{
+  removeBgImgBtn.addEventListener('click', ()=>{
     bgPreview.removeAttribute('src');
     bgPreview.removeAttribute('alt');
+    bgPreview.classList.remove('show-bg');
     bgPreview.classList.add('none-bg');
   });
   
