@@ -673,6 +673,7 @@ const showUserPickedRegi = function(pickedList, regiList) {
     if (e.target.files.length === 0) {
       return;
     } else {
+      bgPreview.classList.remove('none-bg');
       bgPreview.classList.add('show-bg');
 
       const reader = new FileReader();
