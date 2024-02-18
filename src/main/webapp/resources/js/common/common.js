@@ -402,6 +402,37 @@ function parseString(targetValue) {
 
 }
 
+
+/* 
+admin:Hanwon
+name:comObjectInArray
+Purpose: input value의 값을 파싱하여 Map 객체를 배열에 넣음
+parameter: (targetValue: 타겟 value)
+*/	
+function comObjectInArray(targetValue) {
+  const result = [];
+  const cleanedData = targetValue.replace(/[[\]\ ]/g, ''); // 대괄호 삭제
+  const splitData = cleanedData.split("},{"); // 중괄호 단위로 나눔
+
+  splitData.forEach(item => {
+      // 중괄호 제거 후, 쉼표로 데이터 분리
+      const keyValuePairs = item.replace("{", "").replace("}", "").split(",");
+      const map = {};
+
+      keyValuePairs.forEach(pair => {
+          // 등호를 기준으로 키와 값을 나누어 맵에 추가
+          const [key, value] = pair.split("=");
+          map[key] = value;
+      });
+
+      result.push(map); // 배열에 맵 추가
+
+  });
+
+  return { result : result };
+}
+
+
 /* 
 240125 KSH
 name:comNotify
