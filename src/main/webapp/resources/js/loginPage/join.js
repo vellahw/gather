@@ -27,10 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
       const target = event.target;
       const btnId = target.id; // 클릭한 버튼 아이디
 
-      const signupContainer = document.getElementById('signupContainer');
-      const signupStep2 = document.getElementById('signupStep2');
-      const signupStep3 = document.getElementById('signupStep3');
-
       /* 다음 버튼 */
       if(target.matches('.next')) {
 
@@ -45,9 +41,6 @@ document.addEventListener('DOMContentLoaded', function () {
               element.innerHTML = '';
             });
             
-            // needMarginList.forEach(item => {
-            //   item.style.marginBottom = '20px';
-            // });
           }
 
         } else if(btnId == 'next2'){

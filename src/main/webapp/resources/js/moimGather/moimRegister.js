@@ -16,20 +16,41 @@ document.addEventListener('DOMContentLoaded',()=>{
 
       /* 다음 버튼 */
       if(target.matches('.next')) {
-        if(btnId == 'next') {
-					step1.classList.remove('show_step');
-					step2.classList.add('show_step');
-				}
 
-			 /* 이전버튼 */
+        if(btnId == 'next') {
+
+					showStep(step1, step2);
+
+				} else if(btnId == 'next2') {
+
+					showStep(step2, step3);
+
+				}
+				
+				/* 이전버튼 */
       } else if(target.matches('.prev')){
-        if(btnId == 'prev2') {
-          step2.classList.remove('show_step');
-          step1.classList.add('show_step');
-        }
+
+				if(btnId == 'prev2') {
+
+					showStep(step2, step1);
+
+        } else if(btnId == 'prev3') {
+
+					showStep(step3, step2);
+
+				}
 			}
+
 		});
 	});
+
+	/**
+ 	* 다음(이전) 버튼 클릭 시 show_step 클래스 삭제하거나 추가하는 함수
+ 	*/
+	const showStep = function(removeTarget, addTarget) {
+		removeTarget.classList.remove('show_step');
+		addTarget.classList.add('show_step');
+	}
 
 
 	/**
@@ -94,11 +115,13 @@ document.addEventListener('DOMContentLoaded',()=>{
 	});
 
 
+	let category; // 유저가 선택한 카테고리 값을 담음
+
 	// 카테고리 클릭 이벤트
 	categoryListNode.addEventListener('click', (event)=>{
 		const target = event.target;
 
-		if(target.matches('[data-code1]')) {
+		if(target.matches('[data-code1]') || target.matches('[data-parentcode]')) {
 
 			target.classList.toggle('level1_active');
 
@@ -106,6 +129,24 @@ document.addEventListener('DOMContentLoaded',()=>{
 			targetChild.classList.toggle('level2_active');
 
 		}
+	});
+
+	categoryListNode.addEventListener('mouseover', (event)=>{
+		const target = event.target;
+		if(target.matches('[data-code1]') || target.matches('[data-parentcode]')) {
+
+			target.classList.add('level1_active');
+
+			const targetChild = document.querySelector(`[data-pcode=${target.getAttribute('data-code1')}]`);
+			targetChild.classList.add('level2_active');
+		}
+	});
+	
+	const activeElement = categoryListNode.querySelectorAll('.level2_active');
+	activeElement.forEach(element => {
+		element.addEventListener('mouseleave', ()=>{
+			element.classList.remove('.leve2_active');
+		})
 	})
 
 

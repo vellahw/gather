@@ -371,9 +371,9 @@ function comGoSomewhere(pageName, params) {
     
     break;
 
-    case 'register':
+    case 'makeGather':
 
-    location.href = `/gather/register.com`
+    location.href = `/gather/makeGather.com`
     
     break;
     

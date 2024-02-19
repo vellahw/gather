@@ -33,7 +33,7 @@
 							<span aria-label="필수 입력값입니다.">⁕</span>
 							모임 제목을 입력해주세요
 						</label>
-						<input type="text" id="moimTitle" class="basicInput register-p step1" placeHolder="최소 5자 이상 입력해주세요.">
+						<input type="text" id="gatherTitle" class="basicInput register-p step1" placeHolder="최소 5자 이상 입력해주세요.">
 					</div>
 					
 					<div class="btnContainer">
@@ -50,10 +50,10 @@
 						언제 모일까요?
 					</h3>
 					<div class="_row">
-		        <label for="date" >모임 날짜</label>
-		        <input type="date" class="form-control" name="MO_DEADLINE" id="date">
-		        <label for="MO_DEADTIME">모임 시간</label>
-		        <input type="time" class="form-control" name="MO_DEADTIME" id="date2">
+		        <label for="gatherDate" >모임 날짜</label>
+		        <input type="date" id="gatherDate" class="basicInput register-p">
+		        <label for="gatherTime">모임 시간</label>
+		        <input type="time" id="gatherTime" class="basicInput register-p">
 					</div>
 				</div>		
 					
@@ -63,10 +63,10 @@
 						몇 명이서 모일까요?
 					</h3>
 					<div class=" _row">
-		        <label for="date" >최소 인원</label>
-		        <input type="text" class="form-control" name="MO_DEADLINE" id="date">
-		        <label for="MO_DEADTIME" >최대 인원</label>
-		        <input type="text" class="form-control" name="MO_DEADTIME" id="date2">
+		        <label for="minPeople" >최소 인원</label>
+		        <input type="text" id="minPeople" class="basicInput register-p">
+		        <label for="maxPeople" >최대 인원</label>
+		        <input type="text" id="maxPeople" class="basicInput register-p">
 					</div>
 				</div>
 				
@@ -76,23 +76,31 @@
 						어디에서 모일까요?
 					</h3>
           <button type="button" class="searchMap">주소 검색</button>
-          <input type="text" class="moimRegion" id="moimRegion" readonly="readonly">
-          <input type="text" class="moimRegion" id="moimDetailAddress" placeholder="상세주소를 입력해주세요.">
+          <input type="text" class="basicInput register-p moimRegion" id="moimRegion" readonly="readonly">
+          <input type="text" class="basicInput register-p moimRegion" id="moimDetailAddress" placeholder="상세주소를 입력해주세요.">
           <div id="map" style="width:500px;height:400px; margin-top: 10px;"></div>
 				</div>
 				
-				<div class="eachInputWrap">			
-					<label class="eachLabel" for="moimContent">
-						<span aria-label="필수 입력값입니다.">⁕</span>
-						모임 소개
-					</label>
-					<div id="summernote"></div>
-				</div>
-				
-					<div class="btnContainer">
+					<div class="btnContainer" style="margin-bottom: 30px;">
 						<div class="btnWrap">
 							<button type="button" class="waybtn prev" id="prev2">이전</button>
 					  	<button type="button" class="waybtn next" id="next2">다음</button>
+						</div>
+					</div>
+				</div>
+				
+				<div id="step3">
+					<div class="eachInputWrap">			
+						<label class="eachLabel" for="moimContent">
+							<span aria-label="필수 입력값입니다.">⁕</span>
+							모임 소개
+						</label>
+						<div id="summernote"></div>
+					</div>
+					<div class="btnContainer">
+						<div class="btnWrap">
+							<button type="button" class="waybtn prev" id="prev3">이전</button>
+					  	<button type="button" class="waybtn next" id="next3">다음</button>
 						</div>
 					</div>
 				</div>

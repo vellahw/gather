@@ -45,6 +45,11 @@
 	transition: all 0.3s;
 }
 
+#step2 {
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
 .show_step {
 	width: 714px !important;
   opacity: 1 !important;
@@ -70,7 +75,7 @@
 
 .categoryList {
 	display: flex;
-	padding: 18px 0;
+	padding: 8px 0;
   flex-wrap: wrap;
   font-size: 15px;
 }
@@ -175,9 +180,13 @@
 }
 
 .eachLabel {
-  padding: 0 0 5px 5px;
+  padding: 5px 0 5px 5px;
   font-size: 16px;
   font-weight: 500;
+}
+
+.register-p {
+	margin: 8px;	
 }
 
 .btnContainer {
@@ -213,7 +222,7 @@
 	background-color: var(--color-orange500);
 }
 
-.moimTitle {
+.gatherTitle {
   font-size: 18.72px;
   font-weight: 600;
 }
