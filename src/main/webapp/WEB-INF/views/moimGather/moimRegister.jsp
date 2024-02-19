@@ -17,27 +17,37 @@
 
 			<div class="inputWrapper">
 			
-				<div class="eachInputWrap">
-					<h3>
-						<span aria-label="필수 입력값입니다.">*</span>
-						게더의 주제를 선택해주세요
-					</h3>
-					<div class="categoryContainer" id="categoryContainer">
-						<ul class="categoryList"></ul>
+				<div id="step1">
+					<div class="eachInputWrap catesection">
+						<h3>
+							<span aria-label="필수 입력값입니다.">⁕</span>
+							게더의 주제를 선택해주세요
+						</h3>
+						<div class="categoryContainer" id="categoryContainer">
+							<ul class="categoryList"></ul>
+						</div>
+					</div>
+					
+					<div class="eachInputWrap">
+						<label class="eachLabel moimTitle" for="moimTitle">
+							<span aria-label="필수 입력값입니다.">⁕</span>
+							모임 제목을 입력해주세요
+						</label>
+						<input type="text" id="moimTitle" class="basicInput register-p step1" placeHolder="최소 5자 이상 입력해주세요.">
+					</div>
+					
+					<div class="btnContainer">
+						<div class="btnWrap">
+							<button type="button" class="waybtn prev" id="prev">이전</button>
+					  	<button type="button" class="waybtn next" id="next">다음</button>
+						</div>
 					</div>
 				</div>
-				
-				<div class="eachInputWrap">
-					<label class="eachLabel" for="moimTitle">
-						<span aria-label="필수 입력값입니다.">*</span>
-						모임 제목
-					</label>
-					<input type="text" id="moimTitle" class="basicInput register-p step1" placeHolder="최소 5자 이상 입력해주세요.">
-				</div>
-	
+
+				<div style="display: none;">
 				<div class="eachInputWrap">
 					<h3>
-		        <span aria-label="필수 입력값입니다.">*</span>
+		        <span aria-label="필수 입력값입니다.">⁕</span>
 						언제 모일까요?
 					</h3>
 					<div class="_row">
@@ -50,7 +60,7 @@
 					
 				<div class="eachInputWrap">
 					<h3>
-		        <span aria-label="필수 입력값입니다.">*</span>
+		        <span aria-label="필수 입력값입니다.">⁕</span>
 						몇 명이서 모일까요?
 					</h3>
 					<div class=" _row">
@@ -63,7 +73,7 @@
 				
 				<div class="eachInputWrap">
 					<h3>
-		        <span aria-label="필수 입력값입니다.">*</span>
+		        <span aria-label="필수 입력값입니다.">⁕</span>
 						어디에서 모일까요?
 					</h3>
           <button type="button" class="searchMap">주소 검색</button>
@@ -74,12 +84,14 @@
 				
 				<div class="eachInputWrap">			
 					<label class="eachLabel" for="moimContent">
-						<span aria-label="필수 입력값입니다.">*</span>
+						<span aria-label="필수 입력값입니다.">⁕</span>
 						모임 소개
 					</label>
 					<div id="summernote"></div>
 				</div>
-			
+				
+				</div>
+				
 			</div>
 		</div>
 	</div>
