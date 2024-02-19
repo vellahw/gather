@@ -38,6 +38,20 @@
 	margin: 6px 0;
 }
 
+#step1, #step2 {
+	opacity: 0;
+  visibility: hidden;
+	width: 0;
+	transition: all 0.3s;
+}
+
+.show_step {
+	width: 714px !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  position: absolute;
+}
+
 .eachInputWrap {
 	width: 100%;
 	display: flex;
@@ -168,8 +182,8 @@
 
 .btnContainer {
 	position: absolute;
-  bottom: 40px;
-  width: calc(100% - 120px);
+  bottom: -70px;
+  width: calc(100%);
 }
 
 .btnWrap {

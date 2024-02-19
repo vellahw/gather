@@ -1,20 +1,40 @@
 document.addEventListener('DOMContentLoaded',()=>{
 
-	/**
-	 * summernote 에디터
-	 */	
-	$('#summernote').summernote({
-		height: 300,                 // 에디터 높이
-		minHeight: null,             // 최소 높이
-		maxHeight: null,             // 최대 높이
-		focus: false,                  // 에디터 로딩후 포커스를 맞출지 여부
-		lang: "ko-KR",					// 한글 설정
-		//placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
-				
+	/* 
+  * 240219 장한원
+  * 이전/다음 버튼 클릭 이벤트
+  */
+  const btnContainer = document.querySelectorAll('.btnContainer');
+	btnContainer.forEach(btn=>{
+    btn.addEventListener('click', (event)=>{
+      const target = event.target;
+      const btnId = target.id; // 클릭한 버튼 아이디
+
+      const step1 = document.getElementById('step1');
+      const step2 = document.getElementById('step2');
+      const step3 = document.getElementById('step3');
+
+      /* 다음 버튼 */
+      if(target.matches('.next')) {
+        if(btnId == 'next') {
+					step1.classList.remove('show_step');
+					step2.classList.add('show_step');
+				}
+
+			 /* 이전버튼 */
+      } else if(target.matches('.prev')){
+        if(btnId == 'prev2') {
+          step2.classList.remove('show_step');
+          step1.classList.add('show_step');
+        }
+			}
+		});
 	});
+
 
 	/**
 	 * 240219 장한원
+	 * 모임 주제를 골라주세요
 	 * 카테고리 생성
 	 */
 	const cateValue = document.getElementById('cateData').value;
@@ -87,6 +107,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 		}
 	})
+
 
 	/* 카카오맵 지도 띄우기 */
 	const container = document.getElementById('map');
@@ -179,8 +200,20 @@ document.addEventListener('DOMContentLoaded',()=>{
 			//팝업창 타이틀 지정
 			popupTitle: '모임 장소 검색하기'
 		});
-	})
+	});
 
 
+	/**
+	 * summernote 에디터 띄움
+	 */	
+	$('#summernote').summernote({
+		height: 300,                 // 에디터 높이
+		minHeight: null,             // 최소 높이
+		maxHeight: null,             // 최대 높이
+		focus: false,                  // 에디터 로딩후 포커스를 맞출지 여부
+		lang: "ko-KR",					// 한글 설정
+		//placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
+				
+	});
 
 });

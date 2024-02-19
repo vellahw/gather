@@ -12,12 +12,12 @@
 
 <div class="registerContainer">
 	<div class="innerContainer">
-		<div class="formContainer" id="step1">
+		<div class="formContainer">
 			<h2>게더 개설하기</h2>
 
 			<div class="inputWrapper">
 			
-				<div id="step1">
+				<div id="step1" class="show_step">
 					<div class="eachInputWrap catesection">
 						<h3>
 							<span aria-label="필수 입력값입니다.">⁕</span>
@@ -37,14 +37,13 @@
 					</div>
 					
 					<div class="btnContainer">
-						<div class="btnWrap">
-							<button type="button" class="waybtn prev" id="prev">이전</button>
+						<div class="btnWrap" style="justify-content: right;">
 					  	<button type="button" class="waybtn next" id="next">다음</button>
 						</div>
 					</div>
 				</div>
 
-				<div style="display: none;">
+				<div id="step2">
 				<div class="eachInputWrap">
 					<h3>
 		        <span aria-label="필수 입력값입니다.">⁕</span>
@@ -90,6 +89,12 @@
 					<div id="summernote"></div>
 				</div>
 				
+					<div class="btnContainer">
+						<div class="btnWrap">
+							<button type="button" class="waybtn prev" id="prev2">이전</button>
+					  	<button type="button" class="waybtn next" id="next2">다음</button>
+						</div>
+					</div>
 				</div>
 				
 			</div>
