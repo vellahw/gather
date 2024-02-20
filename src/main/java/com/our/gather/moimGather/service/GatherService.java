@@ -36,6 +36,10 @@ public interface GatherService {
 
 	// 게더 갯수 return
 	int getGatherCount(Map<String, Object> map, CommandMap commandMap) throws Exception;
+	
+	// 게더번호 채번
+	String makeGatherNumb()
+			throws Exception;
 
 	// 회원가입
 	void makeGather(Map<String, Object> map, CommandMap commandMap, HttpServletRequest request, HttpSession session)

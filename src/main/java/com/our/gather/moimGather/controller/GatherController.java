@@ -62,117 +62,26 @@ public class GatherController {
 			
 			Map<String, Object> resultMapData = objectMapper.readValue(mapData, new TypeReference<Map<String, Object>>() {});
 			
-			String[] moimRegi = ((String) resultMapData.get("MOIM_ADR1")).split(" ");
+			Map<String, Object> regiMap = commonService.extractRegiCode(resultMapData);
 			
-			String pRegi = moimRegi[0].substring(0, 2);
+			String gathNumb = gatherService.makeGatherNumb();
 			
-			Map<String, Object> regiMap = new HashMap<>();
-			
-			switch (pRegi) {
-		
-			case "서울":
-				
-				regiMap.put("COMD_CODE", "A");
-				break;
-				
-			case "경기":
-				
-				regiMap.put("COMD_CODE", "B");
-				break;
-				
-			case "인천":
-				
-				regiMap.put("COMD_CODE", "C");
-				break;
-				
-			case "강원":
-				
-				regiMap.put("COMD_CODE", "D");
-				break;
-				
-			case "충북":
-				
-				regiMap.put("COMD_CODE", "E");
-				break;
-				
-			case "충남":
-				
-				regiMap.put("COMD_CODE", "F");
-				break;
-				
-			case "세종":
-				
-				regiMap.put("COMD_CODE", "G");
-				break;
-				
-			case "대전":
-				
-				regiMap.put("COMD_CODE", "H");
-				break;
-				
-			case "광주":
-				
-				regiMap.put("COMD_CODE", "I");
-				break;
-				
-			case "전북":
-				
-				regiMap.put("COMD_CODE", "J");
-				break;
-			
-			case "경북":
-				
-				regiMap.put("COMD_CODE", "K");
-				break;
-			
-			case "대구":
-				
-				regiMap.put("COMD_CODE", "L");
-				break;
-			
-			case "제주":
-				
-				regiMap.put("COMD_CODE", "M");
-				break;
-			
-			case "전남":
-				
-				regiMap.put("COMD_CODE", "N");
-				break;
-			
-			case "울산":
-				
-				regiMap.put("COMD_CODE", "O");
-				break;
-			
-			case "경남":
-				
-				regiMap.put("COMD_CODE", "P");
-				break;
-			
-			case "부산":
-				
-				regiMap.put("COMD_CODE", "Q");
-				break;
-			
-			}
-			
-			String cRegi = moimRegi[1].substring(0, 2);
-			
-			regiMap.put("COMD_NAME", cRegi);
-			
-			Map<String, Object> resultRegi = commonService.searchRegi(regiMap, commandMap);
-			
-			resultGahterData.put("REGI_CODE", resultRegi.get("COMD_CODE"));
+			resultGahterData.put("MOIM_IDXX", gathNumb);
+			resultGahterData.put("REGI_CODE", regiMap.get("COMD_CODE"));
 			resultGahterData.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 
 			gatherService.makeGather(resultGahterData, commandMap, request, session);
 			
-			String gathNumb = (String) commandMap.get("GATH_IDXX");
-			
 			resultMapData.put("MOIM_IDXX", gathNumb);
 			
 			commonService.mapInsert(resultMapData, commandMap);
+			
+			Map<String, Object> hashTag = new HashMap<>();
+			
+			hashTag.put("MOIM_CNTT", resultGahterData.get("MOIM_CNTT"));
+			hashTag.put("MOIM_IDXX", gathNumb);
+			
+			commonService.tagInsert(hashTag);
 
 			return ResponseEntity.ok("success");
 			

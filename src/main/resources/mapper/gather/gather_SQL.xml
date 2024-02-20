@@ -41,10 +41,10 @@
 					    , DELT_YSNO		/* 삭제여부(Y,N) /  */
 					    , ENDD_YSNO		/* 마감여부 */
 			) VALUES (
-					      #{GATH_IDXX}  					/* 게더번호 */
+					      #{MOIM_IDXX}  					/* 게더번호 */
 					    , #{USER_NUMB}  					/* 회원번호(방장번호) */
-					    , #{GATH_TITL, jdbcType=VARCHAR}  	/* 게더명 */
-					    , #{GATH_CNTT, jdbcType=VARCHAR}  	/* 상세내용 */
+					    , #{MOIM_TITL, jdbcType=VARCHAR}  	/* 게더명 */
+					    , #{MOIM_CNTT, jdbcType=VARCHAR}  	/* 상세내용 */
 					    , #{CATE_IDXX, jdbcType=VARCHAR}  	/* 카테고리PK */
 					    , #{FILE_SVNM, jdbcType=VARCHAR}  	/* 대표 이미지 파일 */
 					    , #{REGI_CODE, jdbcType=VARCHAR}  	/* 행정구역코드 */

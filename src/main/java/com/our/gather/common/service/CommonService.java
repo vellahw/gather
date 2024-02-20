@@ -17,6 +17,8 @@ public interface CommonService {
 	
 	void unfollow(Map<String, Object> map, CommandMap commandMap) throws Exception;
 	
+	void tagInsert(Map<String, Object> map) throws Exception;
+	
 	List<Map<String, Object>> pCate(Map<String, Object> map, CommandMap commandMap) throws Exception;
 
 	List<Map<String, Object>> cCate(Map<String, Object> map, CommandMap commandMap) throws Exception;
@@ -25,7 +27,7 @@ public interface CommonService {
 	
 	List<Map<String, Object>> getRegi(Map<String, Object> map, CommandMap commandMap) throws Exception;
 	
-	Map<String, Object> searchRegi(Map<String, Object> map, CommandMap commandMap) throws Exception;
+	Map<String, Object> extractRegiCode(Map<String, Object> map) throws Exception;
 	
 
 }

@@ -19,13 +19,13 @@ import com.our.gather.moimGather.dao.GatherDao;
 
 @Service("GatherService")
 public class GatherServiceImpl implements GatherService {
-	
+
 	@Resource(name = "CommonDao")
 	private CommonDao commonDao;
-	
+
 	@Resource(name = "GatherDao")
 	private GatherDao gatherDao;
-	
+
 	@Resource(name = "fileUtils")
 	private FileUtils fileUtils;
 
@@ -105,20 +105,17 @@ public class GatherServiceImpl implements GatherService {
 
 		return gatherDao.getGatherYourState(map, commandMap, session);
 	}
-	
-	//게더 개설
+
+	// 게더 개설
 	@Override
 	public void makeGather(Map<String, Object> map, CommandMap commandMap, HttpServletRequest request,
 			HttpSession session) throws Exception {
-
-		String gatherNumb = gatherDao.makeGatherNumb();
-		map.put("GATH_IDXX", gatherNumb);
-		commandMap.put("GATH_IDXX", gatherNumb);
+		
 
 		try {
-
-			map.put("GATH_IDXX", gatherNumb);
-
+			
+			map.put("GATH_IDXX", map.get("MOIM_IDXX"));
+			
 			List<Map<String, Object>> flist = fileUtils.fileInsert(map, request, session);
 
 			for (int i = 0, size = flist.size(); i < size; i++) {
@@ -140,10 +137,16 @@ public class GatherServiceImpl implements GatherService {
 		gatherDao.makeGather(map, commandMap);
 
 	}
-	
+
+	// 게더 번호 채번
+	public String makeGatherNumb() throws Exception {
+
+		return gatherDao.makeGatherNumb();
+	}
+
 	// 게더 갯수 return
 	public int getGatherCount(Map<String, Object> map, CommandMap commandMap) throws Exception {
-		
+
 		return gatherDao.getGatherCount(map, commandMap);
 	}
 
