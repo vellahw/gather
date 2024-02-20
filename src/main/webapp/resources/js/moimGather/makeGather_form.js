@@ -1,58 +1,4 @@
 document.addEventListener('DOMContentLoaded',()=>{
-
-	/* 
-  * 240219 장한원
-  * 이전/다음 버튼 클릭 이벤트
-  */
-  const btnContainer = document.querySelectorAll('.btnContainer');
-	btnContainer.forEach(btn=>{
-    btn.addEventListener('click', (event)=>{
-      const target = event.target;
-      const btnId = target.id; // 클릭한 버튼 아이디
-
-      const step1 = document.getElementById('step1');
-      const step2 = document.getElementById('step2');
-      const step3 = document.getElementById('step3');
-
-      /* 다음 버튼 */
-      if(target.matches('.next')) {
-
-        if(btnId == 'next') {
-
-					showStep(step1, step2);
-
-				} else if(btnId == 'next2') {
-
-					showStep(step2, step3);
-
-				}
-				
-				/* 이전버튼 */
-      } else if(target.matches('.prev')){
-
-				if(btnId == 'prev2') {
-
-					showStep(step2, step1);
-
-        } else if(btnId == 'prev3') {
-
-					showStep(step3, step2);
-
-				}
-			}
-
-		});
-	});
-
-	/**
- 	* 다음(이전) 버튼 클릭 시 show_step 클래스 삭제하거나 추가하는 함수
- 	*/
-	const showStep = function(removeTarget, addTarget) {
-		removeTarget.classList.remove('show_step');
-		addTarget.classList.add('show_step');
-	}
-
-
 	/**
 	 * 240219 장한원
 	 * 모임 주제를 골라주세요 - 카테고리 생성
@@ -146,6 +92,38 @@ document.addEventListener('DOMContentLoaded',()=>{
 			element.classList.remove('.leve2_active');
 		})
 	});
+
+
+	/**
+	 * 240220 장한원
+	 * step2 참가비 클릭 이벤트
+	 */
+	document.getElementById('step2').addEventListener('click', (event)=>{
+    const target = event.target;
+		const gatherCostNode = document.getElementById('gatherCost')
+
+    if(target.matches('[data-cost="Y"]')) {
+      gatherCostNode.classList.add('block_element');
+    } else if(target.matches('[data-cost="N"]')) {
+      gatherCostNode.classList.remove('block_element');
+		}
+  });
+
+	/**
+	 * 240220 장한원
+	 * step3 승인여부 클릭 이벤트
+	 */
+	document.getElementById('step3').addEventListener('click', (event)=>{
+    const target = event.target;
+
+		if(document.querySelector('.appr_act')) {
+			document.querySelector('.appr_act').classList.remove;
+		}
+
+    if(target.matches('[data-appr]')) {
+      target.classList.toggle('appr_act');
+    }
+  });
 
 
 	/* 카카오맵 지도 띄우기 */
@@ -248,6 +226,39 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 
 	/**
+	 * 240220 장한원
+	 * 연령 선택 range 슬라이더
+	 */
+	const range1 = document.querySelector('.range1')
+	range1.addEventListener('input', (event)=>{
+		const target = event.target;
+
+		target.value = Math.min(target.value, target.parentNode.childNodes[5].value-1);
+			let value = (100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.value)-(100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.min);
+			let children = target.parentNode.childNodes[1].childNodes;
+			children[1].style.width = value + '%';
+			children[5].style.left = value + '%';
+			children[7].style.left = value + '%';
+			children[11].style.left = value + '%';
+			children[11].childNodes[1].innerHTML = target.value;
+	});
+
+	const range2 = document.querySelector('.range2')
+	range2.addEventListener('input', (event)=>{
+		const target = event.target;
+
+		target.value=Math.max(target.value,target.parentNode.childNodes[3].value-(-1));
+		let value = (100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.value)-(100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.min);
+		let children = target.parentNode.childNodes[1].childNodes;
+		children[3].style.width = (100-value) + '%';
+		children[5].style.right = (100-value) + '%';
+		children[9].style.left = value + '%';
+		children[13].style.left = value + '%';
+		children[13].childNodes[1].innerHTML = target.value;
+	});
+
+
+	/**
 	 * summernote 에디터 띄움
 	 */	
 	$('#summernote').summernote({
@@ -257,7 +268,59 @@ document.addEventListener('DOMContentLoaded',()=>{
 		focus: false,                  // 에디터 로딩후 포커스를 맞출지 여부
 		lang: "ko-KR",					// 한글 설정
 		//placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
-				
 	});
+
+	
+	/* 
+  * 240219 장한원
+  * 이전/다음 버튼 클릭 이벤트
+  */
+  const btnContainer = document.querySelectorAll('.btnContainer');
+	btnContainer.forEach(btn=>{
+    btn.addEventListener('click', (event)=>{
+      const target = event.target;
+      const btnId = target.id; // 클릭한 버튼 아이디
+
+      const step1 = document.getElementById('step1');
+      const step2 = document.getElementById('step2');
+      const step4 = document.getElementById('step4');
+
+      /* 다음 버튼 */
+      if(target.matches('.next')) {
+
+        if(btnId == 'next') {
+
+					showStep(step1, step2);
+
+				} else if(btnId == 'next2') {
+
+					showStep(step2, step4);
+
+				}
+				
+				/* 이전버튼 */
+      } else if(target.matches('.prev')){
+
+				if(btnId == 'prev2') {
+
+					showStep(step2, step1);
+
+        } else if(btnId == 'prev3') {
+
+					showStep(step4, step2);
+
+				}
+			}
+
+		});
+	});
+
+	/**
+ 	* 다음(이전) 버튼 클릭 시 show_step 클래스 삭제하거나 추가하는 함수
+ 	*/
+	const showStep = function(removeTarget, addTarget) {
+		removeTarget.classList.remove('show_step');
+		addTarget.classList.add('show_step');
+	}			
 
 });
