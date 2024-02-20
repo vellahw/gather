@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
@@ -12,12 +13,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.common.Pager;
+import com.our.gather.common.dao.CommonDao;
+import com.our.gather.common.utils.FileUtils;
 import com.our.gather.moimGather.dao.GatherDao;
 
 @Service("GatherService")
 public class GatherServiceImpl implements GatherService {
+	
+	@Resource(name = "CommonDao")
+	private CommonDao commonDao;
+	
 	@Resource(name = "GatherDao")
 	private GatherDao gatherDao;
+	
+	@Resource(name = "fileUtils")
+	private FileUtils fileUtils;
 
 	// 게더 메인리스트
 	@Override
@@ -95,8 +105,43 @@ public class GatherServiceImpl implements GatherService {
 
 		return gatherDao.getGatherYourState(map, commandMap, session);
 	}
+	
+	//게더 개설
+	@Override
+	public void makeGather(Map<String, Object> map, CommandMap commandMap, HttpServletRequest request,
+			HttpSession session) throws Exception {
 
-	// 게더 마감
+		String gatherNumb = gatherDao.makeGatherNumb();
+		map.put("GATH_IDXX", gatherNumb);
+		commandMap.put("GATH_IDXX", gatherNumb);
+
+		try {
+
+			map.put("GATH_IDXX", gatherNumb);
+
+			List<Map<String, Object>> flist = fileUtils.fileInsert(map, request, session);
+
+			for (int i = 0, size = flist.size(); i < size; i++) {
+
+				commonDao.comFileInsert(flist.get(i));
+
+				if (flist.get(i).get("FILE_SEQC") == null) {
+
+					map.put("FILE_SVNM", flist.get(i).get("FILE_SVNM"));
+
+				}
+			}
+
+		} catch (Exception e) {
+			System.out.println("userJoin 오류 발생! " + e.getMessage());
+
+		}
+
+		gatherDao.makeGather(map, commandMap);
+
+	}
+	
+	// 게더 갯수 return
 	public int getGatherCount(Map<String, Object> map, CommandMap commandMap) throws Exception {
 		
 		return gatherDao.getGatherCount(map, commandMap);

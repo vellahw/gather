@@ -16,36 +16,12 @@ public class CommonServiceImpl implements CommonService {
 	@Resource(name = "CommonDao")
 	private CommonDao commonDao;
 
-	// 부모카테고리
+	// 좋아요 insert
 	@Override
-	public List<Map<String, Object>> pCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
+	public void mapInsert(Map<String, Object> map, CommandMap commandMap) throws Exception {
 		// TODO Auto-generated method stub
 
-		return commonDao.pCate(map, commandMap);
-	}
-
-	// 자식카테고리
-	@Override
-	public List<Map<String, Object>> cCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
-		// TODO Auto-generated method stub
-
-		return commonDao.cCate(map, commandMap);
-	}
-
-	// 지역전체
-	@Override
-	public List<Map<String, Object>> getRegi(Map<String, Object> map, CommandMap commandMap) throws Exception {
-		// TODO Auto-generated method stub
-
-		return commonDao.getRegi(map, commandMap);
-	}
-
-	// 카테고리전체
-	@Override
-	public List<Map<String, Object>> getCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
-		// TODO Auto-generated method stub
-
-		return commonDao.getCate(map, commandMap);
+		commonDao.mapInsert(map, commandMap);
 	}
 
 	// 좋아요 insert
@@ -78,6 +54,46 @@ public class CommonServiceImpl implements CommonService {
 		// TODO Auto-generated method stub
 
 		commonDao.unfollow(map, commandMap);
+	}
+
+	// 부모카테고리
+	@Override
+	public List<Map<String, Object>> pCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
+		// TODO Auto-generated method stub
+
+		return commonDao.pCate(map, commandMap);
+	}
+
+	// 자식카테고리
+	@Override
+	public List<Map<String, Object>> cCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
+		// TODO Auto-generated method stub
+
+		return commonDao.cCate(map, commandMap);
+	}
+
+	// 카테고리전체
+	@Override
+	public List<Map<String, Object>> getCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
+		// TODO Auto-generated method stub
+
+		return commonDao.getCate(map, commandMap);
+	}
+
+	// 지역전체
+	@Override
+	public List<Map<String, Object>> getRegi(Map<String, Object> map, CommandMap commandMap) throws Exception {
+		// TODO Auto-generated method stub
+
+		return commonDao.getRegi(map, commandMap);
+	}
+
+	// 지역전체
+	@Override
+	public Map<String, Object> searchRegi(Map<String, Object> map, CommandMap commandMap) throws Exception {
+		// TODO Auto-generated method stub
+
+		return commonDao.searchRegi(map, commandMap);
 	}
 
 }

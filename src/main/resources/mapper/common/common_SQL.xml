@@ -24,8 +24,30 @@
 	 ]]>
 	 </select>
 	
+	<!-- 파일 인서트 -->
+	<insert id="mapInsert" parameterType="hashMap">
+  		<![CDATA[
+  		/* common.mapInsert */
+	    INSERT INTO KKAMAP (
+			         MOIM_IDXX     /* 모임 번호 */
+			       , MOIM_LATI     /* 위도 */
+			       , MOIM_LONG     /* 경도 */
+			       , MOIM_ADR1     /* 주소1 */
+			       , MOIM_ADR2     /* 주소2 */
+			) VALUES (
+			         #{MOIM_IDXX}     /* 모임 번호 */
+			       , #{MOIM_LATI}     /*  */
+			       , #{MOIM_LONG}     /* 파일 올린 사용자번호 */
+			       , #{MOIM_ADR1}     /* 원본 파일명 */
+			       , #{MOIM_ADR2}     /* 저장 파일명 */
+	         )
+ 		 ]]>
+	 </insert>
+	
+	<!-- 파일 인서트 -->
 	<insert id="fileInsert" parameterType="hashMap">
   		<![CDATA[
+  		/* common.fileInsert */
 	    INSERT INTO TM_FILEXM (
 			         FILE_IDXX     /* 파일 번호 / 파일 유형(각 PK) */
 			       , FILE_SEQC     /* 파일 번호2(001) */
@@ -68,7 +90,7 @@
 	<select id="pCate" parameterType='hashmap'
 	   resultType="hashmap">
 	   <![CDATA[
-	       SELECT /*common.pCate*/
+	       SELECT /* common.pCate */
 	    		  COMD_CODE AS CATE_CODE												/* 부모 카테고리 코드 */
 	    		, COMD_NAME AS CATE_NAME    											/* 부모 카테고리 이름 */
 	    		, CODE_OPT1 AS CATE_PATH												/*  카테고리 경로 */
@@ -84,7 +106,7 @@
 	<select id="cCate" parameterType='hashmap'
 	   resultType="hashmap">
 	   <![CDATA[
-	      SELECT /*common.cCate*/
+	      SELECT /* common.cCate */
 	    	      SUBSTR(COMD_CODE,'1','1')  AS PARENTS_CODE							/* 부모 카테고리 코드 */
 	            , COMD_CODE AS CATE_CODE												/* 카테고리 코드 */
 	    		, COMD_NAME AS CATE_NAME    											/* 자식 카테고리 이름 */
@@ -133,11 +155,23 @@
 		ORDER BY COMD_CODE
 	 ]]>
 	 </select>
+	
+	<!-- 카테고리검색 -->
+	<select id="searchRegi" parameterType='hashmap'
+	   resultType="hashmap">
+	   <![CDATA[
+	   	 SELECT * 
+	   	   FROM TB_CODEXD 
+	   	  WHERE COMM_CODE = 'REGI_CODE' 
+	   	    AND SUBSTR(COMD_CODE,1,1) = #{COMD_CODE} 
+	   	    AND COMD_NAME LIKE '%'||#{COMD_NAME}||'%'
+	 ]]>
+	 </select>
 	 
 	<!--모임 like insert -->
 	<insert id="likeInsert" parameterType="hashmap">
      <![CDATA[
-	     /*common.likdeInsert*/
+	     /* common.likdeInsert */
 	     INSERT INTO TM_HEARTS (
 	     		      LIKE_IDXX
 	     		    , USER_NUMB
@@ -151,17 +185,17 @@
 	<!--모임 like Delete -->
 	<delete id="likeDelete" parameterType="hashmap">
     <![CDATA[
-	    /*common.likeDelete*/
+	    /* common.likeDelete */
 	    DELETE TM_HEARTS 
 	     WHERE LIKE_IDXX = #{LIKE_IDXX}  
 	       AND USER_NUMB = #{USER_NUMB}  
             ]]>
 	</delete>
 	
-	<!--모임 like insert -->
+	<!-- 팔로우 -->
 	<insert id="follow" parameterType="hashmap">
      <![CDATA[
-	     /*common.follow*/
+	     /* common.follow */
 	     INSERT INTO TB_FOLLOW (
 	     		      USER_NUMB
 	     		    , FOLW_USER
@@ -172,10 +206,10 @@
             ]]>
 	</insert>
 	
-	<!--모임 like Delete -->
+	<!-- 언팔로우 -->
 	<delete id="unfollow" parameterType="hashmap">
     <![CDATA[
-	    /*common.unfollow*/
+	    /* common.unfollow */
 	    DELETE TB_FOLLOW 
 	     WHERE USER_NUMB = #{USER_NUMB}  
 	       AND FOLW_USER = #{FOLW_USER}  

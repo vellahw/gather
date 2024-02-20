@@ -117,23 +117,22 @@ public class GatherDao extends AbstractDao {
 			throws Exception {
 
 		Map<String, Object> getGatherDetail = (Map<String, Object>) selectOne("gather.getGather", map);
-		
-		if(session.getAttribute("USER_NUMB") != null) {
 
-            String userId =getGatherDetail.get("USER_NUMB").toString();
+		if (session.getAttribute("USER_NUMB") != null) {
 
-            String me = session.getAttribute("USER_NUMB").toString();
+			String userId = getGatherDetail.get("USER_NUMB").toString();
 
-            String folwCode = OracleFunction.getRelationCode(me, userId);
+			String me = session.getAttribute("USER_NUMB").toString();
 
-            String folwBtn = OracleFunction.getCodeName("FOLW_CODE", folwCode);
+			String folwCode = OracleFunction.getRelationCode(me, userId);
 
-            getGatherDetail.put("FOLW_CODE", folwCode);
+			String folwBtn = OracleFunction.getCodeName("FOLW_CODE", folwCode);
 
-            getGatherDetail.put("FOLW_BTNN", folwBtn);
+			getGatherDetail.put("FOLW_CODE", folwCode);
 
-        }
+			getGatherDetail.put("FOLW_BTNN", folwBtn);
 
+		}
 
 		return getGatherDetail;
 	}
@@ -169,6 +168,7 @@ public class GatherDao extends AbstractDao {
 		return getGatherMember;
 	}
 
+	// 게더 이미지 불러오기
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getGatherImg(Map<String, Object> map, CommandMap commandMap) throws Exception {
 
@@ -176,9 +176,9 @@ public class GatherDao extends AbstractDao {
 
 		return getGatherImg;
 	}
-	
+
 	public int getGatherCount(Map<String, Object> map, CommandMap commandMap) throws Exception {
-	    return Integer.parseInt(selectOne("gather.getGatherCount", map).toString());
+		return Integer.parseInt(selectOne("gather.getGatherCount", map).toString());
 	}
 
 	// 로그인 맴버 현재 상태
@@ -189,6 +189,16 @@ public class GatherDao extends AbstractDao {
 		Map<String, Object> getGatherYourState = (Map<String, Object>) selectOne("gather.getGatherMember", map);
 
 		return getGatherYourState;
+	}
+
+	//게더 번호 채번
+	public String makeGatherNumb() throws Exception {
+		return (String) selectOne("gather.makeUserNumb");
+	}
+
+	//게더 개설
+	public void makeGather(Map<String, Object> map, CommandMap commandMap) throws Exception {
+		insert("gather.makeGather", map);
 	}
 
 	// 모임마감

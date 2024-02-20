@@ -7,6 +7,64 @@
 -->
 <mapper namespace="gather">
 	
+		<!--  게더번호 체번 -->
+	   <select  id="makeGatherNumb" resultType="String">
+    	<![CDATA[
+	      SELECT 'GT' ||TO_CHAR(SYSDATE, 'YYMM') ||LPAD(NVL(MAX(CAST(SUBSTR(GATH_IDXX,7,4) AS NUMBER))+1,1),4,'0') AS GATH_IDXX
+		  	FROM TM_GATHER
+		   WHERE SUBSTR(GATH_IDXX,3,4) = TO_CHAR(SYSDATE, 'YYMM')
+    	]]>
+    	</select>
+    	
+	   <!--  회원가입 -->
+	   <insert id="makeGather" parameterType="hashmap">
+	        <![CDATA[
+	         INSERT INTO TM_GATHER (
+					      GATH_IDXX  	/* 게더번호 */
+					    , USER_NUMB  	/* 회원번호(방장번호) */
+					    , GATH_TITL  	/* 게더명 7자리 */
+					    , GATH_CNTT  	/* 상세내용 */
+					    , CATE_IDXX  	/* 카테고리PK */
+					    , FILE_SVNM  	/* 대표 이미지 파일 */
+					    , REGI_CODE  	/* 행정구역코드 */
+					    , APPR_YSNO  	/* 승인여부 (Y,N) */
+					    , APPR_GNDR  	/* 참가성별(NULL,M,W) */
+					    , MINN_AGEE		/* 최소참가연령(제한없음0) */
+					    , MAXX_AGEE     /* 최대참가연령(제한없음100) */
+					    , MINN_PEOP		/* 최소참가인원(2) */
+					    , MAXX_PEOP		/* 최대참가인원(30) */
+					    , MOIM_COST		/* 참가비용 */
+					    , MOIM_DATE		/* 모임날짜(마감날짜) */
+					    , MOIM_TIME		/* 모임시간(마감시간) */
+					    , REGG_DATE		/* 등록날짜 */
+					    , COMP_YSNO		/* 작성완료여부 */
+					    , DELT_YSNO		/* 삭제여부(Y,N) /  */
+					    , ENDD_YSNO		/* 마감여부 */
+			) VALUES (
+					      #{GATH_IDXX}  					/* 게더번호 */
+					    , #{USER_NUMB}  					/* 회원번호(방장번호) */
+					    , #{GATH_TITL, jdbcType=VARCHAR}  	/* 게더명 */
+					    , #{GATH_CNTT, jdbcType=VARCHAR}  	/* 상세내용 */
+					    , #{CATE_IDXX, jdbcType=VARCHAR}  	/* 카테고리PK */
+					    , #{FILE_SVNM, jdbcType=VARCHAR}  	/* 대표 이미지 파일 */
+					    , #{REGI_CODE, jdbcType=VARCHAR}  	/* 행정구역코드 */
+					    , #{APPR_YSNO, jdbcType=VARCHAR}  	/* 승인여부 (Y,N) */
+					    , #{APPR_GNDR, jdbcType=VARCHAR} 	/* 참가성별(NULL,M,W) */
+					    , #{MINN_AGEE, jdbcType=INTEGER}	/* 최소참가연령(제한없음0) */
+					    , #{MAXX_AGEE, jdbcType=INTEGER}    /* 최대참가연령(제한없음100) */
+					    , #{MINN_PEOP, jdbcType=INTEGER}	/* 최소참가인원(2) */
+					    , #{MAXX_PEOP, jdbcType=INTEGER}	/* 최대참가인원(30) */
+					    , #{MOIM_COST, jdbcType=INTEGER}	/* 참가비용 */
+					    , #{MOIM_DATE, jdbcType=DATE}		/* 모임날짜(마감날짜) */
+					    , #{MOIM_TIME, jdbcType=VARCHAR}	/* 모임시간(마감시간) */
+					    , SYSDATE							/* 등록날짜 */
+					    , #{COMP_YSNO}						/* 작성완료여부 */
+					    , 'N'								/* 삭제여부(Y,N) */
+					    , 'N'								/* 마감여부 */
+					   )
+	            ]]>
+	   </insert>
+	
    <!-- 게더 메인화면 -->
    <select id="mainGather" parameterType='hashmap'
       resultType="hashmap">
@@ -16,7 +74,6 @@
                 , TYPE                				/* 게더 타입 ('Taste': 취항 , 'Hot': 핫한게더 , 'Like':좋아요 많은 순 'Region': 지역) */
                 , GATH_IDXX	AS MOIM_IDXX			/* 게더 ID */
                 , GATH_TITL AS MOIM_TITL			/* 게더 제목 */
-                , GATH_CNTT	AS MOIM_CNTT			/* 게더 내용 */
                 , GATH_IMAG	AS MOIM_IMAG			/* 게더 대표이미지 */
                 , CATE_IDXX							/* 카테고리 코드 */
                 , PARENTS_CATE						/* 상위 카테고리 */
@@ -58,7 +115,6 @@
                               , 'Taste' AS TYPE
                     		  , GATH_IDXX
                     		  , GATH_TITL
-                    		  , GATH_CNTT
 		                      , GATH_IMAG
 		                      , CATE_IDXX
 		                      , PARENTS_CATE
@@ -96,7 +152,6 @@
 			                     ,'Hot' AS TYPE
 			                     , GATH_IDXX
 			                     , GATH_TITL
-			                     , GATH_CNTT
 			                     , GATH_IMAG
 			                     , CATE_IDXX
 			                     , PARENTS_CATE
@@ -124,7 +179,6 @@
 	                           , 'Like' AS TYPE
 	                           , GATH_IDXX
 	                           , GATH_TITL
-	                           , GATH_CNTT
 	                           , GATH_IMAG
 	                           , CATE_IDXX
 	                           , PARENTS_CATE
@@ -145,7 +199,6 @@
 	                       FROM ( SELECT 
 	                                     GATH_IDXX
 	                                   , GATH_TITL
-	                                   , GATH_CNTT
 	                                   , GATH_IMAG
 	                                   , CATE_IDXX
 	                                   , PARENTS_CATE
@@ -177,7 +230,6 @@
 			                     , 'Region' AS TYPE
 			                     , GATH_IDXX
 			                     , GATH_TITL
-			                     , GATH_CNTT
 			                     , GATH_IMAG
 			                     , CATE_IDXX
 			                     , PARENTS_CATE
@@ -227,7 +279,13 @@
 		       	  SELECT  ROW_NUMBER() OVER (ORDER BY REGG_DATE, MOIM_TIME, GATH_IDXX DESC) RNUM         
 		                , GATH_IDXX AS MOIM_IDXX										   	/* 게더아이디 */
 		                , GATH_TITL AS MOIM_TITL										   	/* 게더 제목 */
+		                ]]>
+		          <if test="MOIM_IDXX != null">
+		      	  <![CDATA[
 		                , GATH_CNTT AS MOIM_CNTT								           	/* 게더 내용 */
+		                  ]]>
+		      	  </if>
+		      	  <![CDATA[
 		                , GATH_IMAG AS MOIM_IMAG								            /* 게더 대표 이미지 */
 		                , CATE_IDXX															/* 카테고리 코드 */
 		                , PARENTS_CATE														/* 부모 카테고리 */
@@ -353,19 +411,20 @@
 	<select id="getGatherImg" parameterType='hashmap'
       resultType="hashmap">
       <![CDATA[
-		  SELECT MOIM_IMAG
-        FROM (
-        	    SELECT GATH_IMAG AS MOIM_IMAG
-                FROM VW_GATHER
-               WHERE GATH_IDXX = #{MOIM_IDXX}
-
-               UNION ALL
-
-              SELECT FILE_PATH AS MOIM_IMAG
-                FROM TM_FILEXM
-               WHERE FILE_IDXX = #{MOIM_IDXX}
-                 AND DELT_YSNO = 'N'
-             )
+		  SELECT /*gather.getGatherImg*/
+		  		 MOIM_IMAG
+	        FROM (
+	        	  SELECT GATH_IMAG AS MOIM_IMAG
+	                FROM VW_GATHER
+	               WHERE GATH_IDXX = #{MOIM_IDXX}
+	
+	               UNION ALL
+	
+	              SELECT FILE_PATH AS MOIM_IMAG
+	                FROM TM_FILEXM
+	               WHERE FILE_IDXX = #{MOIM_IDXX}
+	                 AND DELT_YSNO = 'N'
+	             )
 	 		]]>
 	</select>	
    

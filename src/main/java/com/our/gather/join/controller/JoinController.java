@@ -73,7 +73,8 @@ public class JoinController {
 
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(json);
 	}
-
+	
+	//회원가입
 	@RequestMapping(value = "/gather/joinDo.com", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<String> userJoin(@RequestParam("data") String userData, @RequestParam("regi") String regiData,
