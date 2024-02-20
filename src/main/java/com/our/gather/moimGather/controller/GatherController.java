@@ -35,8 +35,8 @@ public class GatherController {
 	@RequestMapping(value = "/gather/makeGather.com")
 	public ModelAndView moimResister(CommandMap commandMap) throws Exception {
 
-		ModelAndView mv = new ModelAndView("/moimGather/moimRegister");
-		mv.setViewName("moimRegister");
+		ModelAndView mv = new ModelAndView("/moimGather/makeGather");
+		mv.setViewName("makeGather");
 
 		List<Map<String, Object>> cate = commonService.getCate(commandMap.getMap(), commandMap);
 		List<Map<String, Object>> regi = commonService.getRegi(commandMap.getMap(), commandMap);
