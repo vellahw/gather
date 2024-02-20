@@ -103,11 +103,11 @@ document.addEventListener('DOMContentLoaded',()=>{
 		} else if(item.CATE_LEVL == '2') {
 			const childNode = document.createElement('li');
 			childNode.className = 'childWrap';
-			childNode.dataset.code2 = item.CATE_CODE;
 
 			const childNameNode = document.createElement('button');
 			childNameNode.className = 'child';
 			childNameNode.innerHTML = item.CATE_NAME;
+			childNameNode.dataset.code2 = item.CATE_CODE;
 		
 			childNode.appendChild(childNameNode);
 			document.querySelector(`[data-pcode=${item.PARENTS_CODE}]`).appendChild(childNode);
