@@ -32,6 +32,7 @@ public class GatherController {
 	@Resource(name = "GatherService")
 	private GatherService gatherService;
 
+	// 개설 폼
 	@RequestMapping(value = "/gather/makeGather.com")
 	public ModelAndView moimResister(CommandMap commandMap) throws Exception {
 
@@ -160,7 +161,7 @@ public class GatherController {
 			
 			String cRegi = moimRegi[1].substring(0, 2);
 			
-			regiMap.put("COMD_NMAE", cRegi);
+			regiMap.put("COMD_NAME", cRegi);
 			
 			Map<String, Object> resultRegi = commonService.searchRegi(regiMap, commandMap);
 			

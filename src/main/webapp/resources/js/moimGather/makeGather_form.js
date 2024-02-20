@@ -55,8 +55,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 	/**
 	 * 240219 장한원
-	 * 모임 주제를 골라주세요
-	 * 카테고리 생성
+	 * 모임 주제를 골라주세요 - 카테고리 생성
 	 */
 	const cateValue = document.getElementById('cateData').value;
 	const cateData = comObjectInArray(cateValue).result; // 카테고리 데이터
@@ -200,22 +199,27 @@ document.addEventListener('DOMContentLoaded',()=>{
 					}
 							
 					// 우편번호와 주소 정보를 해당 필드에 넣음
-					document.getElementById("moimRegion").value = addr;
+					document.getElementById("gatherAddress").value = addr;
 					//상세주소 입력 폼으로 포커스 이동
-					document.getElementById("moimDetailAddress").focus();
-		
+					document.getElementById("gatherDetailAddress").focus();
+					
 					// 주소 검색 후 지도에 마커 표시하기
 					geocoder.addressSearch(addr, function(result, status) {
 							
 						// 정상적으로 검색이 완료됐으면 
 						if (status === kakao.maps.services.Status.OK) {
-								
-							//위도, 경도 저장
-							let letlng = new kakao.maps.LatLng(result[0].y, result[0].x);
+							
+							let letlng = new kakao.maps.LatLng(result[0].y, result[0].x); // 위도+경도
+							let gatherLati = result[0].y; // 위도
+							let gatherLong = result[0].x; // 경도
 						
-							document.getElementById('moimDetailAddress').style.display = 'block';
-							document.getElementById('moimRegion').style.display = 'block';
-						
+							document.getElementById('gatherAddress').style.display = 'block';
+							document.getElementById('gatherDetailAddress').style.display = 'block';
+
+							// 위도 경도 hidden input 값 채움
+							document.getElementById('gatherLati').value = gatherLati;
+							document.getElementById('gatherLong').value = gatherLong;
+
 							// 결과값으로 받은 위치를 마커로 표시
 							let marker = new kakao.maps.Marker({
 								map: map,

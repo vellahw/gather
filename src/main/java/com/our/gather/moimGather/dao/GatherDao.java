@@ -193,7 +193,7 @@ public class GatherDao extends AbstractDao {
 
 	//게더 번호 채번
 	public String makeGatherNumb() throws Exception {
-		return (String) selectOne("gather.makeUserNumb");
+		return (String) selectOne("gather.makeGatherNumb");
 	}
 
 	//게더 개설
