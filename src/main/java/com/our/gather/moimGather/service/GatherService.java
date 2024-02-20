@@ -3,6 +3,7 @@ package com.our.gather.moimGather.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.our.gather.common.common.CommandMap;
@@ -33,8 +34,11 @@ public interface GatherService {
 	Map<String, Object> getGatherYourState(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception;
 
-	// 로그인 회원 현재 게더 참여상태
-	int getGatherCount(Map<String, Object> map, CommandMap commandMap)
+	// 게더 갯수 return
+	int getGatherCount(Map<String, Object> map, CommandMap commandMap) throws Exception;
+
+	// 회원가입
+	void makeGather(Map<String, Object> map, CommandMap commandMap, HttpServletRequest request, HttpSession session)
 			throws Exception;
 
 	// 게더마감

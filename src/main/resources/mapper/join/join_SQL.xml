@@ -14,6 +14,7 @@
 		   WHERE SUBSTR(USER_NUMB,3,4) = TO_CHAR(SYSDATE, 'YYMM')
     	]]>
     	</select>
+    	
 	   <!--  회원가입 -->
 	   <insert id="joinUs" parameterType="hashmap" useGeneratedKeys="true" keyProperty="USER_NUMB">
 	        <![CDATA[
