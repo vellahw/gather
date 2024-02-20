@@ -40,6 +40,11 @@ public class CommonDao extends AbstractDao {
 		delete("common.unfollow", map);
 	}
 
+	// 해시태그 insert
+	public void tagInsert(Map<String, Object> map) throws Exception {
+		insert("common.tagInsert", map);
+	}
+
 	// 부모카테고리
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> pCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
@@ -78,10 +83,11 @@ public class CommonDao extends AbstractDao {
 
 	// 지역 검색(모임 작성시 카카오맵에 있는 주소정보 검색용)
 	@SuppressWarnings("unchecked")
-	public Map<String, Object> searchRegi(Map<String, Object> map, CommandMap commandMap) throws Exception {
+	public Map<String, Object> searchRegi(Map<String, Object> map) throws Exception {
 
 		Map<String, Object> searchRegi = (Map<String, Object>) selectOne("common.searchRegi", map);
 
 		return searchRegi;
 	}
+
 }
