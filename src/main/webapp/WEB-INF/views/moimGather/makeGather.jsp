@@ -77,8 +77,10 @@
 						어디에서 모일까요?
 					</h3>
           <button type="button" class="searchMap">주소 검색</button>
-          <input type="text" class="basicInput register-p moimRegion" id="moimRegion" readonly="readonly">
-          <input type="text" class="basicInput register-p moimRegion" id="moimDetailAddress" placeholder="상세주소를 입력해주세요.">
+          <input type="text" id="gatherAddress" class="basicInput register-p moimRegion" readonly="readonly">
+          <input type="text" id="gatherDetailAddress" class="basicInput register-p moimRegion" placeholder="상세주소를 입력해주세요.">
+          <input type="hidden" id="gatherLati" />
+          <input type="hidden" id="gatherLong" />
           <div id="map" style="width:500px;height:400px; margin-top: 10px;"></div>
 				</div>
 				
@@ -101,7 +103,7 @@
 					<div class="btnContainer">
 						<div class="btnWrap">
 							<button type="button" class="waybtn prev" id="prev3">이전</button>
-					  	<button type="button" class="waybtn next" id="next3">다음</button>
+					  	<button type="button" class="waybtn next" id="submit">확인</button>
 						</div>
 					</div>
 				</div>
