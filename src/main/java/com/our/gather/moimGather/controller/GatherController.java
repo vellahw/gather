@@ -81,9 +81,6 @@ public class GatherController {
 			hashTag.put("MOIM_CNTT", resultGahterData.get("MOIM_CNTT"));
 			hashTag.put("MOIM_IDXX", gathNumb);
 			
-			System.out.println("resultGahterData.get(\"MOIM_CNTT\") " + resultGahterData.get("MOIM_CNTT"));
-			System.out.println("hashTag " + hashTag);
-			
 			commonService.tagInsert(hashTag);
 
 			return ResponseEntity.ok("success");

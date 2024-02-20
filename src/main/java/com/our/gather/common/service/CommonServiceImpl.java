@@ -204,20 +204,15 @@ public class CommonServiceImpl implements CommonService {
         List<String> hashtags = new ArrayList<>();
 
         String text = (String) map.get("MOIM_CNTT");
-        System.out.println("여긴 들어왔겠지? " + text);
 
         // 해시태그를 추출할 정규 표현식 패턴
-        Pattern pattern = Pattern.compile("#[\\\\wㄱ-힣0-9\\\\p{Punct}]+");
+        Pattern pattern = Pattern.compile("#[\\p{IsHangul}\\p{IsAlphabetic}\\p{IsDigit}]+");
 
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
             // 매칭된 해시태그를 리스트에 추가
             hashtags.add(matcher.group().substring(1)); // # 기호 제거 후 추가;
         }
-        
-        
-        System.out.println("여긴 hashtags는.... " + hashtags);
-        
         
         for(int i = 0; i < hashtags.size(); i++) {
         	
