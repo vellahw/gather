@@ -123,6 +123,10 @@ document.addEventListener('DOMContentLoaded',()=>{
     if(target.matches('[data-appr]')) {
       target.classList.toggle('appr_act');
     }
+
+		if(target.matches('[data-gender')) {
+			target.classList.toggle('gender_act');
+		}
   });
 
 
@@ -283,6 +287,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
       const step1 = document.getElementById('step1');
       const step2 = document.getElementById('step2');
+      const step3 = document.getElementById('step3');
       const step4 = document.getElementById('step4');
 
       /* 다음 버튼 */
@@ -294,8 +299,12 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 				} else if(btnId == 'next2') {
 
-					showStep(step2, step4);
+					showStep(step2, step3);
 
+				} else if(btnId == 'next3') {
+
+					showStep(step3, step4);
+				
 				}
 				
 				/* 이전버튼 */

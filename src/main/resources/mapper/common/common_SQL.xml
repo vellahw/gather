@@ -28,7 +28,7 @@
 	<insert id="mapInsert" parameterType="hashMap">
   		<![CDATA[
   		/* common.mapInsert */
-	    INSERT INTO KKAMAP (
+	    INSERT INTO TB_KKAMAP (
 			         MOIM_IDXX     /* 모임 번호 */
 			       , MOIM_LATI     /* 위도 */
 			       , MOIM_LONG     /* 경도 */
