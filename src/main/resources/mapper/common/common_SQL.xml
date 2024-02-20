@@ -44,8 +44,8 @@
  		 ]]>
 	 </insert>
 	 
-	 <!-- 카카오맵정보 Insert -->
-	<insert id="tagInsert" parameterType="hashMap">
+	 <!-- 해시태그 Insert -->
+	<insert id="tagInsert" parameterType="hashMap" useGeneratedKeys="true" keyProperty="HASH_SEQC">
 	<selectKey keyProperty="HASH_SEQC" order="BEFORE" resultType="string">
 	<![CDATA[
 	SELECT LPAD(NVL(MAX(TO_NUMBER(HASH_SEQC)), 0) + 1, 3, '0') AS HASH_SEQC  
@@ -54,13 +54,13 @@
 	]]>
 	</selectKey>
   		<![CDATA[
-  		/* common."tagInsert" */
+  		/* common.tagInsert */
 	   INSERT INTO TB_HASHTG (
 	   			   HASH_IDXX
 	   			 , HASH_SEQC
 	   			 , HASH_TAGG) 
 	   	  VALUES (
-	   	  		 , #{MOIM_IDXX}
+	   	  		   #{MOIM_IDXX}
 	   	  		 , #{HASH_SEQC}
 	   	  		 , #{HASH_TAGG}
 	   	  		 )
