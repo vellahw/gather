@@ -56,8 +56,6 @@ public class GatherController {
 
 		try {
 			
-			commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
-			// JSON 데이터 처리
 			ObjectMapper objectMapper = new ObjectMapper();
 
 			Map<String, Object> resultGahterData = objectMapper.readValue(gatherData, new TypeReference<Map<String, Object>>() {});
@@ -166,6 +164,7 @@ public class GatherController {
 			Map<String, Object> resultRegi = commonService.searchRegi(regiMap, commandMap);
 			
 			resultGahterData.put("REGI_CODE", resultRegi.get("COMD_CODE"));
+			resultGahterData.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 
 			gatherService.makeGather(resultGahterData, commandMap, request, session);
 			
