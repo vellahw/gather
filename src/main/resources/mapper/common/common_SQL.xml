@@ -166,15 +166,15 @@
 	   resultType="hashmap">
 	   <![CDATA[
 	   	  SELECT /*common.getCate*/
-               CASE WHEN LENGTH(COMD_CODE) = 1 
+                 CASE WHEN LENGTH(COMD_CODE) = 1 
                		 			 THEN 1
-              	    ELSE 2
-                END AS CATE_LEVL                              /* 카테고리 레벨 */
-	   				 , SUBSTR(COMD_CODE,'1','1') AS PARENTS_CODE			/* 부모 지역 코드 */
-	           , COMD_CODE AS CATE_CODE												  /* 부모 지역 코드 */
-	    			 , COMD_NAME AS CATE_NAME   											/* 부모 지역 이름 */
-             , CODE_OPT2 AS CATE_IMAG                         /* 부모 지역 이름 */
-				 FROM TB_CODEXD
+              	      ELSE 2
+                  END AS CATE_LEVL                              	/* 카테고리 레벨 */
+	   		   , SUBSTR(COMD_CODE,'1','1') AS PARENTS_CODE			/* 부모 지역 코드 */
+	           , COMD_CODE AS CATE_CODE								/* 부모 지역 코드 */
+	    	   , COMD_NAME AS CATE_NAME   							/* 부모 지역 이름 */
+               , CODE_OPT2 AS CATE_IMAG                         	/* 부모 지역 이름 */
+		   FROM TB_CODEXD
 	  	  WHERE COMM_CODE = 'CATE_IDXX'
 				ORDER BY COMD_CODE
 	 ]]>
@@ -184,7 +184,9 @@
 	<select id="searchRegi" parameterType='hashmap'
 	   resultType="hashmap">
 	   <![CDATA[
-	   	 SELECT * 
+	   		   
+	   	 SELECT /*common.searchRegi*/
+	   	        * 
 	   	   FROM TB_CODEXD 
 	   	  WHERE COMM_CODE = 'REGI_CODE' 
 	   	    AND SUBSTR(COMD_CODE,1,1) = #{COMD_CODE} 
