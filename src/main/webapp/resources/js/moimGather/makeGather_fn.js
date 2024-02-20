@@ -110,6 +110,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const maxPeople = document.getElementById('maxPeople').value;
     const gathGender = document.querySelector('.gender_act').getAttribute('data-gender'); // 성별
 
+    if(gathGender == 'null') {
+      gathGender = '';
+    }
+
     step3Data ={
         APPR_YSNO : gathAppr
       , MINN_AGEE : minAge
