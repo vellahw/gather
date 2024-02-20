@@ -115,22 +115,21 @@ document.addEventListener('DOMContentLoaded',()=>{
 	});
 
 
-	let category; // 유저가 선택한 카테고리 값을 담음
-
-	// 카테고리 클릭 이벤트
-	categoryListNode.addEventListener('click', (event)=>{
-		const target = event.target;
-
-		if(target.matches('[data-code1]') || target.matches('[data-parentcode]')) {
-
-			target.classList.toggle('level1_active');
-
-			const targetChild = document.querySelector(`[data-pcode=${target.getAttribute('data-code1')}]`);
-			targetChild.classList.toggle('level2_active');
-
-		}
-	});
-
+	/* 부모 카테고리 클릭 이벤트 */
+	// categoryListNode.addEventListener('click', (event)=>{
+		// 	const target = event.target;
+		
+		// 	if(target.matches('[data-code1]') || target.matches('[data-parentcode]')) {
+			
+			// 		target.classList.toggle('level1_active');
+			
+			// 		const targetChild = document.querySelector(`[data-pcode=${target.getAttribute('data-code1')}]`);
+			// 		targetChild.classList.toggle('level2_active');
+			
+			// 	}
+			// });
+			
+	/* 부모 카테고리 마우스오버 이벤트 */
 	categoryListNode.addEventListener('mouseover', (event)=>{
 		const target = event.target;
 		if(target.matches('[data-code1]') || target.matches('[data-parentcode]')) {
@@ -147,7 +146,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 		element.addEventListener('mouseleave', ()=>{
 			element.classList.remove('.leve2_active');
 		})
-	})
+	});
 
 
 	/* 카카오맵 지도 띄우기 */

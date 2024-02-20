@@ -175,6 +175,11 @@
 	color: var(--primary);
 }
 
+.picked_child {
+	background-color: var(--color-white);
+	color: var(--primary);
+}
+
 ._row {
 	flex-direction: row;
 }
