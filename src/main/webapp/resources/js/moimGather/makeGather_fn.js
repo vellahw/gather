@@ -1,16 +1,30 @@
-/**
- * 게더 개설 폼 기능을 담당하는 파일
- */
+/** 게더 개설 폼 기능을 담당하는 파일 **/
 
 document.addEventListener('DOMContentLoaded', ()=>{
+  if(sessionStorage.getItem('USER_NUMB') == null) {
+    comAlert3(
+        '세션이 만료되었습니다.'
+      , '로그인 후 이용해주세요.'
+      , 'warning'
+      , function() { location.href = '/gather/login.com' }
+    )
+
+    return false;
+  }
+
   const categoryList = document.querySelector('.categoryList');
   const step1Btn = document.getElementById('next');
   const step2Btn = document.getElementById('next2');
+  const step3Btn = document.getElementById('next3');
   const submitBtn = document.getElementById('submit');
 
   let pickedCateData; // 유저가 선택한 카테고리 값을 담음
-  let gatherAddressData;
-  let reqData;
+  let gatherAddressData; // 주소+상세주소 데이터 담음
+  let step1Data; // step1 데이터 담음
+  let step2Data; // step2 데이터 담음
+  let step3Data; // step3 데이터 담음
+  let step4Data; // step4 데이터 담음
+  let reqData; // step1~step4 하나로 합친 데이터 담음
   let formData = new FormData(); // 서버로 전송할 폼 객체 생성
 
   // 자식 카테고리 클릭 이벤트
@@ -27,7 +41,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
       pickedCateData = target.getAttribute('data-code2');
     }
   });
-
 
   /**
    * 240220 장한원
@@ -47,7 +60,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const gatherTitle = document.getElementById('gatherTitle').value;
     
     step1Data ={
-        GATH_TITL : gatherTitle
+        MOIM_TITL : gatherTitle
       , CATE_IDXX : pickedCateData
     };
 
@@ -59,38 +72,74 @@ document.addEventListener('DOMContentLoaded', ()=>{
    * step2 -> step3로 가는 '다음' 버튼
    */
   step2Btn.addEventListener('click', ()=>{
+    const gatherCost = document.getElementById('gatherCost').value;
     const gatherDate = document.getElementById('gatherDate').value;
     const gatherTime = document.getElementById('gatherTime').value;
-    const minPeople = document.getElementById('minPeople').value;
-    const maxPeople = document.getElementById('maxPeople').value;
     const gatherAddress = document.getElementById('gatherAddress').value;
     const gatherDetailAddress = document.getElementById('gatherDetailAddress').value;
     const gatherLati = document.getElementById('gatherLati').value;
     const gatherLong = document.getElementById('gatherLong').value;
 
     step2Data ={
-        MOIM_DATE : gatherDate
+        MOIM_COST : gatherCost
+      , MOIM_DATE : gatherDate
       , MOIM_TIME : gatherTime
-      , MINN_PEOP : minPeople
-      , MAXX_PEOP : maxPeople
     };
 
     gatherAddressData = {
         MOIM_LATI : gatherLati
       , MOIM_LONG : gatherLong
       , MOIM_ADR1 : gatherAddress
-      , MOIM_ADR2 : gatherDetailAddress }; // 게더 주소 데이터 가공
-    
-    reqData = Object.assign({}, step1Data, step2Data);
+      , MOIM_ADR2 : gatherDetailAddress
+    };
 
     console.log('step2Data  ' + JSON.stringify(step2Data));
     console.log('gatherAddressData  ' + JSON.stringify(gatherAddressData));
-    console.log('reqData  ' + JSON.stringify(reqData));
     
   });
 
+  /**
+   * 240220: 장한원
+   * step3 -> step4로 가는 '다음' 버튼
+   */
+  step3Btn.addEventListener('click', ()=>{
+    const gathAppr = document.querySelector('.appr_act').getAttribute('data-appr'); // 승인유무
+    const minAge = document.getElementById('minAge').value;
+    const maxAge = document.getElementById('maxAge').value;
+    const minPeople = document.getElementById('minPeople').value;
+    const maxPeople = document.getElementById('maxPeople').value;
+    const gathGender = document.querySelector('.gender_act').getAttribute('data-gender'); // 성별
 
+    step3Data ={
+        APPR_YSNO : gathAppr
+      , MINN_AGEE : minAge
+      , MAXX_AGEE : maxAge
+      , MINN_PEOP : minPeople
+      , MAXX_PEOP : maxPeople
+      , APPR_GNDR : gathGender
+    };
+
+    console.log('step3Data  ' + JSON.stringify(step3Data));
+
+  });
+
+
+  /**
+   * 240220: 장한원
+   * 마지막 '확인' 버튼
+   */
   submitBtn.addEventListener('click', ()=>{
+    const gathContent = document.getElementById('summernote').value;
+
+    step4Data = {
+        MOIM_CNTT : gathContent
+      , COMP_YSNO : 'Y'
+    }
+
+    reqData = Object.assign({}, step1Data, step2Data, step3Data, step4Data);
+
+    console.log('reqData  ' + JSON.stringify(reqData));
+
     
     formData.append('data', JSON.stringify(reqData)); // 유저가 입력한 폼 값
     formData.append('map', JSON.stringify(gatherAddressData)); 
@@ -110,6 +159,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     .then((data) => {
       if(data == 'success') {
         alert('성공입니당')
+        location.reload();
 
         // comAlert2(5
         //   ,"게더가 만들어졌어요!"
@@ -125,7 +175,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     .catch(error => {
       console.error('네트워크 에러 발생:', error);
     });
-  })
-
+  });
 
 });

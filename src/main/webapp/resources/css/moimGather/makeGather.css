@@ -18,7 +18,7 @@
   border-radius: 40px;
   box-sizing: border-box;
   box-shadow: 0px 1px 6px 0px rgba(0,0,0,0.21);
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .innerContainer h2 {
@@ -38,7 +38,7 @@
 	margin: 6px 0;
 }
 
-#step1, #step2 {
+#step1, #step2, #step3, #step4 {
 	opacity: 0;
   visibility: hidden;
 	width: 0;
@@ -190,8 +190,16 @@
   font-weight: 500;
 }
 
+.secondLabel {
+	font-size: 14px;
+}
+
 .register-p {
 	margin: 8px;	
+}
+
+#gatherCost {
+	display: none;
 }
 
 .btnContainer {
@@ -234,4 +242,29 @@
 
 .moimRegion {
 	display: none;
+}
+
+.costBtn {
+	color: var(--primay);
+}
+
+.cost_act {
+	
+}
+
+.apprBtn {
+	
+}
+
+.appr_act {
+	background-color: var(--primay);
+	color: var(--primay);
+}
+
+.genderBtn {
+	
+}
+
+.gender_act {
+	color: var(--primay);
 }
