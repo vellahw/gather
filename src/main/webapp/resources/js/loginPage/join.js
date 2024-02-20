@@ -27,10 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
       const target = event.target;
       const btnId = target.id; // 클릭한 버튼 아이디
 
-      const signupContainer = document.getElementById('signupContainer');
-      const signupStep2 = document.getElementById('signupStep2');
-      const signupStep3 = document.getElementById('signupStep3');
-
       /* 다음 버튼 */
       if(target.matches('.next')) {
 
@@ -45,9 +41,6 @@ document.addEventListener('DOMContentLoaded', function () {
               element.innerHTML = '';
             });
             
-            // needMarginList.forEach(item => {
-            //   item.style.marginBottom = '20px';
-            // });
           }
 
         } else if(btnId == 'next2'){
@@ -310,26 +303,9 @@ document.addEventListener('DOMContentLoaded', function () {
    * 240207 장한원
    * 선호 지역 데이터 처리
    */
-  const regiList = []; // 지역 데이터 list
 
   const regiData = document.getElementById('regi').value;
-  const cleanedData = regiData.replace(/[[\]\ ]/g, '');
-  const splitData = cleanedData.split("},{");
-
-  splitData.forEach(item => {
-      // 중괄호 제거 후, 쉼표로 데이터 분리
-      const keyValuePairs = item.replace("{", "").replace("}", "").split(",");
-      const map = {};
-
-      keyValuePairs.forEach(pair => {
-          // 등호를 기준으로 키와 값을 나누어 맵에 추가
-          const [key, value] = pair.split("=");
-          map[key] = value;
-      });
-
-      regiList.push(map);
-
-  });
+  const regiList = comObjectInArray(regiData).result
 
   /* 부모 지역 노드 생성 및 자식 지역 노드 생성 함수 */
   const createNode = function(item) {

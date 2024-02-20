@@ -19,6 +19,11 @@
 	display: block !important;
 }
 
+/*========== display none 처리 ==========*/
+.none_element {
+	display: none !important;
+}
+
 
 /*========== display flex 처리 ==========
 	display none -> flex 될 때 사용

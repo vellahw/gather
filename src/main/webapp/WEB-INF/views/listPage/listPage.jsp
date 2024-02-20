@@ -25,7 +25,7 @@
 		</c:if>
 	  </h1>
 	  <% if(session.getAttribute("USER_NUMB") != null) { %>
-	    <button type="button" class="moimRegiBtn" onclick="comGoSomewhere('register')">
+	    <button type="button" class="moimRegiBtn" onclick="comGoSomewhere('makeGather')">
 	    	<c:out value="${moimType}" /> 개설하기
 	    </button>
 	  <% } %>
