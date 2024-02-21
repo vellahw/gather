@@ -60,11 +60,11 @@
 							<span aria-label="필수 입력값입니다.">⁕</span>
 							참가비가 있나요?
 						</label>
-						<div>
+						<div style="display: flex; margin: 8px;">
 							<button type="button" class="costBtn parent" data-cost="Y">있음</button>
 							<button type="button" class="costBtn parent" data-cost="N">없음</button>
 						</div>
-						<input type="number" id="gatherCost" class="basicInput register-p">
+						<input type="text" id="gatherCost" class="basicInput register-p" placeHolder="숫자만 입력해주세요.">
 					</div>
 					
 					<div class="eachInputWrap">
@@ -168,7 +168,7 @@
 							<span aria-label="필수 입력값입니다.">⁕</span>
 							모임 소개
 						</label>
-						<textarea id="summernote"></textarea>
+						<textarea id="gathContent"></textarea>
 					</div>
 					<div class="btnContainer">
 						<button type="button" class="waybtn prev" id="prev4">이전</button>

@@ -1,14 +1,14 @@
 document.addEventListener('DOMContentLoaded',()=>{
+	const cateValue = document.getElementById('cateData').value;
+	const cateData = comObjectInArray(cateValue).result; // 카테고리 데이터
+	const gatherCostNode = document.getElementById('gatherCost'); // 참가비용 입력 input
+	// 카테고리들을 담고있는 최상위 노드
+	const categoryListNode =  document.querySelector('.categoryList');
+	
 	/**
 	 * 240219 장한원
 	 * 모임 주제를 골라주세요 - 카테고리 생성
 	 */
-	const cateValue = document.getElementById('cateData').value;
-	const cateData = comObjectInArray(cateValue).result; // 카테고리 데이터
-
-	// 카테고리들을 담고있는 최상위 노드
-	const categoryListNode =  document.querySelector('.categoryList');
-	
 	// 카테고리 생성
 	cateData.forEach(item => {
 
@@ -97,17 +97,42 @@ document.addEventListener('DOMContentLoaded',()=>{
 	/**
 	 * 240220 장한원
 	 * step2 참가비 클릭 이벤트
-	 */
+	*/
 	document.getElementById('step2').addEventListener('click', (event)=>{
     const target = event.target;
-		const gatherCostNode = document.getElementById('gatherCost')
+		
+		if(target.classList.contains('costBtn')) {
 
-    if(target.matches('[data-cost="Y"]')) {
-      gatherCostNode.classList.add('block_element');
-    } else if(target.matches('[data-cost="N"]')) {
-      gatherCostNode.classList.remove('block_element');
+			comRemoveActiveClass('.cost_act', 'cost_act');
+
+			target.classList.toggle('cost_act');
+
+			// 비용 입력하는 input 띄움
+			if(target.matches('[data-cost="Y"]')) {
+				gatherCostNode.classList.add('block_element');
+			} else if(target.matches('[data-cost="N"]')) {
+				gatherCostNode.classList.remove('block_element');
+			}
 		}
+
   });
+
+	// 천원단위로 콤마 찍어줌
+	if(gatherCostNode.classList.contains('block_element')) {
+		gatherCostNode.addEventListener('input', (event)=>{
+			const target = event.target;
+			const originalValue = target.value;
+			
+			// 숫자가 아닌 문자 제거
+			const cleanedValue = originalValue.replace(/[^0-9]/g, '');
+			
+			// 쉼표 추가
+			const formattedValue = cleanedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+			
+			// 입력 값을 대체
+			target.value = formattedValue;
+		});
+	}
 
 	/**
 	 * 240220 장한원
@@ -265,16 +290,41 @@ document.addEventListener('DOMContentLoaded',()=>{
 	/**
 	 * summernote 에디터 띄움
 	 */	
-	$('#summernote').summernote({
+	$('#gathContent').summernote({
+		codeviewFilter: false, // 코드 보기 필터 비활성화
+    codeviewIframeFilter: false, // 코드 보기 iframe 필터 비활성화
+
 		height: 300,                 // 에디터 높이
 		minHeight: null,             // 최소 높이
 		maxHeight: null,             // 최대 높이
 		focus: false,                  // 에디터 로딩후 포커스를 맞출지 여부
 		lang: "ko-KR",					// 한글 설정
 		//placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
+		
+		callbacks:{ 
+			onImageUpload : function(files){ 
+		    uploadSummernoteImageFile(files, this); 
+		  } 
+		} 
 	});
 
-	
+	function uploadSummernoteImageFile(file, editor){ 
+		let imgSrc;
+
+		if (file.length === 0) {
+      return;
+    } else {
+      const reader = new FileReader();
+      reader.onload = ({ target }) => {
+				imgSrc = target.result
+				
+      };
+			
+			$(editor).summernote('insertImage', imgSrc);
+
+		}
+	} 
+
 	/* 
   * 240219 장한원
   * 이전/다음 버튼 클릭 이벤트
