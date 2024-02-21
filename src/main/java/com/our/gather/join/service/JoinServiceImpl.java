@@ -31,14 +31,10 @@ public class JoinServiceImpl implements JoinService {
 	public void userJoin(Map<String, Object> map, CommandMap commandMap, HttpServletRequest request,
 			HttpSession session) throws Exception {
 
-		String userNumbString = joinDao.makeUserNumb();
-		map.put("USER_NUMB", userNumbString);
-		commandMap.put("USER_NUMB", userNumbString);
-
 		try {
-
-			map.put("USER_NUMB", userNumbString);
-
+			
+			map.put("FILE_IDXX",map.get("USER_NUMB"));
+			
 			List<Map<String, Object>> flist = fileUtils.fileInsert(map, request, session);
 
 			for (int i = 0, size = flist.size(); i < size; i++) {
@@ -80,6 +76,14 @@ public class JoinServiceImpl implements JoinService {
 
 			joinDao.updateNewstCate(map, commandMap);
 		}
+
+	}
+
+	// 선호 카테고리 저장
+	@Override
+	public String makeUserNumb() throws Exception {
+
+		return joinDao.makeUserNumb();
 
 	}
 

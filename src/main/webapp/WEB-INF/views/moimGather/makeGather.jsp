@@ -168,7 +168,7 @@
 							<span aria-label="필수 입력값입니다.">⁕</span>
 							모임 소개
 						</label>
-						<textarea id="gathContent"></textarea>
+						<textarea id="summernote"></textarea>
 					</div>
 					<div class="btnContainer">
 						<button type="button" class="waybtn prev" id="prev4">이전</button>
