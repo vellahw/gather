@@ -482,3 +482,16 @@ function comFollow(folwCode, userNumb) {
             });
             
 }
+
+
+/* 
+240221 장한원
+name:comRemoveActiveClass
+Purpose: 액티브 클래스 추가 전 이미 적용된 액티브 클래스를 지움
+parameter: ( selector: 요소 선택자(클래스, 아이디 등) )
+*/	
+function comRemoveActiveClass(elementSelector, removeClassName) {
+  if(document.querySelector(elementSelector)) {
+    document.querySelector(elementSelector).classList.remove(removeClassName);
+  }
+}

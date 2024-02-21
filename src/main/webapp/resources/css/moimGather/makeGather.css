@@ -64,7 +64,7 @@
 	width: 100%;
 	display: flex;
   flex-direction: column;
-  margin: 6px 0;
+  margin: 6px 0 18px 0;
 }
 
 .catesection {
@@ -189,8 +189,8 @@
 
 .eachLabel {
   padding: 5px 0 5px 5px;
-  font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 18.72px;
 }
 
 .secondLabel {
@@ -249,11 +249,22 @@
 }
 
 .costBtn {
-	color: var(--primay);
+  height: 46px;
+}
+
+.costBtn[data-cost="Y"] {
+	margin-right: 5px;
+}
+
+.costBtn[data-cost="N"] {
+	margin-right: 10px;
+  margin-left: 5px;
 }
 
 .cost_act {
-	
+	background-color: var(--color-orange400);
+  color: #fff;
+  border: none;
 }
 
 .apprBtn {
