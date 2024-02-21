@@ -67,6 +67,10 @@
   margin: 6px 0 18px 0;
 }
 
+#step2 > .eachInputWrap {
+	margin-bottom: 34px;
+}
+
 .catesection {
 	margin: 6px 0 18px 0;
 }
@@ -206,7 +210,7 @@
 }
 
 .btnContainer {
-	position: absolute;
+  position: sticky;
 	width: 0;
   bottom: 0;
   justify-content: space-between;
@@ -246,6 +250,8 @@
 
 .moimRegion {
 	display: none;
+	margin-right: 18px;
+	margin-top: 0;
 }
 
 .costBtn {
@@ -266,6 +272,48 @@
   color: #fff;
   border: none;
 }
+
+.gatherWhen {
+	padding:0 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gatherWhen > div {
+	width: 50%;
+}
+
+.gatherWhen > div > label {
+	font-weight: 500;
+  font-size: 14px;
+}
+
+.gatherWhen > div > input {
+	width: 70%;
+	margin-right: 0;
+	margin-left: 4px;
+}
+
+.searchMap {
+	border-radius: 20px;
+  font-size: 14px;
+  height: 38px;
+  width: 230px;
+  margin: 12px 8px;
+}
+
+#map {
+	width: calc(100% - 26px);
+	height: 300px;
+	margin: 0 8px;
+	opacity: 0;
+}
+
+.show_kamap {
+	opacity: 1 !important;
+}
+
 
 .apprBtn {
 	

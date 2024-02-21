@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 								extraAddr = ' (' + extraAddr + ')';
 						}
 					}
-							
+					
 					// 우편번호와 주소 정보를 해당 필드에 넣음
 					document.getElementById("gatherAddress").value = addr;
 					//상세주소 입력 폼으로 포커스 이동
@@ -215,6 +215,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 							
 						// 정상적으로 검색이 완료됐으면 
 						if (status === kakao.maps.services.Status.OK) {
+							
+							document.getElementById("map").classList.add('show_kamap');
+							map.relayout();
 							
 							let letlng = new kakao.maps.LatLng(result[0].y, result[0].x); // 위도+경도
 							let gatherLati = result[0].y; // 위도
@@ -241,6 +244,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 						
 							// 지도의 중심을 결과값으로 받은 위치로 이동
 							map.setCenter(letlng);
+
 						} 
 					}); 
 				}
@@ -285,29 +289,8 @@ document.addEventListener('DOMContentLoaded',()=>{
 		children[13].style.left = value + '%';
 		children[13].childNodes[1].innerHTML = target.value;
 	});
-	
-	// callbacks:{ 
-	// 	onImageUpload : function(files){ 
-	//     uploadSummernoteImageFile(files, this); 
-	//   } 
-	// } 
-	// function uploadSummernoteImageFile(file, editor){ 
-	// 	let imgSrc;
 
-	// 	if (file.length === 0) {
-  //     return;
-  //   } else {
-  //     const reader = new FileReader();
-  //     reader.onload = ({ target }) => {
-	// 			imgSrc = target.result
-				
-  //     };
-			
-	// 		$(editor).summernote('insertImage', imgSrc);
-
-	// 	}
-	// } 
-
+  
 	/* 
   * 240219 장한원
   * 이전/다음 버튼 클릭 이벤트
