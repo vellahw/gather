@@ -83,10 +83,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
    * step1 -> step2로 가는 '다음' 버튼
    */
   step1Btn.addEventListener('click', ()=>{
-    const gatherTitle = document.getElementById('gatherTitle').value;
+    const moimTitle = document.getElementById('moimTitle').value;
     
     step1Data ={
-        MOIM_TITL : gatherTitle
+        MOIM_TITL : moimTitle
       , CATE_IDXX : pickedCateData
     };
 
@@ -159,10 +159,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
    * 마지막 '확인' 버튼
    */
   submitBtn.addEventListener('click', ()=>{
-    const gathContent = document.getElementById('summernote').value;
+    const summernote = document.getElementById('summernote').value;
 
     step4Data = {
-        MOIM_CNTT : gathContent
+        MOIM_CNTT : summernote
       , COMP_YSNO : 'Y'
     }
 
