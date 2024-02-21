@@ -46,25 +46,25 @@
 	 
 	 <!-- 해시태그 Insert -->
 	<insert id="tagInsert" parameterType="hashMap" useGeneratedKeys="true" keyProperty="HASH_SEQC">
-	<selectKey keyProperty="HASH_SEQC" order="BEFORE" resultType="string">
-	<![CDATA[
-	SELECT LPAD(NVL(MAX(TO_NUMBER(HASH_SEQC)), 0) + 1, 3, '0') AS HASH_SEQC  
-						FROM TB_HASHTG
-					   WHERE HASH_IDXX = #{MOIM_IDXX} /* 파일 번호 순차채번 */
-	]]>
-	</selectKey>
-  		<![CDATA[
-  		/* common.tagInsert */
-	   INSERT INTO TB_HASHTG (
-	   			   HASH_IDXX
-	   			 , HASH_SEQC
-	   			 , HASH_TAGG) 
-	   	  VALUES (
-	   	  		   #{MOIM_IDXX}
-	   	  		 , #{HASH_SEQC}
-	   	  		 , #{HASH_TAGG}
-	   	  		 )
- 		 ]]>
+		<selectKey keyProperty="HASH_SEQC" order="BEFORE" resultType="string">
+		<![CDATA[
+		SELECT LPAD(NVL(MAX(TO_NUMBER(HASH_SEQC)), 0) + 1, 3, '0') AS HASH_SEQC  
+		  FROM TB_HASHTG
+		 WHERE HASH_IDXX = #{MOIM_IDXX} /* 해시태그 시퀀스 순차채번 */
+		]]>
+		</selectKey>
+	  		<![CDATA[
+	  		/* common.tagInsert */
+		   INSERT INTO TB_HASHTG (
+		   			   HASH_IDXX
+		   			 , HASH_SEQC
+		   			 , HASH_TAGG) 
+		   	  VALUES (
+		   	  		   #{MOIM_IDXX}
+		   	  		 , #{HASH_SEQC}
+		   	  		 , #{HASH_TAGG}
+		   	  		 )
+	 		 ]]>
 	 </insert>
 	
 	<!-- 파일 Insert -->
