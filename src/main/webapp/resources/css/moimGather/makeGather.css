@@ -29,6 +29,9 @@
 .formContainer {
 	display: flex;
   flex-direction: column;
+  position: absolute;
+  height: calc(100% - 80px);
+  width: calc(100% - 120px);
 }
 
 .inputWrapper {
@@ -36,16 +39,16 @@
 	flex-direction: column;
   align-items: center;
 	margin: 6px 0;
+	height: calc(100% - 61px);
+  width: 100%;
 }
 
 #step1, #step2, #step3, #step4 {
 	opacity: 0;
   visibility: hidden;
 	width: 0;
+	height: calc(100% - 61px);
 	transition: all 0.3s;
-}
-
-#step2 {
 	overflow-y: scroll;
 	overflow-x: hidden;
 }
@@ -204,14 +207,15 @@
 
 .btnContainer {
 	position: absolute;
-  bottom: -70px;
-  width: calc(100%);
+	width: 0;
+  bottom: 0;
+  justify-content: space-between;
+  display: flex;
+  z-index: 1;
 }
 
-.btnWrap {
-	justify-content: space-between;
-  display: flex;
-  padding: 0 4px 0px 4px;
+.btnContainer_act {
+  width: 100%;
 }
 
 .waybtn {
