@@ -51,7 +51,9 @@ public class FileUtils {
 
 				listMap = new HashMap<String, Object>();
 				
-				String fileType =  ((String) map.get("FILE_IDXX")).substring(0,2);
+				listMap.put("FILE_IDXX", map.get("FILE_IDXX"));
+
+				String fileType = ((String) map.get("FILE_IDXX")).substring(0, 2);
 
 				if (fileType.equals("UR")) {
 
@@ -66,7 +68,7 @@ public class FileUtils {
 					File file = new File(profileFolderPath + storedFileName);
 
 					multipartFile.transferTo(file);
-					
+
 					if (multipartFile.getName().equals("wallPaper")) {
 
 						listMap.put("FILE_SEQC", "XXX");
@@ -77,11 +79,13 @@ public class FileUtils {
 
 					}
 
-					listMap.put("FILE_IDXX", map.get("FILE_IDXX"));
+					
 					listMap.put("USER_NUMB", map.get("FILE_IDXX"));
 					listMap.put("FILE_PATH", filePath + "profile/" + map.get("FILE_IDXX") + "/" + storedFileName);
 
 				} else if (fileType.equals("GT")) {
+					
+					System.out.println("파일명 :" + multipartFile.getName());
 
 					String profileFolderPath = realPath + "gather/" + map.get("FILE_IDXX") + "/";
 
@@ -94,7 +98,6 @@ public class FileUtils {
 					File file = new File(profileFolderPath + storedFileName);
 					multipartFile.transferTo(file);
 
-					listMap.put("FILE_IDXX", map.get("FILE_IDXX"));
 					listMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 					listMap.put("FILE_PATH", filePath + "gather/" + map.get("FILE_IDXX") + "/" + storedFileName);
 
@@ -108,7 +111,6 @@ public class FileUtils {
 					File file = new File(profileFolderPath + storedFileName);
 					multipartFile.transferTo(file);
 
-					listMap.put("FILE_IDXX", map.get("FILE_IDXX"));
 					listMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 					listMap.put("FILE_PATH", filePath + "club/" + map.get("FILE_IDXX") + "/" + storedFileName);
 
@@ -122,21 +124,28 @@ public class FileUtils {
 					File file = new File(profileFolderPath + storedFileName);
 					multipartFile.transferTo(file);
 
-					listMap.put("FILE_IDXX", map.get("FILE_IDXX"));
 					listMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 					listMap.put("FILE_PATH", filePath + "challenge/" + map.get("FILE_IDXX") + "/" + storedFileName);
 				}
-				}
+			}
 
+			if (multipartFile.getName().equals("mainImage")) {
 
-				listMap.put("FILE_OGNM", originalFileName);
-				listMap.put("FILE_SVNM", storedFileName);
-				listMap.put("FILE_SIZE", multipartFile.getSize());
+				listMap.put("MAIN_YSNO", "Y");
 
-				list.add(listMap);
+			} else {
+
+				listMap.put("MAIN_YSNO", "N");
 
 			}
 
+			listMap.put("FILE_OGNM", originalFileName);
+			listMap.put("FILE_SVNM", storedFileName);
+			listMap.put("FILE_SIZE", multipartFile.getSize());
+
+			list.add(listMap);
+
+		}
 
 		return list;
 	}

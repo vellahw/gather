@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.our.gather.common.common.CommandMap;
-import com.our.gather.common.common.Pager;
 import com.our.gather.common.dao.CommonDao;
 import com.our.gather.common.utils.FileUtils;
 import com.our.gather.moimGather.dao.GatherDao;
@@ -109,37 +108,56 @@ public class GatherServiceImpl implements GatherService {
 	// 게더 개설
 	@Override
 	public void makeGather(Map<String, Object> map, CommandMap commandMap, HttpServletRequest request,
-			HttpSession session) throws Exception {
-		
+	        HttpSession session) throws Exception {
 
-		try {
-			
-			map.put("FILE_IDXX", map.get("MOIM_IDXX"));
-			
-			List<Map<String, Object>> flist = fileUtils.fileInsert(map, request, session);
+	    try {
+	        
+	        map.put("FILE_IDXX", map.get("MOIM_IDXX"));
+	        
+	        List<Map<String, Object>> flist = fileUtils.fileInsert(map, request, session);
 
-			for (int i = 0, size = flist.size(); i < size; i++) {
-				
-				commonDao.comFileInsert(flist.get(i));
+	        for (int i = 0, size = flist.size(); i < size; i++) {
+	            
+	            // commonDao.comFileInsert(flist.get(i)); // 이 부분은 이미지를 DB에 저장하는 부분인데 여기서 파일 저장하는 로직을 추가합니다.
 
-				if (flist.get(i).get("FILE_SEQC") == null) {
+	            if (flist.get(i).get("MAIN_YSNO").equals("Y")) {
 
-					map.put("FILE_SVNM", flist.get(i).get("FILE_SVNM"));
+	                map.put("FILE_SVNM", flist.get(i).get("FILE_SVNM"));
 
-				}
-			}
+	            }
 
-		} catch (Exception e) {
-			System.out.println("userJoin 오류 발생! " + e.getMessage());
+	            // fileUtils에서 생성된 경로로 변경된 파일 이름을 Map에 다시 설정
+	            String originalFileName = (String) flist.get(i).get("FILE_OGNM");
+	            String filenameFromBase64 = extractFilenameFromBase64(originalFileName);
 
-		}
-		
-		map.put("USER_NUMB", session.getAttribute("USER_NUMB"));
+	            // MOIM_CNTT에서 해당 base64 이미지 파일 찾아서 FILE_PATH 변경
+	            Map<String, String> moimCnttMap = (Map<String, String>) map.get("MOIM_CNTT");
+	            for (Map.Entry<String, String> entry : moimCnttMap.entrySet()) {
+	                String base64Image = entry.getValue();
+	                if (base64Image.contains(filenameFromBase64)) {
+	                    moimCnttMap.put(entry.getKey(), originalFileName);
+	                    break;
+	                }
+	            }
+	        }
 
-		gatherDao.makeGather(map, commandMap);
+	    } catch (Exception e) {
+	        
+	        System.out.println("userJoin 오류 발생! " + e.getMessage());
+
+	    }
+	    
+	    gatherDao.makeGather(map, commandMap); // 파일 처리 이후에 실행
 
 	}
 
+	// base64 데이터에서 파일 이름 추출하는 메서드
+	private String extractFilenameFromBase64(String base64String) {
+	    int startIndex = base64String.indexOf("data-filename=\"") + 15;
+	    int endIndex = base64String.indexOf("\"", startIndex);
+	    return base64String.substring(startIndex, endIndex);
+	}
+	
 	// 게더 번호 채번
 	public String makeGatherNumb() throws Exception {
 
