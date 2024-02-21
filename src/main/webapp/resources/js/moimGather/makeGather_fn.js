@@ -146,11 +146,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
           reader.readAsDataURL(files[i]); // 파일을 base64로 읽어옴
 
           // 이미지 업로드
-          //appendFile('file' + [i], files[i]);
+          appendFile('file' + [i], files[i]);
 
         }
 
-        appendFile('file', fileData);
+        //appendFile('file', fileData);
 
         console.log(fileData);
       }
