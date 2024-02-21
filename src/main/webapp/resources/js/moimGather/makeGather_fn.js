@@ -56,30 +56,28 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
   }
 
+  let fileData = [];
   /**
 	 * summernote 에디터 띄움
 	 */	
 	$('#summernote').summernote({
 		codeviewFilter: false, // 코드 보기 필터 비활성화
     codeviewIframeFilter: false, // 코드 보기 iframe 필터 비활성화
-
+    disableDragAndDrop: false,
+    shortcuts: false,
 		height: 300,                 // 에디터 높이
 		minHeight: null,             // 최소 높이
 		maxHeight: null,             // 최대 높이
 		focus: false,                  // 에디터 로딩후 포커스를 맞출지 여부
 		lang: "ko-KR",					// 한글 설정
-		//placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
 
 		toolbar: [
 			['style', ['style']], // 글자 스타일 설정 옵션
 			['fontsize', ['fontsize']], // 글꼴 크기 설정 옵션
 			['font', ['bold', 'underline', 'clear']], // 글자 굵게, 밑줄, 포맷 제거 옵션
 			['color', ['color']], // 글자 색상 설정 옵션
-			['table', ['table']], // 테이블 삽입 옵션
 			['para', ['ul', 'ol', 'paragraph']], // 문단 스타일, 순서 없는 목록, 순서 있는 목록 옵션
-			['height', ['height']], // 에디터 높이 조절 옵션
 			['insert', ['picture', 'link', 'video']], // 이미지 삽입, 링크 삽입, 동영상 삽입 옵션
-			['view', ['codeview', 'fullscreen', 'help']], // 코드 보기, 전체 화면, 도움말 옵션
 		],
 
 		fontSizes: [
@@ -113,18 +111,72 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 		callbacks: {
 			onImageUpload: function (files) {
-				// 파일 업로드 (다중 업로드를 위해 반복문 사용)
-				for (var i = files.length - 1; i >= 0; i--) {
-					
-					console.log("파일:" + files);
-					appendFile( 'file' + [i], files[i])
-				}
-			},
+        const uploadList = document.getElementById('uploadList');
+
+				// 이미지 업로드 (다중 업로드를 위해 반복문 사용)
+				for (let i = files.length - 1; i >= 0; i--) {
+
+          const reader = new FileReader(); // 파일을 읽음
+          reader.onload = (function (file) {
+              return function (event) {
+                console.log(event.target.result);
+
+                // 본문에 이미지 삽입
+                $('#summernote').summernote('insertImage', event.target.result, file.name);
+
+                // 업로드된 이미지 라이브러리 생성
+                const item = document.createElement('li');
+                item.className = 'uploadItem';
+                
+                const img = document.createElement('img');
+                img.src = event.target.result;
+                img.id = 'uploadImgThumnail';
+
+                item.appendChild(img);
+                uploadList.appendChild(item); // 삽입
+
+                let imageData = {
+                  'file' : event.target.result // 파일 데이터 (base64 등)
+                };
+                fileData.push(imageData); // 파일 데이터를 배열에 추가
+                
+              };
+          })(files[i]); // 함수를 정의 후 바로 실행, 매개변수 file = (바깥 괄호)files[i]
+          
+          reader.readAsDataURL(files[i]); // 파일을 base64로 읽어옴
+
+          // 이미지 업로드
+          //appendFile('file' + [i], files[i]);
+
+        }
+
+        appendFile('file', fileData);
+
+        console.log(fileData);
+      }
 		},
 	});
 
-   // 이미지 업로드 함수 ajax 활용
-   function appendFile(name, file) {
+
+  document.getElementById('uploadList').addEventListener('click', (event)=>{
+
+    const thumnailNode = document.getElementById('uploadImgThumnail');
+    if(thumnailNode.name) {
+      thumnailNode.name = ''; // 클릭 했었던 이미지의 name 값 초기화
+    }
+
+    comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 클릭 했었던 이미지 추가했던 class 삭제
+
+    if(event.target.matches('#uploadImgThumnail')){
+      event.target.parentNode.classList.toggle('picked_thumnail');
+      appendFile('mainImage', event.target.src); // 메인이미지 업로드
+
+      console.log(event.target.src)
+    }
+  })
+
+  // 이미지 formData에 삽입
+  function appendFile(name, file) {
     formData.append(name, file);
   }
 
@@ -217,18 +269,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
       , COMP_YSNO : 'Y'
     }
 
-    debugger;
     reqData = Object.assign({}, step1Data, step2Data, step3Data, step4Data);
 
-    console.log(formData);
-
-    console.log('reqData  ' + JSON.stringify(reqData));
-
-    
     formData.append('data', JSON.stringify(reqData)); // 유저가 입력한 폼 값
     formData.append('map', JSON.stringify(gatherAddressData)); 
-
-    console.log('formData  ' + formData);
 
     fetch("/gather/makeGatherDo.com", {
       method: "POST",

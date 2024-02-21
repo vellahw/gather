@@ -173,6 +173,9 @@
 							모임 소개
 						</label>
 						<textarea id="summernote"></textarea>
+						<div id="uploadFileBox" style="margin: 12px 8px;height: 120px;">
+							<ul id="uploadList" style="display: flex;"></ul>
+						</div>
 					</div>
 					<div class="btnContainer">
 						<button type="button" class="waybtn prev" id="prev4">이전</button>
