@@ -114,6 +114,8 @@ public class GatherServiceImpl implements GatherService {
 
 		try {
 			
+			System.out.println("너가 찍혀야만해...ㅎㅎ");
+			
 			map.put("GATH_IDXX", map.get("MOIM_IDXX"));
 			
 			List<Map<String, Object>> flist = fileUtils.fileInsert(map, request, session);

@@ -686,6 +686,8 @@ const showUserPickedRegi = function(pickedList, regiList) {
   submitBtn.addEventListener('click' , ()=>{
 
     // 아무런 프사도 선택하지 않았을 때
+    console.log("프로필:"+ profile);
+
     if(!profile && !imgValue){
       if(userGender == 'W') {
         imgValue = { 'FILE_SVNM' : 'basic-w.png' };
@@ -706,6 +708,7 @@ const showUserPickedRegi = function(pickedList, regiList) {
     if(profile) {
       joinUserData = Object.assign({}, firstUserData, secondUserData); // 유저가 입력한 폼 데이터 가공
       formData.append('file', profile); // 프로필 사진
+      
     }
 
     if(bgImg) {
