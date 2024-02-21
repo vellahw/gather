@@ -174,7 +174,13 @@ document.addEventListener('DOMContentLoaded', function () {
                   , result.USER_NICK + "님 반갑습니다!"
                   , "let's gather!"
                   , function(){
-                  location.href = document.referrer});
+                    const referrerUrl = document.referrer;
+                    if(referrerUrl != '/gather/login.com') {
+                      location.href = document.referrer;
+                    } else {
+                      location.href = '/gather.com';
+                    }
+                  });
 
           } else if (result.TYPE_CODE == "DV" || result.TYPE_CODE == "AD") {  //관리자 또는 개발자.
 
