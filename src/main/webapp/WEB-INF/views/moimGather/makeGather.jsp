@@ -46,7 +46,7 @@
 							<span aria-label="필수 입력값입니다.">⁕</span>
 							모임 제목을 입력해주세요
 						</label>
-						<input type="text" id="gatherTitle" class="basicInput register-p step1" placeHolder="최소 5자 이상 입력해주세요.">
+						<input type="text" id="moimTitle" class="basicInput register-p step1" placeHolder="최소 5자 이상 입력해주세요.">
 					</div>
 					
 					<div class="btnContainer btnContainer_act" style="justify-content: right;">
@@ -64,7 +64,7 @@
 							<button type="button" class="costBtn parent" data-cost="Y">있음</button>
 							<button type="button" class="costBtn parent" data-cost="N">없음</button>
 						</div>
-						<input type="text" id="gatherCost" class="basicInput register-p" placeHolder="숫자만 입력해주세요.">
+						<input type="text" id="gatherCost" class="basicInput register-p" placeHolder="숫자만 입력해주세요." style="margin-right: 18px;">
 					</div>
 					
 					<div class="eachInputWrap">
@@ -72,11 +72,15 @@
 			        <span aria-label="필수 입력값입니다.">⁕</span>
 							언제 모일까요?
 						</h3>
-						<div class="_row">
-			        <label for="gatherDate" >모임 날짜</label>
-			        <input type="date" id="gatherDate" class="basicInput register-p">
-			        <label for="gatherTime">모임 시간</label>
-			        <input type="time" id="gatherTime" class="basicInput register-p">
+						<div class="_row gatherWhen">
+							<div>
+				        <label for="gatherDate" >모임 날짜</label>
+				        <input type="date" id="gatherDate" class="basicInput register-p">
+							</div>
+							<div>
+				        <label for="gatherTime">모임 시간</label>
+				        <input type="time" id="gatherTime" class="basicInput register-p">
+							</div>
 						</div>
 					</div>	
 					
@@ -85,12 +89,12 @@
 			        <span aria-label="필수 입력값입니다.">⁕</span>
 							어디에서 모일까요?
 						</h3>
-	          <button type="button" class="searchMap">주소 검색</button>
+	          <button type="button" class="searchMap hashtag">주소 검색하기</button>
 	          <input type="text" id="gatherAddress" class="basicInput register-p moimRegion" readonly="readonly">
 	          <input type="text" id="gatherDetailAddress" class="basicInput register-p moimRegion" placeholder="상세주소를 입력해주세요.">
 	          <input type="hidden" id="gatherLati" />
 	          <input type="hidden" id="gatherLong" />
-	          <div id="map" style="width:500px;height:400px; margin-top: 10px;"></div>
+	          <div id="map" style=""></div>
 					</div>
 					
 						<div class="btnContainer" style="margin-top: 30px;">
@@ -168,7 +172,7 @@
 							<span aria-label="필수 입력값입니다.">⁕</span>
 							모임 소개
 						</label>
-						<textarea id="gathContent"></textarea>
+						<textarea id="summernote"></textarea>
 					</div>
 					<div class="btnContainer">
 						<button type="button" class="waybtn prev" id="prev4">이전</button>
