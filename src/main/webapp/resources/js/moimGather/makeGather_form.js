@@ -316,9 +316,13 @@ document.addEventListener('DOMContentLoaded',()=>{
 
         } else if(btnId == 'prev3') {
 
-					showStep(step4, step2);
+					showStep(step3, step2);
 
-				}
+				} else if(btnId == 'prev4') {
+
+					showStep(step4, step3);
+
+				} 
 			}
 
 		});
@@ -330,6 +334,10 @@ document.addEventListener('DOMContentLoaded',()=>{
 	const showStep = function(removeTarget, addTarget) {
 		removeTarget.classList.remove('show_step');
 		addTarget.classList.add('show_step');
+
+		// 이전/다음 버튼 컨테이너
+		removeTarget.querySelector('.btnContainer').classList.remove('btnContainer_act');
+		addTarget.querySelector('.btnContainer').classList.add('btnContainer_act');
 	}			
 
 });

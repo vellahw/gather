@@ -49,10 +49,8 @@
 						<input type="text" id="gatherTitle" class="basicInput register-p step1" placeHolder="최소 5자 이상 입력해주세요.">
 					</div>
 					
-					<div class="btnContainer">
-						<div class="btnWrap" style="justify-content: right;">
-					  	<button type="button" class="waybtn next" id="next">다음</button>
-						</div>
+					<div class="btnContainer btnContainer_act" style="justify-content: right;">
+					  <button type="button" class="waybtn next" id="next">다음</button>
 					</div>
 				</div>
 
@@ -95,11 +93,9 @@
 	          <div id="map" style="width:500px;height:400px; margin-top: 10px;"></div>
 					</div>
 					
-						<div class="btnContainer" style="margin-bottom: 30px;">
-							<div class="btnWrap">
-								<button type="button" class="waybtn prev" id="prev2">이전</button>
-						  	<button type="button" class="waybtn next" id="next2">다음</button>
-							</div>
+						<div class="btnContainer" style="margin-top: 30px;">
+							<button type="button" class="waybtn prev" id="prev2">이전</button>
+						  <button type="button" class="waybtn next" id="next2">다음</button>
 						</div>
 				</div>
 				
@@ -161,10 +157,8 @@
 						</div>
 					
 					<div class="btnContainer" style="margin-top: 30px;">
-						<div class="btnWrap">
-							<button type="button" class="waybtn prev" id="prev3">이전</button>
-					  	<button type="button" class="waybtn next" id="next3">다음</button>
-						</div>
+						<button type="button" class="waybtn prev" id="prev3">이전</button>
+					  <button type="button" class="waybtn next" id="next3">다음</button>
 					</div>
 				</div>		
 				
@@ -177,10 +171,8 @@
 						<textarea id="summernote"></textarea>
 					</div>
 					<div class="btnContainer">
-						<div class="btnWrap">
-							<button type="button" class="waybtn prev" id="prev4">이전</button>
-					  	<button type="button" class="waybtn next" id="submit">확인</button>
-						</div>
+						<button type="button" class="waybtn prev" id="prev4">이전</button>
+					  <button type="button" class="waybtn next" id="submit">확인</button>
 					</div>
 				</div>
 				
