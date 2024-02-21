@@ -114,14 +114,12 @@ public class GatherServiceImpl implements GatherService {
 
 		try {
 			
-			System.out.println("너가 찍혀야만해...ㅎㅎ");
-			
-			map.put("GATH_IDXX", map.get("MOIM_IDXX"));
+			map.put("FILE_IDXX", map.get("MOIM_IDXX"));
 			
 			List<Map<String, Object>> flist = fileUtils.fileInsert(map, request, session);
 
 			for (int i = 0, size = flist.size(); i < size; i++) {
-
+				
 				commonDao.comFileInsert(flist.get(i));
 
 				if (flist.get(i).get("FILE_SEQC") == null) {
@@ -135,6 +133,8 @@ public class GatherServiceImpl implements GatherService {
 			System.out.println("userJoin 오류 발생! " + e.getMessage());
 
 		}
+		
+		map.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 
 		gatherDao.makeGather(map, commandMap);
 

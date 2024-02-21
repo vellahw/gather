@@ -17,6 +17,8 @@ public interface JoinService {
 
 	// 선호 지역저장
 	void insertRegi(Map<String, Object> map, CommandMap commandMap) throws Exception;
+	
+	String makeUserNumb() throws Exception;
 
 	// 아이디 중복 확인
 	Map<String, Object> checkId(Map<String, Object> map) throws Exception;

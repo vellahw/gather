@@ -81,7 +81,8 @@ public class JoinController {
 			HttpServletRequest request, CommandMap commandMap, HttpSession session) throws Exception {
 
 		try {
-
+			
+			String userNumb = joinService.makeUserNumb();
 			// JSON 데이터 처리
 			ObjectMapper objectMapper = new ObjectMapper();
 
@@ -101,10 +102,9 @@ public class JoinController {
 				}
 				resultRegiData.add(resultMap);
 			}
-
+			
+			resultUserData.put("USER_NUMB", userNumb);
 			joinService.userJoin(resultUserData, commandMap, request, session);
-
-			String userNumb = (String) commandMap.get("USER_NUMB");
 
 			if (resultRegiData != null) {
 

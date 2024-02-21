@@ -50,10 +50,12 @@ public class FileUtils {
 				storedFileName = CommonUtils.getRandomString() + originalFileExtension;
 
 				listMap = new HashMap<String, Object>();
+				
+				String fileType =  ((String) map.get("FILE_IDXX")).substring(0,2);
 
-				if (map.get("USER_NUMB") != null) {
+				if (fileType.equals("UR")) {
 
-					String profileFolderPath = realPath + "profile/" + map.get("USER_NUMB") + "/";
+					String profileFolderPath = realPath + "profile/" + map.get("FILE_IDXX") + "/";
 
 					File profileFolder = new File(profileFolderPath);
 
@@ -75,13 +77,13 @@ public class FileUtils {
 
 					}
 
-					listMap.put("FILE_IDXX", map.get("USER_NUMB"));
-					listMap.put("USER_NUMB", map.get("USER_NUMB"));
-					listMap.put("FILE_PATH", filePath + "profile/" + map.get("USER_NUMB") + "/" + storedFileName);
+					listMap.put("FILE_IDXX", map.get("FILE_IDXX"));
+					listMap.put("USER_NUMB", map.get("FILE_IDXX"));
+					listMap.put("FILE_PATH", filePath + "profile/" + map.get("FILE_IDXX") + "/" + storedFileName);
 
-				} else if (map.get("GATH_IDXX") != null) {
+				} else if (fileType.equals("GT")) {
 
-					String profileFolderPath = realPath + "gather/" + map.get("GATH_IDXX") + "/";
+					String profileFolderPath = realPath + "gather/" + map.get("FILE_IDXX") + "/";
 
 					File profileFolder = new File(profileFolderPath);
 
@@ -92,11 +94,11 @@ public class FileUtils {
 					File file = new File(profileFolderPath + storedFileName);
 					multipartFile.transferTo(file);
 
-					listMap.put("FILE_IDXX", map.get("GATH_IDXX"));
+					listMap.put("FILE_IDXX", map.get("FILE_IDXX"));
 					listMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
-					listMap.put("FILE_PATH", filePath + "gather/" + map.get("GATH_IDXX") + "/" + storedFileName);
+					listMap.put("FILE_PATH", filePath + "gather/" + map.get("FILE_IDXX") + "/" + storedFileName);
 
-				} else if (map.get("CLUB_IDXX") != null) {
+				} else if (fileType.equals("CB")) {
 
 					String profileFolderPath = realPath + "club/" + map.get("CLUB_IDXX") + "/";
 					File profileFolder = new File(profileFolderPath);
@@ -106,13 +108,13 @@ public class FileUtils {
 					File file = new File(profileFolderPath + storedFileName);
 					multipartFile.transferTo(file);
 
-					listMap.put("FILE_IDXX", map.get("CLUB_IDXX"));
+					listMap.put("FILE_IDXX", map.get("FILE_IDXX"));
 					listMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
-					listMap.put("FILE_PATH", filePath + "club/" + map.get("CLUB_IDXX") + "/" + storedFileName);
+					listMap.put("FILE_PATH", filePath + "club/" + map.get("FILE_IDXX") + "/" + storedFileName);
 
-				} else if (map.get("CHAL_IDXX") != null) {
+				} else if (fileType.equals("CH")) {
 
-					String profileFolderPath = realPath + "challenge/" + map.get("CHAL_IDXX") + "/";
+					String profileFolderPath = realPath + "challenge/" + map.get("FILE_IDXX") + "/";
 					File profileFolder = new File(profileFolderPath);
 					if (!profileFolder.exists()) {
 						profileFolder.mkdirs();
@@ -120,9 +122,9 @@ public class FileUtils {
 					File file = new File(profileFolderPath + storedFileName);
 					multipartFile.transferTo(file);
 
-					listMap.put("FILE_IDXX", map.get("CHAL_IDXX"));
+					listMap.put("FILE_IDXX", map.get("FILE_IDXX"));
 					listMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
-					listMap.put("FILE_PATH", filePath + "challenge/" + map.get("CHAL_IDXX") + "/" + storedFileName);
+					listMap.put("FILE_PATH", filePath + "challenge/" + map.get("FILE_IDXX") + "/" + storedFileName);
 				}
 				}
 
