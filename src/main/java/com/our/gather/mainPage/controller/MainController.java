@@ -278,14 +278,16 @@ public class MainController {
 			break;
 
 		case "snowy":
-
-			commandMap.put("WEATH_CATE", "B03");
+			
+			dataList = List.of("B03");
+			commandMap.put("WEATH_CATE", dataList);
 
 			break;
 
 		case "hot":
-
-			commandMap.put("WEATH_CATE", "B14");
+			
+			dataList = List.of("B14");
+			commandMap.put("WEATH_CATE", dataList);
 			
 		case "cold":
 			
