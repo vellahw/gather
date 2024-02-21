@@ -12,6 +12,17 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d204e67062ee2684baf0eaa95db96a85&libraries=services"></script>
 
+<% if(session.getAttribute("USER_NUMB") ==  null)  { %>
+	<script>
+		comAlert3(
+	        '세션이 만료되었습니다.'
+	      , '로그인 후 이용해주세요.'
+	      , 'warning'
+	      , function() { location.href = '/gather/login.com' }
+	    )
+	</script>
+<% } %>
+
 <div class="registerContainer">
 	<div class="innerContainer">
 		<div class="formContainer">
@@ -148,15 +159,14 @@
 							<button type="button" class="genderBtn" data-gender="W">여자만</button>
 							<button type="button" class="genderBtn" data-gender="M">남자만</button>
 						</div>
-					</div>		
 					
-					<div class="btnContainer" style="margin-bottom: 30px;">
+					<div class="btnContainer" style="margin-top: 30px;">
 						<div class="btnWrap">
 							<button type="button" class="waybtn prev" id="prev3">이전</button>
 					  	<button type="button" class="waybtn next" id="next3">다음</button>
 						</div>
 					</div>
-				</div>
+				</div>		
 				
 				<div id="step4">
 					<div class="eachInputWrap">
@@ -174,6 +184,7 @@
 					</div>
 				</div>
 				
+				</div>
 			</div>
 		</div>
 	</div>
