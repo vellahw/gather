@@ -63,6 +63,7 @@ public class MoimDetailController {
 			
 			mv.addObject("member", memList); // 게더맴버
 			mv.addObject("detail", detailMap); // 게더
+			mv.addObject("info", detailMap.remove("MOIM_CNTT"));
 			mv.addObject("img", gatherService.getGatherImg(commandMap.getMap(), commandMap)); // 게더 이미지
 
 			if (session.getAttribute("USER_NUMB") != null) {
