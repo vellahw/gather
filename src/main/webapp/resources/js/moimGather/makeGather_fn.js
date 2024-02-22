@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
   }
 
-  let fileData = [];
+  let fileNameNum = 0; // formData 업로드 이미지 key값 채번
   /**
 	 * summernote 에디터 띄움
 	 */	
@@ -112,12 +112,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
 		callbacks: {
 			onImageUpload: function (files) {
         const uploadList = document.getElementById('uploadList');
-        
-        
-
-				// 이미지 업로드 (다중 업로드를 위해 반복문 사용)
-          for (let i = files.length - 1; i >= 0; i--) {
-
+       
+        // 이미지 다중 업로드
+        if(files.length > 1) {
+          for (let i = files.length - 1; i >= 0; i--) { 
+  
             const reader = new FileReader(); // 파일을 읽음
             reader.onload = (function (file) {
                 return function (event) {
@@ -130,30 +129,48 @@ document.addEventListener('DOMContentLoaded', ()=>{
                   item.className = 'uploadItem';
                   
                   const img = document.createElement('img');
-                  img.src = event.target.result;
                   img.id = 'uploadImgThumnail';
-
+                  img.src = event.target.result;
+    
                   item.appendChild(img);
                   uploadList.appendChild(item); // 삽입
-
-                  let imageData = {
-                    'file' : event.target.result // 파일 데이터 (base64 등)
-                  };
-                  fileData.push(imageData); // 파일 데이터를 배열에 추가
-                  
+    
                 };
             })(files[i]); // 함수를 정의 후 바로 실행, 매개변수 file = (바깥 괄호)files[i]
-            
+              
             reader.readAsDataURL(files[i]); // 파일을 base64로 읽어옴
-
-            // 이미지 업로드
-            appendFile('file' + [i], files[i]);
-
+    
+            appendFile('file' + [i], files[i]); // formData에 추가
           }
-       }
 
-        //appendFile('file', fileData);
+        // 이미지 하나씩 업로드
+        } else {
 
+          const reader = new FileReader();
+          reader.onload = ({ target }) => {
+            // 본문에 이미지 삽입
+            $('#summernote').summernote('insertImage', target.result, files[0].name);
+
+            // 업로드된 이미지 라이브러리 생성
+            const item = document.createElement('li');
+            item.className = 'uploadItem';
+            
+            const img = document.createElement('img');
+            img.id = 'uploadImgThumnail';
+            img.src = target.result;
+
+            item.appendChild(img);
+            uploadList.appendChild(item); 
+          
+          };
+
+          reader.readAsDataURL(files[0]);
+
+          appendFile(`file${fileNameNum}`, files[0]); // formdata에 하나씩 추가
+
+          fileNameNum++; 
+  
+        }
       }
 	});
 
@@ -169,14 +186,24 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     if(event.target.matches('#uploadImgThumnail')){
       event.target.parentNode.classList.toggle('picked_thumnail');
-      
-      for (let key of formData.keys()) {
-        if(formData.get(key) == event.target.src) {
-          console.log('있당')
-          formData.delete(key)
-        }
+
+      console.log("이미지.... " + event.target.src)
+
+      let targetSrc = event.target.src;
+      let targetKey = null;
+
+      // FormData 객체의 entries() 메서드를 사용하여 [key, value] 쌍의 이터레이터를 얻습니다.
+      for (const [key, value] of formData.entries()) {
+          // 만약 값이 targetSrc 일치한다면 해당 키(key)를 저장하고 반복문을 종료합니다.
+          if (value === targetSrc) {
+              targetKey = key;
+              break;
+          }
       }
 
+      // 찾고자 하는 값의 키(key) 출력
+      console.log('찾고자 하는 값의 키(key):', targetKey);
+      
       appendFile('mainImage', event.target.src); // 메인이미지 업로드
     }
   })
