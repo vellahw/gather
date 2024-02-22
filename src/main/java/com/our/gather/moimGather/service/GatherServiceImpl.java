@@ -20,26 +20,24 @@ import com.our.gather.moimGather.dao.GatherDao;
 @Service("GatherService")
 public class GatherServiceImpl implements GatherService {
 
-	@Resource(name = "CommonDao")
-	private CommonDao commonDao;
+   @Resource(name = "CommonDao")
+   private CommonDao commonDao;
 
-	@Resource(name = "GatherDao")
-	private GatherDao gatherDao;
+   @Resource(name = "GatherDao")
+   private GatherDao gatherDao;
 
-	@Resource(name = "fileUtils")
-	private FileUtils fileUtils;
+   @Resource(name = "fileUtils")
+   private FileUtils fileUtils;
 
-	// 게더 메인리스트
-	@Override
-	public List<Map<String, Object>> mainGather(Map<String, Object> map, HttpSession session, CommandMap commandMap)
-			throws Exception {
-		// TODO Auto-generated method stub
+   // 게더 메인리스트
+   @Override
+   public List<Map<String, Object>> mainGather(Map<String, Object> map, HttpSession session, CommandMap commandMap)
+         throws Exception {
+      // TODO Auto-generated method stub
 
-		if (session.getAttribute("USER_NUMB") != null) {
+      if (session.getAttribute("USER_NUMB") != null) {
 
-			commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
-
-		}
+         commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 
 		return gatherDao.mainGather(map, commandMap, session);
 	}

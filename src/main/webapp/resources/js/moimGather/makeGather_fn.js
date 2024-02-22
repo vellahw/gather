@@ -121,19 +121,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
             reader.onload = (function (file) {
                 return function (event) {
 
-                  // 본문에 이미지 삽입
-                  $('#summernote').summernote('insertImage', event.target.result, file.name);
-
-                  // 업로드된 이미지 라이브러리 생성
-                  const item = document.createElement('li');
-                  item.className = 'uploadItem';
-                  
-                  const img = document.createElement('img');
-                  img.id = 'uploadImgThumnail';
-                  img.src = event.target.result;
-    
-                  item.appendChild(img);
-                  uploadList.appendChild(item); // 삽입
+                  createImgNode(event.target.result, file.name);
     
                 };
             })(files[i]); // 함수를 정의 후 바로 실행, 매개변수 file = (바깥 괄호)files[i]
@@ -148,19 +136,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
           const reader = new FileReader();
           reader.onload = ({ target }) => {
-            // 본문에 이미지 삽입
-            $('#summernote').summernote('insertImage', target.result, files[0].name);
 
-            // 업로드된 이미지 라이브러리 생성
-            const item = document.createElement('li');
-            item.className = 'uploadItem';
-            
-            const img = document.createElement('img');
-            img.id = 'uploadImgThumnail';
-            img.src = target.result;
-
-            item.appendChild(img);
-            uploadList.appendChild(item); 
+            createImgNode(target.result, files[0].name);
           
           };
 
@@ -169,49 +146,69 @@ document.addEventListener('DOMContentLoaded', ()=>{
           appendFile(`file${fileNameNum}`, files[0]); // formdata에 하나씩 추가
 
           fileNameNum++; 
-  
+          
         }
+
+        document.getElementById('uploadList').addEventListener('click', (event)=>{
+
+          const thumnailNode = document.getElementById('uploadImgThumnail');
+          if(thumnailNode.name) {
+            thumnailNode.name = ''; // 클릭 했었던 이미지의 name 값 초기화
+          }
+      
+          comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 클릭 했었던 이미지 추가했던 class 삭제
+      
+          if(event.target.matches('#uploadImgThumnail')){
+            event.target.parentNode.classList.toggle('picked_thumnail');
+
+            let targetImgSrc = event.target.src;
+
+
+              //appendFile('mainImage', file); // 메인이미지 업로드
+          }
+        });
       }
     }
 	});
 
+  // 이미지 업로드 후 노드 생성/삽입
+  const createImgNode = function(file, fileName){
+    // 본문에 이미지 삽입
+    $('#summernote').summernote('insertImage', file, fileName);
 
-  document.getElementById('uploadList').addEventListener('click', (event)=>{
+    // 업로드된 이미지 라이브러리 생성
+    const item = document.createElement('li');
+    item.className = 'uploadItem';
+    
+    const img = document.createElement('img');
+    img.id = 'uploadImgThumnail';
+    img.src = file;
 
-    const thumnailNode = document.getElementById('uploadImgThumnail');
-    if(thumnailNode.name) {
-      thumnailNode.name = ''; // 클릭 했었던 이미지의 name 값 초기화
-    }
-
-    comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 클릭 했었던 이미지 추가했던 class 삭제
-
-    if(event.target.matches('#uploadImgThumnail')){
-      event.target.parentNode.classList.toggle('picked_thumnail');
-
-      console.log("이미지.... " + event.target.src)
-
-      let targetSrc = event.target.src;
-      let targetKey = null;
-
-      // FormData 객체의 entries() 메서드를 사용하여 [key, value] 쌍의 이터레이터를 얻습니다.
-      for (const [key, value] of formData.entries()) {
-          // 만약 값이 targetSrc 일치한다면 해당 키(key)를 저장하고 반복문을 종료합니다.
-          if (value === targetSrc) {
-              targetKey = key;
-              break;
-          }
-      }
-
-      // 찾고자 하는 값의 키(key) 출력
-      console.log('찾고자 하는 값의 키(key):', targetKey);
-      
-      appendFile('mainImage', event.target.src); // 메인이미지 업로드
-    }
-  })
+    item.appendChild(img); 
+    uploadList.appendChild(item); // 업로드 썸네일 리스트에 삽입
+  }
 
   // 이미지 formData에 삽입
   function appendFile(name, file) {
     formData.append(name, file);
+  }
+
+  // Data URI를 Blob으로 변환하는 함수
+  function dataURItoBlob(dataURI) {
+    // base64 데이터 부분을 디코딩합니다.
+    const byteString = atob(dataURI.split(',')[1]);
+
+    // byte 문자열을 ArrayBuffer로 변환합니다.
+    const ab = new ArrayBuffer(byteString.length);
+
+    // ArrayBuffer를 다루기 쉬운 형태인 Uint8Array로 변환합니다.
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    // Blob 객체를 생성하고 반환합니다.
+    return new Blob([ab], { type: 'image/png' });
   }
 
 
