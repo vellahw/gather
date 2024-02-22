@@ -21,7 +21,7 @@
 	   <!--  회원가입 -->
 	   <insert id="makeGather" parameterType="hashmap">
 	        <![CDATA[
-	        /* gather.makeGather */
+	        /* gather.makeGather NOT_SQL_LOG */
 	          INSERT INTO TM_GATHER (
 					      GATH_IDXX  	/* 게더번호 */
 					    , USER_NUMB  	/* 회원번호(방장번호) */

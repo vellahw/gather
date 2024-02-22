@@ -109,52 +109,49 @@ public class GatherServiceImpl implements GatherService {
 	// 게더 개설
 	@Override
 	public void makeGather(Map<String, Object> map, CommandMap commandMap, HttpServletRequest request,
-	        HttpSession session) throws Exception {
+			HttpSession session) throws Exception {
 
-	    try {
-	        
-	        map.put("FILE_IDXX", map.get("MOIM_IDXX"));
-	        
-	        List<Map<String, Object>> flist = fileUtils.fileInsert(map, request, session);
+		try {
 
-	        for (int i = 0, size = flist.size(); i < size; i++) {
-	        	
-	            if (flist.get(i).get("MAIN_YSNO").equals("Y")) {
-	                map.put("FILE_SVNM", flist.get(i).get("FILE_SVNM"));
-	                
-	            }
-	            
-	            // MOIM_CNTT에서 이미지 파일명을 검색하고 파일 경로를 업데이트
-	            String moimCntt = (String) map.get("MOIM_CNTT");
-	            
-	            for (Map<String, Object> fileInfo : flist) {
-	                String originalFileName = (String) fileInfo.get("FILE_OGNM");
-	                String newSrc = "src=\"" + fileInfo.get("FILE_PATH").toString() + "\"";
-	                String pattern = "src=\"data:image/[a-zA-Z0-9]+;base64,[^\"]+\"" + "data-filename=\"" + originalFileName + "\"";
-	                
-	                if (moimCntt.contains(originalFileName)) {
-	                    // 이미지 태그의 src를 업데이트
-	                    moimCntt = moimCntt.replaceAll(pattern, newSrc);
-	                }
-	            }
+			map.put("FILE_IDXX", map.get("MOIM_IDXX"));
+			
+			String moimCntt = (String) map.get("MOIM_CNTT");
 
-	            // 업데이트된 MOIM_CNTT를 map에 다시 설정
-	            map.put("MOIM_CNTT", moimCntt);
+			List<Map<String, Object>> flist = fileUtils.fileInsert(map, request, session);
 
-	            // 파일 이동 처리 등 fileUtils에 추가된 메서드를 호출하여 파일 저장
-	            // fileUtils.moveFile(flist.get(i), request); // fileUtils에 moveFile 메서드를 추가하여 파일 이동 처리
-	        }
-	        
-	    } catch (Exception e) {
-	        
-	        System.out.println("userJoin 오류 발생! " + e.getMessage());
+			for (int i = 0, size = flist.size(); i < size; i++) {
 
-	    }
-	    
-	    gatherDao.makeGather(map, commandMap);
-	   
+				String originalFileName = (String) flist.get(i).get("FILE_OGNM");
+				String dataFileName= "data-filename=\"" + originalFileName + "\""; 
+				String newSrc = "src=\"" + flist.get(i).get("FILE_PATH").toString() + "\"";
+
+				if (moimCntt.contains(dataFileName)) {
+
+					moimCntt = moimCntt.replaceAll(dataFileName, newSrc); //기존 data-filename을 현src로 변경
+
+				}
+				if (flist.get(i).get("MAIN_YSNO").equals("Y")) {
+					
+					map.put("FILE_SVNM", flist.get(i).get("FILE_SVNM"));
+					
+				}
+				
+			}
+			
+			moimCntt = moimCntt.replaceAll("src=\"data:image/[a-zA-Z0-9]+;base64,[^\"]+\"", "");// 기존 base64 형태의 src 를 replaceAll
+			
+			map.put("MOIM_CNTT", moimCntt);
+
+		} catch (Exception e) {
+
+			System.out.println("userJoin 오류 발생! " + e.getMessage());
+
+		}
+
+		gatherDao.makeGather(map, commandMap);
+
 	}
-	
+
 	// 게더 번호 채번
 	public String makeGatherNumb() throws Exception {
 
