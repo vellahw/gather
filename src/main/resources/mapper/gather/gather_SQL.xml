@@ -10,7 +10,9 @@
 		<!--  게더번호 체번 -->
 	   <select  id="makeGatherNumb" resultType="String">
     	<![CDATA[
-	      SELECT 'GT' ||TO_CHAR(SYSDATE, 'YYMM') ||LPAD(NVL(MAX(CAST(SUBSTR(GATH_IDXX,7,4) AS NUMBER))+1,1),4,'0') AS GATH_IDXX
+    	  
+	      SELECT /* gather.makeGatherNumb */
+	      		 'GT' ||TO_CHAR(SYSDATE, 'YYMM') ||LPAD(NVL(MAX(CAST(SUBSTR(GATH_IDXX,7,4) AS NUMBER))+1,1),4,'0') AS GATH_IDXX
 		  	FROM TM_GATHER
 		   WHERE SUBSTR(GATH_IDXX,3,4) = TO_CHAR(SYSDATE, 'YYMM')
     	]]>
@@ -19,6 +21,7 @@
 	   <!--  회원가입 -->
 	   <insert id="makeGather" parameterType="hashmap">
 	        <![CDATA[
+	        /* gather.makeGather */
 	         INSERT INTO TM_GATHER (
 					      GATH_IDXX  	/* 게더번호 */
 					    , USER_NUMB  	/* 회원번호(방장번호) */

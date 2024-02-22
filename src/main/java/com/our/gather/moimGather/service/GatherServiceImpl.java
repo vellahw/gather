@@ -1,5 +1,6 @@
 package com.our.gather.moimGather.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -117,44 +118,52 @@ public class GatherServiceImpl implements GatherService {
 	        List<Map<String, Object>> flist = fileUtils.fileInsert(map, request, session);
 
 	        for (int i = 0, size = flist.size(); i < size; i++) {
+	        	
+	        		commonDao.comFileInsert(flist.get(i));
 	            
-	            // commonDao.comFileInsert(flist.get(i)); // 이 부분은 이미지를 DB에 저장하는 부분인데 여기서 파일 저장하는 로직을 추가합니다.
-
 	            if (flist.get(i).get("MAIN_YSNO").equals("Y")) {
-
 	                map.put("FILE_SVNM", flist.get(i).get("FILE_SVNM"));
-
+	                
 	            }
-
-	            // fileUtils에서 생성된 경로로 변경된 파일 이름을 Map에 다시 설정
-	            String originalFileName = (String) flist.get(i).get("FILE_OGNM");
-	            String filenameFromBase64 = extractFilenameFromBase64(originalFileName);
-
-	            // MOIM_CNTT에서 해당 base64 이미지 파일 찾아서 FILE_PATH 변경
-	            Map<String, String> moimCnttMap = (Map<String, String>) map.get("MOIM_CNTT");
-	            for (Map.Entry<String, String> entry : moimCnttMap.entrySet()) {
-	                String base64Image = entry.getValue();
-	                if (base64Image.contains(filenameFromBase64)) {
-	                    moimCnttMap.put(entry.getKey(), originalFileName);
-	                    break;
+	            
+	            // MOIM_CNTT에서 이미지 파일명을 검색하고 파일 경로를 업데이트
+	            String moimCntt = (String) map.get("MOIM_CNTT");
+	            
+	            for (Map<String, Object> fileInfo : flist) {
+	                String originalFileName = (String) fileInfo.get("FILE_OGNM");
+	                String base64Src = "data-filename=\"" + originalFileName + "\""; // 기존 base64 형태의 src
+	                String newSrc = "src=\"" + fileInfo.get("FILE_PATH").toString() + "\"";
+	                // 이미지 태그에 해당 파일명이 포함되어 있는지 확인
+	                if (moimCntt.contains(originalFileName)) {
+	                    // 이미지 태그의 src를 업데이트
+	                    String updatedImageTag = moimCntt.replaceAll("src=\"data:image/[a-zA-Z0-9]+;base64,[^\"]+\"", newSrc);
+	                    moimCntt = updatedImageTag;
+	                    moimCntt = moimCntt.replaceAll(base64Src, "");
 	                }
 	            }
-	        }
 
+	            // 업데이트된 MOIM_CNTT를 map에 다시 설정
+	            map.put("MOIM_CNTT", moimCntt);
+
+	            // 파일 이동 처리 등 fileUtils에 추가된 메서드를 호출하여 파일 저장
+	            // fileUtils.moveFile(flist.get(i), request); // fileUtils에 moveFile 메서드를 추가하여 파일 이동 처리
+	        }
+	        
 	    } catch (Exception e) {
 	        
 	        System.out.println("userJoin 오류 발생! " + e.getMessage());
 
 	    }
 	    
-	    gatherDao.makeGather(map, commandMap); // 파일 처리 이후에 실행
-
+	    gatherDao.makeGather(map, commandMap);
+	   
 	}
-
+	
 	// base64 데이터에서 파일 이름 추출하는 메서드
 	private String extractFilenameFromBase64(String base64String) {
-	    int startIndex = base64String.indexOf("data-filename=\"") + 15;
+	    int startIndex = base64String.indexOf("data-filename=\"") + "data-filename=\"".length();
 	    int endIndex = base64String.indexOf("\"", startIndex);
+	    System.out.println("파일명"+  base64String.substring(startIndex, endIndex));
 	    return base64String.substring(startIndex, endIndex);
 	}
 	

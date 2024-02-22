@@ -85,8 +85,6 @@ public class FileUtils {
 
 				} else if (fileType.equals("GT")) {
 					
-					System.out.println("파일명 :" + multipartFile.getName());
-
 					String profileFolderPath = realPath + "gather/" + map.get("FILE_IDXX") + "/";
 
 					File profileFolder = new File(profileFolderPath);
