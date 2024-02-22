@@ -72,7 +72,7 @@ public class GatherController {
 			resultGahterData.put("MOIM_IDXX", gathNumb);
 			resultGahterData.put("REGI_CODE", regiMap.get("COMD_CODE"));
 			resultGahterData.put("USER_NUMB", session.getAttribute("USER_NUMB"));
-
+			
 			gatherService.makeGather(resultGahterData, commandMap, request, session);
 			
 			resultMapData.put("MOIM_IDXX", gathNumb);
