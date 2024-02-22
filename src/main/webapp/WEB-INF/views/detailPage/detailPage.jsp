@@ -54,7 +54,7 @@
      </div>
 
     <div class="intro">
-       ${detail.MOIM_CNTT}
+       ${info}
     </div>
 
     <div class="eachInfoWrap">
