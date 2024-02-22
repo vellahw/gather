@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", function(){
   const backgroundImg = document.querySelector('.backgroundImg'); 
   backgroundImg.src = img[0].src; // 백그라운드 이미지 초기화
 
-
   /**
    * 240118 장한원
    * 이미지 슬라이더
