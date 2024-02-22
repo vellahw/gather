@@ -1,6 +1,5 @@
 package com.our.gather.moimGather.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +20,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.service.CommonService;
+import com.our.gather.detailPage.service.MoimDetailService;
 import com.our.gather.moimGather.service.GatherService;
 
 @Controller
@@ -31,6 +31,9 @@ public class GatherController {
 
 	@Resource(name = "GatherService")
 	private GatherService gatherService;
+	
+	@Resource(name = "MoimDetailService")
+	private MoimDetailService moimDetailService;
 
 	// 개설 폼
 	@RequestMapping(value = "/gather/makeGather.com")
@@ -75,6 +78,9 @@ public class GatherController {
 			resultMapData.put("MOIM_IDXX", gathNumb);
 			
 			commonService.mapInsert(resultMapData, commandMap);
+			
+			resultGahterData.put("WAIT_YSNO", "N");
+			moimDetailService.moimJoin(resultGahterData, commandMap);
 			
 			Map<String, Object> hashTag = new HashMap<>();
 			

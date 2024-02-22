@@ -22,7 +22,7 @@
 	   <insert id="makeGather" parameterType="hashmap">
 	        <![CDATA[
 	        /* gather.makeGather */
-	         INSERT INTO TM_GATHER (
+	          INSERT INTO TM_GATHER (
 					      GATH_IDXX  	/* 게더번호 */
 					    , USER_NUMB  	/* 회원번호(방장번호) */
 					    , GATH_TITL  	/* 게더명 7자리 */
@@ -43,7 +43,7 @@
 					    , COMP_YSNO		/* 작성완료여부 */
 					    , DELT_YSNO		/* 삭제여부(Y,N) /  */
 					    , ENDD_YSNO		/* 마감여부 */
-			) VALUES (
+			 )  VALUES (
 					      #{MOIM_IDXX}  					/* 게더번호 */
 					    , #{USER_NUMB}  					/* 회원번호(방장번호) */
 					    , #{MOIM_TITL, jdbcType=VARCHAR}  	/* 게더명 */

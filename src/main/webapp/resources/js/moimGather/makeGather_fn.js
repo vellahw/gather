@@ -112,47 +112,49 @@ document.addEventListener('DOMContentLoaded', ()=>{
 		callbacks: {
 			onImageUpload: function (files) {
         const uploadList = document.getElementById('uploadList');
+        
+        
 
 				// 이미지 업로드 (다중 업로드를 위해 반복문 사용)
-				for (let i = files.length - 1; i >= 0; i--) {
+          for (let i = files.length - 1; i >= 0; i--) {
 
-          const reader = new FileReader(); // 파일을 읽음
-          reader.onload = (function (file) {
-              return function (event) {
+            const reader = new FileReader(); // 파일을 읽음
+            reader.onload = (function (file) {
+                return function (event) {
 
-                // 본문에 이미지 삽입
-                $('#summernote').summernote('insertImage', event.target.result, file.name);
+                  // 본문에 이미지 삽입
+                  $('#summernote').summernote('insertImage', event.target.result, file.name);
 
-                // 업로드된 이미지 라이브러리 생성
-                const item = document.createElement('li');
-                item.className = 'uploadItem';
-                
-                const img = document.createElement('img');
-                img.src = event.target.result;
-                img.id = 'uploadImgThumnail';
+                  // 업로드된 이미지 라이브러리 생성
+                  const item = document.createElement('li');
+                  item.className = 'uploadItem';
+                  
+                  const img = document.createElement('img');
+                  img.src = event.target.result;
+                  img.id = 'uploadImgThumnail';
 
-                item.appendChild(img);
-                uploadList.appendChild(item); // 삽입
+                  item.appendChild(img);
+                  uploadList.appendChild(item); // 삽입
 
-                let imageData = {
-                  'file' : event.target.result // 파일 데이터 (base64 등)
+                  let imageData = {
+                    'file' : event.target.result // 파일 데이터 (base64 등)
+                  };
+                  fileData.push(imageData); // 파일 데이터를 배열에 추가
+                  
                 };
-                fileData.push(imageData); // 파일 데이터를 배열에 추가
-                
-              };
-          })(files[i]); // 함수를 정의 후 바로 실행, 매개변수 file = (바깥 괄호)files[i]
-          
-          reader.readAsDataURL(files[i]); // 파일을 base64로 읽어옴
+            })(files[i]); // 함수를 정의 후 바로 실행, 매개변수 file = (바깥 괄호)files[i]
+            
+            reader.readAsDataURL(files[i]); // 파일을 base64로 읽어옴
 
-          // 이미지 업로드
-          appendFile('file' + [i], files[i]);
+            // 이미지 업로드
+            appendFile('file' + [i], files[i]);
 
-        }
+          }
+       }
 
         //appendFile('file', fileData);
 
       }
-		},
 	});
 
 
