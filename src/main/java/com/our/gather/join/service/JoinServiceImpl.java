@@ -39,8 +39,6 @@ public class JoinServiceImpl implements JoinService {
 
 			for (int i = 0, size = flist.size(); i < size; i++) {
 
-				commonDao.comFileInsert(flist.get(i));
-
 				if (flist.get(i).get("FILE_SEQC") == null) {
 
 					map.put("FILE_SVNM", flist.get(i).get("FILE_SVNM"));

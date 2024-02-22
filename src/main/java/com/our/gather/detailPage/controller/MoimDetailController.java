@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.service.CommonService;
 import com.our.gather.detailPage.service.MoimDetailService;
@@ -64,7 +62,7 @@ public class MoimDetailController {
 			
 			mv.addObject("member", memList); // 게더맴버
 			mv.addObject("detail", detailMap); // 게더
-			mv.addObject("info", detailMap.remove("MOIM_CNTT"));
+			mv.addObject("contents", detailMap.remove("MOIM_CNTT"));
 			mv.addObject("img", gatherService.getGatherImg(commandMap.getMap(), commandMap)); // 게더 이미지
 
 			if (session.getAttribute("USER_NUMB") != null) {

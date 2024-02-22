@@ -10,20 +10,20 @@
    <!-- 맴버에 가입 -->
    <insert id="moimJoin" parameterType='hashmap'>
       <![CDATA[
-      	 /* detail.moimJoin */
-         INSERT INTO TB_MEMBER (
-                MOIM_IDXX
-              , USER_NUMB
-              , BANN_YSNO
-              , WAIT_YSNO
-              , PART_DATE
-     ) VALUES (
-                #{MOIM_IDXX}
-              , #{USER_NUMB}
-              , 'N'
-              , #{WAIT_YSNO}
-              , SYSDATE
-              )
+	    /* detail.moimJoin */
+	    INSERT INTO TB_MEMBER (
+	                MOIM_IDXX
+	              , USER_NUMB
+	              , BANN_YSNO
+	              , WAIT_YSNO
+	              , PART_DATE
+	     ) VALUES (
+	                #{MOIM_IDXX}
+	              , #{USER_NUMB}
+	              , 'N'
+	              , #{WAIT_YSNO}
+	              , SYSDATE
+	              )
       		]]>
    </insert>
    

@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 		callbacks: {
 			onImageUpload: function (files) {
         const uploadList = document.getElementById('uploadList');
-
+       
         // 이미지 다중 업로드
         if(files.length > 1) {
           for (let i = files.length - 1; i >= 0; i--) { 
@@ -120,6 +120,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
             const reader = new FileReader(); // 파일을 읽음
             reader.onload = (function (file) {
                 return function (event) {
+
                   // 본문에 이미지 삽입
                   $('#summernote').summernote('insertImage', event.target.result, file.name);
 
@@ -171,7 +172,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   
         }
       }
-		},
 	});
 
 

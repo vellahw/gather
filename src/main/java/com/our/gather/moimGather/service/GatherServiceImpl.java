@@ -119,8 +119,6 @@ public class GatherServiceImpl implements GatherService {
 
 	        for (int i = 0, size = flist.size(); i < size; i++) {
 	        	
-	        		commonDao.comFileInsert(flist.get(i));
-	            
 	            if (flist.get(i).get("MAIN_YSNO").equals("Y")) {
 	                map.put("FILE_SVNM", flist.get(i).get("FILE_SVNM"));
 	                
@@ -131,14 +129,12 @@ public class GatherServiceImpl implements GatherService {
 	            
 	            for (Map<String, Object> fileInfo : flist) {
 	                String originalFileName = (String) fileInfo.get("FILE_OGNM");
-	                String base64Src = "data-filename=\"" + originalFileName + "\""; // 기존 base64 형태의 src
 	                String newSrc = "src=\"" + fileInfo.get("FILE_PATH").toString() + "\"";
-	                // 이미지 태그에 해당 파일명이 포함되어 있는지 확인
+	                String pattern = "src=\"data:image/[a-zA-Z0-9]+;base64,[^\"]+\"" + "data-filename=\"" + originalFileName + "\"";
+	                
 	                if (moimCntt.contains(originalFileName)) {
 	                    // 이미지 태그의 src를 업데이트
-	                    String updatedImageTag = moimCntt.replaceAll("src=\"data:image/[a-zA-Z0-9]+;base64,[^\"]+\"", newSrc);
-	                    moimCntt = updatedImageTag;
-	                    moimCntt = moimCntt.replaceAll(base64Src, "");
+	                    moimCntt = moimCntt.replaceAll(pattern, newSrc);
 	                }
 	            }
 
@@ -157,14 +153,6 @@ public class GatherServiceImpl implements GatherService {
 	    
 	    gatherDao.makeGather(map, commandMap);
 	   
-	}
-	
-	// base64 데이터에서 파일 이름 추출하는 메서드
-	private String extractFilenameFromBase64(String base64String) {
-	    int startIndex = base64String.indexOf("data-filename=\"") + "data-filename=\"".length();
-	    int endIndex = base64String.indexOf("\"", startIndex);
-	    System.out.println("파일명"+  base64String.substring(startIndex, endIndex));
-	    return base64String.substring(startIndex, endIndex);
 	}
 	
 	// 게더 번호 채번

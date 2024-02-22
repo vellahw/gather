@@ -54,7 +54,7 @@
      </div>
 
     <div class="intro">
-       ${info}
+       ${contents}
     </div>
 
     <div class="eachInfoWrap">

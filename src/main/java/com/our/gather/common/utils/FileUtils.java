@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -14,8 +15,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.our.gather.common.dao.CommonDao;
+
 @Component("fileUtils")
 public class FileUtils {
+	
+	@Resource(name = "CommonDao")
+	private CommonDao commonDao;
 
 	private static final String filePath = "/resources/img/upload/";
 
@@ -144,7 +150,14 @@ public class FileUtils {
 			list.add(listMap);
 
 		}
-
+		
+		for (int i = 0, size = list.size(); i < size; i++) {
+        	
+    		commonDao.comFileInsert(list.get(i));
+        
+        
+        }
+        
 		return list;
 	}
 }
