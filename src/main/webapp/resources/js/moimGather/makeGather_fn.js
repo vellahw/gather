@@ -119,7 +119,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
           const reader = new FileReader(); // 파일을 읽음
           reader.onload = (function (file) {
               return function (event) {
-                console.log(event.target.result);
 
                 // 본문에 이미지 삽입
                 $('#summernote').summernote('insertImage', event.target.result, file.name);
@@ -146,13 +145,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
           reader.readAsDataURL(files[i]); // 파일을 base64로 읽어옴
 
           // 이미지 업로드
-          //appendFile('file' + [i], files[i]);
+          appendFile('file' + [i], files[i]);
 
         }
 
-        appendFile('file', fileData);
+        //appendFile('file', fileData);
 
-        console.log(fileData);
       }
 		},
 	});
@@ -169,9 +167,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     if(event.target.matches('#uploadImgThumnail')){
       event.target.parentNode.classList.toggle('picked_thumnail');
-      appendFile('mainImage', event.target.src); // 메인이미지 업로드
+      
+      for (let key of formData.keys()) {
+        if(formData.get(key) == event.target.src) {
+          console.log('있당')
+          formData.delete(key)
+        }
+      }
 
-      console.log(event.target.src)
+      appendFile('mainImage', event.target.src); // 메인이미지 업로드
     }
   })
 
