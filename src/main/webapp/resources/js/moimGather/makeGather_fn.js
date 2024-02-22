@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
   }
 
-  let fileData = [];
+  let fileNameNum = 0;
   /**
 	 * summernote 에디터 띄움
 	 */	
@@ -112,45 +112,66 @@ document.addEventListener('DOMContentLoaded', ()=>{
 		callbacks: {
 			onImageUpload: function (files) {
         const uploadList = document.getElementById('uploadList');
+        console.log(files)
 
-				// 이미지 업로드 (다중 업로드를 위해 반복문 사용)
-				for (let i = files.length - 1; i >= 0; i--) {
+        if(files.length > 1) {
+          // 이미지 다중 업로드를 위한 반복문
+          for (let i = files.length - 1; i >= 0; i--) { 
+  
+            const reader = new FileReader(); // 파일을 읽음
+            reader.onload = (function (file) {
+                return function (event) {
+                  // 본문에 이미지 삽입
+                  $('#summernote').summernote('insertImage', event.target.result, file.name);
 
-          const reader = new FileReader(); // 파일을 읽음
-          reader.onload = (function (file) {
-              return function (event) {
-
-                // 본문에 이미지 삽입
-                $('#summernote').summernote('insertImage', event.target.result, file.name);
-
-                // 업로드된 이미지 라이브러리 생성
-                const item = document.createElement('li');
-                item.className = 'uploadItem';
-                
-                const img = document.createElement('img');
-                img.src = event.target.result;
-                img.id = 'uploadImgThumnail';
-
-                item.appendChild(img);
-                uploadList.appendChild(item); // 삽입
-
-                let imageData = {
-                  'file' : event.target.result // 파일 데이터 (base64 등)
+                  // 업로드된 이미지 라이브러리 생성
+                  const item = document.createElement('li');
+                  item.className = 'uploadItem';
+                  
+                  const img = document.createElement('img');
+                  img.id = 'uploadImgThumnail';
+                  img.src = event.target.result;
+    
+                  item.appendChild(img);
+                  uploadList.appendChild(item); // 삽입
+    
                 };
-                fileData.push(imageData); // 파일 데이터를 배열에 추가
-                
-              };
-          })(files[i]); // 함수를 정의 후 바로 실행, 매개변수 file = (바깥 괄호)files[i]
+            })(files[i]); // 함수를 정의 후 바로 실행, 매개변수 file = (바깥 괄호)files[i]
+              
+            reader.readAsDataURL(files[i]); // 파일을 base64로 읽어옴
+    
+            // 이미지 업로드
+            appendFile('file' + [i], files[i]);
+          }
+
+        } else {
+          const reader = new FileReader();
+          reader.onload = ({ target }) => {
+            // 본문에 이미지 삽입
+            $('#summernote').summernote('insertImage', target.result, files[0].name);
+           
+
+            // 업로드된 이미지 라이브러리 생성
+            const item = document.createElement('li');
+            item.className = 'uploadItem';
+            
+            const img = document.createElement('img');
+            img.id = 'uploadImgThumnail';
+            img.src = target.result;
+
+            item.appendChild(img);
+            uploadList.appendChild(item); // 삽입
           
-          reader.readAsDataURL(files[i]); // 파일을 base64로 읽어옴
+          };
 
-          // 이미지 업로드
-          appendFile('file' + [i], files[i]);
+          reader.readAsDataURL(files[0]);
+          appendFile(`file${fileNameNum}`, files[0]);
 
+          fileNameNum++;
+  
         }
 
-        //appendFile('file', fileData);
-
+                  
       }
 		},
 	});
