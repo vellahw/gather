@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.our.gather.common.common.CommandMap;
-import com.our.gather.common.oracleFunction.OracleFunction;
 import com.our.gather.common.service.CommonService;
 import com.our.gather.detailPage.service.MoimDetailService;
 import com.our.gather.join.service.JoinService;
@@ -97,7 +98,7 @@ public class MoimDetailController {
 
 		return mv;
 	}
-
+	
 	// 모임참여
 	@RequestMapping("/moimJoin.com")
 	@ResponseBody
