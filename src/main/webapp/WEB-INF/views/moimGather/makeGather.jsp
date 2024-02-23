@@ -178,15 +178,6 @@
 							<ul id="uploadList"></ul>
 						</div>
 					</div>
-					<div class="mainImgArea">
-						<label for="mainImgInput">메인 이미지 업로드</label>
-						<input type="file" name="mainImage" id="mainImgInput" class="basicFileInput">
-						<div class="previewContainer">
-							<div class="previewWrapper">
-								<img class="preview">
-							</div>
-						</div>
-					</div>
 					<div class="btnContainer" style="margin-top: 30px;">
 						<button type="button" class="waybtn prev" id="prev4">이전</button>
 					  <button type="button" class="waybtn next" id="submit">확인</button>
