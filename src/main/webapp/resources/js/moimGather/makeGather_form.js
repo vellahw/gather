@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded',()=>{
 	const cateValue = document.getElementById('cateData').value;
 	const cateData = comObjectInArray(cateValue).result; // 카테고리 데이터
-	const gatherCostNode = document.getElementById('gatherCost'); // 참가비용 입력 input
+	const gatherCostNode = document.getElementById('moimCost'); // 참가비용 입력 input
 	// 카테고리들을 담고있는 최상위 노드
 	const categoryListNode =  document.querySelector('.categoryList');
 	
@@ -185,9 +185,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 					}
 					
 					// 우편번호와 주소 정보를 해당 필드에 넣음
-					document.getElementById("gatherAddress").value = addr;
+					document.getElementById("moimAddress").value = addr;
 					//상세주소 입력 폼으로 포커스 이동
-					document.getElementById("gatherDetailAddress").focus();
+					document.getElementById("moimDetailAddress").focus();
 					
 					// 주소 검색 후 지도에 마커 표시하기
 					geocoder.addressSearch(addr, function(result, status) {
@@ -202,12 +202,12 @@ document.addEventListener('DOMContentLoaded',()=>{
 							let gatherLati = result[0].y; // 위도
 							let gatherLong = result[0].x; // 경도
 						
-							document.getElementById('gatherAddress').style.display = 'block';
-							document.getElementById('gatherDetailAddress').style.display = 'block';
+							document.getElementById('moimAddress').style.display = 'block';
+							document.getElementById('moimDetailAddress').style.display = 'block';
 
 							// 위도 경도 hidden input 값 채움
-							document.getElementById('gatherLati').value = gatherLati;
-							document.getElementById('gatherLong').value = gatherLong;
+							document.getElementById('moimLati').value = gatherLati;
+							document.getElementById('moimLong').value = gatherLong;
 
 							// 결과값으로 받은 위치를 마커로 표시
 							let marker = new kakao.maps.Marker({

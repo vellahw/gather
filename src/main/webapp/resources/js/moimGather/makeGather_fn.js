@@ -206,13 +206,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
    * step2 -> step3로 가는 '다음' 버튼
    */
   step2Btn.addEventListener('click', ()=>{
-    const gatherCost = document.getElementById('gatherCost').value;
-    const gatherDate = document.getElementById('gatherDate').value;
-    const gatherTime = document.getElementById('gatherTime').value;
-    const gatherAddress = document.getElementById('gatherAddress').value;
-    const gatherDetailAddress = document.getElementById('gatherDetailAddress').value;
-    const gatherLati = document.getElementById('gatherLati').value;
-    const gatherLong = document.getElementById('gatherLong').value;
+    const gatherCost = document.getElementById('moimCost').value;
+    const gatherDate = document.getElementById('moimDate').value;
+    const gatherTime = document.getElementById('moimTime').value;
+    const gatherAddress = document.getElementById('moimAddress').value;
+    const gatherDetailAddress = document.getElementById('moimDetailAddress').value;
+    const gatherLati = document.getElementById('moimLati').value;
+    const gatherLong = document.getElementById('moimLong').value;
 
     step2Data ={
         MOIM_COST : gatherCost
