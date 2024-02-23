@@ -353,7 +353,7 @@
 #uploadFileBox {
   margin: 12px 8px;
   height: 120px;
-  display: none;
+  /* display: none; */
 }
 
 #uploadList {
