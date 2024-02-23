@@ -32,15 +32,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
   // 자식 카테고리 클릭 이벤트
   categoryList.addEventListener('click', (event)=>{
-  	const target = event.target;
+     const target = event.target;
   
     if(target.matches('.child')) {
     
-    	if(document.querySelector('.picked_child')){
-      	document.querySelector('.picked_child').classList.remove('picked_child');
-    	}
+       if(document.querySelector('.picked_child')){
+         document.querySelector('.picked_child').classList.remove('picked_child');
+       }
 
-  	  target.classList.toggle('picked_child');
+       target.classList.toggle('picked_child');
       pickedCateData = target.getAttribute('data-code2');
     }
   });
@@ -58,59 +58,59 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
   let fileNameNum = 0; // formData 업로드 이미지 key값 채번
   /**
-	 * summernote 에디터 띄움
-	 */	
-	$('#summernote').summernote({
-		codeviewFilter: false, // 코드 보기 필터 비활성화
+    * summernote 에디터 띄움
+    */   
+   $('#summernote').summernote({
+      codeviewFilter: false, // 코드 보기 필터 비활성화
     codeviewIframeFilter: false, // 코드 보기 iframe 필터 비활성화
     disableDragAndDrop: false,
     shortcuts: false,
-		height: 300,                 // 에디터 높이
-		minHeight: null,             // 최소 높이
-		maxHeight: null,             // 최대 높이
-		focus: false,                  // 에디터 로딩후 포커스를 맞출지 여부
-		lang: "ko-KR",					// 한글 설정
+      height: 300,                 // 에디터 높이
+      minHeight: null,             // 최소 높이
+      maxHeight: null,             // 최대 높이
+      focus: false,                  // 에디터 로딩후 포커스를 맞출지 여부
+      lang: "ko-KR",               // 한글 설정
 
-		toolbar: [
-			['style', ['style']], // 글자 스타일 설정 옵션
-			['fontsize', ['fontsize']], // 글꼴 크기 설정 옵션
-			['font', ['bold', 'underline', 'clear']], // 글자 굵게, 밑줄, 포맷 제거 옵션
-			['color', ['color']], // 글자 색상 설정 옵션
-			['para', ['ul', 'ol', 'paragraph']], // 문단 스타일, 순서 없는 목록, 순서 있는 목록 옵션
-			['insert', ['picture', 'link', 'video']], // 이미지 삽입, 링크 삽입, 동영상 삽입 옵션
-		],
+      toolbar: [
+         ['style', ['style']], // 글자 스타일 설정 옵션
+         ['fontsize', ['fontsize']], // 글꼴 크기 설정 옵션
+         ['font', ['bold', 'underline', 'clear']], // 글자 굵게, 밑줄, 포맷 제거 옵션
+         ['color', ['color']], // 글자 색상 설정 옵션
+         ['para', ['ul', 'ol', 'paragraph']], // 문단 스타일, 순서 없는 목록, 순서 있는 목록 옵션
+         ['insert', ['picture', 'link', 'video']], // 이미지 삽입, 링크 삽입, 동영상 삽입 옵션
+      ],
 
-		fontSizes: [
-			'8', '9', '10', '11', '12', '14', '16', '18',
-			'20', '22', '24', '28', '30', '36', '50', '72',
-		], // 글꼴 크기 옵션
+      fontSizes: [
+         '8', '9', '10', '11', '12', '14', '16', '18',
+         '20', '22', '24', '28', '30', '36', '50', '72',
+      ], // 글꼴 크기 옵션
 
-		styleTags: [
-			'p',  // 일반 문단 스타일 옵션
-			{
-					title: 'Blockquote',
-					tag: 'blockquote',
-					className: 'blockquote',
-					value: 'blockquote',
-			},  // 인용구 스타일 옵션
-			'pre',  // 코드 단락 스타일 옵션
-			{
-					title: 'code_light',
-					tag: 'pre',
-					className: 'code_light',
-					value: 'pre',
-			},  // 밝은 코드 스타일 옵션
-			{
-					title: 'code_dark',
-					tag: 'pre',
-					className: 'code_dark',
-					value: 'pre',
-			},  // 어두운 코드 스타일 옵션
-			'h1', 'h2', 'h3', 'h4', 'h5', 'h6',  // 제목 스타일 옵션
-		],
+      styleTags: [
+         'p',  // 일반 문단 스타일 옵션
+         {
+               title: 'Blockquote',
+               tag: 'blockquote',
+               className: 'blockquote',
+               value: 'blockquote',
+         },  // 인용구 스타일 옵션
+         'pre',  // 코드 단락 스타일 옵션
+         {
+               title: 'code_light',
+               tag: 'pre',
+               className: 'code_light',
+               value: 'pre',
+         },  // 밝은 코드 스타일 옵션
+         {
+               title: 'code_dark',
+               tag: 'pre',
+               className: 'code_dark',
+               value: 'pre',
+         },  // 어두운 코드 스타일 옵션
+         'h1', 'h2', 'h3', 'h4', 'h5', 'h6',  // 제목 스타일 옵션
+      ],
 
-		callbacks: {
-			onImageUpload: function (files) {
+      callbacks: {
+         onImageUpload: function (files) {
         const uploadList = document.getElementById('uploadList');
        
         // 이미지 다중 업로드
@@ -147,23 +147,24 @@ document.addEventListener('DOMContentLoaded', ()=>{
           fileNameNum++;
       }
 
-        document.getElementById('uploadList').addEventListener('click', (event)=>{
+         document.getElementById('uploadList').addEventListener('click', (event)=>{
 
-          const thumnailNode = document.getElementById('uploadImgThumnail');
-          if(thumnailNode.name) {
-            thumnailNode.name = ''; // 클릭 했었던 이미지의 name 값 초기화
-          }
+           const thumnailNode = document.getElementById('uploadImgThumnail');
+           if(thumnailNode.name) {
+             thumnailNode.name = ''; // 클릭 했었던 이미지의 name 값 초기화
+           }
       
-          comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 클릭 했었던 이미지 추가했던 class 삭제
+           comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 클릭 했었던 이미지 추가했던 class 삭제
       
           if(event.target.matches('#uploadImgThumnail')){
             event.target.parentNode.classList.toggle('picked_thumnail');          
 
           }
         });
+
       }
     }
-	});
+   });
 
   // 이미지 업로드 후 노드 생성/삽입
   const createImgNode = function(file, fileName){
@@ -200,7 +201,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     // Blob 객체를 생성하고 반환합니다.
     return new Blob([ab], { type: 'image/png' });
   }
-
 
   /**
    * 240220: 장한원
@@ -335,5 +335,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     .catch(error => {
         console.error('네트워크 에러 발생:', error);
     });
-});
+
+  });
+
 });
