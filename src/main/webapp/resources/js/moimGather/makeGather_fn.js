@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const img = document.createElement('img');
     img.id = 'uploadImgThumnail';
     img.src = file;
-    img.name = fileName;
+    img.dataset.name = fileName;
 
     item.appendChild(img); 
     uploadList.appendChild(item); // 업로드 썸네일 리스트에 삽입
@@ -301,12 +301,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     // 아까 만든 배열을 이용하여 li 태그의 클래스가 'uploadItem picked_thumnail'인 이미지의 이름을 가져와서
     // 해당 이름과 일치하는 배열 요소의 key 값을 'mainImage'로 바꿔줍니다.
-    const pickedFileName = document.querySelector('.uploadItem.picked_thumnail img').getAttribute('name');
+    const pickedFileName = document.querySelector('.uploadItem.picked_thumnail img').getAttribute('data-name');
 
     fileDataArray.forEach(item => {
-        if (item.fileName === pickedFileName) {
-            item.key = 'mainImage';
-        }
+      if (item.fileName === pickedFileName) {
+        item.key = 'mainImage';
+      }
     });
 
     // 파일 데이터 배열을 formData에 추가합니다.
