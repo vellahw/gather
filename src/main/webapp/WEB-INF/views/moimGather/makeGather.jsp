@@ -155,7 +155,7 @@
 						
 						<div class=" _row">
 							<h3 class="secondLabel">성별</h3>
-							<button type="button" class="genderBtn" data-gender="null">누구나</button>
+							<button type="button" class="genderBtn" data-gender="">누구나</button>
 							<button type="button" class="genderBtn" data-gender="W">여자만</button>
 							<button type="button" class="genderBtn" data-gender="M">남자만</button>
 						</div>
@@ -176,6 +176,10 @@
 						<div id="uploadFileBox" style="margin: 12px 8px;height: 120px;">
 							<ul id="uploadList" style="display: flex;"></ul>
 						</div>
+					</div>
+					<div>
+						<input type="file" name="mainImage" id="mainImgInput">
+						<div><img class="preview"></div>
 					</div>
 					<div class="btnContainer">
 						<button type="button" class="waybtn prev" id="prev4">이전</button>

@@ -147,35 +147,60 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
           };
 
-          
         }
 
-        document.getElementById('uploadList').addEventListener('click', (event)=>{
+        // document.getElementById('uploadList').addEventListener('click', (event)=>{
 
-          const thumnailNode = document.getElementById('uploadImgThumnail');
-          if(thumnailNode.name) {
-            thumnailNode.name = ''; // 클릭 했었던 이미지의 name 값 초기화
-          }
+        //   const thumnailNode = document.getElementById('uploadImgThumnail');
+        //   if(thumnailNode.name) {
+        //     thumnailNode.name = ''; // 클릭 했었던 이미지의 name 값 초기화
+        //   }
       
-          comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 클릭 했었던 이미지 추가했던 class 삭제
+        //   comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 클릭 했었던 이미지 추가했던 class 삭제
       
-          if(event.target.matches('#uploadImgThumnail')){
-            event.target.parentNode.classList.toggle('picked_thumnail');
+        //   if(event.target.matches('#uploadImgThumnail')){
+        //     event.target.parentNode.classList.toggle('picked_thumnail');
 
-            let targetImgSrc = event.target.src;
+        //     let targetImgSrc = event.target.src;
 
-            for (let [key, value] of formData.entries()) {
-              appendFile('mainImage', value); // 메인이미지 업로드
-              formData.delete(key);
-            }
+        //     for (let [key, value] of formData.entries()) {
+        //       appendFile('mainImage', value); // 메인이미지 업로드
+        //       formData.delete(key);
+        //     }
 
-          }
-        });
+        //   }
+        // });
       }
     }
 	});
+  
+  /*
+   * 240223 장한원
+   * 메인 이미지 업로드
+   */
+  const mainImgInput = document.getElementById('mainImgInput');
+  mainImgInput.addEventListener('change', (e)=>{
 
-  // 이미지 업로드 후 노드 생성/삽입
+    let mainImage = mainImgInput.files[0];
+
+    if (e.target.files.length === 0) {
+      return;
+    } else {
+      const reader = new FileReader();
+      reader.onload = ({ target }) => {
+        document.querySelector('.preview').src = target.result; // 프리뷰 띄움
+      };
+
+      reader.readAsDataURL(mainImage);
+      
+      appendFile("mainImage", mainImage); // formData에 삽입
+    }
+  });
+
+
+  /* 
+   * 이미지 업로드 후 본문, 미리보기에 노드 생성/삽입 
+   */
   const createImgNode = function(file, fileName){
     // 본문에 이미지 삽입
     $('#summernote').summernote('insertImage', file, fileName);
@@ -192,11 +217,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
     uploadList.appendChild(item); // 업로드 썸네일 리스트에 삽입
   }
 
-  // 이미지 formData에 삽입
+  /*
+   * 이미지 (file 데이터) formData에 삽입
+   */
   function appendFile(name, file) {
     formData.append(name, file);
   }
-
+  
   /**
    * 240220: 장한원
    * step1 -> step2로 가는 '다음' 버튼
@@ -254,10 +281,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const minPeople = document.getElementById('minPeople').value;
     const maxPeople = document.getElementById('maxPeople').value;
     const gathGender = document.querySelector('.gender_act').getAttribute('data-gender'); // 성별
-
-    if(gathGender == 'null') {
-      gathGender = '';
-    }
 
     step3Data ={
         APPR_YSNO : gathAppr
