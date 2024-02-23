@@ -198,7 +198,7 @@
 }
 
 .secondLabel {
-	font-size: 14px;
+	font-size: 15px;
 	margin: 12px 0;
 }
 
@@ -270,7 +270,9 @@
   margin-left: 5px;
 }
 
-.cost_act {
+.cost_act,
+.appr_act,
+.gender_act {
 	background-color: var(--color-orange400);
   color: #fff;
   border: none;
@@ -328,26 +330,26 @@
 }
 
 .apprBtn > label {
+	cursor: pointer;
   font-size: 19px;
   line-height: 28px;
 }
 
+
 .apprBtn > p {
+	cursor: pointer;
 	font-size: 13px;
 	color: var(--color-gray500);
 }
 
-.appr_act {
-	background-color: var(--primay);
-	color: var(--primay);
+.appr_act > p {
+	color: #fff;	
 }
 
 .genderBtn {
 	cursor: pointer;
-}
-
-.gender_act {
-	color: var(--primay);
+	margin: 5px;
+  height: 49px;
 }
 
 #uploadFileBox {

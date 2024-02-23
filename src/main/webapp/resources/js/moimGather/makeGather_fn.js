@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
   }
 
+
   let fileNameNum = 0; // formData 업로드 이미지 key값 채번
   /**
     * summernote 에디터 띄움
@@ -131,7 +132,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
                   fileName: files[i].name
               });
           }
-      } else {
+        } else {
           const reader = new FileReader();
           reader.onload = ({ target }) => {
               createImgNode(target.result, files[0].name);
@@ -144,27 +145,27 @@ document.addEventListener('DOMContentLoaded', ()=>{
               file: files[0],
               fileName: files[0].name
           });
+
           fileNameNum++;
+        }
+
+          document.getElementById('uploadList').addEventListener('click', (event)=>{
+
+            const thumnailNode = document.getElementById('uploadImgThumnail');
+            if(thumnailNode.name) {
+              thumnailNode.name = ''; // 클릭 했었던 이미지의 name 값 초기화
+            }
+          
+            comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 클릭 했었던 이미지 추가했던 class 삭제
+          
+            if(event.target.matches('#uploadImgThumnail')){
+              event.target.parentNode.classList.toggle('picked_thumnail');          
+
+            }
+          });
+        }
       }
-
-         document.getElementById('uploadList').addEventListener('click', (event)=>{
-
-           const thumnailNode = document.getElementById('uploadImgThumnail');
-           if(thumnailNode.name) {
-             thumnailNode.name = ''; // 클릭 했었던 이미지의 name 값 초기화
-           }
-      
-           comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 클릭 했었던 이미지 추가했던 class 삭제
-      
-          if(event.target.matches('#uploadImgThumnail')){
-            event.target.parentNode.classList.toggle('picked_thumnail');          
-
-          }
-        });
-
-      }
-    }
-   });
+    });
 
   // 이미지 업로드 후 노드 생성/삽입
   const createImgNode = function(file, fileName){
@@ -184,23 +185,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     uploadList.appendChild(item); // 업로드 썸네일 리스트에 삽입
   }
 
-  // Data URI를 Blob으로 변환하는 함수
-  function dataURItoBlob(dataURI) {
-    // base64 데이터 부분을 디코딩합니다.
-    const byteString = atob(dataURI.split(',')[1]);
-
-    // byte 문자열을 ArrayBuffer로 변환합니다.
-    const ab = new ArrayBuffer(byteString.length);
-
-    // ArrayBuffer를 다루기 쉬운 형태인 Uint8Array로 변환합니다.
-    const ia = new Uint8Array(ab);
-    for (let i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-    }
-
-    // Blob 객체를 생성하고 반환합니다.
-    return new Blob([ab], { type: 'image/png' });
-  }
 
   /**
    * 240220: 장한원
@@ -283,8 +267,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
  * 마지막 '확인' 버튼
  */
   submitBtn.addEventListener('click', () => {
-
-    debugger;
 
     let formData = new FormData(); // 서버로 전송할 폼 객체 생성
     const summernote = document.getElementById('summernote').value;

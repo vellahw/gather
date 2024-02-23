@@ -134,27 +134,6 @@ document.addEventListener('DOMContentLoaded',()=>{
 		});
 	}
 
-	/**
-	 * 240220 장한원
-	 * step3 승인여부 클릭 이벤트
-	 */
-	document.getElementById('step3').addEventListener('click', (event)=>{
-    const target = event.target;
-
-		if(document.querySelector('.appr_act')) {
-			document.querySelector('.appr_act').classList.remove;
-		}
-
-    if(target.matches('[data-appr]')) {
-      target.classList.toggle('appr_act');
-    }
-
-		if(target.matches('[data-gender')) {
-			target.classList.toggle('gender_act');
-		}
-  });
-
-
 	/* 카카오맵 지도 띄우기 */
 	const container = document.getElementById('map');
 	const options = { //지도를 생성할 때 필요한 기본 옵션
@@ -290,6 +269,24 @@ document.addEventListener('DOMContentLoaded',()=>{
 		children[13].childNodes[1].innerHTML = target.value;
 	});
 
+
+	/**
+	 * 240224 장한원
+	 * 성별 버튼 클릭 이벤트 
+	 */
+	document.getElementById('step3').addEventListener('click', (event)=>{
+		const target = event.target;
+
+		if(target.matches('[data-gender]')){
+
+			if(document.querySelector('.gender_act')) {
+				document.querySelector('.gender_act').classList.remove('gender_act');
+			}
+
+			target.classList.add('gender_act');
+		}
+	});
+
   
 	/* 
   * 240219 장한원
@@ -357,3 +354,20 @@ document.addEventListener('DOMContentLoaded',()=>{
 	}			
 
 });
+
+
+/*
+ * 240224 장한원
+ * 참여 승인제 클릭 이벤트
+ */
+const chooseAppr = function(element) {
+
+	// 이미 눌려있는 버튼의 효과 클래스 지움
+	if(document.querySelector('.appr_act')){
+		document.querySelector('.appr_act').classList.remove('appr_act');
+
+	}
+
+	element.classList.add('appr_act');
+
+}
