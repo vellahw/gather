@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const img = document.createElement('img');
     img.id = 'uploadImgThumnail';
     img.src = file;
-    img.name = fileName;
+    img.dataset.name = fileName;
 
     item.appendChild(img); 
     uploadList.appendChild(item); // 업로드 썸네일 리스트에 삽입
