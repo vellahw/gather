@@ -63,7 +63,7 @@ function comUpdateArray(arr, value, key) {
 240122 KSH
 name:comRemoveDuplicates
 Purpose: 배열 중복값 삭제
-parameter: (arr : 배열명, value: 배열값, key: 비교 키)
+parameter: (arr : 배열)
 */	
 function comRemoveDuplicates(arr) {
   return arr.filter((value, index, self) => {
