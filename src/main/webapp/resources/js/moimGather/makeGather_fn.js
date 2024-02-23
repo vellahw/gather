@@ -2,8 +2,6 @@
 
 document.addEventListener('DOMContentLoaded', ()=>{
 
-  let formData = new FormData(); // 서버로 전송할 폼 객체 생성
-
   if(sessionStorage.getItem('USER_NUMB') == null) {
     comAlert3(
         '세션이 만료되었습니다.'
@@ -114,40 +112,38 @@ document.addEventListener('DOMContentLoaded', ()=>{
         const uploadList = document.getElementById('uploadList');
        
         // 이미지 다중 업로드
-        if(files.length > 1) {
-          for (let i = files.length - 1; i >= 0; i--) { 
-  
-            const reader = new FileReader(); // 파일을 읽음
-            reader.onload = (function (file) {
-                return function (event) {
-
-                  createImgNode(event.target.result, file.name);
-    
-                };
-            })(files[i]); // 함수를 정의 후 바로 실행, 매개변수 file = (바깥 괄호)files[i]
-              
-            reader.readAsDataURL(files[i]); // 파일을 base64로 읽어옴
-    
-            appendFile('file' + [i], files[i]); // formData에 추가
+        if (files.length > 1) {
+          for (let i = files.length - 1; i >= 0; i--) {
+              const reader = new FileReader(); // 파일을 읽음
+              reader.onload = (function (file) {
+                  return function (event) {
+                      createImgNode(event.target.result, file.name);
+                  };
+              })(files[i]); // 함수를 정의 후 바로 실행, 매개변수 file = (바깥 괄호)files[i]
+              reader.readAsDataURL(files[i]); // 파일을 base64로 읽어옴
+      
+              // 파일 데이터 배열에 파일과 파일 이름 추가
+              fileDataArray.push({
+                  key: 'file' + i,
+                  file: files[i],
+                  fileName: files[i].name
+              });
           }
-
-        // 이미지 하나씩 업로드
-        } else {
-
+      } else {
           const reader = new FileReader();
           reader.onload = ({ target }) => {
-
-            createImgNode(target.result, files[0].name);
-          
+              createImgNode(target.result, files[0].name);
           };
-
           reader.readAsDataURL(files[0]);
-
-          appendFile(`file${fileNameNum}`, files[0]); // formdata에 하나씩 추가
-
-          fileNameNum++; 
-          
-        }
+      
+          // 파일 데이터 배열에 파일과 파일 이름 추가
+          fileDataArray.push({
+              key: `file${fileNameNum}`,
+              file: files[0],
+              fileName: files[0].name
+          });
+          fileNameNum++;
+      }
 
         document.getElementById('uploadList').addEventListener('click', (event)=>{
 
@@ -159,12 +155,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
           comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 클릭 했었던 이미지 추가했던 class 삭제
       
           if(event.target.matches('#uploadImgThumnail')){
-            event.target.parentNode.classList.toggle('picked_thumnail');
+            event.target.parentNode.classList.toggle('picked_thumnail');          
 
-            let targetImgSrc = event.target.src;
-
-
-              //appendFile('mainImage', file); // 메인이미지 업로드
           }
         });
       }
@@ -183,14 +175,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const img = document.createElement('img');
     img.id = 'uploadImgThumnail';
     img.src = file;
+    img.name = fileName;
 
     item.appendChild(img); 
     uploadList.appendChild(item); // 업로드 썸네일 리스트에 삽입
-  }
-
-  // 이미지 formData에 삽입
-  function appendFile(name, file) {
-    formData.append(name, file);
   }
 
   // Data URI를 Blob으로 변환하는 함수
@@ -289,51 +277,59 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 
   /**
-   * 240220: 장한원
-   * 마지막 '확인' 버튼
-   */
-  submitBtn.addEventListener('click', ()=>{
+ * 240220: 장한원
+ * 마지막 '확인' 버튼
+ */
+  submitBtn.addEventListener('click', () => {
+
+    let formData = new FormData(); // 서버로 전송할 폼 객체 생성
     const summernote = document.getElementById('summernote').value;
 
     step4Data = {
-        MOIM_CNTT : summernote
-      , COMP_YSNO : 'Y'
+        MOIM_CNTT: summernote,
+        COMP_YSNO: 'Y'
     }
 
     reqData = Object.assign({}, step1Data, step2Data, step3Data, step4Data);
 
     formData.append('data', JSON.stringify(reqData)); // 유저가 입력한 폼 값
-    formData.append('map', JSON.stringify(gatherAddressData)); 
+    formData.append('map', JSON.stringify(gatherAddressData));
+
+    // 아까 만든 배열을 이용하여 li 태그의 클래스가 'uploadItem picked_thumnail'인 이미지의 이름을 가져와서
+    // 해당 이름과 일치하는 배열 요소의 key 값을 'mainImage'로 바꿔줍니다.
+    const pickedFileName = document.querySelector('.uploadItem.picked_thumnail img').getAttribute('name');
+
+    fileDataArray.forEach(item => {
+        if (item.fileName === pickedFileName) {
+            item.key = 'mainImage';
+        }
+    });
+
+    // 파일 데이터 배열을 formData에 추가합니다.
+    fileDataArray.forEach(({ key, file }) => {
+        formData.append(key, file);
+    });
 
     fetch("/gather/makeGatherDo.com", {
-      method: "POST",
-      body: formData
+        method: "POST",
+        body: formData
     })
     .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.text();
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.text();
     })
     .then((data) => {
-      if(data == 'success') {
-        alert('성공입니당')
-        location.reload();
-
-        // comAlert2(5
-        //   ,"게더가 만들어졌어요!"
-        //   , null
-        //   , "방금 만든 게더 보러 가기"
-        //   , function(){
-        //     location.href = "/gather/login.com"
-        //   });
-      } else {
-        console.log("오류 발생 data: ", data)
-      }
+        if(data === 'success') {
+            alert('성공입니당')
+            location.reload();
+        } else {
+            console.log("오류 발생 data: ", data)
+        }
     })
     .catch(error => {
-      console.error('네트워크 에러 발생:', error);
+        console.error('네트워크 에러 발생:', error);
     });
-  });
-
+});
 });
