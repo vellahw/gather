@@ -271,7 +271,8 @@
 }
 
 .cost_act,
-.appr_act {
+.appr_act,
+.gender_act {
 	background-color: var(--color-orange400);
   color: #fff;
   border: none;
@@ -342,10 +343,8 @@
 
 .genderBtn {
 	cursor: pointer;
-}
-
-.gender_act {
-	color: var(--primay);
+	margin: 5px;
+  height: 49px;
 }
 
 #uploadFileBox {
