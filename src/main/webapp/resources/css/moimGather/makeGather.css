@@ -198,7 +198,7 @@
 }
 
 .secondLabel {
-	font-size: 14px;
+	font-size: 15px;
 	margin: 12px 0;
 }
 
@@ -335,10 +335,15 @@
   line-height: 28px;
 }
 
+
 .apprBtn > p {
 	cursor: pointer;
 	font-size: 13px;
 	color: var(--color-gray500);
+}
+
+.appr_act > p {
+	color: #fff;	
 }
 
 .genderBtn {

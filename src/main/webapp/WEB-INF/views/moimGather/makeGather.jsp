@@ -111,14 +111,17 @@
 						</h3>
 						
 						<div class=" _row">
-							<h3 class="secondLabel">- 참여 승인제 여부</h3>
+							<h3 class="secondLabel">
+								<img src="/resources/img/form/peopleApprIcon.png">
+								참여 승인제 여부
+							</h3>
 								<div class="apprBtnContainer">
 									<div class="apprBtn parent" data-appr="Y" id="apprY" onclick="chooseAppr(this)">
 										<label for="apprY" aria-label="승인 필요">필요</label>
 										<p>직접 멤버의 참여 요청을 수락하거나 거절할 수 있어요.</p>
 									</div>
 									<div class="apprBtn parent" data-appr="N" id="apprN" onclick="chooseAppr(this)">
-										<label for="apprN" aria-label="승인 불필요">불필요</label>
+										<label for="apprN" aria-label="승 인 불필요">불필요</label>
 										<p>멤버들의 신청과 동시에 참여가 완료돼요.</p>
 									</div>
 								</div>
@@ -126,7 +129,10 @@
 						</div>
 						
 						<div class=" _row">
-							<h3 class="secondLabel" aria-label="gatherAge">- 연령대</h3>
+							<h3 class="secondLabel" aria-label="gatherAge">
+								<img src="/resources/img/form/peopleAgeIcon.png">
+								연령대
+							</h3>
 			        <div slider id="slider-distance">
 							  <div>
 							    <div inverse-left style="width:70%;"></div>
@@ -147,7 +153,10 @@
 						</div>
 						
 						<div class=" _row">
-							<h3 class="secondLabel">- 인원수</h3>
+							<h3 class="secondLabel">
+								<img src="/resources/img/form/peopleCountIcon.png">
+								인원수
+							</h3>
 			        <label for="minPeople" >최소 인원(2명~)</label>
 			        <input type="number" id="minPeople" class="basicInput register-p">
 			        <label for="maxPeople" >최대 인원</label>
@@ -155,7 +164,10 @@
 						</div>
 						
 						<div class=" _row">
-							<h3 class="secondLabel" style="margin-bottom: 7px;">- 성별</h3>
+							<h3 class="secondLabel" style="margin-bottom: 7px;">
+							  <img src="/resources/img/form/peopleGenderIcon.png">
+							  성별
+							</h3>
 							<div style="display: flex; margin-right: 10px;">
 								<button type="button" class="genderBtn parent" data-gender="">누구나</button>
 								<button type="button" class="genderBtn parent" data-gender="W">여자만</button>
