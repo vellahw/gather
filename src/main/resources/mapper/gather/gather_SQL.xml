@@ -418,16 +418,19 @@
 		  		 MOIM_IMAG
 	        FROM (
 	        	  SELECT GATH_IMAG AS MOIM_IMAG
+	        	       , '000' AS FILE_SEQC
 	                FROM VW_GATHER
 	               WHERE GATH_IDXX = #{MOIM_IDXX}
 	
-	               UNION ALL
+	               UNION 
 	
 	              SELECT FILE_PATH AS MOIM_IMAG
+	                   , FILE_SEQC AS FILE_SEQC
 	                FROM TM_FILEXM
 	               WHERE FILE_IDXX = #{MOIM_IDXX}
 	                 AND DELT_YSNO = 'N'
-	             )
+	             ) A
+	    ORDER BY FILE_SEQC
 	 		]]>
 	</select>	
    
