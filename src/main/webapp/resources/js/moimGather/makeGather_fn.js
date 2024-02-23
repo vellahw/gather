@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 			['font', ['bold', 'underline', 'clear']], // 글자 굵게, 밑줄, 포맷 제거 옵션
 			['color', ['color']], // 글자 색상 설정 옵션
 			['para', ['ul', 'ol', 'paragraph']], // 문단 스타일, 순서 없는 목록, 순서 있는 목록 옵션
-			['insert', ['picture', 'link', 'video']], // 이미지 삽입, 링크 삽입, 동영상 삽입 옵션
+			['insert', ['picture']], // 이미지 삽입 옵션
 		],
 
 		fontSizes: [
@@ -139,13 +139,14 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
             createImgNode(target.result, files[0].name);
           
+            reader.readAsDataURL(files[0]);
+  
+            appendFile(`file${fileNameNum}`, files[0]); // formdata에 하나씩 추가
+  
+            fileNameNum++; 
+
           };
 
-          reader.readAsDataURL(files[0]);
-
-          appendFile(`file${fileNameNum}`, files[0]); // formdata에 하나씩 추가
-
-          fileNameNum++; 
           
         }
 
@@ -163,8 +164,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
             let targetImgSrc = event.target.src;
 
+            for (let [key, value] of formData.entries()) {
+              appendFile('mainImage', value); // 메인이미지 업로드
+              formData.delete(key);
+            }
 
-              //appendFile('mainImage', file); // 메인이미지 업로드
           }
         });
       }
@@ -192,25 +196,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   function appendFile(name, file) {
     formData.append(name, file);
   }
-
-  // Data URI를 Blob으로 변환하는 함수
-  function dataURItoBlob(dataURI) {
-    // base64 데이터 부분을 디코딩합니다.
-    const byteString = atob(dataURI.split(',')[1]);
-
-    // byte 문자열을 ArrayBuffer로 변환합니다.
-    const ab = new ArrayBuffer(byteString.length);
-
-    // ArrayBuffer를 다루기 쉬운 형태인 Uint8Array로 변환합니다.
-    const ia = new Uint8Array(ab);
-    for (let i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-    }
-
-    // Blob 객체를 생성하고 반환합니다.
-    return new Blob([ab], { type: 'image/png' });
-  }
-
 
   /**
    * 240220: 장한원
@@ -318,7 +303,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
     .then((data) => {
       if(data == 'success') {
         alert('성공입니당')
-        location.reload();
+
+        // key/value 쌍이 담긴 리스트
+        for(let [name, value] of formData) {
+          console.log(`${name} = ${value}`); // key1 = value1, then key2 = value2
+        }
+
+        //location.reload();
 
         // comAlert2(5
         //   ,"게더가 만들어졌어요!"

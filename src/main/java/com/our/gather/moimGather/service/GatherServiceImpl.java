@@ -39,8 +39,9 @@ public class GatherServiceImpl implements GatherService {
 
          commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 
-		return gatherDao.mainGather(map, commandMap, session);
-	}
+      }
+      return gatherDao.mainGather(map, commandMap, session);
+   }
 
 	// 게더리스트
 	@Override
