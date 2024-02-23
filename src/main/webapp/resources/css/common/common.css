@@ -24,7 +24,6 @@
 	display: none !important;
 }
 
-
 /*========== display flex 처리 ==========
 	display none -> flex 될 때 사용
 */
@@ -70,6 +69,20 @@
 input.basicInput:focus {
   /* outline: 1px solid var(--primary); */
   border: 1px solid var(--primary);
+}
+
+
+/*========== 기본 input=file 태그 버튼 ==========*/
+.basicFileInput::file-selector-button {
+  width: 100px;
+  height: 28px;
+  background-color: var(--color-orange300); 
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-right: 25px;
+  margin-left:0px;
+  color: #fff;
 }
 
 

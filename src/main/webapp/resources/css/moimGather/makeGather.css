@@ -199,6 +199,7 @@
 
 .secondLabel {
 	font-size: 14px;
+	margin: 12px 0;
 }
 
 .register-p {
@@ -258,11 +259,13 @@
   height: 46px;
 }
 
-.costBtn[data-cost="Y"] {
+.costBtn[data-cost="Y"],
+.apprBtn[data-appr="Y"] {
 	margin-right: 5px;
 }
 
-.costBtn[data-cost="N"] {
+.costBtn[data-cost="N"],
+.apprBtn[data-appr="N"] {
 	margin-right: 10px;
   margin-left: 5px;
 }
@@ -314,9 +317,24 @@
 	opacity: 1 !important;
 }
 
+.apprBtnContainer {
+	display: flex;
+}
 
 .apprBtn {
-	
+	cursor: pointer;
+	flex-direction: column;
+	height: 86px;
+}
+
+.apprBtn > label {
+  font-size: 19px;
+  line-height: 28px;
+}
+
+.apprBtn > p {
+	font-size: 13px;
+	color: var(--color-gray500);
 }
 
 .appr_act {
@@ -325,20 +343,20 @@
 }
 
 .genderBtn {
-	
+	cursor: pointer;
 }
 
 .gender_act {
 	color: var(--primay);
 }
 
-＃uploadFileBox {
-  margin: 12px 8px !important;
-  height: 120px !important;
+#uploadFileBox {
+  margin: 12px 8px;
+  height: 120px;
 }
 
-＃uploadList {
-	display: flex !important;
+#uploadList {
+	display: flex;
 }
 
 .uploadItem {
@@ -354,7 +372,8 @@
   height: 108px;
 }
 
-.uploadItem > img {
+.uploadItem > img,
+.previewWrapper > img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
