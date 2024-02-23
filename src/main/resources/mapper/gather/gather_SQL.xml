@@ -12,9 +12,9 @@
     	<![CDATA[
     	  
 	      SELECT /* gather.makeGatherNumb */
-	      		 'GT' ||TO_CHAR(SYSDATE, 'YYMM') ||LPAD(NVL(MAX(CAST(SUBSTR(GATH_IDXX,7,4) AS NUMBER))+1,1),4,'0') AS GATH_IDXX
+	      		 'GT' ||TO_CHAR(SYSDATE, 'YYMM') ||LPAD(NVL(MAX(CAST(SUBSTR(MOIM_IDXX,7,4) AS NUMBER))+1,1),4,'0') AS MOIM_IDXX
 		  	FROM TM_GATHER
-		   WHERE SUBSTR(GATH_IDXX,3,4) = TO_CHAR(SYSDATE, 'YYMM')
+		   WHERE SUBSTR(MOIM_IDXX,3,4) = TO_CHAR(SYSDATE, 'YYMM')
     	]]>
     	</select>
     	
@@ -23,10 +23,10 @@
 	        <![CDATA[
 	        /* gather.makeGather */
 	          INSERT INTO TM_GATHER (
-					      GATH_IDXX  	/* 게더번호 */
+					      MOIM_IDXX  	/* 게더번호 */
 					    , USER_NUMB  	/* 회원번호(방장번호) */
-					    , GATH_TITL  	/* 게더명 7자리 */
-					    , GATH_CNTT  	/* 상세내용 */
+					    , MOIM_TITL  	/* 게더명 7자리 */
+					    , MOIM_CNTT  	/* 상세내용 */
 					    , CATE_IDXX  	/* 카테고리PK */
 					    , FILE_SVNM  	/* 대표 이미지 파일 */
 					    , REGI_CODE  	/* 행정구역코드 */
@@ -75,9 +75,9 @@
          SELECT /*mainPage.mainGather*/
          		  RNUM
                 , TYPE                				/* 게더 타입 ('Taste': 취항 , 'Hot': 핫한게더 , 'Like':좋아요 많은 순 'Region': 지역) */
-                , GATH_IDXX	AS MOIM_IDXX			/* 게더 ID */
-                , GATH_TITL AS MOIM_TITL			/* 게더 제목 */
-                , GATH_IMAG	AS MOIM_IMAG			/* 게더 대표이미지 */
+                , MOIM_IDXX				            /* 게더 ID */
+                , MOIM_TITL			                /* 게더 제목 */
+                , MOIM_IMAG				            /* 게더 대표이미지 */
                 , CATE_IDXX							/* 카테고리 코드 */
                 , PARENTS_CATE						/* 상위 카테고리 */
                 , CHILD_CATE						/* 하위 카테고리 */
@@ -97,14 +97,14 @@
                 ]]>
                  <if test="USER_NUMB != null">
       			 	<![CDATA[
-                , getAmILike (GATH_IDXX, #{USER_NUMB}) AS LIKE_YSNO					/* 로그인유저 좋아요 유무 */
-                , getAmIBkmk (GATH_IDXX, #{USER_NUMB}) AS BKMK_YSNO					/* 로그인유저 북마크 유무 */
+                , getAmILike (MOIM_IDXX, #{USER_NUMB}) AS LIKE_YSNO					/* 로그인유저 좋아요 유무 */
+                , getAmIBkmk (MOIM_IDXX, #{USER_NUMB}) AS BKMK_YSNO					/* 로그인유저 북마크 유무 */
                   	]]>
      			 </if>
      			 <if test="USER_NUMB == null">
       			 	<![CDATA[
-                , getAmILike (GATH_IDXX, null) AS LIKE_YSNO							/* 비로그인 시 좋아요 유무 없음 0 리턴 */
-                , getAmIBkmk (GATH_IDXX, null) AS BKMK_YSNO							/* 비로그인 시 북마크 유무 없음 0 리턴 */
+                , getAmILike (MOIM_IDXX, null) AS LIKE_YSNO							/* 비로그인 시 좋아요 유무 없음 0 리턴 */
+                , getAmIBkmk (MOIM_IDXX, null) AS BKMK_YSNO							/* 비로그인 시 북마크 유무 없음 0 리턴 */
                   	]]>
      			 </if>
      			 <![CDATA[
@@ -116,9 +116,9 @@
                   
                     	SELECT  ROW_NUMBER() OVER (ORDER BY REGG_DATE DESC) RNUM
                               , 'Taste' AS TYPE
-                    		  , GATH_IDXX
-                    		  , GATH_TITL
-		                      , GATH_IMAG
+                    		  , MOIM_IDXX
+                    		  , MOIM_TITL
+		                      , MOIM_IMAG
 		                      , CATE_IDXX
 		                      , PARENTS_CATE
 		                      , CHILD_CATE
@@ -153,9 +153,9 @@
                 (
 		        			SELECT ROW_NUMBER() OVER (ORDER BY REGG_DATE DESC) RNUM
 			                     ,'Hot' AS TYPE
-			                     , GATH_IDXX
-			                     , GATH_TITL
-			                     , GATH_IMAG
+			                     , MOIM_IDXX
+			                     , MOIM_TITL
+			                     , MOIM_IMAG
 			                     , CATE_IDXX
 			                     , PARENTS_CATE
 			                     , CHILD_CATE
@@ -180,9 +180,9 @@
                  		 SELECT 
 	                             ROWNUM RNUM
 	                           , 'Like' AS TYPE
-	                           , GATH_IDXX
-	                           , GATH_TITL
-	                           , GATH_IMAG
+	                           , MOIM_IDXX
+	                           , MOIM_TITL
+	                           , MOIM_IMAG
 	                           , CATE_IDXX
 	                           , PARENTS_CATE
 	                           , CHILD_CATE
@@ -200,9 +200,9 @@
 	                           , REGG_DATE
 	                           , ENDD_YSNO
 	                       FROM ( SELECT 
-	                                     GATH_IDXX
-	                                   , GATH_TITL
-	                                   , GATH_IMAG
+	                                     MOIM_IDXX
+	                                   , MOIM_TITL
+	                                   , MOIM_IMAG
 	                                   , CATE_IDXX
 	                                   , PARENTS_CATE
 	                                   , CHILD_CATE
@@ -231,9 +231,9 @@
                  (
                   			SELECT ROW_NUMBER() OVER (ORDER BY REGG_DATE DESC) RNUM
 			                     , 'Region' AS TYPE
-			                     , GATH_IDXX
-			                     , GATH_TITL
-			                     , GATH_IMAG
+			                     , MOIM_IDXX
+			                     , MOIM_TITL
+			                     , MOIM_IMAG
 			                     , CATE_IDXX
 			                     , PARENTS_CATE
 			                     , CHILD_CATE
@@ -279,17 +279,17 @@
        	SELECT /*mainPage.getGather*/
        			*
 		  FROM (  
-		       	  SELECT  ROW_NUMBER() OVER (ORDER BY REGG_DATE, MOIM_TIME, GATH_IDXX DESC) RNUM         
-		                , GATH_IDXX AS MOIM_IDXX										   	/* 게더아이디 */
-		                , GATH_TITL AS MOIM_TITL										   	/* 게더 제목 */
+		       	  SELECT  ROW_NUMBER() OVER (ORDER BY REGG_DATE, MOIM_TIME, MOIM_IDXX DESC) RNUM         
+		                , MOIM_IDXX										   					/* 게더아이디 */
+		                , MOIM_TITL										   					/* 게더 제목 */
 		                ]]>
 		          <if test="MOIM_IDXX != null">
 		      	  <![CDATA[
-		                , GATH_CNTT AS MOIM_CNTT								           	/* 게더 내용 */
+		                , MOIM_CNTT							           						/* 게더 내용 */
 		                  ]]>
 		      	  </if>
 		      	  <![CDATA[
-		                , GATH_IMAG AS MOIM_IMAG								            /* 게더 대표 이미지 */
+		                , MOIM_IMAG							           						/* 게더 대표 이미지 */
 		                , CATE_IDXX															/* 카테고리 코드 */
 		                , PARENTS_CATE														/* 부모 카테고리 */
 		                , CHILD_CATE														/* 자식 카테고리 */
@@ -316,14 +316,14 @@
 		                 ]]>
 		                 <if test="USER_NUMB != null">
 		      			 	<![CDATA[
-		                , getAmILike (GATH_IDXX, #{USER_NUMB}) AS LIKE_YSNO					/* 로그인유저 좋아요 유무 */
-		                , getAmIBkmk (GATH_IDXX, #{USER_NUMB}) AS BKMK_YSNO					/* 로그인유저 북마크 유무 */
+		                , getAmILike (MOIM_IDXX, #{USER_NUMB}) AS LIKE_YSNO					/* 로그인유저 좋아요 유무 */
+		                , getAmIBkmk (MOIM_IDXX, #{USER_NUMB}) AS BKMK_YSNO					/* 로그인유저 북마크 유무 */
 		                  	]]>
 		     			 </if>
 		     			  <if test="USER_NUMB == null">
 		      			 	<![CDATA[
-		                , getAmILike (GATH_IDXX, null) AS LIKE_YSNO							/* 좋아요 유무 없음 0 리턴 */
-		                , getAmIBkmk (GATH_IDXX, null) AS BKMK_YSNO							/* 북마크 유무 없음 0 리턴 */
+		                , getAmILike (MOIM_IDXX, null) AS LIKE_YSNO							/* 좋아요 유무 없음 0 리턴 */
+		                , getAmIBkmk (MOIM_IDXX, null) AS BKMK_YSNO							/* 북마크 유무 없음 0 리턴 */
 		                  	]]>
 		     			 </if>
 		     			 <![CDATA[
@@ -332,7 +332,7 @@
 		      ]]>
 		      <if test="MOIM_IDXX != null">
 		      	 <![CDATA[
-		         	 AND GATH_IDXX = #{MOIM_IDXX}
+		         	 AND MOIM_IDXX = #{MOIM_IDXX}
 		         ]]>
 		      </if>
 		      <if test="CATE_IDXX != null and CATE_IDXX != 'all'">
@@ -359,10 +359,10 @@
 		         	  OR (PREGI_NAME   LIKE '%'||#{KEYY_WORD}||'%')
 		         	  OR (CHILD_CATE   LIKE '%'||#{KEYY_WORD}||'%')
 		         	  OR (PARENTS_CATE LIKE '%'||#{KEYY_WORD}||'%')
-		         	  OR (GATH_TITL    LIKE '%'||#{KEYY_WORD}||'%')
-		         	  OR (GATH_CNTT    LIKE '%'||#{KEYY_WORD}||'%')
+		         	  OR (MOIM_TITL    LIKE '%'||#{KEYY_WORD}||'%')
+		         	  OR (MOIM_CNTT    LIKE '%'||#{KEYY_WORD}||'%')
 		         	  OR (USER_NICK    LIKE '%'||#{KEYY_WORD}||'%')
-		         	  OR GATH_IDXX IN (SELECT HASH_IDXX 
+		         	  OR MOIM_IDXX IN (SELECT HASH_IDXX 
 		         	                     FROM TB_HASHTG 
 		         	                    WHERE HASH_TAGG LIKE '%'||#{KEYY_WORD}||'%')  
 		         ]]>
@@ -399,10 +399,10 @@
 		    OR (PREGI_NAME   LIKE '%'||#{KEYY_WORD}||'%')
 		    OR (CHILD_CATE   LIKE '%'||#{KEYY_WORD}||'%')
 		    OR (PARENTS_CATE LIKE '%'||#{KEYY_WORD}||'%')
-		    OR (GATH_TITL    LIKE '%'||#{KEYY_WORD}||'%')
-		    OR (GATH_CNTT    LIKE '%'||#{KEYY_WORD}||'%')
+		    OR (MOIM_TITL    LIKE '%'||#{KEYY_WORD}||'%')
+		    OR (MOIM_CNTT    LIKE '%'||#{KEYY_WORD}||'%')
 		    OR (USER_NICK    LIKE '%'||#{KEYY_WORD}||'%')
-		    OR GATH_IDXX IN (SELECT HASH_IDXX 
+		    OR MOIM_IDXX IN (SELECT HASH_IDXX 
 		         	           FROM TB_HASHTG 
 		         	          WHERE HASH_TAGG LIKE '%'||#{KEYY_WORD}||'%')  
             
@@ -415,20 +415,24 @@
       resultType="hashmap">
       <![CDATA[
 		  SELECT /*gather.getGatherImg*/
-		  		 MOIM_IMAG
+		  		  MOIM_IMAG
+    
 	        FROM (
-	        	  SELECT GATH_IMAG AS MOIM_IMAG
+	        	  SELECT MOIM_IMAG
 	        	       , '000' AS FILE_SEQC
 	                FROM VW_GATHER
-	               WHERE GATH_IDXX = #{MOIM_IDXX}
+	               WHERE MOIM_IDXX = #{MOIM_IDXX}
 	
-	               UNION 
+	               UNION
 	
 	              SELECT FILE_PATH AS MOIM_IMAG
 	                   , FILE_SEQC AS FILE_SEQC
-	                FROM TM_FILEXM
+	                FROM TM_FILEXM A
+               LEFT JOIN VW_GATHER B
+                      ON A.FILE_IDXX = B.MOIM_IDXX
 	               WHERE FILE_IDXX = #{MOIM_IDXX}
-	                 AND DELT_YSNO = 'N'
+                     AND A.FILE_PATH <> B.MOIM_IMAG   
+                     AND DELT_YSNO = 'N'
 	             ) A
 	    ORDER BY FILE_SEQC
 	 		]]>
@@ -468,7 +472,7 @@
 	   LEFT JOIN TM_USERXM B
 	          ON A.USER_NUMB = B.USER_NUMB
 	   LEFT JOIN TM_GATHER C
-	          ON A.MOIM_IDXX = C.GATH_IDXX
+	          ON A.MOIM_IDXX = C.MOIM_IDXX
 	   LEFT JOIN TB_REVIEW D 
             ON A.MOIM_IDXX = D.MOIM_IDXX        
 	       WHERE A.MOIM_IDXX = #{MOIM_IDXX}
@@ -493,7 +497,7 @@
       UPDATE /*gather.setGatherEnd*/
       		 TM_GATHER SET
 		     ENDD_YSNO = 'Y'
-	   WHERE GATH_IDXX = #{GATH_IDXX}
+	   WHERE MOIM_IDXX = #{MOIM_IDXX}
        ]]>
    </update>
 </mapper>

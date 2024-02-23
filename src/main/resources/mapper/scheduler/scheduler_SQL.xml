@@ -24,7 +24,7 @@
                 END AS MAST_YSNO	
 	      FROM TB_MEMBER A
 	 LEFT JOIN TM_GATHER B
-	        ON A.MOIM_IDXX = B.GATH_IDXX
+	        ON A.MOIM_IDXX = B.MOIM_IDXX
 	     WHERE A.MOIM_IDXX = #{MOIM_IDXX}
 	       AND A.BANN_YSNO = 'N'
 	       AND A.WAIT_YSNO = 'N'
@@ -39,7 +39,7 @@
 	<select id="getEnddedGahter" resultType="hashmap">
     <![CDATA[
         SELECT /*gather.getEnddedGahter*/
-        	   GATH_IDXX
+        	   MOIM_IDXX
           FROM TM_GATHER
          WHERE TO_DATE(CONCAT(CONCAT(MOIM_DATE, ' '), MOIM_TIME), 'YY/MM/DD HH24:MI') <= SYSDATE
            AND ENDD_YSNO = 'N'
@@ -54,10 +54,10 @@
 	<select id="getOneDayLeftGather" resultType="hashmap">
     <![CDATA[
    SELECT /*gather.getOneDayLeft*/
-    		   A.GATH_IDXX
+    		   A.MOIM_IDXX
 		 FROM TM_GATHER A
 	LEFT JOIN TB_NOTIFY B 
-	       ON B.BOAD_IDXX = A.GATH_IDXX
+	       ON B.BOAD_IDXX = A.MOIM_IDXX
           AND B.NOTI_CODE = 'C01'
 		WHERE TO_DATE(CONCAT(CONCAT(MOIM_DATE, ' '), MOIM_TIME), 'YY/MM/DD HH24:MI') - SYSDATE <= 1
 		  AND TO_DATE(CONCAT(CONCAT(MOIM_DATE, ' '), MOIM_TIME), 'YY/MM/DD HH24:MI') - SYSDATE > 0
