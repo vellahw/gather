@@ -65,21 +65,21 @@
 		   			   , A.NOTI_SEQC 
                        , A.NOTI_CODE
 		    		   , B.USER_NICK                                                 
-					   , C.GATH_TITL AS MOIM_TITL              
+					   , C.MOIM_TITL AS MOIM_TITL              
 					   , D.CODE_OPT1 AS NOTI_CNT2            
-					   , C.GATH_IDXX AS CNTT_IDXX 
-                       , getCodeName('MOIM_TYPE',SUBSTR(C.GATH_IDXX,1,2)) AS MOIM_TYPEKR
+					   , C.MOIM_IDXX AS CNTT_IDXX 
+                       , getCodeName('MOIM_TYPE',SUBSTR(C.MOIM_IDXX,1,2)) AS MOIM_TYPEKR
 					   , SUBSTR(formatDate(A.REGG_DATE), 7, 11) AS REGG_DATEKR
 					   , A.REGG_DATE
 					FROM TB_NOTIFY A
 			   LEFT JOIN TM_USERXM B 
 			          ON A.SEND_USER = B.USER_NUMB
 			   LEFT JOIN TM_GATHER C 
-			          ON A.BOAD_IDXX = C.GATH_IDXX
+			          ON A.BOAD_IDXX = C.MOIM_IDXX
 			   LEFT JOIN TB_CODEXD D 
 			          ON D.COMD_CODE = A.NOTI_CODE
 			          AND D.COMM_CODE = 'NOTI_CODE'
-				   WHERE A.BOAD_IDXX = C.GATH_IDXX
+				   WHERE A.BOAD_IDXX = C.MOIM_IDXX
 					 AND A.READ_YSNO = 'N'
 		
 		       UNION ALL

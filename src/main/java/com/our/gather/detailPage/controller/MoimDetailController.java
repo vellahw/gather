@@ -189,7 +189,7 @@ public class MoimDetailController {
 			
 			 Map<String, Object> paramMap = new HashMap<>();
 			 
-			 paramMap.put("GATH_IDXX", MOIM_IDXX);
+			 paramMap.put("MOIM_IDXX", MOIM_IDXX);
 			
 			 gatherService.setGatherEnd(paramMap);
 

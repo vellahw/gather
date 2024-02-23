@@ -40,11 +40,11 @@ public class Scheduler {
 				// 가져온 게더에 대해 'ENDD_YSNO' 값을 업데이트
 				for (Map<String, Object> gathMap : gathList) {
 
-					String gathIdxx = (String) gathMap.get("GATH_IDXX");
+					String gathIdxx = (String) gathMap.get("MOIM_IDXX");
 
 					// Map에 필요한 로직 수행
 					Map<String, Object> paramMap = new HashMap<>();
-					paramMap.put("GATH_IDXX", gathIdxx);
+					paramMap.put("MOIM_IDXX", gathIdxx);
 
 					gatherService.setGatherEnd(paramMap);
 
@@ -92,11 +92,11 @@ public class Scheduler {
 
 				for (Map<String, Object> gathMap : gathList) {
 
-					String gathIdxx = (String) gathMap.get("GATH_IDXX");
+					String gathIdxx = (String) gathMap.get("MOIM_IDXX");
 
 					// Map에 필요한 로직 수행
 					Map<String, Object> paramMap = new HashMap<>();
-					paramMap.put("GATH_IDXX", gathIdxx);
+					paramMap.put("MOIM_IDXX", gathIdxx);
 
 					commandMap.put("MOIM_IDXX", gathIdxx);
 					List<Map<String, Object>> memList = schedulerService.getGatherMemberForSD(commandMap.getMap(),commandMap);
