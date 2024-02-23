@@ -2,6 +2,8 @@
 
 document.addEventListener('DOMContentLoaded', ()=>{
 
+  let fileDataArray = []; // 파일 데이터를 담을 배열
+
   if(sessionStorage.getItem('USER_NUMB') == null) {
     comAlert3(
         '세션이 만료되었습니다.'
@@ -281,6 +283,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
  * 마지막 '확인' 버튼
  */
   submitBtn.addEventListener('click', () => {
+
+    debugger;
 
     let formData = new FormData(); // 서버로 전송할 폼 객체 생성
     const summernote = document.getElementById('summernote').value;
