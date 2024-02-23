@@ -51,18 +51,6 @@ textarea {
 	outline: none;
 }
 
-/* input[type=file]::file-selector-button {
-  width: 100px;
-  height: 28px;
-  background-color: var(--color-orange300); 
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-right: 25px;
-  margin-left:0px;
-  color: #fff;
-} */
-
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,

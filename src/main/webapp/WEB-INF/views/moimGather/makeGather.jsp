@@ -112,14 +112,15 @@
 						
 						<div class=" _row">
 							<h3 class="secondLabel">참여 승인제 여부</h3>
-								<div class="apprBtn">
-									<p data-appr="Y">필요</p>
-									<p>방장이 직접 멤버의 참여 요청을 수락하거나 거절할 수 있어요.</p>
-									<p>질문을 통해 취향이 통하는 사람들과 만날 수 있어요.</p>
-								</div>
-								<div class="apprBtn">
-									<p  data-appr="N">불필요</p>
-									<p>멤버들의 신청과 동시에 참여가 완료돼요.</p>
+								<div class="apprBtnContainer">
+									<div class="apprBtn parent" data-appr="Y" id="apprY">
+										<label for="apprY" aria-label="승인 필요">필요</label>
+										<p>직접 멤버의 참여 요청을 수락하거나 거절할 수 있어요.</p>
+									</div>
+									<div class="apprBtn parent" data-appr="N" id="apprN">
+										<label for="apprN" aria-label="승인 불필요">불필요</label>
+										<p>멤버들의 신청과 동시에 참여가 완료돼요.</p>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -173,15 +174,20 @@
 							모임 소개
 						</label>
 						<textarea id="summernote"></textarea>
-						<div id="uploadFileBox" style="margin: 12px 8px;height: 120px;">
-							<ul id="uploadList" style="display: flex;"></ul>
+						<div id="uploadFileBox">
+							<ul id="uploadList"></ul>
 						</div>
 					</div>
-					<div>
-						<input type="file" name="mainImage" id="mainImgInput">
-						<div><img class="preview"></div>
+					<div class="mainImgArea">
+						<label for="mainImgInput">메인 이미지 업로드</label>
+						<input type="file" name="mainImage" id="mainImgInput" class="basicFileInput">
+						<div class="previewContainer">
+							<div class="previewWrapper">
+								<img class="preview">
+							</div>
+						</div>
 					</div>
-					<div class="btnContainer">
+					<div class="btnContainer" style="margin-top: 30px;">
 						<button type="button" class="waybtn prev" id="prev4">이전</button>
 					  <button type="button" class="waybtn next" id="submit">확인</button>
 					</div>

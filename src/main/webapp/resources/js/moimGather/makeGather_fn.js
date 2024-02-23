@@ -32,15 +32,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
   // 자식 카테고리 클릭 이벤트
   categoryList.addEventListener('click', (event)=>{
-  	const target = event.target;
+     const target = event.target;
   
     if(target.matches('.child')) {
     
-    	if(document.querySelector('.picked_child')){
-      	document.querySelector('.picked_child').classList.remove('picked_child');
-    	}
+       if(document.querySelector('.picked_child')){
+         document.querySelector('.picked_child').classList.remove('picked_child');
+       }
 
-  	  target.classList.toggle('picked_child');
+       target.classList.toggle('picked_child');
       pickedCateData = target.getAttribute('data-code2');
     }
   });
@@ -58,59 +58,59 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
   let fileNameNum = 0; // formData 업로드 이미지 key값 채번
   /**
-	 * summernote 에디터 띄움
-	 */	
-	$('#summernote').summernote({
-		codeviewFilter: false, // 코드 보기 필터 비활성화
+    * summernote 에디터 띄움
+    */   
+   $('#summernote').summernote({
+      codeviewFilter: false, // 코드 보기 필터 비활성화
     codeviewIframeFilter: false, // 코드 보기 iframe 필터 비활성화
     disableDragAndDrop: false,
     shortcuts: false,
-		height: 300,                 // 에디터 높이
-		minHeight: null,             // 최소 높이
-		maxHeight: null,             // 최대 높이
-		focus: false,                  // 에디터 로딩후 포커스를 맞출지 여부
-		lang: "ko-KR",					// 한글 설정
+      height: 300,                 // 에디터 높이
+      minHeight: null,             // 최소 높이
+      maxHeight: null,             // 최대 높이
+      focus: false,                  // 에디터 로딩후 포커스를 맞출지 여부
+      lang: "ko-KR",               // 한글 설정
 
-		toolbar: [
-			['style', ['style']], // 글자 스타일 설정 옵션
-			['fontsize', ['fontsize']], // 글꼴 크기 설정 옵션
-			['font', ['bold', 'underline', 'clear']], // 글자 굵게, 밑줄, 포맷 제거 옵션
-			['color', ['color']], // 글자 색상 설정 옵션
-			['para', ['ul', 'ol', 'paragraph']], // 문단 스타일, 순서 없는 목록, 순서 있는 목록 옵션
-			['insert', ['picture']], // 이미지 삽입 옵션
-		],
+      toolbar: [
+         ['style', ['style']], // 글자 스타일 설정 옵션
+         ['fontsize', ['fontsize']], // 글꼴 크기 설정 옵션
+         ['font', ['bold', 'underline', 'clear']], // 글자 굵게, 밑줄, 포맷 제거 옵션
+         ['color', ['color']], // 글자 색상 설정 옵션
+         ['para', ['ul', 'ol', 'paragraph']], // 문단 스타일, 순서 없는 목록, 순서 있는 목록 옵션
+         ['insert', ['picture', 'link', 'video']], // 이미지 삽입, 링크 삽입, 동영상 삽입 옵션
+      ],
 
-		fontSizes: [
-			'8', '9', '10', '11', '12', '14', '16', '18',
-			'20', '22', '24', '28', '30', '36', '50', '72',
-		], // 글꼴 크기 옵션
+      fontSizes: [
+         '8', '9', '10', '11', '12', '14', '16', '18',
+         '20', '22', '24', '28', '30', '36', '50', '72',
+      ], // 글꼴 크기 옵션
 
-		styleTags: [
-			'p',  // 일반 문단 스타일 옵션
-			{
-					title: 'Blockquote',
-					tag: 'blockquote',
-					className: 'blockquote',
-					value: 'blockquote',
-			},  // 인용구 스타일 옵션
-			'pre',  // 코드 단락 스타일 옵션
-			{
-					title: 'code_light',
-					tag: 'pre',
-					className: 'code_light',
-					value: 'pre',
-			},  // 밝은 코드 스타일 옵션
-			{
-					title: 'code_dark',
-					tag: 'pre',
-					className: 'code_dark',
-					value: 'pre',
-			},  // 어두운 코드 스타일 옵션
-			'h1', 'h2', 'h3', 'h4', 'h5', 'h6',  // 제목 스타일 옵션
-		],
+      styleTags: [
+         'p',  // 일반 문단 스타일 옵션
+         {
+               title: 'Blockquote',
+               tag: 'blockquote',
+               className: 'blockquote',
+               value: 'blockquote',
+         },  // 인용구 스타일 옵션
+         'pre',  // 코드 단락 스타일 옵션
+         {
+               title: 'code_light',
+               tag: 'pre',
+               className: 'code_light',
+               value: 'pre',
+         },  // 밝은 코드 스타일 옵션
+         {
+               title: 'code_dark',
+               tag: 'pre',
+               className: 'code_dark',
+               value: 'pre',
+         },  // 어두운 코드 스타일 옵션
+         'h1', 'h2', 'h3', 'h4', 'h5', 'h6',  // 제목 스타일 옵션
+      ],
 
-		callbacks: {
-			onImageUpload: function (files) {
+      callbacks: {
+         onImageUpload: function (files) {
         const uploadList = document.getElementById('uploadList');
        
         // 이미지 다중 업로드
@@ -139,14 +139,14 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
             createImgNode(target.result, files[0].name);
           
-            reader.readAsDataURL(files[0]);
-  
-            appendFile(`file${fileNameNum}`, files[0]); // formdata에 하나씩 추가
-  
-            fileNameNum++; 
-
           };
 
+          reader.readAsDataURL(files[0]);
+
+          appendFile(`file${fileNameNum}`, files[0]); // formdata에 하나씩 추가
+
+          fileNameNum++; 
+          
         }
 
         // document.getElementById('uploadList').addEventListener('click', (event)=>{
@@ -163,44 +163,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
         //     let targetImgSrc = event.target.src;
 
-        //     for (let [key, value] of formData.entries()) {
-        //       appendFile('mainImage', value); // 메인이미지 업로드
-        //       formData.delete(key);
-        //     }
 
+        //       //appendFile('mainImage', file); // 메인이미지 업로드
         //   }
         // });
       }
     }
-	});
-  
-  /*
-   * 240223 장한원
-   * 메인 이미지 업로드
-   */
-  const mainImgInput = document.getElementById('mainImgInput');
-  mainImgInput.addEventListener('change', (e)=>{
+   });
 
-    let mainImage = mainImgInput.files[0];
-
-    if (e.target.files.length === 0) {
-      return;
-    } else {
-      const reader = new FileReader();
-      reader.onload = ({ target }) => {
-        document.querySelector('.preview').src = target.result; // 프리뷰 띄움
-      };
-
-      reader.readAsDataURL(mainImage);
-      
-      appendFile("mainImage", mainImage); // formData에 삽입
-    }
-  });
-
-
-  /* 
-   * 이미지 업로드 후 본문, 미리보기에 노드 생성/삽입 
-   */
+  // 이미지 업로드 후 노드 생성/삽입
   const createImgNode = function(file, fileName){
     // 본문에 이미지 삽입
     $('#summernote').summernote('insertImage', file, fileName);
@@ -215,15 +186,41 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     item.appendChild(img); 
     uploadList.appendChild(item); // 업로드 썸네일 리스트에 삽입
+
+    uploadList.parentNode.classList.add('block_element'); // #uploadFilebox display block
   }
 
   /*
-   * 이미지 (file 데이터) formData에 삽입
+   * 240223 장한원
+   * 메인 이미지 업로드
    */
+  const mainImgInput = document.getElementById('mainImgInput');
+  mainImgInput.addEventListener('change', (e)=>{
+    const previewNode = document.querySelector('.preview');
+
+    let mainImage = mainImgInput.files[0];
+
+    if (e.target.files.length === 0) {
+      return;
+    } else {
+      const reader = new FileReader();
+      reader.onload = ({ target }) => {
+        previewNode.src = target.result; // 프리뷰 띄움
+        document.querySelector('.previewContainer').classList.add('block_element');
+      };
+
+      reader.readAsDataURL(mainImage);
+      
+      appendFile("mainImage", mainImage); // formData에 삽입
+
+    }
+  });
+
+  // 이미지 formData에 삽입
   function appendFile(name, file) {
     formData.append(name, file);
   }
-  
+
   /**
    * 240220: 장한원
    * step1 -> step2로 가는 '다음' 버튼
@@ -282,6 +279,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const maxPeople = document.getElementById('maxPeople').value;
     const gathGender = document.querySelector('.gender_act').getAttribute('data-gender'); // 성별
 
+    if(gathGender == 'null') {
+      gathGender = '';
+    }
+
     step3Data ={
         APPR_YSNO : gathAppr
       , MINN_AGEE : minAge
@@ -326,13 +327,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     .then((data) => {
       if(data == 'success') {
         alert('성공입니당')
-
-        // key/value 쌍이 담긴 리스트
-        for(let [name, value] of formData) {
-          console.log(`${name} = ${value}`); // key1 = value1, then key2 = value2
-        }
-
-        //location.reload();
+        location.reload();
 
         // comAlert2(5
         //   ,"게더가 만들어졌어요!"
