@@ -411,12 +411,30 @@
 	height: 110px;
 	margin: 0 5px 5px 0;
 	border: 1px solid var(--color-gray100);
+	position: relative;
 }
 
 .picked_thumnail {
-	border: 2px solid var(--primary);
-	width: 108px;
-  height: 108px;
+	border: 3px solid var(--primary);
+	width: 107px;
+  height: 107px;
+}
+
+.mainTag {
+	display: none;
+	background-color: var(--primary);
+	color: #fff;
+	width: 10px;
+	height: 10px;
+	font-size: 11px;
+  padding: 2px 4px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+ 
+.mainTag_act {
+	display: block;
 }
 
 .uploadItem > img,

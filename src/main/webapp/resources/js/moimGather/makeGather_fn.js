@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   let step3Data; // step3 데이터 담음
   let step4Data; // step4 데이터 담음
   let reqData; // step1~step4 하나로 합친 데이터 담음
- 
 
   /**
    * 240220 장한원
@@ -94,55 +93,67 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
       callbacks: {
          onImageUpload: function (files) {
-        const uploadList = document.getElementById('uploadList');
-       
-        // 이미지 다중 업로드
-        if (files.length > 1) {
-          for (let i = files.length - 1; i >= 0; i--) {
-              const reader = new FileReader(); // 파일을 읽음
-              reader.onload = (function (file) {
-                  return function (event) {
-                      createImgNode(event.target.result, file.name);
-                  };
-              })(files[i]); // 함수를 정의 후 바로 실행, 매개변수 file = (바깥 괄호)files[i]
-              reader.readAsDataURL(files[i]); // 파일을 base64로 읽어옴
-      
-              // 파일 데이터 배열에 파일과 파일 이름 추가
-              fileDataArray.push({
-                  key: 'file' + i,
-                  file: files[i],
-                  fileName: files[i].name
-              });
+          const uploadList = document.getElementById('uploadList');
+        
+          // 이미지 다중 업로드
+          if (files.length > 1) {
+            for (let i = files.length - 1; i >= 0; i--) {
+                const reader = new FileReader(); // 파일을 읽음
+                reader.onload = (function (file) {
+                    return function (event) {
+                        createImgNode(event.target.result, file.name);
+                        document.getElementById('#uploadList').childNodes[0].classList.add('picked_thumnail'); // 메인이미지 표시
+                       // document.getElementById('#uploadList').childNodes[0].querySelector('img#uploadImgThumnail').; // 메인이미지 태그 표시
+                    };
+                })(files[i]); // 함수를 정의 후 바로 실행, 매개변수 file = (바깥 괄호)files[i]
+                reader.readAsDataURL(files[i]); // 파일을 base64로 읽어옴
+        
+                // 파일 데이터 배열에 파일과 파일 이름 추가
+                fileDataArray.push({
+                    key: 'file' + i,
+                    file: files[i],
+                    fileName: files[i].name
+                });
+            }
+          } else {
+            const reader = new FileReader();
+            reader.onload = ({ target }) => {
+                createImgNode(target.result, files[0].name);
+                document.getElementById('#uploadList').childNodes[0].classList.add('picked_thumnail'); // 메인이미지 표시
+            };
+            reader.readAsDataURL(files[0]);
+        
+            // 파일 데이터 배열에 파일과 파일 이름 추가
+            fileDataArray.push({
+                key: `file${fileNameNum}`,
+                file: files[0],
+                fileName: files[0].name
+            });
+
+            console.log(fileDataArray)
+
+            fileNameNum++;
           }
-        } else {
-          const reader = new FileReader();
-          reader.onload = ({ target }) => {
-              createImgNode(target.result, files[0].name);
-          };
-          reader.readAsDataURL(files[0]);
-      
-          // 파일 데이터 배열에 파일과 파일 이름 추가
-          fileDataArray.push({
-              key: `file${fileNameNum}`,
-              file: files[0],
-              fileName: files[0].name
-          });
 
-          fileNameNum++;
-        }
-
+          /* 메인 이미지 선택(클릭) 이벤트 */
           document.getElementById('uploadList').addEventListener('click', (event)=>{
 
-            const thumnailNode = document.getElementById('uploadImgThumnail');
-            if(thumnailNode.name) {
-              thumnailNode.name = ''; // 클릭 했었던 이미지의 name 값 초기화
-            }
-          
-            comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 클릭 했었던 이미지 추가했던 class 삭제
-          
-            if(event.target.matches('#uploadImgThumnail')){
-              event.target.parentNode.classList.toggle('picked_thumnail');          
+            // const thumnailNode = document.getElementById('uploadImgThumnail');
+            // if(thumnailNode.name) {
+            //   thumnailNode.name = ''; // 클릭 했었던 이미지의 name 값 초기화
+            // }
 
+            const mainTag = document.querySelector('.mainTag_act');
+            if(mainTag_act) {
+              mainTag.classList.remove('mainTag_act');
+            } else {
+              event.target.classList.add('mainTag_act');
+            }
+
+            comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 클릭 했었던 이미지 추가했던 class 삭제
+            
+            if(event.target.matches('#uploadImgThumnail')){
+              event.target.parentNode.classList.toggle('picked_thumnail');
             }
           });
         }
@@ -163,11 +174,21 @@ document.addEventListener('DOMContentLoaded', ()=>{
     img.src = file;
     img.dataset.name = fileName;
 
+    const mainTag = document.createElement('span');
+    mainTag.innerHTML = '대표';
+    mainTag.className = 'mainTag';
+    
     item.appendChild(img); 
+    item.appendChild(mainTag);
     uploadList.appendChild(item); // 업로드 썸네일 리스트에 삽입
   }
-
-
+  
+  const findKey = function(element) {
+    if(element.fileName == document.querySelector('.uploadItem.picked_thumnail img').getAttribute('data-name')) {
+      return { key : element.key };
+    }
+  }
+  
   /**
    * 240220: 장한원
    * step1 -> step2로 가는 '다음' 버튼
@@ -250,6 +271,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
  * 마지막 '확인' 버튼
  */
   submitBtn.addEventListener('click', () => {
+
+    const key = fileDataArray.find(findKey);
+    console.log(key.key);
 
     let formData = new FormData(); // 서버로 전송할 폼 객체 생성
     const summernote = document.getElementById('summernote').value;
