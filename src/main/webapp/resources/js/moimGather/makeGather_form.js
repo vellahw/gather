@@ -2,8 +2,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 	const cateValue = document.getElementById('cateData').value;
 	const cateData = comObjectInArray(cateValue).result; // 카테고리 데이터
 	const gatherCostNode = document.getElementById('moimCost'); // 참가비용 입력 input
-	// 카테고리들을 담고있는 최상위 노드
-	const categoryListNode =  document.querySelector('.categoryList');
+	const categoryListNode =  document.querySelector('.categoryList'); // 카테고리들을 담고있는 ul tag
 	
 	/**
 	 * 240219 장한원
@@ -59,38 +58,53 @@ document.addEventListener('DOMContentLoaded',()=>{
 		}
 	});
 
+	/*
+	 * 240225 장한원 
+	 * 부모 카테고리 마우스오버/리브 이벤트
+	 */
+	const parentCategory = document.querySelectorAll('li[data-parentcode]');
+	parentCategory.forEach(parent => {
+		parent.addEventListener('mouseover', ()=>{
 
-	/* 부모 카테고리 클릭 이벤트 */
-	// categoryListNode.addEventListener('click', (event)=>{
-		// 	const target = event.target;
-		
-		// 	if(target.matches('[data-code1]') || target.matches('[data-parentcode]')) {
 			
-			// 		target.classList.toggle('level1_active');
-			
-			// 		const targetChild = document.querySelector(`[data-pcode=${target.getAttribute('data-code1')}]`);
-			// 		targetChild.classList.toggle('level2_active');
-			
-			// 	}
-			// });
-			
-	/* 부모 카테고리 마우스오버 이벤트 */
-	categoryListNode.addEventListener('mouseover', (event)=>{
-		const target = event.target;
-		if(target.matches('[data-code1]') || target.matches('[data-parentcode]')) {
+			const targetParentCode = parent.getAttribute('data-parentcode');
 
-			target.classList.add('level1_active');
-
-			const targetChild = document.querySelector(`[data-pcode=${target.getAttribute('data-code1')}]`);
+			document.querySelector(`[data-code1=${targetParentCode}]`).classList.add('level1_active');
+			
+			const targetChild = parent.querySelector(`ul[data-pcode=${targetParentCode}]`);
 			targetChild.classList.add('level2_active');
-		}
+		});
 	});
-	
-	const activeElement = categoryListNode.querySelectorAll('.level2_active');
-	activeElement.forEach(element => {
-		element.addEventListener('mouseleave', ()=>{
-			element.classList.remove('.leve2_active');
-		})
+
+	parentCategory.forEach(parent => {
+		parent.addEventListener('mouseleave', ()=>{
+
+			const targetParentCode = parent.getAttribute('data-parentcode');
+			const targetChild = parent.querySelector(`ul[data-pcode=${targetParentCode}]`);
+
+			document.querySelector(`[data-code1=${targetParentCode}]`).classList.remove('level1_active');
+			
+			if(targetChild.classList.contains('level2_active')) {
+				targetChild.classList.remove('level2_active');
+			}
+		});
+	});
+
+	/* 
+	 * 자식 카테고리 클릭 이벤트
+	 */
+	const categoryList = document.querySelector('.categoryList');
+	categoryList.addEventListener('click', (event)=>{
+		const target = event.target;
+	 
+		if(target.matches('.child')) {
+		 
+			if(document.querySelector('.picked_child')){
+				document.querySelector('.picked_child').classList.remove('picked_child');
+			}
+ 
+			target.classList.toggle('picked_child');
+		}
 	});
 
 
@@ -246,20 +260,20 @@ document.addEventListener('DOMContentLoaded',()=>{
 		const target = event.target;
 
 		target.value = Math.min(target.value, target.parentNode.childNodes[5].value-1);
-			let value = (100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.value)-(100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.min);
-			let children = target.parentNode.childNodes[1].childNodes;
-			children[1].style.width = value + '%';
-			children[5].style.left = value + '%';
-			children[7].style.left = value + '%';
-			children[11].style.left = value + '%';
-			children[11].childNodes[1].innerHTML = target.value;
+		let value = (100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.value)-(100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.min);
+		let children = target.parentNode.childNodes[1].childNodes;
+		children[1].style.width = value + '%';
+		children[5].style.left = value + '%';
+		children[7].style.left = value + '%';
+		children[11].style.left = value + '%';
+		children[11].childNodes[1].innerHTML = target.value;
 	});
 
 	const range2 = document.querySelector('.range2')
 	range2.addEventListener('input', (event)=>{
 		const target = event.target;
 
-		target.value=Math.max(target.value,target.parentNode.childNodes[3].value-(-1));
+		target.value = Math.max(target.value,target.parentNode.childNodes[3].value-(-1));
 		let value = (100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.value)-(100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.min);
 		let children = target.parentNode.childNodes[1].childNodes;
 		children[3].style.width = (100-value) + '%';
@@ -355,6 +369,8 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 });
 
+
+// ======= DOMContentLoaded 후 아님 =======
 
 /*
  * 240224 장한원

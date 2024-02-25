@@ -15,13 +15,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
     return false;
   }
 
-  const categoryList = document.querySelector('.categoryList');
   const step1Btn = document.getElementById('next');
   const step2Btn = document.getElementById('next2');
   const step3Btn = document.getElementById('next3');
   const submitBtn = document.getElementById('submit');
 
-  let pickedCateData; // 유저가 선택한 카테고리 값을 담음
   let gatherAddressData; // 주소+상세주소 데이터 담음
   let step1Data; // step1 데이터 담음
   let step2Data; // step2 데이터 담음
@@ -30,22 +28,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   let reqData; // step1~step4 하나로 합친 데이터 담음
  
 
-  // 자식 카테고리 클릭 이벤트
-  categoryList.addEventListener('click', (event)=>{
-     const target = event.target;
-  
-    if(target.matches('.child')) {
-    
-       if(document.querySelector('.picked_child')){
-         document.querySelector('.picked_child').classList.remove('picked_child');
-       }
-
-       target.classList.toggle('picked_child');
-      pickedCateData = target.getAttribute('data-code2');
-    }
-  });
-
-  
   /**
    * 240220 장한원
    * 유효성 검사
@@ -63,9 +45,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
     */   
    $('#summernote').summernote({
       codeviewFilter: false, // 코드 보기 필터 비활성화
-    codeviewIframeFilter: false, // 코드 보기 iframe 필터 비활성화
-    disableDragAndDrop: false,
-    shortcuts: false,
+      codeviewIframeFilter: false, // 코드 보기 iframe 필터 비활성화
+      disableDragAndDrop: false,
+      shortcuts: false,
       height: 300,                 // 에디터 높이
       minHeight: null,             // 최소 높이
       maxHeight: null,             // 최대 높이
@@ -192,6 +174,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
    */
   step1Btn.addEventListener('click', ()=>{
     const moimTitle = document.getElementById('moimTitle').value;
+    const pickedCateData = document.querySelector('.picked_child').getAttribute('data-code2');
     
     step1Data ={
         MOIM_TITL : moimTitle
