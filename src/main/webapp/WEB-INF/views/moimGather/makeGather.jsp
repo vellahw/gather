@@ -34,7 +34,7 @@
 						<h3>
 							<span class="required" aria-label="필수 입력값입니다.">⁕</span>
 							게더의 주제를 선택해주세요
-							<span id="addPickedCate"></span>
+							<span id="addPickedCate" style="padding: 0;"></span>
 						</h3>
 						<div class="categoryContainer" id="categoryContainer">
 							<ul class="categoryList"></ul>

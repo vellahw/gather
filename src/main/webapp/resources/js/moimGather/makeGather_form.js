@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 			const picekParent = targetParent.querySelector('.name').innerHTML;
 			const pickedChild = document.querySelector('.picked_child').innerHTML;
 			document.getElementById('addPickedCate').innerHTML = `${picekParent} | ${pickedChild}`;
-
+			document.getElementById('addPickedCate').classList.add('addPicked');
 		}
 	});
 

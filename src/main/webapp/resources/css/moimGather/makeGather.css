@@ -71,13 +71,14 @@
 	color: var(--color-red);
 }
 
-#addPickedCate {
+.addPicked {
 	background-color: var(--color-orange400);
   color: #fff;
   font-size: 15px;
   font-weight: 500;
-  padding: 2px 12px;
+  padding: 2px 12px !important;
   border-radius: 12px;
+  margin-left: 7px;
 }
 
 #step2 > .eachInputWrap {
