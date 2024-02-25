@@ -100,35 +100,35 @@ document.addEventListener('DOMContentLoaded', ()=>{
             for (let i = files.length - 1; i >= 0; i--) {
                 const reader = new FileReader(); // 파일을 읽음
                 reader.onload = (function (file) {
-                    return function (event) {
-                        createImgNode(event.target.result, file.name);
-                        document.getElementById('uploadList').childNodes[0].classList.add('picked_thumnail'); // 메인이미지 표시
-                        document.getElementById('uploadList').childNodes[0].querySelector('.mainTag').classList.add('mainTag_act'); // 메인이미지 태그 표시
-                    };
+                  return function (event) {
+                    createImgNode(event.target.result, file.name);
+                    document.getElementById('uploadList').childNodes[0].classList.add('picked_thumnail'); // 메인이미지 표시
+                    document.getElementById('uploadList').childNodes[0].querySelector('.mainTag').classList.add('mainTag_act'); // 메인이미지 태그 표시
+                  };
                 })(files[i]); // 함수를 정의 후 바로 실행, 매개변수 file = (바깥 괄호)files[i]
                 reader.readAsDataURL(files[i]); // 파일을 base64로 읽어옴
         
                 // 파일 데이터 배열에 파일과 파일 이름 추가
                 fileDataArray.push({
-                    key: 'file' + i,
-                    file: files[i],
-                    fileName: files[i].name
+                  key: 'file' + i,
+                  file: files[i],
+                  fileName: files[i].name
                 });
             }
           } else {
             const reader = new FileReader();
             reader.onload = ({ target }) => {
-                createImgNode(target.result, files[0].name);
-                document.getElementById('uploadList').childNodes[0].classList.add('picked_thumnail'); // 메인이미지 표시
-                document.getElementById('uploadList').childNodes[0].querySelector('.mainTag').classList.add('mainTag_act'); // 메인이미지 태그 표시
+              createImgNode(target.result, files[0].name);
+              document.getElementById('uploadList').childNodes[0].classList.add('picked_thumnail'); // 메인이미지 표시
+              document.getElementById('uploadList').childNodes[0].querySelector('.mainTag').classList.add('mainTag_act'); // 메인이미지 태그 표시
             };
             reader.readAsDataURL(files[0]);
         
             // 파일 데이터 배열에 파일과 파일 이름 추가
             fileDataArray.push({
-                key: `file${fileNameNum}`,
-                file: files[0],
-                fileName: files[0].name
+              key: `file${fileNameNum}`,
+              file: files[0],
+              fileName: files[0].name
             });
 
             console.log(fileDataArray)
@@ -143,16 +143,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
             //   thumnailNode.name = ''; // 클릭 했었던 이미지의 name 값 초기화
             // }
 
-            // '대표' 태그 클릭한 이미지에 표시
+            // 클릭한 이미지에 '대표' 태그 표시
             const mainTag = document.querySelector('.mainTag_act');
             if(mainTag) {
               mainTag.classList.remove('mainTag_act');
             }
-
+            
             event.target.nextSibling.classList.add('mainTag_act');
 
             comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 클릭 했었던 이미지 추가했던 class 삭제
             
+            // border 추가
             if(event.target.matches('#uploadImgThumnail')){
               event.target.parentNode.classList.toggle('picked_thumnail');
             }
@@ -182,12 +183,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     item.appendChild(img); 
     item.appendChild(mainTag);
     uploadList.appendChild(item); // 업로드 썸네일 리스트에 삽입
-  }
-  
-  const findKey = function(element) {
-    if(element.fileName == document.querySelector('.uploadItem.picked_thumnail img').getAttribute('data-name')) {
-      return { key : element.key };
-    }
   }
   
   /**
@@ -273,9 +268,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
  */
   submitBtn.addEventListener('click', () => {
 
-    const key = fileDataArray.find(findKey);
-    console.log(key.key);
-
     let formData = new FormData(); // 서버로 전송할 폼 객체 생성
     const summernote = document.getElementById('summernote').value;
 
@@ -289,17 +281,25 @@ document.addEventListener('DOMContentLoaded', ()=>{
     formData.append('data', JSON.stringify(reqData)); // 유저가 입력한 폼 값
     formData.append('map', JSON.stringify(gatherAddressData));
 
-    // 아까 만든 배열을 이용하여 li 태그의 클래스가 'uploadItem picked_thumnail'인 이미지의 이름을 가져와서
-    // 해당 이름과 일치하는 배열 요소의 key 값을 'mainImage'로 바꿔줍니다.
     const pickedFileName = document.querySelector('.uploadItem.picked_thumnail img').getAttribute('data-name');
 
+    // 클릭한 메인 사진의 data-name 속성을 가져와
+    // fileDataArray 속 fileName과 같은 데이터의 key를 가져옴 
+    const key = fileDataArray.find((element)=>{
+      if(element.fileName == pickedFileName) {
+        return { key : element.key };
+      }
+    });
+
+    // fileDataArray 속 key와 클릭한 메인 사진의 key 가 같다면
+    // key를 mainImage로 수정
     fileDataArray.forEach(item => {
-      if (item.fileName === pickedFileName) {
+      if (item.key === key.key) {
         item.key = 'mainImage';
       }
     });
 
-    // 파일 데이터 배열을 formData에 추가합니다.
+    // 파일 데이터 배열을 formData에 추가
     fileDataArray.forEach(({ key, file }) => {
         formData.append(key, file);
     });

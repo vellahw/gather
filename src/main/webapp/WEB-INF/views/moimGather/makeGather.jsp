@@ -64,7 +64,7 @@
 							<button type="button" class="costBtn parent" data-cost="Y">있음</button>
 							<button type="button" class="costBtn parent" data-cost="N">없음</button>
 						</div>
-						<input type="text" id="moimCost" class="basicInput register-p" placeHolder="숫자만 입력해주세요." style="margin-right: 18px;">
+						<input type="text" id="moimCost" class="basicInput register-p" placeHolder="숫자만 입력해주세요." style="margin-right: 18px; display: none;">
 					</div>
 					
 					<div class="eachInputWrap">
