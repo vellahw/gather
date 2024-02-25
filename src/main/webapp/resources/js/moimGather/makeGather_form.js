@@ -125,11 +125,12 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 	/**
 	 * 240220 장한원
-	 * step2 참가비 클릭 이벤트
+	 * step2 클릭 이벤트
 	*/
 	document.getElementById('step2').addEventListener('click', (event)=>{
     const target = event.target;
 		
+		// 참가비 클릭 이벤트
 		if(target.classList.contains('costBtn')) {
 
 			comRemoveActiveClass('.cost_act', 'cost_act');
@@ -141,6 +142,17 @@ document.addEventListener('DOMContentLoaded',()=>{
 				gatherCostNode.classList.add('block_element');
 			} else if(target.matches('[data-cost="N"]')) {
 				gatherCostNode.classList.remove('block_element');
+			}
+		}
+
+		// 온라인/오프라인 모임 장소 클릭
+		if(target.classList.contains('locaBtn')) {
+			comRemoveActiveClass('.loca_act', 'loca_act');
+
+			target.classList.toggle('loca_act');
+			
+			if(target.id == 'offline') {
+				document.querySelector('.searchMap').classList.add('block_element');
 			}
 		}
 
@@ -315,77 +327,23 @@ document.addEventListener('DOMContentLoaded',()=>{
 			target.classList.add('gender_act');
 		}
 	});
-
-  
-	/* 
-  * 240219 장한원
-  * 이전/다음 버튼 클릭 이벤트
-  */
-  const btnContainer = document.querySelectorAll('.btnContainer');
-	btnContainer.forEach(btn=>{
-    btn.addEventListener('click', (event)=>{
-      const target = event.target;
-      const btnId = target.id; // 클릭한 버튼 아이디
-
-      const step1 = document.getElementById('step1');
-      const step2 = document.getElementById('step2');
-      const step3 = document.getElementById('step3');
-      const step4 = document.getElementById('step4');
-
-      /* 다음 버튼 */
-      if(target.matches('.next')) {
-
-        if(btnId == 'next') {
-
-					showStep(step1, step2);
-
-				} else if(btnId == 'next2') {
-
-					showStep(step2, step3);
-
-				} else if(btnId == 'next3') {
-
-					showStep(step3, step4);
-				
-				}
-				
-				/* 이전버튼 */
-      } else if(target.matches('.prev')){
-
-				if(btnId == 'prev2') {
-
-					showStep(step2, step1);
-
-        } else if(btnId == 'prev3') {
-
-					showStep(step3, step2);
-
-				} else if(btnId == 'prev4') {
-
-					showStep(step4, step3);
-
-				} 
-			}
-
-		});
-	});
-
-	/**
- 	* 다음(이전) 버튼 클릭 시 show_step 클래스 삭제하거나 추가하는 함수
- 	*/
-	const showStep = function(removeTarget, addTarget) {
-		removeTarget.classList.remove('show_step');
-		addTarget.classList.add('show_step');
-
-		// 이전/다음 버튼 컨테이너
-		removeTarget.querySelector('.btnContainer').classList.remove('btnContainer_act');
-		addTarget.querySelector('.btnContainer').classList.add('btnContainer_act');
-	}			
-
+	
 });
 
 
 // ======= DOMContentLoaded 후 아님 =======
+
+/**
+ * 다음(이전) 버튼 클릭 시 show_step 클래스 삭제하거나 추가하는 함수
+ */
+const showStep = function(removeTarget, addTarget) {
+	removeTarget.classList.remove('show_step');
+	addTarget.classList.add('show_step');
+
+	// 이전/다음 버튼 컨테이너
+	removeTarget.querySelector('.btnContainer').classList.remove('btnContainer_act');
+	addTarget.querySelector('.btnContainer').classList.add('btnContainer_act');
+}
 
 /*
  * 240224 장한원

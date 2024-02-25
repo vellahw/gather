@@ -60,7 +60,7 @@
 							<span class="required" aria-label="필수 입력값입니다.">⁕</span>
 							참가비가 있나요?
 						</label>
-						<div style="display: flex; margin: 8px;">
+						<div class="chooseCost">
 							<button type="button" class="costBtn parent" data-cost="Y">있음</button>
 							<button type="button" class="costBtn parent" data-cost="N">없음</button>
 						</div>
@@ -89,12 +89,16 @@
 			        <span class="required" aria-label="필수 입력값입니다.">⁕</span>
 							어디에서 모일까요?
 						</h3>
-	          <button type="button" class="searchMap hashtag">주소 검색하기</button>
+						<div class="chooseLocation">
+		          <button type="button" id="online" class="locaBtn parent" data-loca="on">온라인에서 모여요</button>
+		          <button type="button" id="offline" class="locaBtn parent" data-loca="off">오프라인에서 모여요</button>
+						</div>
+            <button type="button" class="searchMap hashtag">주소 검색하기</button>
 	          <input type="text" id="moimAddress" class="basicInput register-p moimRegion" readonly="readonly">
 	          <input type="text" id="moimDetailAddress" class="basicInput register-p moimRegion" placeholder="상세주소를 입력해주세요.">
 	          <input type="hidden" id="moimLati" />
 	          <input type="hidden" id="moimLong" />
-	          <div id="map" style=""></div>
+	          <div id="map"></div>
 					</div>
 					
 						<div class="btnContainer" style="margin-top: 30px;">
@@ -137,18 +141,18 @@
 							  <div>
 							    <div inverse-left style="width:70%;"></div>
 							    <div inverse-right style="width:70%;"></div>
-							    <div range style="left:30%;right:40%;"></div>
-							    <span thumb style="left:30%;"></span>
-							    <span thumb style="left:60%;"></span>
-							    <div sign style="left:30%;">
-							      <span id="value">30</span>
+							    <div range style="left:0%;right:0%;"></div>
+							    <span thumb style="left:0%;"></span>
+							    <span thumb style="left:100%;"></span>
+							    <div sign style="left:0%;">
+							      <span id="value">15</span>
 							    </div>
-							    <div sign style="left:60%;">
-							      <span id="value">60</span>
+							    <div sign style="left:100%;">
+							      <span id="value">50</span>
 							    </div>
 							  </div>
-							  <input type="range" id="minAge" class="range1" tabindex="0" value="30" max="100" min="0" step="15" />
-							  <input type="range" id="maxAge" class="range2" tabindex="0" value="60" max="100" min="0" step="15" />
+							  <input type="range" id="minAge" class="range1" tabindex="0" value="0" max="105" min="0" step="15" />
+							  <input type="range" id="maxAge" class="range2" tabindex="0" value="100"  max="105" min="0" step="15" />
 							</div>
 						</div>
 						

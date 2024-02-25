@@ -67,6 +67,10 @@
   margin: 6px 0 18px 0;
 }
 
+.eachInputWrap > h3 {
+	padding: 5px 0 5px 5px;
+}
+
 .eachInputWrap > h3 > .required {
 	color: var(--color-red);
 }
@@ -294,24 +298,34 @@
 	margin-top: 0;
 }
 
-.costBtn {
+.chooseCost,
+.chooseLocation {
+	display: flex;
+	margin: 8px;
+}
+
+.costBtn,
+.locaBtn {
   height: 46px;
 }
 
 .costBtn[data-cost="Y"],
-.apprBtn[data-appr="Y"] {
+.apprBtn[data-appr="Y"],
+.locaBtn[data-loca="on"] {
 	margin-right: 5px;
 }
 
 .costBtn[data-cost="N"],
-.apprBtn[data-appr="N"] {
+.apprBtn[data-appr="N"],
+.locaBtn[data-loca="off"] {
 	margin-right: 10px;
   margin-left: 5px;
 }
 
 .cost_act,
 .appr_act,
-.gender_act {
+.gender_act,
+.loca_act {
 	background-color: var(--color-orange400);
   color: #fff;
   border: none;
@@ -343,18 +357,20 @@
 	border-radius: 20px;
   font-size: 14px;
   height: 38px;
-  width: 230px;
+  width: calc(100% - 26px);
   margin: 12px 8px;
+  display: none;
 }
 
 #map {
 	width: calc(100% - 26px);
-	height: 300px;
+	height: 0px;
 	margin: 0 8px;
 	opacity: 0;
 }
 
 .show_kamap {
+	height: 300px !important;
 	opacity: 1 !important;
 }
 

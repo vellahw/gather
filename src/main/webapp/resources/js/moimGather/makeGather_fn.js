@@ -31,11 +31,137 @@ document.addEventListener('DOMContentLoaded', ()=>{
    * 240220 장한원
    * 유효성 검사
    */
-  const formCheck = function() {
-    if(!pickedCateData) {
+  const formCheck = function(step) {
+
+    const pickedCate = document.querySelector('.picked_child');
+    const moimTitle = document.getElementById('moimTitle').value;
+    const moimCost = document.getElementById('moimCost').value;
+    const moimDate = document.getElementById('moimDate').value;
+    const moimTime = document.getElementById('moimTime').value;
+
+    if(step == 'step1') {
+      if(!pickedCate) {
+        comAlert2(3, '게더의 주제를 골라주세요');
+        
+        return false;
+  
+      } else if(!moimTitle) {
+        comAlert3(
+            '제목을 입력해주세요'
+          , null
+          , 'warning'
+          , null
+          , function(){ comFocus('id', 'moimTitle'); }
+        );
+  
+        return false;
+  
+      } else {
+        
+        return true;
+      }
+    } else if(step == 'step2') {
       
+      if(!document.querySelector('.cost_act')) {
+
+        comAlert2(3, '참가비 유무를 선택해주세요');
+
+        return false;
+
+      } else if(!moimCost) {
+
+        comAlert3(
+          '참가 금액을 입력해주세요'
+        , null
+        , 'warning'
+        , null
+        , function(){ comFocus('id', 'moimCost'); }
+        );
+
+        return false;
+
+      } else if(!moimDate) {
+
+        comAlert2(3, '모임 날짜를 선택해주세요.');
+
+        return false;
+
+
+      } else if(!moimTime) {
+
+        comAlert2(3, '모임 시간을 선택해주세요.');
+
+        return false;
+      }
+
+      return true;
     }
   }
+
+  const comFocus = function(target, elSelector) {
+    if(target == 'class') {
+      document.querySelector(elSelector).focus();
+    } else if(target == 'id') {
+      document.getElementById(elSelector).focus();
+    }
+  }
+
+  /* 
+  * 240219 장한원
+  * 이전/다음 버튼 클릭 이벤트
+  */
+  const btnContainer = document.querySelectorAll('.btnContainer');
+	btnContainer.forEach(btn=>{
+    btn.addEventListener('click', (event)=>{
+      const target = event.target;
+      const btnId = target.id; // 클릭한 버튼 아이디
+
+      const step1 = document.getElementById('step1');
+      const step2 = document.getElementById('step2');
+      const step3 = document.getElementById('step3');
+      const step4 = document.getElementById('step4');
+
+      /* 다음 버튼 */
+      if(target.matches('.next')) {
+
+        if(btnId == 'next') {
+					
+					if(formCheck('step1')) {
+						showStep(step1, step2);
+					}
+
+				} else if(btnId == 'next2') {
+
+          if(formCheck('step2')) {
+					  showStep(step2, step3);
+          }
+
+				} else if(btnId == 'next3') {
+
+					showStep(step3, step4);
+				
+				}
+				
+				/* 이전버튼 */
+      } else if(target.matches('.prev')){
+
+				if(btnId == 'prev2') {
+
+					showStep(step2, step1);
+
+        } else if(btnId == 'prev3') {
+
+					showStep(step3, step2);
+
+				} else if(btnId == 'prev4') {
+
+					showStep(step4, step3);
+
+				} 
+			}
+
+		});
+	});
 
 
   let fileNameNum = 0; // formData 업로드 이미지 key값 채번
@@ -191,7 +317,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
    */
   step1Btn.addEventListener('click', ()=>{
     const moimTitle = document.getElementById('moimTitle').value;
-    const pickedCateData = document.querySelector('.picked_child').getAttribute('data-code2');
+    const pickedCate = document.querySelector('.picked_child');
+    let pickedCateData;
+
+    if(pickedCate) {
+      pickedCateData = pickedCate.getAttribute('data-code2');
+    }
     
     step1Data ={
         MOIM_TITL : moimTitle
