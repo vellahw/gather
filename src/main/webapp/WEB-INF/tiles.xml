@@ -29,4 +29,9 @@
   <definition name="makeGather" extends="mainPage">
     <put-attribute name="body" value="/WEB-INF/views/moimGather/makeGather.jsp"/>
   </definition>
+  
+  <definition name="userPage" extends="mainPage">
+    <put-attribute name="body" value="/WEB-INF/views/userPage/userPage.jsp"/>
+  </definition>
+  
 </tiles-definitions>

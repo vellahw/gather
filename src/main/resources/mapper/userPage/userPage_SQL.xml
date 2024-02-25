@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+	작성자:Hwai
+    작성일:23.12.19
+-->
+<mapper namespace="userPage">
+	
+   <!-- 로그인회원 읽지 않은 알림조회 -->
+   <select id="userInfo" parameterType='hashmap' resultType="hashmap">
+     <![CDATA[
+           SELECT /* userPage.userInfo */
+                   A.USER_NUMB                                          /* 회원번호 */                       
+		         , A.USER_NAME											/* 회원이름 */ 
+		         , A.USER_NICK											/* 회원닉네임 */
+		         , A.USER_IDXX											/* 회원아이디 */
+		         , A.CELL_NUMB											/* 회원 전화번호 */
+		         , A.SELF_INTR											/* 회원 자기소개 */
+		         , getUserImage(A.FILE_SVNM,A.USER_NUMB) AS USER_IMAG   /* 회원 프로필 사진*/
+		         , B.FILE_PATH AS BACK_IMAG  							/* 회원 배경이미지 */
+		         , returnCount(D.FOLW_COUNT) AS FOLW_COUNT				/* 팔로워 수 */
+		         , returnCount(C.FOLN_COUNT) AS FOLN_COUNT				/* 팔로잉 수 */
+		         , returnCount(E.GATH_COUNT) AS GATH_COUNT				/* 개설한 게더 수 */
+		         , returnCount(F.CLUB_COUNT) AS CLUB_COUNT				/* 개설한 클럽 수 */
+		         , returnCount(G.CHAL_COUNT) AS CHAL_COUNT				/* 개설한 챌린지 수 */
+		         , returnCount(E.GATH_COUNT) 							
+		           + returnCount(F.CLUB_COUNT) 
+		           + returnCount(G.CHAL_COUNT) AS TOTAL_BOARD			/* 개설한 총 모임 수 */
+		      FROM TM_USERXM A
+		 LEFT JOIN TM_FILEXM B
+		        ON A.USER_NUMB = B.FILE_IDXX
+		       AND B.FILE_SEQC = 'XXX'
+		 LEFT JOIN ( SELECT COUNT(USER_NUMB) AS FOLN_COUNT
+		                  , USER_NUMB
+		               FROM TB_FOLLOW
+		           GROUP BY USER_NUMB
+		            ) C
+		        ON A.USER_NUMB = C.USER_NUMB
+		 LEFT JOIN ( SELECT COUNT(FOLW_USER) AS FOLW_COUNT
+		                  , FOLW_USER
+		               FROM TB_FOLLOW
+		           GROUP BY FOLW_USER
+		            ) D
+		        ON A.USER_NUMB = D.FOLW_USER
+		 LEFT JOIN ( SELECT COUNT(*) AS GATH_COUNT
+		                  , USER_NUMB
+		               FROM TM_GATHER
+		           GROUP BY USER_NUMB
+		           ) E
+		        ON A.USER_NUMB = E.USER_NUMB
+		 LEFT JOIN ( SELECT COUNT(*) AS CLUB_COUNT
+		                  , USER_NUMB
+		               FROM TM_CLUBXM
+		           GROUP BY USER_NUMB
+		           ) F
+		        ON A.USER_NUMB = F.USER_NUMB
+		 LEFT JOIN ( SELECT COUNT(*) AS CHAL_COUNT
+		                  , USER_NUMB
+		               FROM TM_CHALNG
+		           GROUP BY USER_NUMB
+		           ) G
+		        ON A.USER_NUMB = G.USER_NUMB
+		     WHERE A.USER_NUMB = #{USER_NUMB}
+     ]]>
+    </select>
+		
+</mapper>

@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+.userInfo1 {
+	position: relative;
+	height: 620px;
+}
+
+.background-image img{
+   width: 100%;
+   object-fit: cover;
+   height: 530px;
+}
+
+.profile-picture {
+	position: absolute;
+	bottom: 0px;
+	left: 250px;
+	width: 145px;
+	height: 145px;
+	border-radius: 50%;
+	border: 3px solid white;
+	overflow: hidden;
+	margin-left: 20px;
+}
+
+.profile-picture img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.userInfo {
+	position: relative;
+}
+.user-info {
+	position: absolute;
+	bottom: 20px;
+	right: 500px;
+	color: black;
+}
+
+.user-info .info table {
+	text-align: center;
+}
+
+.user-info .info table tr{
+	
+}
