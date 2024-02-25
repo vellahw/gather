@@ -64,5 +64,21 @@
 		     WHERE A.USER_NUMB = #{USER_NUMB}
      ]]>
     </select>
+    
+    <!-- 로그인회원 읽지 않은 알림조회 -->
+	 <select id="userRegi" parameterType='hashmap' resultType="hashmap">
+	   <![CDATA[
+	   SELECT B.COMD_CODE
+	        , B.COMD_NAME
+	        , SUBSTR(B.COMD_CODE,1,1) AS PARN_CODE
+	        , getCodeName('REGI_CODE', SUBSTR(B.COMD_CODE,1,1)) AS PARN_REGI
+	     FROM TB_URREGI A
+	LEFT JOIN TB_CODEXD B
+	       ON A.REGI_CODE = B.COMD_CODE
+	      AND B.COMM_CODE = 'REGI_CODE'
+	    WHERE A.USER_NUMB = #{USER_NUMB}
+	 ORDER BY B.COMD_NAME
+	    ]]>
+	  </select>
 		
 </mapper>

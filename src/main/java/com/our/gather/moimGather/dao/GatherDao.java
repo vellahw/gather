@@ -5,17 +5,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Repository;
 
 import com.our.gather.common.common.CommandMap;
-import com.our.gather.common.common.Pager;
 import com.our.gather.common.dao.AbstractDao;
 import com.our.gather.common.oracleFunction.OracleFunction;
+import com.our.gather.common.service.CommonService;
 
 @Repository("GatherDao")
 public class GatherDao extends AbstractDao {
+	
+	@Resource(name = "CommonService")
+	private CommonService commonService;
 
 	// 로그인시 메인 게더
 	@SuppressWarnings("unchecked")
@@ -92,17 +96,7 @@ public class GatherDao extends AbstractDao {
 
 			if (session.getAttribute("USER_NUMB") != null) {
 
-				String userId = getGatherList.get(i).get("USER_NUMB").toString();
-
-				String me = session.getAttribute("USER_NUMB").toString();
-
-				String folwCode = OracleFunction.getRelationCode(me, userId);
-
-				String folwBtn = OracleFunction.getCodeName("FOLW_CODE", folwCode);
-
-				getGatherList.get(i).put("FOLW_CODE", folwCode);
-
-				getGatherList.get(i).put("FOLW_BTNN", folwBtn);
+				commonService.makeFollowBtn(getGatherList, session);
 
 			}
 
@@ -120,17 +114,7 @@ public class GatherDao extends AbstractDao {
 
 		if (session.getAttribute("USER_NUMB") != null) {
 
-			String userId = getGatherDetail.get("USER_NUMB").toString();
-
-			String me = session.getAttribute("USER_NUMB").toString();
-
-			String folwCode = OracleFunction.getRelationCode(me, userId);
-
-			String folwBtn = OracleFunction.getCodeName("FOLW_CODE", folwCode);
-
-			getGatherDetail.put("FOLW_CODE", folwCode);
-
-			getGatherDetail.put("FOLW_BTNN", folwBtn);
+			commonService.makeFollowBtn(getGatherDetail, session);
 
 		}
 
@@ -149,17 +133,7 @@ public class GatherDao extends AbstractDao {
 
 			if (session.getAttribute("USER_NUMB") != null) {
 
-				String userId = getGatherMember.get(i).get("USER_NUMB").toString();
-
-				String me = session.getAttribute("USER_NUMB").toString();
-
-				String folwCode = OracleFunction.getRelationCode(me, userId);
-
-				String folwBtn = OracleFunction.getCodeName("FOLW_CODE", folwCode);
-
-				getGatherMember.get(i).put("FOLW_CODE", folwCode);
-
-				getGatherMember.get(i).put("FOLW_BTNN", folwBtn);
+				commonService.makeFollowBtn(getGatherMember, session);
 
 			}
 

@@ -1,5 +1,6 @@
 package com.our.gather.userPage.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -35,8 +36,11 @@ public class UserPageController {
 		commandMap.put("USER_NUMB", USER_NUMB);
 
 		Map<String, Object> userMap = userPageService.userPage(commandMap.getMap(), session, commandMap);
+		
+		List<Map<String, Object>> userRegi = userPageService.userRegi(commandMap.getMap(), commandMap);
 
 		mv.addObject("user", userMap);
+		mv.addObject("userRegi", userRegi);
 
 		return mv;
 	}

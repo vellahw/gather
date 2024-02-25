@@ -3,6 +3,8 @@ package com.our.gather.common.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import com.our.gather.common.common.CommandMap;
 
 public interface CommonService {
@@ -28,6 +30,8 @@ public interface CommonService {
 	List<Map<String, Object>> getRegi(Map<String, Object> map, CommandMap commandMap) throws Exception;
 	
 	Map<String, Object> extractRegiCode(Map<String, Object> map) throws Exception;
+	
+	Object makeFollowBtn(Object data, HttpSession session) throws Exception;
 	
 
 }
