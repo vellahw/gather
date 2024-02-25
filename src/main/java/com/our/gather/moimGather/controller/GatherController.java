@@ -22,6 +22,7 @@ import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.service.CommonService;
 import com.our.gather.detailPage.service.MoimDetailService;
 import com.our.gather.moimGather.service.GatherService;
+import com.our.gather.notify.service.NotifyService;
 
 @Controller
 public class GatherController {
@@ -34,16 +35,24 @@ public class GatherController {
 	
 	@Resource(name = "MoimDetailService")
 	private MoimDetailService moimDetailService;
+	
+	@Resource(name = "NotifyService")
+	private NotifyService notifyService;
 
 	// 개설 폼
 	@RequestMapping(value = "/gather/makeGather.com")
-	public ModelAndView moimResister(CommandMap commandMap) throws Exception {
+	public ModelAndView moimResister(CommandMap commandMap, HttpSession session) throws Exception {
 
 		ModelAndView mv = new ModelAndView("/moimGather/makeGather");
 		mv.setViewName("makeGather");
 
 		List<Map<String, Object>> cate = commonService.getCate(commandMap.getMap(), commandMap);
 		List<Map<String, Object>> regi = commonService.getRegi(commandMap.getMap(), commandMap);
+		
+		List<Map<String, Object>> notify = notifyService.getNotify(commandMap.getMap(), commandMap, session);
+		
+		mv.addObject("notify", notify);
+		mv.addObject("notiCount", notify.size());
 
 		mv.addObject("cate", cate);
 		mv.addObject("regi", regi);

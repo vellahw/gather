@@ -1,0 +1,105 @@
+@charset "UTF-8";
+
+.userInfo1 {
+	position: relative;
+	height: 620px;
+}
+
+.background-image img {
+	width: 100%;
+	object-fit: cover;
+	height: 530px;
+}
+
+.profile-picture {
+	position: absolute;
+	bottom: 0px;
+	left: 350px;
+	width: 145px;
+	height: 145px;
+	border-radius: 50%;
+	border: 4px solid white;
+	overflow: hidden;
+	margin-left: 20px;
+}
+
+.profile-picture img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.userInfo {
+	position: relative;
+}
+
+.counter {
+	position: absolute;
+	bottom: 0px;
+	right: 350px;
+	color: black;
+}
+
+.counter table {
+	text-align: center;
+	border-spacing: 20px 5px;
+}
+
+.counter td {
+	font-weight: 500;
+}
+
+.nickname {
+	position: absolute;
+	left: 525px;
+	bottom: 0px;
+	font-size: 35px;
+	font-weight: 500;
+}
+
+.userInfo2 {
+	position: relative;
+	height: 300px;
+}
+
+.user {
+	position: absolute;
+	left: 380px;
+	top: 20px;
+	width: 1170px;
+}
+
+.user>p {
+	line-height: 32px;
+}
+
+.user>.id {
+	font-size: 15px;
+	color: var(--color-gray500);
+	margin-bottom: 5px;
+}
+
+.user>.selfIntro {
+	font-size: 15px;
+	color: var(--color-gray600);
+}
+
+.pickedRegiContianer {
+	margin-top: 25px;
+}
+
+.regiList {
+	margin-top: 7px;
+	font-size: 15px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.pickedChildRegiitem {
+	color: var(--color-gray500);
+	background-color: #eee;
+	padding: 2px 6px;
+	border-radius: 13px;
+	margin: 4px 4px 4px 0;
+	width: fit-content;
+}

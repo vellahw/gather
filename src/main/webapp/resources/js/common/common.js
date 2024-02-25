@@ -3,6 +3,20 @@
  * Purpose: 배열 겹치는 값 삭제
  * parameter: (arr : 배열명, key: 비교 키)
  */
+console.log(
+    "%c██████╗░██╗░░░██╗███████╗███╗░░██╗██████╗░  ░█████╗░░█████╗░██████╗░███████╗███╗░░░███╗███████╗\n" +
+    "%c██╔══██╗╚██╗░██╔╝██╔════╝████╗░██║██╔══██╗  ██╔══██╗██╔══██╗██╔══██╗██╔════╝████╗░████║██╔════╝\n" +
+    "%c██████╔╝░╚████╔╝░█████╗░░██╔██╗██║██║░░██║  ██║░░██║██║░░██║██████╔╝█████╗░░██╔████╔██║█████╗░░\n" +
+    "%c██╔═══╝░░░╚██╔╝░░██╔══╝░░██║╚████║██║░░██║  ██║░░██║██║░░██║██╔══██╗██╔══╝░░██║╚██╔╝██║██╔══╝░░\n" +
+    "%c██║░░░░░░░░██║░░░███████╗██║░╚███║██████╔╝  ╚█████╔╝╚█████╔╝██║░░██║███████╗██║░╚═╝░██║███████╗\n" +
+    "%c╚═╝░░░░░░░░╚═╝░░░╚══════╝╚═╝░░╚══╝╚═════╝░  ░╚════╝░░╚════╝░╚═╝░░╚═╝╚══════╝╚═╝░░░░░╚═╝╚══════╝",
+    "font-weight: bold; color: #FF5733", "font-weight: bold; color: #FFC300", "font-weight: bold; color: #C70039", "font-weight: bold; color: #900C3F", "font-weight: bold; color: #581845", "font-weight: bold; color: #003f5c"
+);
+/**
+ * name:comRemoveArray
+ * Purpose: 배열 겹치는 값 삭제
+ * parameter: (arr : 배열명, key: 비교 키)
+ */
 function comRemoveArray(arr, key) {
   let uniqueKeys = new Set();
   let uniqueElements = [];
@@ -77,7 +91,7 @@ name:whereIam
 Purpose: 현재 사용자가 위치한 모임타입
 parameter: null
 */		     
-function comWhereIam() {
+function comWhereAmI() {
     var queryParams = new URLSearchParams(window.location.search);
     var moimType = queryParams.get("type");
     var moimTypeKr = "";

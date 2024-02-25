@@ -140,7 +140,6 @@ public class GatherServiceImpl implements GatherService {
 				
 			}
 			
-			
 			map.put("MOIM_CNTT", moimCntt);
 
 		} catch (Exception e) {
