@@ -27,20 +27,20 @@
 						<c:if test="${list.TYPE == param.type && fn:length(list) > 0}">
 							<div class="slideContents">
 								<div class="eachWrap">
-									<div class="thumnailContainer" onclick="comGoSomewhere('detail','${list.MOIM_IDXX}')">
+									<div class="thumnailContainer" onclick="comWhere2Go('detail','${list.MOIM_IDXX}')">
 										<img src="${list.MOIM_IMAG}" data-end="${list.ENDD_YSNO}"
 												 class="thumnail"
 												 alt="썸네일">
 									</div>
 									<div class="infoContainer">
-										<h3 class="title" onclick="comGoSomewhere('detail','${list.MOIM_IDXX}')">
+										<h3 class="title" onclick="comWhere2Go('detail','${list.MOIM_IDXX}')">
 											<c:out value="${list.MOIM_TITL}" />
 										</h3>
 										<div class="hashtagContainer">
 											<c:choose>
 												<c:when test="${fn:length(list.HASH_TAGG) != 0 }">
 													<c:forEach var="hashtag" items="${list.HASH_TAGG}">
-														<button type="button" class="hashtag" onclick="comGoSomewhere('search','${hashtag}')">
+														<button type="button" class="hashtag" onclick="comWhere2Go('search','${hashtag}')">
 														  <c:out value="#${hashtag}" />
 														</button>
 													</c:forEach>
@@ -70,7 +70,7 @@
 										<div class="userContainer">
 											<div class="userProfileWrap">
 												<div class="profileImgWrap">
-													<img src="${list.USER_IMAG}"class="profileImg" alt="프로필사진">
+													<img src="${list.USER_IMAG}"class="profileImg" alt="프로필사진" onclick="comWhere2Go('userPage','${list.USER_NUMB}')">
 												</div>
 												<span class="nickname">
 												  <c:out value="${list.USER_NICK}" />
@@ -81,7 +81,7 @@
 												<div class="heartContainer">
 											    <input class="heart-box" type="checkbox" id="${list.MOIM_IDXX}"  data-master="${list.USER_NUMB}" onchange="handleCheckboxChange(this)">
 													<label class="heartIcon" for="${list.MOIM_IDXX}"></label>
-		          				    <input id="realCount" type="hidden" data-realCount-id="${list.MOIM_IDXX}" value="${list.LIKE_COUNT}" >
+		          				    				<input id="realCount" type="hidden" data-realCount-id="${list.MOIM_IDXX}" value="${list.LIKE_COUNT}" >
 													<span id="showCount"class="heartCount main" data-ShowCount-id="${list.MOIM_IDXX}"></span>
 											  </div>
 											</div>

@@ -639,10 +639,38 @@ const showUserPickedRegi = function(pickedList, regiList) {
       reader.readAsDataURL(chooseImgInput.files[0]);
       
       profile = chooseImgInput.files[0];
+
     }
 
   });
   
+if(chooseImgInput.files[0] != null){
+
+    document.querySelector('.profileImg.preview').addEventListener('mouseover', function() {
+      
+      document.addEventListener('keydown', function(event) {
+        var image = document.querySelector('.profileImg.preview');
+        var currentPositionX = parseFloat(image.style.objectPositionX) || 0;
+        var currentPositionY = parseFloat(image.style.objectPositionY) || 0;
+        var step = 1;
+    
+        switch(event.key) {
+            case 'ArrowUp':
+                image.style.objectPositionY = (currentPositionY - step) + 'px';
+                break;
+            case 'ArrowDown':
+                image.style.objectPositionY = (currentPositionY + step) + 'px';
+                break;
+            case 'ArrowLeft':
+                image.style.objectPositionX = (currentPositionX - step) + 'px';
+                break;
+            case 'ArrowRight':
+                image.style.objectPositionX = (currentPositionX + step) + 'px';
+                break;
+        }
+    });
+  });
+}
   // 배경 사진 삭제(되돌리기) 버튼
   const removeBgImgBtn =  document.getElementById('bg-remove');
 

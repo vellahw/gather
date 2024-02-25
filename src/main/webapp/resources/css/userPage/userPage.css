@@ -29,6 +29,51 @@
 	object-fit: cover;
 }
 
+.nickname {
+	position: absolute;
+	left: 525px;
+	bottom: 0px;
+	font-size: 35px;
+	font-weight: 500;
+}
+.profileBtnContainer {
+ 	position: absolute;
+    bottom: 110px;
+    right: 353px;
+}
+.Btn {
+	background-color: var(--color-white);
+	border: 1px solid var(--primary);
+	color: var(--primary);
+	padding: 4px 8px 4px 7px;
+	border-radius: 15px;
+	font-size: 15px;
+	margin-right: 10px;
+	transition: background-color 0.3s;
+}
+
+.Btn:hover {
+	background-color: var(--color-orange500);
+	color: var(--color-white);
+}
+
+.f {
+	/* display: none; */
+	background-color: var(--primary);
+	border: 1px solid var(--primary);
+	color: var(--color-white);
+	padding: 4px 8px 4px 7px;
+	border-radius: 15px;
+	font-size: 15px;
+	margin-right: 10px;
+	transition: background-color 0.3s ease-out;
+}
+
+.actb {
+	background-color: var(--primary) !important;
+	color: var(--color-white) !important;
+}
+
 .userInfo {
 	position: relative;
 }
@@ -46,14 +91,6 @@
 }
 
 .counter td {
-	font-weight: 500;
-}
-
-.nickname {
-	position: absolute;
-	left: 525px;
-	bottom: 0px;
-	font-size: 35px;
 	font-weight: 500;
 }
 

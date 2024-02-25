@@ -363,13 +363,13 @@ function comConfirm2(title, content, icon, okTitle, okIcon, okFn) {
 
 /* 
 admin:KSH
-name:comGoSomewhere
+name:comWhere2Go
 Purpose:공통 페이지 이동함수
 parameter:(pageName: 페이지(detail : 디테일 페이지
                             search : 검색 페이지)
            , params : 해당 파라미터)
 */ 
-function comGoSomewhere(pageName, params) {
+function comWhere2Go(pageName, params) {
 
   switch (pageName){
 
@@ -388,6 +388,12 @@ function comGoSomewhere(pageName, params) {
     case 'makeGather':
 
     location.href = `/gather/makeGather.com`
+    
+    break;
+
+    case 'userPage':
+
+    location.href = `/gather/userPage.com?idx=${params}`
     
     break;
     

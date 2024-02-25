@@ -38,7 +38,7 @@
 			        <span>
 			        	<c:out value="${noti.NOTI_CNT1}" />
 			        </span>
-			        <span class="t" onclick="comGoSomewhere('detail','${noti.CNTT_IDXX}')">
+			        <span class="t" onclick="comWhere2Go('detail','${noti.CNTT_IDXX}')">
 			        	'<c:out value="${noti.MOIM_TITL}" />'
 			        </span>
 			        <span>

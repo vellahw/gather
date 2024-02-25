@@ -31,25 +31,29 @@ document.addEventListener("DOMContentLoaded", function(){
   240124 강승현
   해당 카테고리 진입시 active
   */
+ 
   const params = new URL(location.href).searchParams;
   const cate = params.get('cate');  
 
-    if (cate != 'all') {
+  if(cate){
 
-      const pcate = cate.substring(0, 1);
-      document.querySelector(`div[data-code="${pcate}"`).classList.add('active'); 
+      if (cate != 'all') {
 
-      if(cate.length == 3){ 
+        const pcate = cate.substring(0, 1);
+        document.querySelector(`div[data-code="${pcate}"`).classList.add('active'); 
 
-        document.querySelector(`li[data-code2="${cate}"`).classList.add('active');
+        if(cate.length == 3){ 
+
+          document.querySelector(`li[data-code2="${cate}"`).classList.add('active');
+
+        }
+
+      } else {
+
+        document.querySelector(`div[data-code="all"`).classList.add('active'); 
 
       }
-
-    } else {
-
-      document.querySelector(`div[data-code="all"`).classList.add('active'); 
-
-    }
+  }
   
 });
 

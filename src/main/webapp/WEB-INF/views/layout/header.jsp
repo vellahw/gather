@@ -28,7 +28,7 @@
       <c:if test="${USER_NUMB != null }">
         <div class="iconContainer mypage">
           <div class="profileImgWrap">
-            <img src="${USER_IMAG}" class="profileImg" alt="프로필사진">
+            <img src="${USER_IMAG}" class="profileImg" alt="프로필사진" onclick="comWhere2Go('userPage','${USER_NUMB}')">
           </div>
         </div>
         <div class="iconContainer">

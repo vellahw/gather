@@ -93,13 +93,13 @@ public class CommonController {
 	
 	    try {
 	    	
-	    	if(folwCode.equals("FW")) {
+	    	if(folwCode.equals("FI")) {
 	    		
-	        	commonService.follow(commandMap.getMap(), commandMap);
+	        	commonService.unfollow(commandMap.getMap(), commandMap);
 	        	
 	    	} else {
 	    	
-	    		commonService.unfollow(commandMap.getMap(), commandMap);
+	    		commonService.follow(commandMap.getMap(), commandMap);
 	    	
 	    	}
 	

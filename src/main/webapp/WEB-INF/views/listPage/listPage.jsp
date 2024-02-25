@@ -25,7 +25,7 @@
 		</c:if>
 	  </h1>
 	  <% if(session.getAttribute("USER_NUMB") != null) { %>
-	    <button type="button" class="moimRegiBtn" onclick="comGoSomewhere('makeGather')">
+	    <button type="button" class="moimRegiBtn" onclick="comWhere2Go('makeGather')">
 	    	<c:out value="${moimType}" /> 개설하기
 	    </button>
 	  <% } %>
@@ -36,20 +36,20 @@
 				<c:forEach var="list" items="${list}">
 					<div class="Contents">
 						<div class="eachWrap">
-							<div class="thumnailContainer" onclick="comGoSomewhere('detail','${list.MOIM_IDXX}')">
+							<div class="thumnailContainer" onclick="comWhere2Go('detail','${list.MOIM_IDXX}')">
 								<img src="${list.MOIM_IMAG}" data-end="${list.ENDD_YSNO}"
 										 class="thumnail"
 										 alt="썸네일">
 							</div>
 							<div class="infoContainer">
-								<h3 class="title" onclick="comGoSomewhere('detail','${list.MOIM_IDXX}')">
+								<h3 class="title" onclick="comWhere2Go('detail','${list.MOIM_IDXX}')">
 								  <c:out value="${list.MOIM_TITL}" />
 								</h3>
 								<div class="hashtagContainer">
 								<c:choose>
 									<c:when test="${fn:length(list.HASH_TAGG) != 0 }">
 										<c:forEach var="hashtag" items="${list.HASH_TAGG}">
-											<button type="button" class="hashtag" onclick="comGoSomewhere('search','${hashtag}')">
+											<button type="button" class="hashtag" onclick="comWhere2Go('search','${hashtag}')">
 											  <c:out value="#${hashtag}" />
 											</button>
 										</c:forEach>
