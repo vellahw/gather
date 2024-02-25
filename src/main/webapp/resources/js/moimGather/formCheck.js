@@ -10,7 +10,10 @@ const formCheck = function(step) {
   const moimDate = document.getElementById('moimDate').value;
   const moimTime = document.getElementById('moimTime').value;
   const moimAddress = document.getElementById('moimAddress').value;
-  const moimDetailAddress = document.getElementById('moimDetailAddress').value;
+  const needCostBtn = document.querySelector('button[data-cost="Y"]');
+  const offlineBtn = document.querySelector('button[data-loca="off"]');
+  const minPeople = document.getElementById('minPeople').value;
+  const maxPeople = document.getElementById('maxPeople').value;
 
   if(step == 'step1') {
     if(!pickedCate) {
@@ -33,6 +36,8 @@ const formCheck = function(step) {
       
       return true;
     }
+  
+  // 두 번째 스탭
   } else if(step == 'step2') {
     
     if(!document.querySelector('.cost_act')) {
@@ -41,21 +46,17 @@ const formCheck = function(step) {
 
       return false;
 
-    } else if(document.querySelector('button[data-cost="Y"]').classList.contains('cost_act')) {
+    } else if(needCostBtn.classList.contains('cost_act') && !moimCost) {
 
-      if(!moimCost) {
-
-        comAlert3(
-          '참가 금액을 입력해주세요'
+      comAlert3(
+        '참가 금액을 입력해주세요'
         , null
         , 'warning'
         , null
         , function(){ comFocus('id', 'moimCost'); }
-        );
+      );
 
-        return false;
-
-      }
+       return false;
 
     } else if(!moimDate) {
 
@@ -69,29 +70,72 @@ const formCheck = function(step) {
       comAlert2(3, '모임 시간을 선택해주세요.');
 
       return false;
+
     } else if(!document.querySelector('.loca_act')) {
+
       comAlert2(3, '모임 장소를 선택해주세요');
 
       return false;
 
-    } else if(document.querySelector('button[data-loca="on"]').classList.contains('loca_act')){
-
-      if(!moimAddress || !moimDetailAddress) {
+    } else if(offlineBtn.classList.contains('loca_act') && !moimAddress){
   
-        comAlert3(
+      comAlert3(
           '모임 장소의 주소를 입력해주세요'
         , null
         , 'warning'
         , null
         , function(){ comFocus('id', 'moimAddress'); }
-        );
+      );
   
-        return false;
-      }
-
+      return false;
+      
+    } else {
+      
+      return true;
     }
-    
 
-    return true;
+  // 세 번째 스탭
+  } else if(step == 'step3') {
+
+    if(!document.querySelector('.appr_act')) {
+
+      comAlert2(3, '참여 승인제 여부를 선택해주세요.');
+
+      return false;
+
+    } else if(!minPeople) {
+
+      comAlert3(
+        '모임 최소 인원수를 입력해주세요'
+        , null
+        , 'warning'
+        , null
+        , function(){ comFocus('id', 'minPeople'); }
+      );
+
+      return false;
+
+    } else if(!maxPeople) {
+
+      comAlert3(
+        '모임 최대 인원수를 입력해주세요'
+        , null
+        , 'warning'
+        , null
+        , function(){ comFocus('id', 'maxPeople'); }
+      );
+
+      return false;
+
+    } else if(!document.querySelector('.gender_act')) {
+
+      comAlert2(3, '모임 참여 성별을 선택해주세요.');
+
+      return false;
+
+    } else {
+      return true;
+    }
   }
+  return true;
 }

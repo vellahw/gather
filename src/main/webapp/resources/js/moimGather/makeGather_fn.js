@@ -58,8 +58,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
           }
 
 				} else if(btnId == 'next3') {
-
-					showStep(step3, step4);
+          
+          if(formCheck('step3')) {
+            showStep(step3, step4);
+          }
 				
 				}
 				

@@ -402,10 +402,12 @@
 	color: #fff;	
 }
 
-.peopleCount {
-	
+#peopleNoLimit {
+	width: calc(192px + 63px + 10px);
+  height: 38px;
+  border: 1px solid var(--primary);
+  box-shadow: none;
 }
-
 
 .genderBtn {
 	cursor: pointer;

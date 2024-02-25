@@ -160,17 +160,18 @@
 						<div class="row">
 							<h3 class="secondLabel">
 								<img src="/resources/img/form/peopleCountIcon.png" alt="인원수 아이콘">
-								인원수 (2명~)
+								인원수 (2명~30명)
 							</h3>
-							<div class="peopleCount">
+							<div>
 								<div>
 					        <label for="minPeople" >최소 인원</label>
-					        <input type="number" id="minPeople" class="basicInput register-p">
+					        <input type="text" id="minPeople" class="basicInput register-p">
 								</div>
 								<div style="margin-right: 10px;">
 					        <label for="maxPeople" >최대 인원</label>
-					        <input type="number" id="maxPeople" class="basicInput register-p">
+					        <input type="text" id="maxPeople" class="basicInput register-p">
 								</div>
+								<button type="button" id="peopleNoLimit" class="parent">제한 없음</button>
 							</div>
 						</div>
 						
