@@ -414,6 +414,12 @@
 	position: relative;
 }
 
+.uploadItem:hover {
+	border: 3px solid var(--primary);
+	width: 107px;
+  height: 107px;
+}
+
 .picked_thumnail {
 	border: 3px solid var(--primary);
 	width: 107px;
