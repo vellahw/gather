@@ -15,37 +15,18 @@ document.addEventListener('DOMContentLoaded', ()=>{
     return false;
   }
 
-  const categoryList = document.querySelector('.categoryList');
   const step1Btn = document.getElementById('next');
   const step2Btn = document.getElementById('next2');
   const step3Btn = document.getElementById('next3');
   const submitBtn = document.getElementById('submit');
 
-  let pickedCateData; // 유저가 선택한 카테고리 값을 담음
   let gatherAddressData; // 주소+상세주소 데이터 담음
   let step1Data; // step1 데이터 담음
   let step2Data; // step2 데이터 담음
   let step3Data; // step3 데이터 담음
   let step4Data; // step4 데이터 담음
   let reqData; // step1~step4 하나로 합친 데이터 담음
- 
 
-  // 자식 카테고리 클릭 이벤트
-  categoryList.addEventListener('click', (event)=>{
-     const target = event.target;
-  
-    if(target.matches('.child')) {
-    
-       if(document.querySelector('.picked_child')){
-         document.querySelector('.picked_child').classList.remove('picked_child');
-       }
-
-       target.classList.toggle('picked_child');
-      pickedCateData = target.getAttribute('data-code2');
-    }
-  });
-
-  
   /**
    * 240220 장한원
    * 유효성 검사
@@ -63,9 +44,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
     */   
    $('#summernote').summernote({
       codeviewFilter: false, // 코드 보기 필터 비활성화
-    codeviewIframeFilter: false, // 코드 보기 iframe 필터 비활성화
-    disableDragAndDrop: false,
-    shortcuts: false,
+      codeviewIframeFilter: false, // 코드 보기 iframe 필터 비활성화
+      disableDragAndDrop: false,
+      shortcuts: false,
       height: 300,                 // 에디터 높이
       minHeight: null,             // 최소 높이
       maxHeight: null,             // 최대 높이
@@ -112,55 +93,67 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
       callbacks: {
          onImageUpload: function (files) {
-        const uploadList = document.getElementById('uploadList');
-       
-        // 이미지 다중 업로드
-        if (files.length > 1) {
-          for (let i = files.length - 1; i >= 0; i--) {
-              const reader = new FileReader(); // 파일을 읽음
-              reader.onload = (function (file) {
-                  return function (event) {
-                      createImgNode(event.target.result, file.name);
-                  };
-              })(files[i]); // 함수를 정의 후 바로 실행, 매개변수 file = (바깥 괄호)files[i]
-              reader.readAsDataURL(files[i]); // 파일을 base64로 읽어옴
-      
-              // 파일 데이터 배열에 파일과 파일 이름 추가
-              fileDataArray.push({
-                  key: 'file' + i,
-                  file: files[i],
-                  fileName: files[i].name
-              });
+          const uploadList = document.getElementById('uploadList');
+        
+          // 이미지 다중 업로드
+          if (files.length > 1) {
+            for (let i = files.length - 1; i >= 0; i--) {
+                const reader = new FileReader(); // 파일을 읽음
+                reader.onload = (function (file) {
+                    return function (event) {
+                        createImgNode(event.target.result, file.name);
+                        document.getElementById('#uploadList').childNodes[0].classList.add('picked_thumnail'); // 메인이미지 표시
+                       // document.getElementById('#uploadList').childNodes[0].querySelector('img#uploadImgThumnail').; // 메인이미지 태그 표시
+                    };
+                })(files[i]); // 함수를 정의 후 바로 실행, 매개변수 file = (바깥 괄호)files[i]
+                reader.readAsDataURL(files[i]); // 파일을 base64로 읽어옴
+        
+                // 파일 데이터 배열에 파일과 파일 이름 추가
+                fileDataArray.push({
+                    key: 'file' + i,
+                    file: files[i],
+                    fileName: files[i].name
+                });
+            }
+          } else {
+            const reader = new FileReader();
+            reader.onload = ({ target }) => {
+                createImgNode(target.result, files[0].name);
+                document.getElementById('#uploadList').childNodes[0].classList.add('picked_thumnail'); // 메인이미지 표시
+            };
+            reader.readAsDataURL(files[0]);
+        
+            // 파일 데이터 배열에 파일과 파일 이름 추가
+            fileDataArray.push({
+                key: `file${fileNameNum}`,
+                file: files[0],
+                fileName: files[0].name
+            });
+
+            console.log(fileDataArray)
+
+            fileNameNum++;
           }
-        } else {
-          const reader = new FileReader();
-          reader.onload = ({ target }) => {
-              createImgNode(target.result, files[0].name);
-          };
-          reader.readAsDataURL(files[0]);
-      
-          // 파일 데이터 배열에 파일과 파일 이름 추가
-          fileDataArray.push({
-              key: `file${fileNameNum}`,
-              file: files[0],
-              fileName: files[0].name
-          });
 
-          fileNameNum++;
-        }
-
+          /* 메인 이미지 선택(클릭) 이벤트 */
           document.getElementById('uploadList').addEventListener('click', (event)=>{
 
-            const thumnailNode = document.getElementById('uploadImgThumnail');
-            if(thumnailNode.name) {
-              thumnailNode.name = ''; // 클릭 했었던 이미지의 name 값 초기화
-            }
-          
-            comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 클릭 했었던 이미지 추가했던 class 삭제
-          
-            if(event.target.matches('#uploadImgThumnail')){
-              event.target.parentNode.classList.toggle('picked_thumnail');          
+            // const thumnailNode = document.getElementById('uploadImgThumnail');
+            // if(thumnailNode.name) {
+            //   thumnailNode.name = ''; // 클릭 했었던 이미지의 name 값 초기화
+            // }
 
+            const mainTag = document.querySelector('.mainTag_act');
+            if(mainTag_act) {
+              mainTag.classList.remove('mainTag_act');
+            } else {
+              event.target.classList.add('mainTag_act');
+            }
+
+            comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 클릭 했었던 이미지 추가했던 class 삭제
+            
+            if(event.target.matches('#uploadImgThumnail')){
+              event.target.parentNode.classList.toggle('picked_thumnail');
             }
           });
         }
@@ -181,17 +174,28 @@ document.addEventListener('DOMContentLoaded', ()=>{
     img.src = file;
     img.dataset.name = fileName;
 
+    const mainTag = document.createElement('span');
+    mainTag.innerHTML = '대표';
+    mainTag.className = 'mainTag';
+    
     item.appendChild(img); 
+    item.appendChild(mainTag);
     uploadList.appendChild(item); // 업로드 썸네일 리스트에 삽입
   }
-
-
+  
+  const findKey = function(element) {
+    if(element.fileName == document.querySelector('.uploadItem.picked_thumnail img').getAttribute('data-name')) {
+      return { key : element.key };
+    }
+  }
+  
   /**
    * 240220: 장한원
    * step1 -> step2로 가는 '다음' 버튼
    */
   step1Btn.addEventListener('click', ()=>{
     const moimTitle = document.getElementById('moimTitle').value;
+    const pickedCateData = document.querySelector('.picked_child').getAttribute('data-code2');
     
     step1Data ={
         MOIM_TITL : moimTitle
@@ -206,13 +210,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
    * step2 -> step3로 가는 '다음' 버튼
    */
   step2Btn.addEventListener('click', ()=>{
-    const gatherCost = document.getElementById('gatherCost').value;
-    const gatherDate = document.getElementById('gatherDate').value;
-    const gatherTime = document.getElementById('gatherTime').value;
-    const gatherAddress = document.getElementById('gatherAddress').value;
-    const gatherDetailAddress = document.getElementById('gatherDetailAddress').value;
-    const gatherLati = document.getElementById('gatherLati').value;
-    const gatherLong = document.getElementById('gatherLong').value;
+    const gatherCost = document.getElementById('moimCost').value;
+    const gatherDate = document.getElementById('moimDate').value;
+    const gatherTime = document.getElementById('moimTime').value;
+    const gatherAddress = document.getElementById('moimAddress').value;
+    const gatherDetailAddress = document.getElementById('moimDetailAddress').value;
+    const gatherLati = document.getElementById('moimLati').value;
+    const gatherLong = document.getElementById('moimLong').value;
 
     step2Data ={
         MOIM_COST : gatherCost
@@ -267,6 +271,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
  * 마지막 '확인' 버튼
  */
   submitBtn.addEventListener('click', () => {
+
+    const key = fileDataArray.find(findKey);
+    console.log(key.key);
 
     let formData = new FormData(); // 서버로 전송할 폼 객체 생성
     const summernote = document.getElementById('summernote').value;

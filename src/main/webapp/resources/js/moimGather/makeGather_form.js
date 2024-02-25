@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded',()=>{
 	const cateValue = document.getElementById('cateData').value;
 	const cateData = comObjectInArray(cateValue).result; // 카테고리 데이터
-	const gatherCostNode = document.getElementById('gatherCost'); // 참가비용 입력 input
-	// 카테고리들을 담고있는 최상위 노드
-	const categoryListNode =  document.querySelector('.categoryList');
+	const gatherCostNode = document.getElementById('moimCost'); // 참가비용 입력 input
+	const categoryListNode =  document.querySelector('.categoryList'); // 카테고리들을 담고있는 ul tag
 	
 	/**
 	 * 240219 장한원
@@ -59,38 +58,68 @@ document.addEventListener('DOMContentLoaded',()=>{
 		}
 	});
 
+	/*
+	 * 240225 장한원 
+	 * 부모 카테고리 마우스오버/리브 이벤트
+	 */
+	const parentCategory = document.querySelectorAll('li[data-parentcode]');
+	parentCategory.forEach(parent => {
+		parent.addEventListener('mouseover', ()=>{
+			
+			const targetParentCode = parent.getAttribute('data-parentcode');
+			
+			if(document.querySelector('.parent_active')) {
+				document.querySelector(`.parent[data-code1=${targetParentCode}]`).classList.remove('parent_active');
+			}
 
-	/* 부모 카테고리 클릭 이벤트 */
-	// categoryListNode.addEventListener('click', (event)=>{
-		// 	const target = event.target;
-		
-		// 	if(target.matches('[data-code1]') || target.matches('[data-parentcode]')) {
+			document.querySelector(`.parent[data-code1=${targetParentCode}]`).classList.add('parent_active');
 			
-			// 		target.classList.toggle('level1_active');
-			
-			// 		const targetChild = document.querySelector(`[data-pcode=${target.getAttribute('data-code1')}]`);
-			// 		targetChild.classList.toggle('level2_active');
-			
-			// 	}
-			// });
-			
-	/* 부모 카테고리 마우스오버 이벤트 */
-	categoryListNode.addEventListener('mouseover', (event)=>{
-		const target = event.target;
-		if(target.matches('[data-code1]') || target.matches('[data-parentcode]')) {
-
-			target.classList.add('level1_active');
-
-			const targetChild = document.querySelector(`[data-pcode=${target.getAttribute('data-code1')}]`);
+			const targetChild = parent.querySelector(`ul[data-pcode=${targetParentCode}]`);
 			targetChild.classList.add('level2_active');
-		}
+		});
 	});
-	
-	const activeElement = categoryListNode.querySelectorAll('.level2_active');
-	activeElement.forEach(element => {
-		element.addEventListener('mouseleave', ()=>{
-			element.classList.remove('.leve2_active');
-		})
+
+	parentCategory.forEach(parent => {
+		parent.addEventListener('mouseleave', ()=>{
+
+			const targetParentCode = parent.getAttribute('data-parentcode');
+			const targetChild = parent.querySelector(`ul[data-pcode=${targetParentCode}]`);
+
+			document.querySelector(`.parent[data-code1=${targetParentCode}]`).classList.remove('parent_active');
+			
+			if(targetChild.classList.contains('level2_active')) {
+				targetChild.classList.remove('level2_active');
+			}
+		});
+	});
+
+	/* 
+	 * 자식 카테고리 클릭 이벤트
+	 */
+	const categoryList = document.querySelector('.categoryList');
+	categoryList.addEventListener('click', (event)=>{
+		const target = event.target;
+	 
+		if(target.matches('.child')) {
+		 
+			if(document.querySelector('.picked_child')){
+				document.querySelector('.picked_child').classList.remove('picked_child');
+				document.querySelector('.level1_active').classList.remove('level1_active');
+			}
+ 
+			target.classList.add('picked_child'); // 선택한 자식에 액티브 클래스 추가
+
+			// 선택한 자식의 부모에 액티브 클래스 추가
+			const parentCode = target.parentElement.parentElement.getAttribute('data-pcode');
+			const targetParent = document.querySelector(`.parent[data-code1=${parentCode}]`);
+			targetParent.classList.add('level1_active');
+
+			// 선택한 카테고리 화면에 띄움
+			const picekParent = targetParent.querySelector('.name').innerHTML;
+			const pickedChild = document.querySelector('.picked_child').innerHTML;
+			document.getElementById('addPickedCate').innerHTML = `${picekParent} | ${pickedChild}`;
+			document.getElementById('addPickedCate').classList.add('addPicked');
+		}
 	});
 
 
@@ -185,9 +214,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 					}
 					
 					// 우편번호와 주소 정보를 해당 필드에 넣음
-					document.getElementById("gatherAddress").value = addr;
+					document.getElementById("moimAddress").value = addr;
 					//상세주소 입력 폼으로 포커스 이동
-					document.getElementById("gatherDetailAddress").focus();
+					document.getElementById("moimDetailAddress").focus();
 					
 					// 주소 검색 후 지도에 마커 표시하기
 					geocoder.addressSearch(addr, function(result, status) {
@@ -202,12 +231,12 @@ document.addEventListener('DOMContentLoaded',()=>{
 							let gatherLati = result[0].y; // 위도
 							let gatherLong = result[0].x; // 경도
 						
-							document.getElementById('gatherAddress').style.display = 'block';
-							document.getElementById('gatherDetailAddress').style.display = 'block';
+							document.getElementById('moimAddress').style.display = 'block';
+							document.getElementById('moimDetailAddress').style.display = 'block';
 
 							// 위도 경도 hidden input 값 채움
-							document.getElementById('gatherLati').value = gatherLati;
-							document.getElementById('gatherLong').value = gatherLong;
+							document.getElementById('moimLati').value = gatherLati;
+							document.getElementById('moimLong').value = gatherLong;
 
 							// 결과값으로 받은 위치를 마커로 표시
 							let marker = new kakao.maps.Marker({
@@ -246,20 +275,20 @@ document.addEventListener('DOMContentLoaded',()=>{
 		const target = event.target;
 
 		target.value = Math.min(target.value, target.parentNode.childNodes[5].value-1);
-			let value = (100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.value)-(100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.min);
-			let children = target.parentNode.childNodes[1].childNodes;
-			children[1].style.width = value + '%';
-			children[5].style.left = value + '%';
-			children[7].style.left = value + '%';
-			children[11].style.left = value + '%';
-			children[11].childNodes[1].innerHTML = target.value;
+		let value = (100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.value)-(100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.min);
+		let children = target.parentNode.childNodes[1].childNodes;
+		children[1].style.width = value + '%';
+		children[5].style.left = value + '%';
+		children[7].style.left = value + '%';
+		children[11].style.left = value + '%';
+		children[11].childNodes[1].innerHTML = target.value;
 	});
 
 	const range2 = document.querySelector('.range2')
 	range2.addEventListener('input', (event)=>{
 		const target = event.target;
 
-		target.value=Math.max(target.value,target.parentNode.childNodes[3].value-(-1));
+		target.value = Math.max(target.value,target.parentNode.childNodes[3].value-(-1));
 		let value = (100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.value)-(100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.min);
 		let children = target.parentNode.childNodes[1].childNodes;
 		children[3].style.width = (100-value) + '%';
@@ -355,6 +384,8 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 });
 
+
+// ======= DOMContentLoaded 후 아님 =======
 
 /*
  * 240224 장한원

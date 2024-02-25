@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="/resources/css/moimGather/makeGather.css">
-<link rel="stylesheet" href="/resources/css/moimGather/rangeSlider.css">
 <script src="/resources/js/moimGather/makeGather_form.js"></script>
 <script src="/resources/js/moimGather/makeGather_fn.js"></script>
 <script src="/resources/summernote/summernote-lite.js"></script>
@@ -33,8 +32,9 @@
 				<div id="step1" class="show_step">
 					<div class="eachInputWrap catesection">
 						<h3>
-							<span aria-label="필수 입력값입니다.">⁕</span>
+							<span class="required" aria-label="필수 입력값입니다.">⁕</span>
 							게더의 주제를 선택해주세요
+							<span id="addPickedCate" style="padding: 0;"></span>
 						</h3>
 						<div class="categoryContainer" id="categoryContainer">
 							<ul class="categoryList"></ul>
@@ -43,7 +43,7 @@
 					
 					<div class="eachInputWrap">
 						<label class="eachLabel moimTitle" for="moimTitle">
-							<span aria-label="필수 입력값입니다.">⁕</span>
+							<span  class="required" aria-label="필수 입력값입니다.">⁕</span>
 							모임 제목을 입력해주세요
 						</label>
 						<input type="text" id="moimTitle" class="basicInput register-p step1" placeHolder="최소 5자 이상 입력해주세요.">
@@ -56,44 +56,44 @@
 
 				<div id="step2">
 					<div class="eachInputWrap">
-						<label class="eachLabel" for="gatherCost">
-							<span aria-label="필수 입력값입니다.">⁕</span>
+						<label class="eachLabel" for="moimCost">
+							<span class="required" aria-label="필수 입력값입니다.">⁕</span>
 							참가비가 있나요?
 						</label>
 						<div style="display: flex; margin: 8px;">
 							<button type="button" class="costBtn parent" data-cost="Y">있음</button>
 							<button type="button" class="costBtn parent" data-cost="N">없음</button>
 						</div>
-						<input type="text" id="gatherCost" class="basicInput register-p" placeHolder="숫자만 입력해주세요." style="margin-right: 18px;">
+						<input type="text" id="moimCost" class="basicInput register-p" placeHolder="숫자만 입력해주세요." style="margin-right: 18px;">
 					</div>
 					
 					<div class="eachInputWrap">
 						<h3>
-			        <span aria-label="필수 입력값입니다.">⁕</span>
+			        <span class="required" aria-label="필수 입력값입니다.">⁕</span>
 							언제 모일까요?
 						</h3>
-						<div class="_row gatherWhen">
+						<div class="_row moimWhen">
 							<div>
-				        <label for="gatherDate" >모임 날짜</label>
-				        <input type="date" id="gatherDate" class="basicInput register-p">
+				        <label for="moimDate" >모임 날짜</label>
+				        <input type="date" id="moimDate" class="basicInput register-p">
 							</div>
 							<div>
-				        <label for="gatherTime">모임 시간</label>
-				        <input type="time" id="gatherTime" class="basicInput register-p">
+				        <label for="moimTime">모임 시간</label>
+				        <input type="time" id="moimTime" class="basicInput register-p" style="width: 113.33px;">
 							</div>
 						</div>
 					</div>	
 					
 					<div class="eachInputWrap">
 						<h3>
-			        <span aria-label="필수 입력값입니다.">⁕</span>
+			        <span class="required" aria-label="필수 입력값입니다.">⁕</span>
 							어디에서 모일까요?
 						</h3>
 	          <button type="button" class="searchMap hashtag">주소 검색하기</button>
-	          <input type="text" id="gatherAddress" class="basicInput register-p moimRegion" readonly="readonly">
-	          <input type="text" id="gatherDetailAddress" class="basicInput register-p moimRegion" placeholder="상세주소를 입력해주세요.">
-	          <input type="hidden" id="gatherLati" />
-	          <input type="hidden" id="gatherLong" />
+	          <input type="text" id="moimAddress" class="basicInput register-p moimRegion" readonly="readonly">
+	          <input type="text" id="moimDetailAddress" class="basicInput register-p moimRegion" placeholder="상세주소를 입력해주세요.">
+	          <input type="hidden" id="moimLati" />
+	          <input type="hidden" id="moimLong" />
 	          <div id="map" style=""></div>
 					</div>
 					
@@ -105,14 +105,14 @@
 				
 				<div id="step3">
 					<div class="eachInputWrap">
-						<h3>
-			        <span aria-label="필수 입력값입니다.">⁕</span>
+						<h3 style="margin-bottom: 5px;">
+			        <span class="required" aria-label="필수 입력값입니다.">⁕</span>
 							어떻게 멤버를 모을까요?
 						</h3>
 						
-						<div class=" _row">
+						<div class="row">
 							<h3 class="secondLabel">
-								<img src="/resources/img/form/peopleApprIcon.png">
+								<img src="/resources/img/form/peopleApprIcon.png" alt="참여승인제 아이콘">
 								참여 승인제 여부
 							</h3>
 								<div class="apprBtnContainer">
@@ -128,9 +128,9 @@
 							</div>
 						</div>
 						
-						<div class=" _row">
-							<h3 class="secondLabel" aria-label="gatherAge">
-								<img src="/resources/img/form/peopleAgeIcon.png">
+						<div class="row">
+							<h3 class="secondLabel" aria-label="moimAge">
+								<img src="/resources/img/form/peopleAgeIcon.png" alt="연령대 아이콘">
 								연령대
 							</h3>
 			        <div slider id="slider-distance">
@@ -147,25 +147,31 @@
 							      <span id="value">60</span>
 							    </div>
 							  </div>
-							  <input type="range" id="minAge" class="range1" tabindex="0" value="30" max="100" min="0" step="1" />
-							  <input type="range" id="maxAge" class="range2" tabindex="0" value="60" max="100" min="0" step="1" />
+							  <input type="range" id="minAge" class="range1" tabindex="0" value="30" max="100" min="0" step="15" />
+							  <input type="range" id="maxAge" class="range2" tabindex="0" value="60" max="100" min="0" step="15" />
 							</div>
 						</div>
 						
-						<div class=" _row">
+						<div class="row">
 							<h3 class="secondLabel">
-								<img src="/resources/img/form/peopleCountIcon.png">
-								인원수
+								<img src="/resources/img/form/peopleCountIcon.png" alt="인원수 아이콘">
+								인원수 (2명~)
 							</h3>
-			        <label for="minPeople" >최소 인원(2명~)</label>
-			        <input type="number" id="minPeople" class="basicInput register-p">
-			        <label for="maxPeople" >최대 인원</label>
-			        <input type="number" id="maxPeople" class="basicInput register-p">
+							<div class="peopleCount">
+								<div>
+					        <label for="minPeople" >최소 인원</label>
+					        <input type="number" id="minPeople" class="basicInput register-p">
+								</div>
+								<div style="margin-right: 10px;">
+					        <label for="maxPeople" >최대 인원</label>
+					        <input type="number" id="maxPeople" class="basicInput register-p">
+								</div>
+							</div>
 						</div>
 						
-						<div class=" _row">
+						<div class="row">
 							<h3 class="secondLabel" style="margin-bottom: 7px;">
-							  <img src="/resources/img/form/peopleGenderIcon.png">
+							  <img src="/resources/img/form/peopleGenderIcon.png" alt="성별 아이콘" style="width: 16px;">
 							  성별
 							</h3>
 							<div style="display: flex; margin-right: 10px;">
@@ -184,7 +190,7 @@
 				<div id="step4">
 					<div class="eachInputWrap">
 						<label class="eachLabel" for="moimContent">
-							<span aria-label="필수 입력값입니다.">⁕</span>
+							<span class="required" aria-label="필수 입력값입니다.">⁕</span>
 							모임 소개
 						</label>
 						<textarea id="summernote"></textarea>

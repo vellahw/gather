@@ -90,22 +90,22 @@
 				       , A.NOTI_SEQC
                        , A.NOTI_CODE
 				       , B.USER_NICK
-				       , C.CHAL_TITL AS MOIM_TITL
+				       , C.MOIM_TITL AS MOIM_TITL
 				       , D.CODE_OPT1 AS NOTI_CNT2
-				       , C.CHAL_IDXX AS CNTT_IDXX
-                       , getCodeName('MOIM_TYPE',SUBSTR(C.CHAL_IDXX,1,2)) AS MOIM_TYPEKR
+				       , C.MOIM_IDXX AS CNTT_IDXX
+                       , getCodeName('MOIM_TYPE',SUBSTR(C.MOIM_IDXX,1,2)) AS MOIM_TYPEKR
 				       , SUBSTR(formatDate(A.REGG_DATE), 7, 11) AS REGG_DATEKR
 				       , A.REGG_DATE
 				    FROM TB_NOTIFY A
 			   LEFT JOIN TM_USERXM B 
 				      ON A.SEND_USER = B.USER_NUMB
 			   LEFT JOIN TM_CHALNG C 
-			          ON A.BOAD_IDXX = C.CHAL_IDXX
+			          ON A.BOAD_IDXX = C.MOIM_IDXX
 			   LEFT JOIN TB_CODEXD D 
 			          ON D.COMD_CODE = A.NOTI_CODE
 			         AND D.COMM_CODE = 'NOTI_CODE'
 				   WHERE A.READ_YSNO = 'N'
-				     AND A.BOAD_IDXX =  C.CHAL_IDXX
+				     AND A.BOAD_IDXX =  C.MOIM_IDXX
 				
 			   UNION ALL
 				
@@ -115,10 +115,10 @@
 				       , A.NOTI_SEQC
                        , A.NOTI_CODE
 				       , B.USER_NICK 
-				       , C.CLUB_TITL AS MOIM_TITL
+				       , C.MOIM_TITL AS MOIM_TITL
 				       , D.CODE_OPT1 AS NOTI_CNT2
-				       , C.CLUB_IDXX AS CNTT_IDXX
-                       , getCodeName('MOIM_TYPE',SUBSTR(C.CLUB_IDXX,1,2)) AS MOIM_TYPEKR
+				       , C.MOIM_IDXX AS CNTT_IDXX
+                       , getCodeName('MOIM_TYPE',SUBSTR(C.MOIM_IDXX,1,2)) AS MOIM_TYPEKR
 				       , SUBSTR(formatDate(A.REGG_DATE), 7, 11) AS REGG_DATEKR
 				       , A.REGG_DATE
 				    
@@ -126,12 +126,12 @@
 			   LEFT JOIN TM_USERXM B 
 			          ON A.SEND_USER = B.USER_NUMB
 			   LEFT JOIN TM_CLUBXM C 
-			          ON A.BOAD_IDXX = C.CLUB_IDXX
+			          ON A.BOAD_IDXX = C.MOIM_IDXX
 			   LEFT JOIN TB_CODEXD D 
 			          ON D.COMD_CODE = A.NOTI_CODE
 			         AND D.COMM_CODE = 'NOTI_CODE'
 				   WHERE A.READ_YSNO = 'N'
-				     AND A.BOAD_IDXX =  C.CLUB_IDXX
+				     AND A.BOAD_IDXX =  C.MOIM_IDXX
 		      )
 		WHERE POST_USER = #{USER_NUMB}
 	 ORDER BY REGG_DATE DESC
