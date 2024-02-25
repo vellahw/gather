@@ -67,8 +67,17 @@
   margin: 6px 0 18px 0;
 }
 
-.eachInputWrap > h3 > span {
+.eachInputWrap > h3 > .required {
 	color: var(--color-red);
+}
+
+#addPickedCate {
+	background-color: var(--color-orange400);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 2px 12px;
+  border-radius: 12px;
 }
 
 #step2 > .eachInputWrap {
@@ -108,13 +117,21 @@
 	transform: scale(1.03);
 }
 
+
 .level1_active {
+	background-color: var(--color-orange400) !important;
+	color: var(--color-white);
+}
+
+.parent_active {
 	background-color: var(--color-orange400) !important;
 	color: var(--color-white);
 	font-weight: 500 !important;
 	border-bottom-right-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
 }
+
+
 
 .parent {
   background-color: var(--color-white);
@@ -146,14 +163,14 @@
   border-bottom-left-radius: 0;
 }
 
-.parent_active {
+/* .parent_active {
   font-weight: 500;
   background-color: var(--color-white);
   color: var(--primary);
   border-radius: 20px;
   padding: 3px 8px;
 }
-
+ */
 
 .level2 {
 	display: none;

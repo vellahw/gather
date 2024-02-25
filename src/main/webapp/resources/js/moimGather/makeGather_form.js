@@ -65,11 +65,14 @@ document.addEventListener('DOMContentLoaded',()=>{
 	const parentCategory = document.querySelectorAll('li[data-parentcode]');
 	parentCategory.forEach(parent => {
 		parent.addEventListener('mouseover', ()=>{
-
 			
 			const targetParentCode = parent.getAttribute('data-parentcode');
+			
+			if(document.querySelector('.parent_active')) {
+				document.querySelector(`.parent[data-code1=${targetParentCode}]`).classList.remove('parent_active');
+			}
 
-			document.querySelector(`[data-code1=${targetParentCode}]`).classList.add('level1_active');
+			document.querySelector(`.parent[data-code1=${targetParentCode}]`).classList.add('parent_active');
 			
 			const targetChild = parent.querySelector(`ul[data-pcode=${targetParentCode}]`);
 			targetChild.classList.add('level2_active');
@@ -82,7 +85,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 			const targetParentCode = parent.getAttribute('data-parentcode');
 			const targetChild = parent.querySelector(`ul[data-pcode=${targetParentCode}]`);
 
-			document.querySelector(`[data-code1=${targetParentCode}]`).classList.remove('level1_active');
+			document.querySelector(`.parent[data-code1=${targetParentCode}]`).classList.remove('parent_active');
 			
 			if(targetChild.classList.contains('level2_active')) {
 				targetChild.classList.remove('level2_active');
@@ -101,9 +104,21 @@ document.addEventListener('DOMContentLoaded',()=>{
 		 
 			if(document.querySelector('.picked_child')){
 				document.querySelector('.picked_child').classList.remove('picked_child');
+				document.querySelector('.level1_active').classList.remove('level1_active');
 			}
  
-			target.classList.toggle('picked_child');
+			target.classList.add('picked_child'); // 선택한 자식에 액티브 클래스 추가
+
+			// 선택한 자식의 부모에 액티브 클래스 추가
+			const parentCode = target.parentElement.parentElement.getAttribute('data-pcode');
+			const targetParent = document.querySelector(`.parent[data-code1=${parentCode}]`);
+			targetParent.classList.add('level1_active');
+
+			// 선택한 카테고리 화면에 띄움
+			const picekParent = targetParent.querySelector('.name').innerHTML;
+			const pickedChild = document.querySelector('.picked_child').innerHTML;
+			document.getElementById('addPickedCate').innerHTML = `${picekParent} | ${pickedChild}`;
+
 		}
 	});
 

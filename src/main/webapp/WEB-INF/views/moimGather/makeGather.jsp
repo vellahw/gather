@@ -32,8 +32,9 @@
 				<div id="step1" class="show_step">
 					<div class="eachInputWrap catesection">
 						<h3>
-							<span aria-label="필수 입력값입니다.">⁕</span>
+							<span class="required" aria-label="필수 입력값입니다.">⁕</span>
 							게더의 주제를 선택해주세요
+							<span id="addPickedCate"></span>
 						</h3>
 						<div class="categoryContainer" id="categoryContainer">
 							<ul class="categoryList"></ul>
@@ -42,7 +43,7 @@
 					
 					<div class="eachInputWrap">
 						<label class="eachLabel moimTitle" for="moimTitle">
-							<span aria-label="필수 입력값입니다.">⁕</span>
+							<span  class="required" aria-label="필수 입력값입니다.">⁕</span>
 							모임 제목을 입력해주세요
 						</label>
 						<input type="text" id="moimTitle" class="basicInput register-p step1" placeHolder="최소 5자 이상 입력해주세요.">
@@ -56,7 +57,7 @@
 				<div id="step2">
 					<div class="eachInputWrap">
 						<label class="eachLabel" for="moimCost">
-							<span aria-label="필수 입력값입니다.">⁕</span>
+							<span class="required" aria-label="필수 입력값입니다.">⁕</span>
 							참가비가 있나요?
 						</label>
 						<div style="display: flex; margin: 8px;">
@@ -68,7 +69,7 @@
 					
 					<div class="eachInputWrap">
 						<h3>
-			        <span aria-label="필수 입력값입니다.">⁕</span>
+			        <span class="required" aria-label="필수 입력값입니다.">⁕</span>
 							언제 모일까요?
 						</h3>
 						<div class="_row moimWhen">
@@ -78,14 +79,14 @@
 							</div>
 							<div>
 				        <label for="moimTime">모임 시간</label>
-				        <input type="time" id="moimTime" class="basicInput register-p">
+				        <input type="time" id="moimTime" class="basicInput register-p" style="width: 113.33px;">
 							</div>
 						</div>
 					</div>	
 					
 					<div class="eachInputWrap">
 						<h3>
-			        <span aria-label="필수 입력값입니다.">⁕</span>
+			        <span class="required" aria-label="필수 입력값입니다.">⁕</span>
 							어디에서 모일까요?
 						</h3>
 	          <button type="button" class="searchMap hashtag">주소 검색하기</button>
@@ -105,7 +106,7 @@
 				<div id="step3">
 					<div class="eachInputWrap">
 						<h3 style="margin-bottom: 5px;">
-			        <span aria-label="필수 입력값입니다.">⁕</span>
+			        <span class="required" aria-label="필수 입력값입니다.">⁕</span>
 							어떻게 멤버를 모을까요?
 						</h3>
 						
@@ -189,7 +190,7 @@
 				<div id="step4">
 					<div class="eachInputWrap">
 						<label class="eachLabel" for="moimContent">
-							<span aria-label="필수 입력값입니다.">⁕</span>
+							<span class="required" aria-label="필수 입력값입니다.">⁕</span>
 							모임 소개
 						</label>
 						<textarea id="summernote"></textarea>
