@@ -424,8 +424,6 @@
 	display: none;
 	background-color: var(--primary);
 	color: #fff;
-	width: 10px;
-	height: 10px;
 	font-size: 11px;
   padding: 2px 4px;
   position: absolute;

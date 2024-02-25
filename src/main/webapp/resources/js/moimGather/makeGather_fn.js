@@ -102,8 +102,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 reader.onload = (function (file) {
                     return function (event) {
                         createImgNode(event.target.result, file.name);
-                        document.getElementById('#uploadList').childNodes[0].classList.add('picked_thumnail'); // 메인이미지 표시
-                       // document.getElementById('#uploadList').childNodes[0].querySelector('img#uploadImgThumnail').; // 메인이미지 태그 표시
+                        document.getElementById('uploadList').childNodes[0].classList.add('picked_thumnail'); // 메인이미지 표시
+                        document.getElementById('uploadList').childNodes[0].querySelector('.mainTag').classList.add('mainTag_act'); // 메인이미지 태그 표시
                     };
                 })(files[i]); // 함수를 정의 후 바로 실행, 매개변수 file = (바깥 괄호)files[i]
                 reader.readAsDataURL(files[i]); // 파일을 base64로 읽어옴
@@ -119,7 +119,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
             const reader = new FileReader();
             reader.onload = ({ target }) => {
                 createImgNode(target.result, files[0].name);
-                document.getElementById('#uploadList').childNodes[0].classList.add('picked_thumnail'); // 메인이미지 표시
+                document.getElementById('uploadList').childNodes[0].classList.add('picked_thumnail'); // 메인이미지 표시
+                document.getElementById('uploadList').childNodes[0].querySelector('.mainTag').classList.add('mainTag_act'); // 메인이미지 태그 표시
             };
             reader.readAsDataURL(files[0]);
         
@@ -137,18 +138,18 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
           /* 메인 이미지 선택(클릭) 이벤트 */
           document.getElementById('uploadList').addEventListener('click', (event)=>{
-
             // const thumnailNode = document.getElementById('uploadImgThumnail');
             // if(thumnailNode.name) {
             //   thumnailNode.name = ''; // 클릭 했었던 이미지의 name 값 초기화
             // }
 
+            // '대표' 태그 클릭한 이미지에 표시
             const mainTag = document.querySelector('.mainTag_act');
-            if(mainTag_act) {
+            if(mainTag) {
               mainTag.classList.remove('mainTag_act');
-            } else {
-              event.target.classList.add('mainTag_act');
             }
+
+            event.target.nextSibling.classList.add('mainTag_act');
 
             comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 클릭 했었던 이미지 추가했던 class 삭제
             
