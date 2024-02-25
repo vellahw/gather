@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="/resources/css/moimGather/makeGather.css">
 <script src="/resources/js/moimGather/makeGather_form.js"></script>
 <script src="/resources/js/moimGather/makeGather_fn.js"></script>
+<script src="/resources/js/moimGather/formCheck.js"></script>
 <script src="/resources/summernote/summernote-lite.js"></script>
 <script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="/resources/summernote/summernote-lite.css">

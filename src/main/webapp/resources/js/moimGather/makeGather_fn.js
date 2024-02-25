@@ -27,85 +27,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   let step4Data; // step4 데이터 담음
   let reqData; // step1~step4 하나로 합친 데이터 담음
 
-  /**
-   * 240220 장한원
-   * 유효성 검사
-   */
-  const formCheck = function(step) {
-
-    const pickedCate = document.querySelector('.picked_child');
-    const moimTitle = document.getElementById('moimTitle').value;
-    const moimCost = document.getElementById('moimCost').value;
-    const moimDate = document.getElementById('moimDate').value;
-    const moimTime = document.getElementById('moimTime').value;
-
-    if(step == 'step1') {
-      if(!pickedCate) {
-        comAlert2(3, '게더의 주제를 골라주세요');
-        
-        return false;
-  
-      } else if(!moimTitle) {
-        comAlert3(
-            '제목을 입력해주세요'
-          , null
-          , 'warning'
-          , null
-          , function(){ comFocus('id', 'moimTitle'); }
-        );
-  
-        return false;
-  
-      } else {
-        
-        return true;
-      }
-    } else if(step == 'step2') {
-      
-      if(!document.querySelector('.cost_act')) {
-
-        comAlert2(3, '참가비 유무를 선택해주세요');
-
-        return false;
-
-      } else if(!moimCost) {
-
-        comAlert3(
-          '참가 금액을 입력해주세요'
-        , null
-        , 'warning'
-        , null
-        , function(){ comFocus('id', 'moimCost'); }
-        );
-
-        return false;
-
-      } else if(!moimDate) {
-
-        comAlert2(3, '모임 날짜를 선택해주세요.');
-
-        return false;
-
-
-      } else if(!moimTime) {
-
-        comAlert2(3, '모임 시간을 선택해주세요.');
-
-        return false;
-      }
-
-      return true;
-    }
-  }
-
-  const comFocus = function(target, elSelector) {
-    if(target == 'class') {
-      document.querySelector(elSelector).focus();
-    } else if(target == 'id') {
-      document.getElementById(elSelector).focus();
-    }
-  }
-
   /* 
   * 240219 장한원
   * 이전/다음 버튼 클릭 이벤트
@@ -345,18 +266,27 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const gatherLati = document.getElementById('moimLati').value;
     const gatherLong = document.getElementById('moimLong').value;
 
+    const onlineBtn = document.querySelector('button[data-loca="on"]');
+
     step2Data ={
         MOIM_COST : gatherCost
       , MOIM_DATE : gatherDate
       , MOIM_TIME : gatherTime
     };
+  
+    // 모임 장소 데이터 가공
+    if(onlineBtn.classList.contains('loca_act')) {
 
-    gatherAddressData = {
-        MOIM_LATI : gatherLati
-      , MOIM_LONG : gatherLong
-      , MOIM_ADR1 : gatherAddress
-      , MOIM_ADR2 : gatherDetailAddress
-    };
+      gatherAddressData = ''; // 온라인 모임 = null
+
+    } else {
+      gatherAddressData = {
+          MOIM_LATI : gatherLati
+        , MOIM_LONG : gatherLong
+        , MOIM_ADR1 : gatherAddress
+        , MOIM_ADR2 : gatherDetailAddress
+      };
+    }
 
     console.log('step2Data  ' + JSON.stringify(step2Data));
     console.log('gatherAddressData  ' + JSON.stringify(gatherAddressData));

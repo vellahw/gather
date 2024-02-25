@@ -509,3 +509,17 @@ function comRemoveActiveClass(elementSelector, removeClassName) {
     document.querySelector(elementSelector).classList.remove(removeClassName);
   }
 }
+
+/* 
+240226 장한원
+name: comFocus
+Purpose: input 요소에 포커스하기
+parameter: ( target: 타겟을 id로 선택할건지 class로 선택할건지, elSelector: 요소 선택자(클래스, 아이디 등) )
+*/	
+const comFocus = function(target, elSelector) {
+  if(target == 'class') {
+    document.querySelector(elSelector).focus();
+  } else if(target == 'id') {
+    document.getElementById(elSelector).focus();
+  }
+}

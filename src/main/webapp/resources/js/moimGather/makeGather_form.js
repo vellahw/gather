@@ -147,12 +147,16 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 		// 온라인/오프라인 모임 장소 클릭
 		if(target.classList.contains('locaBtn')) {
+			
 			comRemoveActiveClass('.loca_act', 'loca_act');
 
 			target.classList.toggle('loca_act');
 			
 			if(target.id == 'offline') {
 				document.querySelector('.searchMap').classList.add('block_element');
+			} else {
+				document.querySelector('.searchMap').classList.remove('block_element');
+				document.getElementById('map').classList.remove('show_kamap');
 			}
 		}
 
