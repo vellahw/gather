@@ -175,6 +175,7 @@
 							<h3 class="secondLabel">
 								<img src="/resources/img/form/peopleCountIcon.png" alt="인원수 아이콘">
 								인원수 (2명~30명)
+								<span class="peopleLimitInfo">본인을 포함한 참여 인원 수를 작성해주세요.</span>
 							</h3>
 							<div id="peopleInputContainer">
 								<div>
