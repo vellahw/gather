@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded',()=>{
 	const cateValue = document.getElementById('cateData').value;
 	const cateData = comObjectInArray(cateValue).result; // 카테고리 데이터
-	const gatherCostNode = document.getElementById('moimCost'); // 참가비용 입력 input
+	const gatherCostInput = document.getElementById('moimCost'); // 참가비용 입력 input
 	const categoryListNode =  document.querySelector('.categoryList'); // 카테고리들을 담고있는 ul tag
 	
 	/**
@@ -139,9 +139,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 			// 비용 입력하는 input 띄움
 			if(target.matches('[data-cost="Y"]')) {
-				gatherCostNode.classList.add('block_element');
+				gatherCostInput.classList.add('block_element');
 			} else if(target.matches('[data-cost="N"]')) {
-				gatherCostNode.classList.remove('block_element');
+				gatherCostInput.classList.remove('block_element');
 			}
 		}
 
@@ -165,16 +165,33 @@ document.addEventListener('DOMContentLoaded',()=>{
 	/*
 	 * 참가비 input 천원 단위로 콤마 찍어줌
 	 */
-	gatherCostNode.addEventListener('input', (event)=>{
+	gatherCostInput.addEventListener('input', (event)=>{
 		const target = event.target;
 		const originalValue = target.value;
-			
+		
 		// 숫자가 아닌 문자 제거
 		let cleanedValue = originalValue.replace(/[^0-9]/g, '');
-			
+		
 		// 콤마 찍고 입력값 대체
 		target.value = comApplyNumFmt(cleanedValue);
 	});
+	
+
+	/* 
+	 * 240227 
+	 * 최소인원, 최대인원 입력시
+	 * 숫자만 가능, 2자리 이상 입력 불가, 최소 28, 최대 30까지 입력 가능
+	*/
+	const minPeopleInput = document.getElementById('minPeople');
+	minPeopleInput.addEventListener('input', (event) => {
+			limitInputLength(event, 28);
+	});
+	
+	const maxPeopleInput = document.getElementById('maxPeople');
+	maxPeopleInput.addEventListener('input', (event) => {
+			limitInputLength(event, 30);
+	});
+
 
 	/* 
 	 * moinDate
@@ -382,10 +399,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 		}
 	});
 	
-});
+}); // END DOMContentLoaded
 
 
-// ======= DOMContentLoaded 후 아님 =======
 
 /**
  * 다음(이전) 버튼 클릭 시 show_step 클래스 삭제하거나 추가하는 함수
@@ -424,3 +440,22 @@ const peopleNoLimit = function(element) {
 	document.getElementById('bubble').classList.toggle('show_flex_element'); // 안내문구 띄우기 toggle
 
 }
+
+/*
+ * 240227 장한원
+ * 최소/최대인원 2자리까지만 입력 가능,
+ * 입력 가능한 최댓값 설정
+ */
+const limitInputLength = function(event, maxValue) {
+	let inputValue = comOnlyNumber(event.target.value);
+
+	if (parseInt(inputValue) > maxValue) {
+			inputValue = maxValue.toString();
+	}
+
+	if (inputValue.length >= 2) {
+			inputValue = inputValue.substring(0, 2);
+	}
+
+	event.target.value = inputValue;
+};

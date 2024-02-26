@@ -179,11 +179,11 @@
 							<div id="peopleInputContainer">
 								<div>
 					        <label for="minPeople" >최소 인원</label>
-					        <input type="text" id="minPeople" class="basicInput register-p" placeHolder="숫자만 입력 가능">
+					        <input type="text" id="minPeople" value="2" class="basicInput register-p" placeHolder="숫자만 입력 가능">명
 								</div>
 								<div style="margin-right: 10px;">
 					        <label for="maxPeople" >최대 인원</label>
-					        <input type="text" id="maxPeople" class="basicInput register-p" placeHolder="숫자만 입력 가능">
+					        <input type="text" id="maxPeople" class="basicInput register-p" placeHolder="숫자만 입력 가능">명
 								</div>
 							</div>
 							<div id="noLimitContainer">

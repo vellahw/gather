@@ -541,3 +541,13 @@ const comSetMinDate = function() {
 
   return { today : today };
 }
+
+/* 
+240227 장한원
+name: comOnlyNumber
+Purpose: input에 숫자만 입력받고 싶을 때
+parameter: (targetValue : replace하려는 값)
+*/	
+const comOnlyNumber = function(targetValue) {
+	return targetValue.replace(/[^0-9]/g, '');
+}
