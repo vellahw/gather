@@ -150,26 +150,38 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 const reader = new FileReader(); // 파일을 읽음
                 reader.onload = (function (file) {
                   return function (event) {
+
                     createImgNode(event.target.result, file.name);
+
+                    comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 메인이미지 표시 삭제
+
                     document.getElementById('uploadList').childNodes[0].classList.add('picked_thumnail'); // 메인이미지 표시
                     document.getElementById('uploadList').childNodes[0].querySelector('.mainTag').classList.add('mainTag_act'); // 메인이미지 태그 표시
+                  
                   };
                 })(files[i]); // 함수를 정의 후 바로 실행, 매개변수 file = (바깥 괄호)files[i]
                 reader.readAsDataURL(files[i]); // 파일을 base64로 읽어옴
         
                 // 파일 데이터 배열에 파일과 파일 이름 추가
                 fileDataArray.push({
-                  key: 'file' + i,
+                  key: 'file' + fileNameNum,
                   file: files[i],
                   fileName: files[i].name
                 });
+
+                fileNameNum++;
             }
           } else {
             const reader = new FileReader();
             reader.onload = ({ target }) => {
+
               createImgNode(target.result, files[0].name);
+
+              comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 메인이미지 표시 삭제
+
               document.getElementById('uploadList').childNodes[0].classList.add('picked_thumnail'); // 메인이미지 표시
               document.getElementById('uploadList').childNodes[0].querySelector('.mainTag').classList.add('mainTag_act'); // 메인이미지 태그 표시
+            
             };
             reader.readAsDataURL(files[0]);
         
@@ -179,8 +191,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
               file: files[0],
               fileName: files[0].name
             });
-
-            console.log(fileDataArray)
 
             fileNameNum++;
           }
@@ -260,7 +270,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
    * step2 -> step3로 가는 '다음' 버튼
    */
   step2Btn.addEventListener('click', ()=>{
-    const gatherCost = document.getElementById('moimCost').value;
+    const gatherCost = document.getElementById('moimCost').value.replace(/[,]/g, '');
     const gatherDate = document.getElementById('moimDate').value;
     const gatherTime = document.getElementById('moimTime').value;
     const gatherAddress = document.getElementById('moimAddress').value;
@@ -307,21 +317,30 @@ document.addEventListener('DOMContentLoaded', ()=>{
    */
   step3Btn.addEventListener('click', ()=>{
     const gathApprBtn = document.querySelector('.appr_act') // 승인 버튼 두 개 중 누른것(== 'appr_act' 클래스를 가지고 있는 버튼)
-    const minAge = document.getElementById('minAge').value;
-    const maxAge = document.getElementById('maxAge').value;
+    const minAgeInput = document.getElementById('minAge');
+    const maxAgeInput = document.getElementById('maxAge');
     const minPeopleInput = document.getElementById('minPeople').value;
     const maxPeopleInput = document.getElementById('maxPeople').value;
     const gathGenderBtn = document.querySelector('.gender_act'); // 성별 버튼 중 누른것(== 'gender_act' 클래스를 가지고 있는 버튼)
     const peopleNoLimitBtn = document.getElementById('peopleNoLimit'); // 인원수 제한없음 버튼
 
     let gathAppr;
+    let minAge = minAgeInput.value;
+    let maxAge = maxAgeInput.value;
     let minPeople;
     let maxPeople;
     let gathGender; 
 
+    
     // 승인여부
     if(gathApprBtn) {
       gathAppr = gathApprBtn.getAttribute('data-appr');
+    }
+    
+    // 연령대
+    if(minAge == '15' && maxAge == '50') {
+      minAge = 0;
+      maxAge = 100;
     }
     
     // 참가인원
@@ -408,26 +427,38 @@ document.addEventListener('DOMContentLoaded', ()=>{
   
       // 파일 데이터 배열을 formData에 추가
       fileDataArray.forEach(({ key, file }) => {
-          formData.append(key, file);
+        formData.append(key, file);
       });
   
       fetch("/gather/makeGatherDo.com", {
-          method: "POST",
-          body: formData
+        method: "POST",
+        body: formData,
       })
       .then(response => {
-          if (!response.ok) {
-              throw new Error('Network response was not ok');
-          }
-          return response.text();
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.text();
       })
       .then((data) => {
-          if(data === 'success') {
-              alert('성공입니당')
-              location.reload();
-          } else {
-              console.log("오류 발생 data: ", data)
-          }
+
+        console.log(data)
+        
+        if(data != 'fail') {
+          comAlert3(
+              '모임이 개설되었어요!'
+            , null
+            , 'success'
+            , function() { location.href = `/gatherDetail.com?idx=${data}`; }
+          );
+        } else if(message == 'fail') {
+          comAlert2(
+              '데이터를 처리하는 중 오류 발생'
+            , '관리자에게 문의해주세요.'
+            , 'warning'
+            , null
+          );
+        }
       })
       .catch(error => {
           console.error('네트워크 에러 발생:', error);

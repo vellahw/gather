@@ -490,6 +490,18 @@
 	object-fit: cover;
 }
 
+#appendAgeRange,
+#appendMaxAgeRange {
+	color: var(--color-orange400);
+}
+
+.peopleLimitInfo {
+	font-size: 12px;
+	font-weight: 500;
+	color: var(--color-gray500);
+  padding-left: 9px;
+}
+
 
 /* 연령대 슬라이더 */
 [slider] {
@@ -497,7 +509,8 @@
   height: 14px;
   border-radius: 10px;
   text-align: left;
-  margin: 12px 0;
+  margin: 33px 10px 14px 10px;
+  width: calc(100% - 33px);
 }
  
 [slider] > div {
@@ -505,6 +518,13 @@
   left: 13px;
   right: 15px;
   height: 14px;
+  width: 96%;
+}
+
+.scale > span {
+	padding: 0 40px 0 34px;
+  font-size: 13px;
+  color: var(--color-gray600);
 }
 
 [slider] > div > [inverse-left] {

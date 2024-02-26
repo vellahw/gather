@@ -825,4 +825,4 @@ document.addEventListener("DOMContentLoaded", function(){
     return moimGender === 'M' ? '남성 회원만 참여 가능한 모임이에요.' : '여성 회원만 참여 가능한 모임이에요.';
   }
 
-});
+}); // END DOMContentLoaded

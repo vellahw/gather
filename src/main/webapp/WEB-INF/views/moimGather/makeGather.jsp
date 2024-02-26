@@ -137,6 +137,10 @@
 							<h3 class="secondLabel" aria-label="moimAge">
 								<img src="/resources/img/form/peopleAgeIcon.png" alt="연령대 아이콘">
 								연령대
+								<span id="appendAgeRange" style="padding-left: 8px;">
+									15세 이상
+								</span>
+								<span id="appendMaxAgeRange"></span>
 							</h3>
 			        <div slider id="slider-distance">
 							  <div>
@@ -152,24 +156,35 @@
 							      <span id="value">50</span>
 							    </div>
 							  </div>
-							  <input type="range" id="minAge" class="range1" tabindex="0" value="0" max="105" min="0" step="15" />
-							  <input type="range" id="maxAge" class="range2" tabindex="0" value="100"  max="105" min="0" step="15" />
+							  <input type="range" id="minAge" class="range1" tabindex="0" value="15" max="50" min="15" />
+							  <input type="range" id="maxAge" class="range2" tabindex="0" value="50"  max="50" min="15" />
 							</div>
+							  <div class="scale">
+							  	<span style="padding-left: 18px;">15</span>
+							  	<span>20</span>
+							  	<span style="padding-left: 32px;">25</span>
+							  	<span>30</span>
+							  	<span style="padding-left: 32px;">35</span>
+							  	<span>40</span>
+							  	<span style="padding-left: 32px;">45</span>
+							  	<span style="padding-right: 0;">50+</span>
+							  </div>
 						</div>
 						
 						<div class="row">
 							<h3 class="secondLabel">
 								<img src="/resources/img/form/peopleCountIcon.png" alt="인원수 아이콘">
 								인원수 (2명~30명)
+								<span class="peopleLimitInfo">본인을 포함한 참여 인원 수를 작성해주세요.</span>
 							</h3>
 							<div id="peopleInputContainer">
 								<div>
 					        <label for="minPeople" >최소 인원</label>
-					        <input type="text" id="minPeople" class="basicInput register-p" placeHolder="숫자만 입력 가능">
+					        <input type="text" id="minPeople" value="2" class="basicInput register-p" placeHolder="숫자만 입력 가능">명
 								</div>
 								<div style="margin-right: 10px;">
 					        <label for="maxPeople" >최대 인원</label>
-					        <input type="text" id="maxPeople" class="basicInput register-p" placeHolder="숫자만 입력 가능">
+					        <input type="text" id="maxPeople" class="basicInput register-p" placeHolder="숫자만 입력 가능">명
 								</div>
 							</div>
 							<div id="noLimitContainer">

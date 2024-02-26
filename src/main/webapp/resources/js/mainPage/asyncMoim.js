@@ -243,24 +243,26 @@ document.addEventListener("DOMContentLoaded", function(){
   function createElement(data) {
     const hashtag = data.HASH_TAGG;
     let str =
-        `<div class="eachWrap">
-          <div class="thumnailContainer" onclick="comWhere2Go('detail','${data.MOIM_IDXX}')">
-            <img src="${data.MOIM_IMAG}" data-end="${data.ENDD_YSNO}" class="thumnail" alt="썸네일">
-          </div>
-          <div class="infoContainer">
-            <h3 class="title" onclick="comWhere2Go('detail','${data.MOIM_IDXX}')">${data.MOIM_TITL}</h3>
-            <div class="hashtagContainer">`;
-      
-    if(hashtag.length !=0) {
-
-      for (let i = 0; i < hashtag.length; i++) {
-        str += `<button type="submit" class="hashtag" onclick="comWhere2Go('search','${data.HASH_TAGG[i]}')"">
-                  #${data.HASH_TAGG[i]}
-                </button>`
+      `<div class="eachWrap">
+       <div class="thumnailContainer" onclick="comWhere2Go('detail','${data.MOIM_IDXX}')">
+       <img src="${data.MOIM_IMAG}" data-end="${data.ENDD_YSNO}" class="thumnail" alt="썸네일">
+       </div>
+       <div class="infoContainer">
+       <h3 class="title" onclick="comWhere2Go('detail','${data.MOIM_IDXX}')">${data.MOIM_TITL}</h3>
+       <div class="hashtagContainer">`;
+    
+    if(hashtag) {
+      if(hashtag.length !=0) {
+  
+        for (let i = 0; i < hashtag.length; i++) {
+          str += `<button type="submit" class="hashtag" onclick="comWhere2Go('search','${data.HASH_TAGG[i]}')"">
+                    #${data.HASH_TAGG[i]}
+                  </button>`
+        }
+  
+      } else {
+        str += '<div style="height: 30px;"></div>';
       }
-
-    } else {
-      str += '<div style="height: 30px;"></div>';
     }
         
     str += `</div>
