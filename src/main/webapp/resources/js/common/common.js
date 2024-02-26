@@ -164,9 +164,6 @@ parameter:num
 function comApplyNumFmt(num) {
 
 	if(!$.isNumeric(num)) {
-		if(num == null || num == undefined || num == '') {
-			return 0;
-		}
 		return num;
 	}
 	

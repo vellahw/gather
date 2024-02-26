@@ -170,13 +170,10 @@ document.addEventListener('DOMContentLoaded',()=>{
 		const originalValue = target.value;
 			
 		// 숫자가 아닌 문자 제거
-		const cleanedValue = originalValue.replace(/[^0-9]/g, '');
+		let cleanedValue = originalValue.replace(/[^0-9]/g, '');
 			
-		// 쉼표 추가
-		const formattedValue = cleanedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-			
-		// 입력 값을 대체
-		target.value = formattedValue;
+		// 콤마 찍고 입력값 대체
+		target.value = comApplyNumFmt(cleanedValue);
 	});
 
 	/* 

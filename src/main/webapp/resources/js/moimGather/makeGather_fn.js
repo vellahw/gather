@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
    * step2 -> step3로 가는 '다음' 버튼
    */
   step2Btn.addEventListener('click', ()=>{
-    const gatherCost = document.getElementById('moimCost').value;
+    const gatherCost = document.getElementById('moimCost').value.replace(/[,]/g, '');
     const gatherDate = document.getElementById('moimDate').value;
     const gatherTime = document.getElementById('moimTime').value;
     const gatherAddress = document.getElementById('moimAddress').value;
@@ -427,26 +427,35 @@ document.addEventListener('DOMContentLoaded', ()=>{
   
       // 파일 데이터 배열을 formData에 추가
       fileDataArray.forEach(({ key, file }) => {
-          formData.append(key, file);
+        formData.append(key, file);
       });
   
       fetch("/gather/makeGatherDo.com", {
-          method: "POST",
-          body: formData
+        method: "POST",
+        body: formData
       })
       .then(response => {
-          if (!response.ok) {
-              throw new Error('Network response was not ok');
-          }
-          return response.text();
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.text();
       })
       .then((data) => {
-          if(data === 'success') {
-              alert('성공입니당')
-              location.reload();
-          } else {
-              console.log("오류 발생 data: ", data)
-          }
+        if(data.message === 'success') {
+          comAlert3(
+              '모임이 개설되었어요!'
+            , null
+            , 'success'
+            , function() { location.href = `/gatherDetail.com?idx=${data.MOIM_IDXX}`; }
+          );
+        } else {
+          comAlert2(
+              '데이터를 처리하는 중 오류 발생'
+            , '관리자에게 문의해주세요.'
+            , 'warning'
+            , null
+          );
+        }
       })
       .catch(error => {
           console.error('네트워크 에러 발생:', error);
