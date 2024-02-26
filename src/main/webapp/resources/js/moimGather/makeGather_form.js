@@ -355,12 +355,22 @@ const showStep = function(removeTarget, addTarget) {
  */
 const chooseAppr = function(element) {
 
-	// 이미 눌려있는 버튼의 효과 클래스 지움
-	if(document.querySelector('.appr_act')){
-		document.querySelector('.appr_act').classList.remove('appr_act');
-
-	}
-
+	comRemoveActiveClass('.appr_act', 'appr_act');
+	
+	// active 클래스 추가
 	element.classList.add('appr_act');
+
+}
+
+/*
+ * 240224 장한원
+ * 참여 승인제 클릭 이벤트
+ */
+const peopleNoLimit = function(element) {
+	
+	element.classList.toggle('picked_noLimit');
+	
+	document.getElementById('peopleInputContainer').classList.toggle('none_element'); // input 가리기 toggle
+	document.getElementById('bubble').classList.toggle('show_flex_element'); // 안내문구 띄우기 toggle
 
 }

@@ -325,7 +325,8 @@
 .cost_act,
 .appr_act,
 .gender_act,
-.loca_act {
+.loca_act,
+.picked_noLimit {
 	background-color: var(--color-orange400);
   color: #fff;
   border: none;
@@ -404,9 +405,32 @@
 
 #peopleNoLimit {
 	width: calc(192px + 63px + 10px);
-  height: 38px;
-  border: 1px solid var(--primary);
-  box-shadow: none;
+  height: 49px;
+  margin: 8px 0;
+  font-weight: 400;
+}
+
+#noLimitContainer {
+	display: flex;
+}
+
+#bubble {
+	color: var(--color-gray500);
+	font-size: 14px;
+  font-weight: 500;
+  align-items: center;
+  padding-left: 10px;
+  display: none;
+  animation: motion 0.9s infinite ease-in-out alternate;
+}
+
+@keyframes motion {
+  from{
+    transform: translate(0, 0px);
+  }
+  to{
+    transform: translate(0, -5px);
+  }
 }
 
 .genderBtn {
