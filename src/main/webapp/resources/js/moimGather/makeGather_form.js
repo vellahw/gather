@@ -162,22 +162,22 @@ document.addEventListener('DOMContentLoaded',()=>{
 
   });
 
-	// 천원단위로 콤마 찍어줌
-	if(gatherCostNode.classList.contains('block_element')) {
-		gatherCostNode.addEventListener('input', (event)=>{
-			const target = event.target;
-			const originalValue = target.value;
+	/*
+	 * 참가비 input 천원 단위로 콤마 찍어줌
+	 */
+	gatherCostNode.addEventListener('input', (event)=>{
+		const target = event.target;
+		const originalValue = target.value;
 			
-			// 숫자가 아닌 문자 제거
-			const cleanedValue = originalValue.replace(/[^0-9]/g, '');
+		// 숫자가 아닌 문자 제거
+		const cleanedValue = originalValue.replace(/[^0-9]/g, '');
 			
-			// 쉼표 추가
-			const formattedValue = cleanedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		// 쉼표 추가
+		const formattedValue = cleanedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 			
-			// 입력 값을 대체
-			target.value = formattedValue;
-		});
-	}
+		// 입력 값을 대체
+		target.value = formattedValue;
+	});
 
 	/* 
 	 * moinDate
