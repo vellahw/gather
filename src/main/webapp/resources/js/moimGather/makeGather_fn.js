@@ -150,9 +150,14 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 const reader = new FileReader(); // 파일을 읽음
                 reader.onload = (function (file) {
                   return function (event) {
+
                     createImgNode(event.target.result, file.name);
+
+                    comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 메인이미지 표시 삭제
+
                     document.getElementById('uploadList').childNodes[0].classList.add('picked_thumnail'); // 메인이미지 표시
                     document.getElementById('uploadList').childNodes[0].querySelector('.mainTag').classList.add('mainTag_act'); // 메인이미지 태그 표시
+                  
                   };
                 })(files[i]); // 함수를 정의 후 바로 실행, 매개변수 file = (바깥 괄호)files[i]
                 reader.readAsDataURL(files[i]); // 파일을 base64로 읽어옴
@@ -169,9 +174,14 @@ document.addEventListener('DOMContentLoaded', ()=>{
           } else {
             const reader = new FileReader();
             reader.onload = ({ target }) => {
+
               createImgNode(target.result, files[0].name);
+
+              comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 메인이미지 표시 삭제
+
               document.getElementById('uploadList').childNodes[0].classList.add('picked_thumnail'); // 메인이미지 표시
               document.getElementById('uploadList').childNodes[0].querySelector('.mainTag').classList.add('mainTag_act'); // 메인이미지 태그 표시
+            
             };
             reader.readAsDataURL(files[0]);
         
