@@ -79,12 +79,11 @@ public class GatherController {
 					new TypeReference<Map<String, Object>>() {
 					});
 
-			Map<String, Object> regiMap = commonService.extractRegiCode(resultMapData);
-
 			String gathNumb = gatherService.makeGatherNumb();
 
-			if (resultMapData.get("MOIM_ADR1") != null) {
+			if (resultMapData.get("MOIM_ADR1").equals("")) {
 
+				Map<String, Object> regiMap = commonService.extractRegiCode(resultMapData);
 				resultMapData.put("MOIM_IDXX", gathNumb);
 				resultGahterData.put("REGI_CODE", regiMap.get("COMD_CODE"));
 				commonService.mapInsert(resultMapData, commandMap);
@@ -113,6 +112,35 @@ public class GatherController {
 
 			return ResponseEntity.ok("fail");
 		}
+
+	}
+
+	// 개설 폼
+	@RequestMapping(value = "/gather/modifyGather.com")
+	public ModelAndView modifyGatherForm(@RequestParam(value = "idx", required = false) String MOIM_IDXX, CommandMap commandMap, HttpSession session) throws Exception {
+
+		ModelAndView mv = new ModelAndView("/moimGather/makeGather");
+		mv.setViewName("makeGather");
+
+		List<Map<String, Object>> cate = commonService.getCate(commandMap.getMap(), commandMap);
+		List<Map<String, Object>> regi = commonService.getRegi(commandMap.getMap(), commandMap);
+		
+		commandMap.put("USER_NUMB",session.getAttribute("USER_NUMB"));
+
+		List<Map<String, Object>> notify = notifyService.getNotify(commandMap.getMap(), commandMap, session);
+		
+		commandMap.put("MOIM_IDXX", MOIM_IDXX);
+		
+		mv.addObject("moim", gatherService.getGatherDetail(commandMap.getMap(), session, commandMap));
+		mv.addObject("img", gatherService.getGatherImg(commandMap.getMap(), commandMap)); // 게더 이미지
+		mv.addObject("notify", notify);
+		mv.addObject("notiCount", notify.size());
+		
+
+		mv.addObject("cate", cate);
+		mv.addObject("regi", regi);
+
+		return mv;
 	}
 
 }
