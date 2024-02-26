@@ -32,10 +32,10 @@ public class GatherController {
 
 	@Resource(name = "GatherService")
 	private GatherService gatherService;
-	
+
 	@Resource(name = "MoimDetailService")
 	private MoimDetailService moimDetailService;
-	
+
 	@Resource(name = "NotifyService")
 	private NotifyService notifyService;
 
@@ -48,9 +48,9 @@ public class GatherController {
 
 		List<Map<String, Object>> cate = commonService.getCate(commandMap.getMap(), commandMap);
 		List<Map<String, Object>> regi = commonService.getRegi(commandMap.getMap(), commandMap);
-		
+
 		List<Map<String, Object>> notify = notifyService.getNotify(commandMap.getMap(), commandMap, session);
-		
+
 		mv.addObject("notify", notify);
 		mv.addObject("notiCount", notify.size());
 
@@ -60,50 +60,57 @@ public class GatherController {
 		return mv;
 	}
 
-	//게더 개설
+	// 게더 개설
 	@RequestMapping(value = "/gather/makeGatherDo.com", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<String> makeGather(@RequestParam("data") String gatherData, @RequestParam("map") String mapData , HttpServletRequest request,
-			CommandMap commandMap, HttpSession session) throws Exception {
+	public ResponseEntity<String> makeGather(@RequestParam("data") String gatherData,
+			@RequestParam("map") String mapData, HttpServletRequest request, CommandMap commandMap, HttpSession session)
+			throws Exception {
 
 		try {
-			
+
 			ObjectMapper objectMapper = new ObjectMapper();
 
-			Map<String, Object> resultGahterData = objectMapper.readValue(gatherData, new TypeReference<Map<String, Object>>() {});
-			
-			Map<String, Object> resultMapData = objectMapper.readValue(mapData, new TypeReference<Map<String, Object>>() {});
-			
+			Map<String, Object> resultGahterData = objectMapper.readValue(gatherData,
+					new TypeReference<Map<String, Object>>() {
+					});
+
+			Map<String, Object> resultMapData = objectMapper.readValue(mapData,
+					new TypeReference<Map<String, Object>>() {
+					});
+
 			Map<String, Object> regiMap = commonService.extractRegiCode(resultMapData);
-			
+
 			String gathNumb = gatherService.makeGatherNumb();
-			
+
+			if (resultMapData.get("MOIM_ADR1") != null) {
+
+				resultMapData.put("MOIM_IDXX", gathNumb);
+				resultGahterData.put("REGI_CODE", regiMap.get("COMD_CODE"));
+				commonService.mapInsert(resultMapData, commandMap);
+			}
+
 			resultGahterData.put("MOIM_IDXX", gathNumb);
-			resultGahterData.put("REGI_CODE", regiMap.get("COMD_CODE"));
 			resultGahterData.put("USER_NUMB", session.getAttribute("USER_NUMB"));
-			
+
 			gatherService.makeGather(resultGahterData, commandMap, request, session);
-			
-			resultMapData.put("MOIM_IDXX", gathNumb);
-			
-			commonService.mapInsert(resultMapData, commandMap);
-			
+
 			resultGahterData.put("WAIT_YSNO", "N");
 			moimDetailService.moimJoin(resultGahterData, commandMap);
-			
+
 			Map<String, Object> hashTag = new HashMap<>();
-			
+
 			hashTag.put("MOIM_CNTT", resultGahterData.get("MOIM_CNTT"));
 			hashTag.put("MOIM_IDXX", gathNumb);
-			
+
 			commonService.tagInsert(hashTag);
 
 			return ResponseEntity.ok("success");
-			
+
 		} catch (Exception e) {
-			
+
 			System.out.println("error : " + e.getMessage());
-			
+
 			return ResponseEntity.ok("fail");
 		}
 	}

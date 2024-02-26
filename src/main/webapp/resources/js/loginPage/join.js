@@ -647,33 +647,33 @@ const showUserPickedRegi = function(pickedList, regiList) {
    * 240226 강승현
    * 프로필 파일 위치 조정
    */
-    document.querySelector('#profileImg').addEventListener('mouseover', function() {
+  //   document.querySelector('#profileImg').addEventListener('mouseover', function() {
       
-      document.addEventListener('keydown', function(event) {
-        console.log(event)
+  //     document.addEventListener('keydown', function(event) {
+  //       console.log(event)
         
-        var image = document.querySelector('#profileImg');
-        var currentPositionX = parseFloat(image.style.objectPositionX) || 0;
-        var currentPositionY = parseFloat(image.style.objectPositionY) || 0;
-        console.log("가로: "+ currentPositionX + "세로 :" + currentPositionY)
-        var step = 1;
+  //       var image = document.querySelector('#profileImg');
+  //       var currentPositionX = parseFloat(image.style.objectPositionX) || 0;
+  //       var currentPositionY = parseFloat(image.style.objectPositionY) || 0;
+  //       console.log("가로: "+ currentPositionX + "세로 :" + currentPositionY)
+  //       var step = 1;
     
-        switch(event.key) {
-            case 'ArrowUp':
-                image.style.objectPositionY = (currentPositionY - step) + 'px';
-                break;
-            case 'ArrowDown':
-                image.style.objectPositionY = (currentPositionY + step) + 'px';
-                break;
-            case 'ArrowLeft':
-                image.style.objectPositionX = (currentPositionX - step) + 'px';
-                break;
-            case 'ArrowRight':
-                image.style.objectPositionX = (currentPositionX + step) + 'px';
-                break;
-        }
-    });
-  });
+  //       switch(event.key) {
+  //           case 'ArrowUp':
+  //               image.style.objectPositionY = `calc(${currentPositionY + step})px`;
+  //               break;
+  //           case 'ArrowDown':
+  //               image.style.objectPositionY = `calc(${currentPositionY - step})px`;
+  //               break;
+  //           case 'ArrowLeft':
+  //               image.style.objectPositionX = `calc(${currentPositionX - step})px`;
+  //               break;
+  //           case 'ArrowRight':
+  //               image.style.objectPositionX = `calc(${currentPositionX + step})px`;;
+  //               break;
+  //       }
+  //   });
+  // });
   // 배경 사진 삭제(되돌리기) 버튼
   const removeBgImgBtn =  document.getElementById('bg-remove');
 
