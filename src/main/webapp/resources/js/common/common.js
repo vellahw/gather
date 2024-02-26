@@ -279,7 +279,7 @@ function comAlert2(type, title, content, button , okFun){
 240111 KSH
 name:comAlert3
 Purpose:알럿창
-parameter:(title : 제목, content: 내용 , icon:아이콘 , button: 버튼 , okFn : 확인 후 함수)
+parameter:(title : 제목, content: 내용 , icon:아이콘 , okFn : 확인 후 함수)
 */ 
 function comAlert3(title, content, icon, okFn) {
     

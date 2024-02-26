@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
       height: 300,                 // 에디터 높이
       minHeight: null,             // 최소 높이
       maxHeight: null,             // 최대 높이
-      focus: false,                  // 에디터 로딩후 포커스를 맞출지 여부
+      focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
       lang: "ko-KR",               // 한글 설정
 
       toolbar: [
@@ -279,7 +279,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
     // 모임 장소 데이터 가공
     if(onlineBtn.classList.contains('loca_act')) {
 
-      gatherAddressData = ''; // 온라인 모임 = null
+      // 온라인 모임 = null
+      gatherAddressData = {
+          MOIM_LATI : ''
+        , MOIM_LONG : ''
+        , MOIM_ADR1 : ''
+        , MOIM_ADR2 : ''
+      };
 
     } else {
       gatherAddressData = {
@@ -300,17 +306,47 @@ document.addEventListener('DOMContentLoaded', ()=>{
    * step3 -> step4로 가는 '다음' 버튼
    */
   step3Btn.addEventListener('click', ()=>{
-    const gathAppr = document.querySelector('.appr_act').getAttribute('data-appr'); // 승인유무
+    const gathApprBtn = document.querySelector('.appr_act') // 승인 버튼 두 개 중 누른것(== 'appr_act' 클래스를 가지고 있는 버튼)
     const minAge = document.getElementById('minAge').value;
     const maxAge = document.getElementById('maxAge').value;
-    const minPeople = document.getElementById('minPeople').value;
-    const maxPeople = document.getElementById('maxPeople').value;
-    const gathGender = document.querySelector('.gender_act').getAttribute('data-gender'); // 성별
+    const minPeopleInput = document.getElementById('minPeople').value;
+    const maxPeopleInput = document.getElementById('maxPeople').value;
+    const gathGenderBtn = document.querySelector('.gender_act'); // 성별 버튼 중 누른것(== 'gender_act' 클래스를 가지고 있는 버튼)
+    const peopleNoLimitBtn = document.getElementById('peopleNoLimit'); // 인원수 제한없음 버튼
 
-    if(gathGender == 'null') {
-      gathGender = '';
+    let gathAppr;
+    let minPeople;
+    let maxPeople;
+    let gathGender; 
+
+    // 승인여부
+    if(gathApprBtn) {
+      gathAppr = gathApprBtn.getAttribute('data-appr');
+    }
+    
+    // 참가인원
+    if(peopleNoLimitBtn.classList.contains('picked_noLimit')) { // 제한없음 버튼 눌렀을 때
+      minPeople = '0';
+      maxPeople = '30';
+
+    } else { // 인원수 직접 작성
+
+      if(minPeopleInput) {
+        minPeople = minPeopleInput;
+      }
+
+      if(maxPeopleInput) {
+        maxPeople = maxPeopleInput;
+      }
+
     }
 
+    // 성별
+    if(gathGenderBtn) {
+      gathGender = gathGenderBtn.getAttribute('data-gender');
+    }
+
+    // 데이터 가공
     step3Data ={
         APPR_YSNO : gathAppr
       , MINN_AGEE : minAge
@@ -331,64 +367,74 @@ document.addEventListener('DOMContentLoaded', ()=>{
  */
   submitBtn.addEventListener('click', () => {
 
-    let formData = new FormData(); // 서버로 전송할 폼 객체 생성
-    const summernote = document.getElementById('summernote').value;
+    if(formCheck('step4')) { // 유효성 검사
 
-    step4Data = {
-        MOIM_CNTT: summernote,
-        COMP_YSNO: 'Y'
+      let formData = new FormData(); // 서버로 전송할 폼 객체 생성
+      const summernote = document.getElementById('summernote').value;
+  
+      step4Data = {
+          MOIM_CNTT: summernote,
+          COMP_YSNO: 'Y'
+      }
+  
+      reqData = Object.assign({}, step1Data, step2Data, step3Data, step4Data);
+  
+      formData.append('data', JSON.stringify(reqData)); // 유저가 입력한 폼 값
+      formData.append('map', JSON.stringify(gatherAddressData));
+  
+      // 메인 대표 이미지
+      const picked_thumnail = document.querySelector('.uploadItem.picked_thumnail img');
+      let pickedFileName;
+
+      if(picked_thumnail) {
+        pickedFileName = picked_thumnail.getAttribute('data-name');
+      }
+  
+      // 클릭한 메인 사진의 data-name 속성을 가져와
+      // fileDataArray 속 fileName과 같은 데이터의 key를 가져옴 
+      const key = fileDataArray.find((element)=>{
+        if(element.fileName == pickedFileName) {
+          return { key : element.key };
+        }
+      });
+  
+      // fileDataArray 속 key와 클릭한 메인 사진의 key 가 같다면
+      // key를 mainImage로 수정
+      fileDataArray.forEach(item => {
+        if (item.key === key.key) {
+          item.key = 'mainImage';
+        }
+      });
+  
+      // 파일 데이터 배열을 formData에 추가
+      fileDataArray.forEach(({ key, file }) => {
+          formData.append(key, file);
+      });
+  
+      fetch("/gather/makeGatherDo.com", {
+          method: "POST",
+          body: formData
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.text();
+      })
+      .then((data) => {
+          if(data === 'success') {
+              alert('성공입니당')
+              location.reload();
+          } else {
+              console.log("오류 발생 data: ", data)
+          }
+      })
+      .catch(error => {
+          console.error('네트워크 에러 발생:', error);
+      });
+
     }
-
-    reqData = Object.assign({}, step1Data, step2Data, step3Data, step4Data);
-
-    formData.append('data', JSON.stringify(reqData)); // 유저가 입력한 폼 값
-    formData.append('map', JSON.stringify(gatherAddressData));
-
-    const pickedFileName = document.querySelector('.uploadItem.picked_thumnail img').getAttribute('data-name');
-
-    // 클릭한 메인 사진의 data-name 속성을 가져와
-    // fileDataArray 속 fileName과 같은 데이터의 key를 가져옴 
-    const key = fileDataArray.find((element)=>{
-      if(element.fileName == pickedFileName) {
-        return { key : element.key };
-      }
-    });
-
-    // fileDataArray 속 key와 클릭한 메인 사진의 key 가 같다면
-    // key를 mainImage로 수정
-    fileDataArray.forEach(item => {
-      if (item.key === key.key) {
-        item.key = 'mainImage';
-      }
-    });
-
-    // 파일 데이터 배열을 formData에 추가
-    fileDataArray.forEach(({ key, file }) => {
-        formData.append(key, file);
-    });
-
-    fetch("/gather/makeGatherDo.com", {
-        method: "POST",
-        body: formData
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.text();
-    })
-    .then((data) => {
-        if(data === 'success') {
-            alert('성공입니당')
-            location.reload();
-        } else {
-            console.log("오류 발생 data: ", data)
-        }
-    })
-    .catch(error => {
-        console.error('네트워크 에러 발생:', error);
-    });
-
   });
+
 
 });

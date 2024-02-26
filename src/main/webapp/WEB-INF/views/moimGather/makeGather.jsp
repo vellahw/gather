@@ -162,16 +162,19 @@
 								<img src="/resources/img/form/peopleCountIcon.png" alt="인원수 아이콘">
 								인원수 (2명~30명)
 							</h3>
-							<div>
+							<div id="peopleInputContainer">
 								<div>
 					        <label for="minPeople" >최소 인원</label>
-					        <input type="text" id="minPeople" class="basicInput register-p">
+					        <input type="text" id="minPeople" class="basicInput register-p" placeHolder="숫자만 입력 가능">
 								</div>
 								<div style="margin-right: 10px;">
 					        <label for="maxPeople" >최대 인원</label>
-					        <input type="text" id="maxPeople" class="basicInput register-p">
+					        <input type="text" id="maxPeople" class="basicInput register-p" placeHolder="숫자만 입력 가능">
 								</div>
-								<button type="button" id="peopleNoLimit" class="parent">제한 없음</button>
+							</div>
+							<div id="noLimitContainer">
+							  <button type="button" id="peopleNoLimit" class="parent" onclick="peopleNoLimit(this)">제한 없음</button>
+							  <span id="bubble">👈 다시 누르면 입력창이 나와요</span>
 							</div>
 						</div>
 						
