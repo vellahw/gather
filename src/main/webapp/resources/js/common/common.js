@@ -272,7 +272,7 @@ function comAlert2(type, title, content, button , okFun){
     }
 };
 
-/* 
+/**
 240111 KSH
 name:comAlert3
 Purpose:알럿창
