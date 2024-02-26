@@ -137,6 +137,10 @@
 							<h3 class="secondLabel" aria-label="moimAge">
 								<img src="/resources/img/form/peopleAgeIcon.png" alt="연령대 아이콘">
 								연령대
+								<span id="appendAgeRange" style="padding-left: 8px;">
+									제한 없음
+								</span>
+								<span id="appendMaxAgeRange"></span>
 							</h3>
 			        <div slider id="slider-distance">
 							  <div>
@@ -152,9 +156,19 @@
 							      <span id="value">50</span>
 							    </div>
 							  </div>
-							  <input type="range" id="minAge" class="range1" tabindex="0" value="0" max="105" min="0" step="15" />
-							  <input type="range" id="maxAge" class="range2" tabindex="0" value="100"  max="105" min="0" step="15" />
+							  <input type="range" id="minAge" class="range1" tabindex="0" value="15" max="50" min="15" />
+							  <input type="range" id="maxAge" class="range2" tabindex="0" value="50"  max="50" min="15" />
 							</div>
+							  <div class="scale">
+							  	<span style="padding-left: 18px;">15</span>
+							  	<span>20</span>
+							  	<span style="padding-left: 32px;">25</span>
+							  	<span>30</span>
+							  	<span style="padding-left: 32px;">35</span>
+							  	<span>40</span>
+							  	<span style="padding-left: 32px;">45</span>
+							  	<span style="padding-right: 0;">50+</span>
+							  </div>
 						</div>
 						
 						<div class="row">

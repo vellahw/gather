@@ -286,10 +286,17 @@ document.addEventListener('DOMContentLoaded',()=>{
 	 * 240220 장한원
 	 * 연령 선택 range 슬라이더
 	 */
-	const range1 = document.querySelector('.range1')
+	const range1 = document.querySelector('.range1');
+	const range2 = document.querySelector('.range2');
+	const appendMaxAgeRange = document.getElementById('appendMaxAgeRange');
+	const appendAgeRangeNode = document.getElementById('appendAgeRange');
+
+	let minRange = '15';
+	let maxRange = '50';
+
 	range1.addEventListener('input', (event)=>{
 		const target = event.target;
-
+		
 		target.value = Math.min(target.value, target.parentNode.childNodes[5].value-1);
 		let value = (100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.value)-(100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.min);
 		let children = target.parentNode.childNodes[1].childNodes;
@@ -298,12 +305,28 @@ document.addEventListener('DOMContentLoaded',()=>{
 		children[7].style.left = value + '%';
 		children[11].style.left = value + '%';
 		children[11].childNodes[1].innerHTML = target.value;
+		
 	});
+	
+	range1.addEventListener('change', (event)=>{ // 최소 연령 화면에 띄움
+		const target = event.target;
+		
+		minRange = target.value;
+		
+		appendAgeRangeNode.innerHTML = minRange + '세~';
 
-	const range2 = document.querySelector('.range2')
+		if(minRange == '15' && maxRange == '50') {
+			appendAgeRangeNode.innerHTML = '제한 없음';
+			appendMaxAgeRange.innerHTML = '';
+		} else if(maxRange == '50') {
+			appendMaxAgeRange.innerHTML = '50세 이상';
+		}
+
+	});
+	
 	range2.addEventListener('input', (event)=>{
 		const target = event.target;
-
+		
 		target.value = Math.max(target.value,target.parentNode.childNodes[3].value-(-1));
 		let value = (100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.value)-(100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.min);
 		let children = target.parentNode.childNodes[1].childNodes;
@@ -311,7 +334,29 @@ document.addEventListener('DOMContentLoaded',()=>{
 		children[5].style.right = (100-value) + '%';
 		children[9].style.left = value + '%';
 		children[13].style.left = value + '%';
-		children[13].childNodes[1].innerHTML = target.value;
+		
+		if(target.value == '50') {
+			children[13].childNodes[1].innerHTML = target.value + '+';
+		} else {
+			children[13].childNodes[1].innerHTML = target.value;
+		}
+		
+	});
+	
+	range2.addEventListener('change', (event)=>{ // 최대 연령 화면에 띄움
+		const target = event.target;
+		
+		maxRange = target.value;
+
+		appendMaxAgeRange.innerHTML = maxRange + '세';
+
+		if(minRange == '15' && maxRange == '50') {
+			appendMaxAgeRange.innerHTML = '';
+			appendAgeRangeNode.innerHTML = '제한 없음';
+		} else if(minRange == '15') {
+			appendAgeRangeNode.innerHTML = '15세~';
+		}
+
 	});
 
 
