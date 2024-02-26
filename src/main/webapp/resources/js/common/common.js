@@ -529,3 +529,18 @@ const comFocus = function(target, elSelector) {
     document.getElementById(elSelector).focus();
   }
 }
+
+/* 
+240226 장한원
+name: comSetMinDate
+Purpose: date 타입 input의 오늘 날짜 이전 날짜는 선택 불가능하게 함
+*/	
+const comSetMinDate = function() {
+  let now_utc = Date.now() // 지금 날짜를 밀리초로
+	//getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환
+	let timeOff = new Date().getTimezoneOffset()*60000; // 분단위를 밀리초로 변환
+	//new Date(now_utc-timeOff).toISOString()은 '2022-05-11T18:09:38.134Z'를 반환
+	let today = new Date(now_utc-timeOff).toISOString().split("T")[0];
+
+  return { today : today };
+}

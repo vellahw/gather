@@ -179,6 +179,14 @@ document.addEventListener('DOMContentLoaded',()=>{
 		});
 	}
 
+	/* 
+	 * moinDate
+	 * 오늘 날짜 이전 날짜는 선택 불가능하게
+	*/
+	const today = comSetMinDate().today;
+	document.getElementById("moimDate").setAttribute("min", today);
+
+
 	/* 카카오맵 지도 띄우기 */
 	const container = document.getElementById('map');
 	const options = { //지도를 생성할 때 필요한 기본 옵션
