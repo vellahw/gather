@@ -68,6 +68,10 @@
              	 <c:if test="${detail.PREGI_NAME != null && detail.REGI_NAME != null}">
                	<c:out value="${detail.PREGI_NAME}" />
                	<c:out value="${detail.REGI_NAME}" />
+               	<!-- <button type="button">자세한 장소 보기</button>
+               	<div class="showMap">
+                	<div id="map" style="width:500px;height:400px;margin-top:10px;"></div>
+                </div> -->
              	 </c:if>
              	 <c:if test="${detail.PREGI_NAME == null && detail.REGI_NAME == null}">
              	 	오프라인 모임
