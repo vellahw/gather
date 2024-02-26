@@ -159,10 +159,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
         
                 // 파일 데이터 배열에 파일과 파일 이름 추가
                 fileDataArray.push({
-                  key: 'file' + i,
+                  key: 'file' + fileNameNum,
                   file: files[i],
                   fileName: files[i].name
                 });
+
+                fileNameNum++;
             }
           } else {
             const reader = new FileReader();
@@ -179,8 +181,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
               file: files[0],
               fileName: files[0].name
             });
-
-            console.log(fileDataArray)
 
             fileNameNum++;
           }
@@ -307,21 +307,30 @@ document.addEventListener('DOMContentLoaded', ()=>{
    */
   step3Btn.addEventListener('click', ()=>{
     const gathApprBtn = document.querySelector('.appr_act') // 승인 버튼 두 개 중 누른것(== 'appr_act' 클래스를 가지고 있는 버튼)
-    const minAge = document.getElementById('minAge').value;
-    const maxAge = document.getElementById('maxAge').value;
+    const minAgeInput = document.getElementById('minAge');
+    const maxAgeInput = document.getElementById('maxAge');
     const minPeopleInput = document.getElementById('minPeople').value;
     const maxPeopleInput = document.getElementById('maxPeople').value;
     const gathGenderBtn = document.querySelector('.gender_act'); // 성별 버튼 중 누른것(== 'gender_act' 클래스를 가지고 있는 버튼)
     const peopleNoLimitBtn = document.getElementById('peopleNoLimit'); // 인원수 제한없음 버튼
 
     let gathAppr;
+    let minAge = minAgeInput.value;
+    let maxAge = maxAgeInput.value;
     let minPeople;
     let maxPeople;
     let gathGender; 
 
+    
     // 승인여부
     if(gathApprBtn) {
       gathAppr = gathApprBtn.getAttribute('data-appr');
+    }
+    
+    // 연령대
+    if(minAge == '15' && maxAge == '50') {
+      minAge = 0;
+      maxAge = 100;
     }
     
     // 참가인원
