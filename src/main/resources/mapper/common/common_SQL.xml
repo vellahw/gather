@@ -44,6 +44,17 @@
 	         )
  		 ]]>
 	 </insert>
+	 
+	 <!-- 카카오맵정보 Delete -->
+	<update id="fileDelete" parameterType="hashMap">
+  		<![CDATA[
+  		/* common.mapUpdate */
+	    UPDATE SET TM_FILEXM
+	         	   DELT_YSNO = 'Y'
+	         WHERE FILE_IDXX = #{MOIM_IDXX}
+	           AND FILE_SVNM = #{FILE_PATH}
+ 		]]>
+	 </update>
 	
 	<!-- 해시태그 -->
 	<select id="hashTag" parameterType='hashmap'
