@@ -65,8 +65,13 @@
                 <img class="infoIcon loca" src="/resources/img/icon/detail/location_detail.png" alt="위치 아이콘" />
              </div>
              <span class="infoText">
-               <c:out value="${detail.PREGI_NAME}" />
-               <c:out value="${detail.REGI_NAME}" />
+             	 <c:if test="${detail.PREGI_NAME != null && detail.REGI_NAME != null}">
+               	<c:out value="${detail.PREGI_NAME}" />
+               	<c:out value="${detail.REGI_NAME}" />
+             	 </c:if>
+             	 <c:if test="${detail.PREGI_NAME == null && detail.REGI_NAME == null}">
+             	 	오프라인 모임
+             	 </c:if>
              </span>
           </div>
           <div class="each">
