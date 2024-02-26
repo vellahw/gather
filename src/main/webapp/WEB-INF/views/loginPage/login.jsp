@@ -185,7 +185,7 @@
 				
 				<div class="container" style="max-width: 100px; transform: translateY(-60px);">
 					<div class="profileImgWrap pro">
-						<img class="profileImg preview" alt="프로필사진"/>
+						<img class="profileImg preview" alt="프로필사진" id="profileImg" style="object-position: 0px 0px;"/>
 					</div>
 					<div id="p-updateBtn" class="p-updateBtn">
 						<img src="/resources/img/icon/pencil-w.png" class="p-updateIcon" alt="프로필 사진 수정하기">
