@@ -236,23 +236,26 @@ public class CommonServiceImpl implements CommonService {
 	public Object makeFollowBtn(Object data, HttpSession session) throws Exception {
 		
         if (data instanceof Map) {
-            Map<String, Object> userPage = (Map<String, Object>) data;
-            String userId = userPage.get("USER_NUMB").toString();
+        	
+            Map<String, Object> map = (Map<String, Object>) data;
+            String userId = map.get("USER_NUMB").toString();
             String me = session.getAttribute("USER_NUMB").toString();
 
             String folwCode = OracleFunction.getRelationCode(me, userId);
             String folwBtn = OracleFunction.getCodeName("FOLW_CODE", folwCode);
 
-            userPage.put("FOLW_CODE", folwCode);
-            userPage.put("FOLW_BTNN", folwBtn);
+            map.put("FOLW_CODE", folwCode);
+            map.put("FOLW_BTNN", folwBtn);
 
-            return userPage;
+            return map;
             
         } else if (data instanceof List) {
-            List<Map<String, Object>> gatherList = (List<Map<String, Object>>) data;
+            List<Map<String, Object>> list = (List<Map<String, Object>>) data;
             List<Map<String, Object>> processedList = new ArrayList<>();
-            for (int i = 0; i < gatherList.size(); i++) {
-                Map<String, Object> item = gatherList.get(i);
+            
+            for (int i = 0; i < list.size(); i++) {
+            	
+                Map<String, Object> item = list.get(i);
                 String userId = item.get("USER_NUMB").toString();
                 String me = session.getAttribute("USER_NUMB").toString();
 
@@ -263,7 +266,9 @@ public class CommonServiceImpl implements CommonService {
                 item.put("FOLW_BTNN", folwBtn);
 
                 processedList.add(item);
+                
             }
+            
             return processedList;
             
         } else {

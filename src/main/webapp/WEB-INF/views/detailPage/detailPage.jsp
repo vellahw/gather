@@ -107,7 +107,7 @@
       <h3 class="infoTitle">방장 정보</h3>
       <div class="masterProfile">
         <div class="profileImgWrap dp">
-          <img class="profileImg" src="${detail.USER_IMAG}"/>
+          <img class="profileImg" src="${detail.USER_IMAG}" onclick="comWhere2Go('userPage','${detail.USER_NUMB}')"/>
         </div>
         <div class="profileInfo master">
            <p style="margin-bottom: 5px;">
@@ -134,7 +134,7 @@
                       <div class="profileWrapper">
                         <div class="profileImgContainer">
                            <div class="profileImgWrap dp" data-count="${count}" id="count">
-                             <img class="profileImg" src="${m.USER_IMAG}" />
+                             <img class="profileImg" src="${m.USER_IMAG}" onclick="comWhere2Go('userPage','${m.USER_NUMB}')"/>
                            </div>
                         </div>
                         <div class="profileInfo">
@@ -168,7 +168,7 @@
                    <div class="profileWrapper">
                       <div class="profileImgContainer">
                          <div class="profileImgWrap dp" data-count="${count}" id="count">
-                            <img class="profileImg" src="${m.USER_IMAG}" />
+                            <img class="profileImg" src="${m.USER_IMAG}" onclick="comWhere2Go('userPage','${m.USER_NUMB}')"/>
                          </div>
                       </div>
                       <div class="profileInfo">

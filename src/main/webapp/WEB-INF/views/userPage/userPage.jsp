@@ -7,6 +7,11 @@
 <div class="userInfo1">
 	<div class="background-image">
 		<img src="${user.BACK_IMAG}" alt="프로필 사진">
+		<div class="profileBtnContainer">
+		    <button class="Btn f" data-code="${user.FOLW_CODE}"data-numb="${user.USER_NUMB}" onclick="comFollow('${user.FOLW_CODE}','${user.USER_NUMB}')" >
+	        	<c:out value="${user.FOLW_BTNN}" />
+	        </button>
+		</div>
 	</div>
 	<div class="profile-picture">
 	    <img src="${user.USER_IMAG}" alt="프로필 사진">

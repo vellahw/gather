@@ -11,22 +11,22 @@
    <select id="userInfo" parameterType='hashmap' resultType="hashmap">
      <![CDATA[
            SELECT /* userPage.userInfo */
-                   A.USER_NUMB                                          /* 회원번호 */                       
-		         , A.USER_NAME											/* 회원이름 */ 
-		         , A.USER_NICK											/* 회원닉네임 */
-		         , A.USER_IDXX											/* 회원아이디 */
-		         , A.CELL_NUMB											/* 회원 전화번호 */
-		         , A.SELF_INTR											/* 회원 자기소개 */
-		         , getUserImage(A.FILE_SVNM,A.USER_NUMB) AS USER_IMAG   /* 회원 프로필 사진*/
-		         , B.FILE_PATH AS BACK_IMAG  							/* 회원 배경이미지 */
-		         , returnCount(D.FOLW_COUNT) AS FOLW_COUNT				/* 팔로워 수 */
-		         , returnCount(C.FOLN_COUNT) AS FOLN_COUNT				/* 팔로잉 수 */
-		         , returnCount(E.GATH_COUNT) AS GATH_COUNT				/* 개설한 게더 수 */
-		         , returnCount(F.CLUB_COUNT) AS CLUB_COUNT				/* 개설한 클럽 수 */
-		         , returnCount(G.CHAL_COUNT) AS CHAL_COUNT				/* 개설한 챌린지 수 */
-		         , returnCount(E.GATH_COUNT) 							
-		           + returnCount(F.CLUB_COUNT) 
-		           + returnCount(G.CHAL_COUNT) AS TOTAL_BOARD			/* 개설한 총 모임 수 */
+                   A.USER_NUMB                                          							/* 회원번호 */                       
+		         , A.USER_NAME																		/* 회원이름 */ 
+		         , A.USER_NICK																		/* 회원닉네임 */
+		         , A.USER_IDXX																		/* 회원아이디 */
+		         , A.CELL_NUMB																		/* 회원 전화번호 */
+		         , A.SELF_INTR																		/* 회원 자기소개 */
+		         , getUserImage(A.FILE_SVNM,A.USER_NUMB) AS USER_IMAG   							/* 회원 프로필 사진*/
+		         , NVL(B.FILE_PATH ,'/resources/img/basic/profile/basicBg.png') AS BACK_IMAG  		/* 회원 배경이미지 */
+		         , NVL(D.FOLW_COUNT, 0) AS FOLW_COUNT												/* 팔로워 수 */
+		         , NVL(C.FOLN_COUNT, 0) AS FOLN_COUNT												/* 팔로잉 수 */
+		         , NVL(E.GATH_COUNT, 0) AS GATH_COUNT												/* 개설한 게더 수 */
+		         , NVL(F.CLUB_COUNT, 0) AS CLUB_COUNT												/* 개설한 클럽 수 */
+		         , NVL(G.CHAL_COUNT, 0) AS CHAL_COUNT												/* 개설한 챌린지 수 */
+		         , NVL(E.GATH_COUNT, 0) 							
+		           + NVL(F.CLUB_COUNT, 0) 
+		           + NVL(G.CHAL_COUNT, 0) AS TOTAL_BOARD											/* 개설한 총 모임 수 */
 		      FROM TM_USERXM A
 		 LEFT JOIN TM_FILEXM B
 		        ON A.USER_NUMB = B.FILE_IDXX
@@ -46,18 +46,21 @@
 		 LEFT JOIN ( SELECT COUNT(*) AS GATH_COUNT
 		                  , USER_NUMB
 		               FROM TM_GATHER
+		              WHERE DELT_YSNO = 'N'
 		           GROUP BY USER_NUMB
 		           ) E
 		        ON A.USER_NUMB = E.USER_NUMB
 		 LEFT JOIN ( SELECT COUNT(*) AS CLUB_COUNT
 		                  , USER_NUMB
 		               FROM TM_CLUBXM
+		              WHERE DELT_YSNO = 'N'
 		           GROUP BY USER_NUMB
 		           ) F
 		        ON A.USER_NUMB = F.USER_NUMB
 		 LEFT JOIN ( SELECT COUNT(*) AS CHAL_COUNT
 		                  , USER_NUMB
 		               FROM TM_CHALNG
+		              WHERE DELT_YSNO = 'N'
 		           GROUP BY USER_NUMB
 		           ) G
 		        ON A.USER_NUMB = G.USER_NUMB
