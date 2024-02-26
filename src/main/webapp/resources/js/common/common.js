@@ -279,9 +279,9 @@ function comAlert2(type, title, content, button , okFun){
 240111 KSH
 name:comAlert3
 Purpose:알럿창
-parameter:(title : 제목, icon:아이콘 , content: 내용 , button: 버튼 , okFn : 확인 후 함수)
+parameter:(title : 제목, content: 내용 , icon:아이콘 , button: 버튼 , okFn : 확인 후 함수)
 */ 
-function comAlert3(title, content, icon,  okFn) {
+function comAlert3(title, content, icon, okFn) {
     
   swal({ 
     title: title,
@@ -507,5 +507,19 @@ parameter: ( selector: 요소 선택자(클래스, 아이디 등) )
 function comRemoveActiveClass(elementSelector, removeClassName) {
   if(document.querySelector(elementSelector)) {
     document.querySelector(elementSelector).classList.remove(removeClassName);
+  }
+}
+
+/* 
+240226 장한원
+name: comFocus
+Purpose: input 요소에 포커스하기
+parameter: ( target: 타겟을 id로 선택할건지 class로 선택할건지, elSelector: 요소 선택자(클래스, 아이디 등) )
+*/	
+const comFocus = function(target, elSelector) {
+  if(target == 'class') {
+    document.querySelector(elSelector).focus();
+  } else if(target == 'id') {
+    document.getElementById(elSelector).focus();
   }
 }
