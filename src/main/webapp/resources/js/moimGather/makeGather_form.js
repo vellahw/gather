@@ -321,7 +321,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 		appendAgeRangeNode.innerHTML = minRange + '세~';
 
 		if(minRange == '15' && maxRange == '50') {
-			appendAgeRangeNode.innerHTML = '제한 없음';
+			appendAgeRangeNode.innerHTML = '15세 이상';
 			appendMaxAgeRange.innerHTML = '';
 		} else if(maxRange == '50') {
 			appendMaxAgeRange.innerHTML = '50세 이상';
@@ -357,7 +357,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 		if(minRange == '15' && maxRange == '50') {
 			appendMaxAgeRange.innerHTML = '';
-			appendAgeRangeNode.innerHTML = '제한 없음';
+			appendAgeRangeNode.innerHTML = '15세 이상';
 		} else if(minRange == '15') {
 			appendAgeRangeNode.innerHTML = '15세~';
 		}

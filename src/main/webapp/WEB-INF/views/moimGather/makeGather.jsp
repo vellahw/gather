@@ -138,7 +138,7 @@
 								<img src="/resources/img/form/peopleAgeIcon.png" alt="연령대 아이콘">
 								연령대
 								<span id="appendAgeRange" style="padding-left: 8px;">
-									제한 없음
+									15세 이상
 								</span>
 								<span id="appendMaxAgeRange"></span>
 							</h3>

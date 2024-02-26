@@ -432,7 +432,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   
       fetch("/gather/makeGatherDo.com", {
         method: "POST",
-        body: formData
+        body: formData,
       })
       .then(response => {
         if (!response.ok) {
@@ -441,14 +441,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
         return response.text();
       })
       .then((data) => {
-        if(data.message === 'success') {
+
+        console.log(data)
+        
+        if(data != 'fail') {
           comAlert3(
               '모임이 개설되었어요!'
             , null
             , 'success'
-            , function() { location.href = `/gatherDetail.com?idx=${data.MOIM_IDXX}`; }
+            , function() { location.href = `/gatherDetail.com?idx=${data}`; }
           );
-        } else {
+        } else if(message == 'fail') {
           comAlert2(
               '데이터를 처리하는 중 오류 발생'
             , '관리자에게 문의해주세요.'

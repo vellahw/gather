@@ -8,9 +8,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,57 +63,58 @@ public class GatherController {
 	}
 
 	// 게더 개설
+	@Transactional(isolation = Isolation.SERIALIZABLE)
 	@RequestMapping(value = "/gather/makeGatherDo.com", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<String> makeGather(@RequestParam("data") String gatherData,
 			@RequestParam("map") String mapData, HttpServletRequest request, CommandMap commandMap, HttpSession session)
 			throws Exception {
 
-		ObjectMapper objectMapper = new ObjectMapper();
+		try {
 
-		Map<String, Object> resultGahterData = objectMapper.readValue(gatherData,
-				new TypeReference<Map<String, Object>>() {
-				});
+			ObjectMapper objectMapper = new ObjectMapper();
 
-		Map<String, Object> resultMapData = objectMapper.readValue(mapData, new TypeReference<Map<String, Object>>() {
-		});
+			Map<String, Object> resultGahterData = objectMapper.readValue(gatherData,
+					new TypeReference<Map<String, Object>>() {
+					});
 
-		String gathNumb = gatherService.makeGatherNumb();
+			Map<String, Object> resultMapData = objectMapper.readValue(mapData,
+					new TypeReference<Map<String, Object>>() {
+					});
 
-		if (!resultMapData.get("MOIM_LATI").equals("")) {
+			String gathNumb = gatherService.makeGatherNumb();
 
-			Map<String, Object> regiMap = commonService.extractRegiCode(resultMapData);
+			if (!resultMapData.get("MOIM_ADR1").equals("")) {
 
-			resultMapData.put("MOIM_IDXX", gathNumb);
-			resultGahterData.put("REGI_CODE", regiMap.get("COMD_CODE"));
-			commonService.mapInsert(resultMapData, commandMap);
+				Map<String, Object> regiMap = commonService.extractRegiCode(resultMapData);
+
+				resultMapData.put("MOIM_IDXX", gathNumb);
+				resultGahterData.put("REGI_CODE", regiMap.get("COMD_CODE"));
+				commonService.mapInsert(resultMapData, commandMap);
+			}
+
+			resultGahterData.put("MOIM_IDXX", gathNumb);
+			resultGahterData.put("USER_NUMB", session.getAttribute("USER_NUMB"));
+
+			gatherService.makeGather(resultGahterData, commandMap, request, session);
+
+			resultGahterData.put("WAIT_YSNO", "N");
+			moimDetailService.moimJoin(resultGahterData, commandMap);
+
+			Map<String, Object> hashTag = new HashMap<>();
+
+			hashTag.put("MOIM_CNTT", resultGahterData.get("MOIM_CNTT"));
+			hashTag.put("MOIM_IDXX", gathNumb);
+
+			commonService.tagInsert(hashTag);
+
+			return ResponseEntity.ok(gathNumb);
+
+		} catch (Exception e) {
+
+			System.out.println("error : " + e.getMessage());
+
+			return ResponseEntity.ok("fail");
 		}
-
-		resultGahterData.put("MOIM_IDXX", gathNumb);
-		resultGahterData.put("USER_NUMB", session.getAttribute("USER_NUMB"));
-
-		gatherService.makeGather(resultGahterData, commandMap, request, session);
-
-		resultGahterData.put("WAIT_YSNO", "N");
-		moimDetailService.moimJoin(resultGahterData, commandMap);
-
-		Map<String, Object> hashTag = new HashMap<>();
-
-		hashTag.put("MOIM_CNTT", resultGahterData.get("MOIM_CNTT"));
-		hashTag.put("MOIM_IDXX", gathNumb);
-
-		commonService.tagInsert(hashTag);
-		
-		// 성공 후 프론트로 데이터(게더 넘버, 메세지) 보냄 
-		Map<String, Object> resultData = new HashMap<>();
-		resultData.put("MOIM_IDXX", gathNumb);
-		resultData.put("message", "success");
-		
-		// 데이터를 JSON 문자열로 변환
-		String json = objectMapper.writeValueAsString(resultData);
-
-		return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(json);
-
 	}
-
 }
