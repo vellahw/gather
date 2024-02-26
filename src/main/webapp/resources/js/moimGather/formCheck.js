@@ -14,6 +14,9 @@ const formCheck = function(step) {
   const offlineBtn = document.querySelector('button[data-loca="off"]');
   const minPeople = document.getElementById('minPeople').value;
   const maxPeople = document.getElementById('maxPeople').value;
+  const peopleNoLimitBtn = document.getElementById('peopleNoLimit');
+  
+  const summernote = document.getElementById('summernote').value;
 
   if(step == 'step1') {
     if(!pickedCate) {
@@ -26,7 +29,6 @@ const formCheck = function(step) {
           '제목을 입력해주세요'
         , null
         , 'warning'
-        , null
         , function(){ comFocus('id', 'moimTitle'); }
       );
 
@@ -52,7 +54,6 @@ const formCheck = function(step) {
         '참가 금액을 입력해주세요'
         , null
         , 'warning'
-        , null
         , function(){ comFocus('id', 'moimCost'); }
       );
 
@@ -60,14 +61,23 @@ const formCheck = function(step) {
 
     } else if(!moimDate) {
 
-      comAlert2(3, '모임 날짜를 선택해주세요.');
+      comAlert3(
+        '모임 날짜를 선택해주세요'
+        , null
+        , 'warning'
+        , function(){ comFocus('id', 'moimDate'); }
+      );
 
       return false;
 
-
     } else if(!moimTime) {
 
-      comAlert2(3, '모임 시간을 선택해주세요.');
+      comAlert3(
+        '모임 시간을 선택해주세요'
+        , null
+        , 'warning'
+        , function(){ comFocus('id', 'moimTime'); }
+      );
 
       return false;
 
@@ -83,7 +93,6 @@ const formCheck = function(step) {
           '모임 장소의 주소를 입력해주세요'
         , null
         , 'warning'
-        , null
         , function(){ comFocus('id', 'moimAddress'); }
       );
   
@@ -103,30 +112,30 @@ const formCheck = function(step) {
 
       return false;
 
-    } else if(!minPeople) {
+    } else if(!peopleNoLimitBtn.classList.contains('picked_noLimit')) {
+      if(!minPeople) {
 
-      comAlert3(
-        '모임 최소 인원수를 입력해주세요'
-        , null
-        , 'warning'
-        , null
-        , function(){ comFocus('id', 'minPeople'); }
-      );
-
-      return false;
-
-    } else if(!maxPeople) {
-
-      comAlert3(
-        '모임 최대 인원수를 입력해주세요'
-        , null
-        , 'warning'
-        , null
-        , function(){ comFocus('id', 'maxPeople'); }
-      );
-
-      return false;
-
+        comAlert3(
+          '모임 최소 인원수를 입력해주세요'
+          , null
+          , 'warning'
+          , function(){ comFocus('id', 'minPeople'); }
+        );
+  
+        return false;
+  
+      } else if(!maxPeople) {
+  
+        comAlert3(
+          '모임 최대 인원수를 입력해주세요'
+          , null
+          , 'warning'
+          , function(){ comFocus('id', 'maxPeople'); }
+        );
+  
+        return false;
+  
+      }
     } else if(!document.querySelector('.gender_act')) {
 
       comAlert2(3, '모임 참여 성별을 선택해주세요.');
@@ -136,6 +145,22 @@ const formCheck = function(step) {
     } else {
       return true;
     }
+
+  } else if(step == 'step4') {
+    if(!summernote) {
+      comAlert3(
+        '모임 소개글을 작성해주세요'
+        , null
+        , 'warning'
+        , null
+      );
+
+      return false;
+
+    } else {
+      return true;
+    }
   }
+
   return true;
 }

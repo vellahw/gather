@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded',()=>{
 	const cateValue = document.getElementById('cateData').value;
 	const cateData = comObjectInArray(cateValue).result; // 카테고리 데이터
-	const gatherCostNode = document.getElementById('moimCost'); // 참가비용 입력 input
+	const gatherCostInput = document.getElementById('moimCost'); // 참가비용 입력 input
 	const categoryListNode =  document.querySelector('.categoryList'); // 카테고리들을 담고있는 ul tag
 	
 	/**
@@ -139,9 +139,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 			// 비용 입력하는 input 띄움
 			if(target.matches('[data-cost="Y"]')) {
-				gatherCostNode.classList.add('block_element');
+				gatherCostInput.classList.add('block_element');
 			} else if(target.matches('[data-cost="N"]')) {
-				gatherCostNode.classList.remove('block_element');
+				gatherCostInput.classList.remove('block_element');
 			}
 		}
 
@@ -162,22 +162,44 @@ document.addEventListener('DOMContentLoaded',()=>{
 
   });
 
-	// 천원단위로 콤마 찍어줌
-	if(gatherCostNode.classList.contains('block_element')) {
-		gatherCostNode.addEventListener('input', (event)=>{
-			const target = event.target;
-			const originalValue = target.value;
-			
-			// 숫자가 아닌 문자 제거
-			const cleanedValue = originalValue.replace(/[^0-9]/g, '');
-			
-			// 쉼표 추가
-			const formattedValue = cleanedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-			
-			// 입력 값을 대체
-			target.value = formattedValue;
-		});
-	}
+	/*
+	 * 참가비 input 천원 단위로 콤마 찍어줌
+	 */
+	gatherCostInput.addEventListener('input', (event)=>{
+		const target = event.target;
+		const originalValue = target.value;
+		
+		// 숫자가 아닌 문자 제거
+		let cleanedValue = originalValue.replace(/[^0-9]/g, '');
+		
+		// 콤마 찍고 입력값 대체
+		target.value = comApplyNumFmt(cleanedValue);
+	});
+	
+
+	/* 
+	 * 240227 
+	 * 최소인원, 최대인원 입력시
+	 * 숫자만 가능, 2자리 이상 입력 불가, 최소 28, 최대 30까지 입력 가능
+	*/
+	const minPeopleInput = document.getElementById('minPeople');
+	minPeopleInput.addEventListener('input', (event) => {
+			limitInputLength(event, 28);
+	});
+	
+	const maxPeopleInput = document.getElementById('maxPeople');
+	maxPeopleInput.addEventListener('input', (event) => {
+			limitInputLength(event, 30);
+	});
+
+
+	/* 
+	 * moinDate
+	 * 오늘 날짜 이전 날짜는 선택 불가능하게
+	*/
+	const today = comSetMinDate().today;
+	document.getElementById("moimDate").setAttribute("min", today);
+
 
 	/* 카카오맵 지도 띄우기 */
 	const container = document.getElementById('map');
@@ -286,10 +308,17 @@ document.addEventListener('DOMContentLoaded',()=>{
 	 * 240220 장한원
 	 * 연령 선택 range 슬라이더
 	 */
-	const range1 = document.querySelector('.range1')
+	const range1 = document.querySelector('.range1');
+	const range2 = document.querySelector('.range2');
+	const appendMaxAgeRange = document.getElementById('appendMaxAgeRange');
+	const appendAgeRangeNode = document.getElementById('appendAgeRange');
+
+	let minRange = '15';
+	let maxRange = '50';
+
 	range1.addEventListener('input', (event)=>{
 		const target = event.target;
-
+		
 		target.value = Math.min(target.value, target.parentNode.childNodes[5].value-1);
 		let value = (100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.value)-(100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.min);
 		let children = target.parentNode.childNodes[1].childNodes;
@@ -298,12 +327,28 @@ document.addEventListener('DOMContentLoaded',()=>{
 		children[7].style.left = value + '%';
 		children[11].style.left = value + '%';
 		children[11].childNodes[1].innerHTML = target.value;
+		
 	});
+	
+	range1.addEventListener('change', (event)=>{ // 최소 연령 화면에 띄움
+		const target = event.target;
+		
+		minRange = target.value;
+		
+		appendAgeRangeNode.innerHTML = minRange + '세~';
 
-	const range2 = document.querySelector('.range2')
+		if(minRange == '15' && maxRange == '50') {
+			appendAgeRangeNode.innerHTML = '15세 이상';
+			appendMaxAgeRange.innerHTML = '';
+		} else if(maxRange == '50') {
+			appendMaxAgeRange.innerHTML = '50세 이상';
+		}
+
+	});
+	
 	range2.addEventListener('input', (event)=>{
 		const target = event.target;
-
+		
 		target.value = Math.max(target.value,target.parentNode.childNodes[3].value-(-1));
 		let value = (100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.value)-(100/(parseInt(target.max)-parseInt(target.min)))*parseInt(target.min);
 		let children = target.parentNode.childNodes[1].childNodes;
@@ -311,7 +356,29 @@ document.addEventListener('DOMContentLoaded',()=>{
 		children[5].style.right = (100-value) + '%';
 		children[9].style.left = value + '%';
 		children[13].style.left = value + '%';
-		children[13].childNodes[1].innerHTML = target.value;
+		
+		if(target.value == '50') {
+			children[13].childNodes[1].innerHTML = target.value + '+';
+		} else {
+			children[13].childNodes[1].innerHTML = target.value;
+		}
+		
+	});
+	
+	range2.addEventListener('change', (event)=>{ // 최대 연령 화면에 띄움
+		const target = event.target;
+		
+		maxRange = target.value;
+
+		appendMaxAgeRange.innerHTML = maxRange + '세';
+
+		if(minRange == '15' && maxRange == '50') {
+			appendMaxAgeRange.innerHTML = '';
+			appendAgeRangeNode.innerHTML = '15세 이상';
+		} else if(minRange == '15') {
+			appendAgeRangeNode.innerHTML = '15세~';
+		}
+
 	});
 
 
@@ -332,10 +399,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 		}
 	});
 	
-});
+}); // END DOMContentLoaded
 
 
-// ======= DOMContentLoaded 후 아님 =======
 
 /**
  * 다음(이전) 버튼 클릭 시 show_step 클래스 삭제하거나 추가하는 함수
@@ -355,12 +421,41 @@ const showStep = function(removeTarget, addTarget) {
  */
 const chooseAppr = function(element) {
 
-	// 이미 눌려있는 버튼의 효과 클래스 지움
-	if(document.querySelector('.appr_act')){
-		document.querySelector('.appr_act').classList.remove('appr_act');
-
-	}
-
+	comRemoveActiveClass('.appr_act', 'appr_act');
+	
+	// active 클래스 추가
 	element.classList.add('appr_act');
 
 }
+
+/*
+ * 240224 장한원
+ * 참여 승인제 클릭 이벤트
+ */
+const peopleNoLimit = function(element) {
+	
+	element.classList.toggle('picked_noLimit');
+	
+	document.getElementById('peopleInputContainer').classList.toggle('none_element'); // input 가리기 toggle
+	document.getElementById('bubble').classList.toggle('show_flex_element'); // 안내문구 띄우기 toggle
+
+}
+
+/*
+ * 240227 장한원
+ * 최소/최대인원 2자리까지만 입력 가능,
+ * 입력 가능한 최댓값 설정
+ */
+const limitInputLength = function(event, maxValue) {
+	let inputValue = comOnlyNumber(event.target.value);
+
+	if (parseInt(inputValue) > maxValue) {
+			inputValue = maxValue.toString();
+	}
+
+	if (inputValue.length >= 2) {
+			inputValue = inputValue.substring(0, 2);
+	}
+
+	event.target.value = inputValue;
+};

@@ -164,9 +164,6 @@ parameter:num
 function comApplyNumFmt(num) {
 
 	if(!$.isNumeric(num)) {
-		if(num == null || num == undefined || num == '') {
-			return 0;
-		}
 		return num;
 	}
 	
@@ -275,11 +272,11 @@ function comAlert2(type, title, content, button , okFun){
     }
 };
 
-/* 
+/**
 240111 KSH
 name:comAlert3
 Purpose:알럿창
-parameter:(title : 제목, content: 내용 , icon:아이콘 , button: 버튼 , okFn : 확인 후 함수)
+parameter:(title : 제목, content: 내용 , icon:아이콘 , okFn : 확인 후 함수)
 */ 
 function comAlert3(title, content, icon, okFn) {
     
@@ -528,4 +525,29 @@ const comFocus = function(target, elSelector) {
   } else if(target == 'id') {
     document.getElementById(elSelector).focus();
   }
+}
+
+/* 
+240226 장한원
+name: comSetMinDate
+Purpose: date 타입 input의 오늘 날짜 이전 날짜는 선택 불가능하게 함
+*/	
+const comSetMinDate = function() {
+  let now_utc = Date.now() // 지금 날짜를 밀리초로
+	//getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환
+	let timeOff = new Date().getTimezoneOffset()*60000; // 분단위를 밀리초로 변환
+	//new Date(now_utc-timeOff).toISOString()은 '2022-05-11T18:09:38.134Z'를 반환
+	let today = new Date(now_utc-timeOff).toISOString().split("T")[0];
+
+  return { today : today };
+}
+
+/* 
+240227 장한원
+name: comOnlyNumber
+Purpose: input에 숫자만 입력받고 싶을 때
+parameter: (targetValue : replace하려는 값)
+*/	
+const comOnlyNumber = function(targetValue) {
+	return targetValue.replace(/[^0-9]/g, '');
 }

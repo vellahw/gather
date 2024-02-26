@@ -2,6 +2,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<% if(session.getAttribute("USER_NUMB") ==  null)  { %>
+	<script>
+		comAlert3(
+	        '세션이 만료되었습니다.'
+	      , '로그인 후 이용해주세요.'
+	      , 'warning'
+	      , function() { location.href = '/gather/login.com' }
+	    )
+	</script>
+<% } %>
+
 <div class="notifyBtnWrap">
 	<button type="button" class="notifyBtn">
 		<img src="/resources/img/icon/bellIcon.png" alt="알림 아이콘"/>
@@ -23,7 +34,7 @@
 			      	<span>
 			      		<c:out value="${noti.REGG_DATEKR}" />
 			      	</span>
-			      	<div class="parent">
+			      	<div>
 				      	<button type="button" data-noti-seqc="${noti.NOTI_SEQC}" class="readBtn" onclick="updateReadNoti(this)">
 				      		읽음
 				      	</button>

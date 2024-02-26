@@ -643,7 +643,8 @@ const showUserPickedRegi = function(pickedList, regiList) {
     }
 
   });
-    /**
+
+  /**
    * 240226 강승현
    * 프로필 파일 위치 조정
    */
@@ -674,6 +675,7 @@ const showUserPickedRegi = function(pickedList, regiList) {
   //       }
   //   });
   // });
+
   // 배경 사진 삭제(되돌리기) 버튼
   const removeBgImgBtn =  document.getElementById('bg-remove');
 

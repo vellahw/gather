@@ -325,7 +325,8 @@
 .cost_act,
 .appr_act,
 .gender_act,
-.loca_act {
+.loca_act,
+.picked_noLimit {
 	background-color: var(--color-orange400);
   color: #fff;
   border: none;
@@ -404,9 +405,32 @@
 
 #peopleNoLimit {
 	width: calc(192px + 63px + 10px);
-  height: 38px;
-  border: 1px solid var(--primary);
-  box-shadow: none;
+  height: 49px;
+  margin: 8px 0;
+  font-weight: 400;
+}
+
+#noLimitContainer {
+	display: flex;
+}
+
+#bubble {
+	color: var(--color-gray500);
+	font-size: 14px;
+  font-weight: 500;
+  align-items: center;
+  padding-left: 10px;
+  display: none;
+  animation: motion 0.9s infinite ease-in-out alternate;
+}
+
+@keyframes motion {
+  from{
+    transform: translate(0, 0px);
+  }
+  to{
+    transform: translate(0, -5px);
+  }
 }
 
 .genderBtn {
@@ -466,6 +490,18 @@
 	object-fit: cover;
 }
 
+#appendAgeRange,
+#appendMaxAgeRange {
+	color: var(--color-orange400);
+}
+
+.peopleLimitInfo {
+	font-size: 12px;
+	font-weight: 500;
+	color: var(--color-gray500);
+  padding-left: 9px;
+}
+
 
 /* 연령대 슬라이더 */
 [slider] {
@@ -473,7 +509,8 @@
   height: 14px;
   border-radius: 10px;
   text-align: left;
-  margin: 12px 0;
+  margin: 33px 10px 14px 10px;
+  width: calc(100% - 33px);
 }
  
 [slider] > div {
@@ -481,6 +518,13 @@
   left: 13px;
   right: 15px;
   height: 14px;
+  width: 96%;
+}
+
+.scale > span {
+	padding: 0 40px 0 34px;
+  font-size: 13px;
+  color: var(--color-gray600);
 }
 
 [slider] > div > [inverse-left] {

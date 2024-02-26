@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,6 +63,7 @@ public class GatherController {
 	}
 
 	// 게더 개설
+	@Transactional(isolation = Isolation.SERIALIZABLE)
 	@RequestMapping(value = "/gather/makeGatherDo.com", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<String> makeGather(@RequestParam("data") String gatherData,
@@ -81,7 +84,7 @@ public class GatherController {
 
 			String gathNumb = gatherService.makeGatherNumb();
 
-			if (resultMapData.get("MOIM_ADR1").equals("")) {
+			if (!resultMapData.get("MOIM_ADR1").equals("")) {
 
 				Map<String, Object> regiMap = commonService.extractRegiCode(resultMapData);
 				resultMapData.put("MOIM_IDXX", gathNumb);
@@ -104,7 +107,7 @@ public class GatherController {
 
 			commonService.tagInsert(hashTag);
 
-			return ResponseEntity.ok("success");
+			return ResponseEntity.ok(gathNumb);
 
 		} catch (Exception e) {
 
@@ -142,5 +145,4 @@ public class GatherController {
 
 		return mv;
 	}
-
 }
