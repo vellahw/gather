@@ -45,6 +45,11 @@ public class CommonDao extends AbstractDao {
 		insert("common.tagInsert", map);
 	}
 
+	// 좋아요 Delete
+	public void tagDelete(Map<String, Object> map, CommandMap commandMap) throws Exception {
+		delete("common.tagDelete", map);
+	}
+
 	// 부모카테고리
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> pCate(Map<String, Object> map, CommandMap commandMap) throws Exception {

@@ -279,70 +279,76 @@
        	SELECT /*mainPage.getGather*/
        			*
 		  FROM (  
-		       	  SELECT  ROW_NUMBER() OVER (ORDER BY REGG_DATE, MOIM_TIME, MOIM_IDXX DESC) RNUM         
-		                , MOIM_IDXX										   					/* 게더아이디 */
-		                , MOIM_TITL										   					/* 게더 제목 */
+		       	  SELECT  ROW_NUMBER() OVER (ORDER BY A.REGG_DATE, A.MOIM_TIME, A.MOIM_IDXX DESC) RNUM         
+		                , A.MOIM_IDXX										   							/* 게더아이디 */
+		                , A.MOIM_TITL										   							/* 게더 제목 */
 		                ]]>
 		          <if test="MOIM_IDXX != null">
 		      	  <![CDATA[
-		                , MOIM_CNTT							           						/* 게더 내용 */
+		                , A.MOIM_CNTT																	/* 게더 내용 */
+		                , B.MOIM_LATI																	/* 위도 */
+                        , B.MOIM_LONG																	/* 경도 */
+                        , B.MOIM_ADR1																	/* 주소1 */
+                        , B.MOIM_ADR2							           								/* 주소2 */			
 		                  ]]>
 		      	  </if>
 		      	  <![CDATA[
-		                , MOIM_IMAG							           						/* 게더 대표 이미지 */
-		                , CATE_IDXX															/* 카테고리 코드 */
-		                , PARENTS_CATE														/* 부모 카테고리 */
-		                , CHILD_CATE														/* 자식 카테고리 */
-                		, MAXX_PEOP															/* 최대 인원 */
-		                , PRES_PEOP															/* 현재 인원  n/n */
-		                , MEMB_COUNT														/* 현재 인원수 */
-		                , MOIM_COST															/* 참가 비용 */
-		                , APPR_YSNO															/* 승인 여부 */
-		                , MINN_AGEE						 									/* 최소나이 */
-                		, MAXX_AGEE															/* 최대나이 */
-						, APPR_LMIT															/* 모임 제한 KR */
-		                , GNDR_CODE															/* 모임 성별 코드 */											
-		                , PREGI_NAME														/* 부모 지역명 */
-		                , REGI_NAME															/* 자식 지역명 */
-		                , USER_NUMB															/* 방장 회원번호 */
-		                , USER_NICK															/* 방장 닉네임 */
-		                , USER_IMAG															/* 방장 프로필 사진 */
-		                , SELF_INTR															/* 방장 자기소개 */
-		                , SMAL_DATE															/* 날짜 형식 MM.dd(day) 오전/오후 HH:mm */
-		                , FULL_DATE															/* 날짜 형식 YYYY년 M월 오전/오후 HH:mm */
-		                , LIKE_COUNT														/* 좋아요 수 */
-		                , REGG_DATE															/* 모임 개설일 */
-		                , ENDD_YSNO															/* 모임 마감 유무 */
+		                , A.MOIM_IMAG							           								/* 게더 대표 이미지 */
+		                , A.CATE_IDXX																	/* 카테고리 코드 */
+		                , A.PARENTS_CATE																/* 부모 카테고리 */
+		                , A.CHILD_CATE																	/* 자식 카테고리 */
+                		, A.MAXX_PEOP																	/* 최대 인원 */
+		                , A.PRES_PEOP																	/* 현재 인원  n/n */
+		                , A.MEMB_COUNT																	/* 현재 인원수 */
+		                , A.MOIM_COST																	/* 참가 비용 */
+		                , A.APPR_YSNO																	/* 승인 여부 */
+		                , A.MINN_AGEE						 											/* 최소나이 */
+                		, A.MAXX_AGEE																	/* 최대나이 */
+						, A.APPR_LMIT																	/* 모임 제한 KR */
+		                , A.GNDR_CODE																	/* 모임 성별 코드 */											
+		                , A.PREGI_NAME																	/* 부모 지역명 */
+		                , A.REGI_NAME																	/* 자식 지역명 */
+		                , A.USER_NUMB																	/* 방장 회원번호 */
+		                , A.USER_NICK																	/* 방장 닉네임 */
+		                , A.USER_IMAG																	/* 방장 프로필 사진 */
+		                , A.SELF_INTR																	/* 방장 자기소개 */
+		                , A.SMAL_DATE																	/* 날짜 형식 MM.dd(day) 오전/오후 HH:mm */
+		                , A.FULL_DATE																	/* 날짜 형식 YYYY년 M월 오전/오후 HH:mm */
+		                , A.LIKE_COUNT																	/* 좋아요 수 */
+		                , A.REGG_DATE																	/* 모임 개설일 */
+		                , A.ENDD_YSNO																	/* 모임 마감 유무 */
 		                 ]]>
 		                 <if test="USER_NUMB != null">
 		      			 	<![CDATA[
-		                , getAmILike (MOIM_IDXX, #{USER_NUMB}) AS LIKE_YSNO					/* 로그인유저 좋아요 유무 */
-		                , getAmIBkmk (MOIM_IDXX, #{USER_NUMB}) AS BKMK_YSNO					/* 로그인유저 북마크 유무 */
+		                , getAmILike (A.MOIM_IDXX, #{USER_NUMB}) AS LIKE_YSNO							/* 로그인유저 좋아요 유무 */
+		                , getAmIBkmk (A.MOIM_IDXX, #{USER_NUMB}) AS BKMK_YSNO							/* 로그인유저 북마크 유무 */
 		                  	]]>
 		     			 </if>
 		     			  <if test="USER_NUMB == null">
 		      			 	<![CDATA[
-		                , getAmILike (MOIM_IDXX, null) AS LIKE_YSNO							/* 좋아요 유무 없음 0 리턴 */
-		                , getAmIBkmk (MOIM_IDXX, null) AS BKMK_YSNO							/* 북마크 유무 없음 0 리턴 */
+		                , getAmILike (A.MOIM_IDXX, null) AS LIKE_YSNO									/* 좋아요 유무 없음 0 리턴 */
+		                , getAmIBkmk (A.MOIM_IDXX, null) AS BKMK_YSNO									/* 북마크 유무 없음 0 리턴 */
 		                  	]]>
 		     			 </if>
 		     			 <![CDATA[
-					FROM VW_GATHER
+					FROM VW_GATHER A
+			   LEFT JOIN TB_KKAMAP B
+                      ON A.MOIM_IDXX = B.MOIM_IDXX
 				   WHERE 1=1
 		      ]]>
 		      <if test="MOIM_IDXX != null">
 		      	 <![CDATA[
-		         	 AND MOIM_IDXX = #{MOIM_IDXX}
+		         	 AND A.MOIM_IDXX = #{MOIM_IDXX}
 		         ]]>
 		      </if>
 		      <if test="CATE_IDXX != null and CATE_IDXX != 'all'">
 		      	 <![CDATA[
-		         	 AND CATE_IDXX LIKE '%'||#{CATE_IDXX}||'%'
+		         	 AND A.CATE_IDXX LIKE '%'||#{CATE_IDXX}||'%'
 		         ]]>
 		      </if>
 		      <if test="WEATH_CATE != null">
 		      	 <![CDATA[
-		         	 AND CATE_IDXX IN 
+		         	 AND A.CATE_IDXX IN 
 		         	 ]]>
 		         	  <foreach collection="WEATH_CATE" item="WEATH_CATE" open="(" separator="," close=")">
 		       			 #{WEATH_CATE}
@@ -350,21 +356,21 @@
 		      </if>
 		      <if test="CITY_CODE != null">
 		      	 <![CDATA[
-		         	 AND REGI_CODE LIKE '%'||#{CITY_CODE}||'%'
+		         	 AND A.REGI_CODE LIKE '%'||#{CITY_CODE}||'%'
 		         ]]>
 		      </if>
 		      <if test="KEYY_WORD != null">
 		      	 <![CDATA[
-		         	 AND (REGI_NAME    LIKE '%'||#{KEYY_WORD}||'%')
-		         	  OR (PREGI_NAME   LIKE '%'||#{KEYY_WORD}||'%')
-		         	  OR (CHILD_CATE   LIKE '%'||#{KEYY_WORD}||'%')
-		         	  OR (PARENTS_CATE LIKE '%'||#{KEYY_WORD}||'%')
-		         	  OR (MOIM_TITL    LIKE '%'||#{KEYY_WORD}||'%')
-		         	  OR (MOIM_CNTT    LIKE '%'||#{KEYY_WORD}||'%')
-		         	  OR (USER_NICK    LIKE '%'||#{KEYY_WORD}||'%')
-		         	  OR MOIM_IDXX IN (SELECT HASH_IDXX 
+		         	 AND (A.REGI_NAME    LIKE '%'||#{KEYY_WORD}||'%')
+		         	  OR (A.PREGI_NAME   LIKE '%'||#{KEYY_WORD}||'%')
+		         	  OR (A.CHILD_CATE   LIKE '%'||#{KEYY_WORD}||'%')
+		         	  OR (A.PARENTS_CATE LIKE '%'||#{KEYY_WORD}||'%')
+		         	  OR (A.MOIM_TITL    LIKE '%'||#{KEYY_WORD}||'%')
+		         	  OR (A.MOIM_CNTT    LIKE '%'||#{KEYY_WORD}||'%')
+		         	  OR (A.USER_NICK    LIKE '%'||#{KEYY_WORD}||'%')
+		         	  OR (A.MOIM_IDXX IN (SELECT HASH_IDXX 
 		         	                     FROM TB_HASHTG 
-		         	                    WHERE HASH_TAGG LIKE '%'||#{KEYY_WORD}||'%')  
+		         	                    WHERE HASH_TAGG LIKE '%'||#{KEYY_WORD}||'%') ) 
 		         ]]>
 		      </if>
 		      	<![CDATA[
@@ -489,6 +495,31 @@
     
     <!-- 
 	작성자:Hwai
+    작성일:24.02.26
+    (게더수정)
+    -->
+   <update id="modifyGahter" parameterType="hashmap">
+       <![CDATA[
+      UPDATE TM_GATHER SET
+		     MOIM_TITL = #{MOIM_TITL}
+		     MOIM_CNTT = #{MOIM_CNTT}
+		     CATE_IDXX = #{CATE_IDXX}
+		     FILE_SVNM = #{FILE_SVNM}
+		     REGI_CODE = #{REGI_CODE}
+		     APPR_YSNO = #{APPR_YSNO}
+		     APPR_GNDR = #{APPR_GNDR}
+		     MINN_AGEE = #{MINN_AGEE}
+		     MINN_PEOP = #{MINN_PEOP}
+		     MOIM_COST = #{MOIM_COST}
+		     MOIM_DATE = #{MOIM_DATE}
+		     MOIM_DATE = #{MOIM_DATE}
+		     MOIM_TIME = #{MOIM_TIME}
+	   WHERE MOIM_IDXX = #{MOIM_IDXX}
+       ]]>
+   </update>
+   
+    <!-- 
+	작성자:Hwai
     작성일:23.12.19
     (게더마감)
     -->
@@ -500,4 +531,5 @@
 	   WHERE MOIM_IDXX = #{MOIM_IDXX}
        ]]>
    </update>
+   
 </mapper>
