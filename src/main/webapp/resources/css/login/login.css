@@ -310,7 +310,8 @@ form {
 	margin-bottom: 6px;
 }
 
-#userPw {
+#userPw,
+#PASS_WORD {
 	width: calc(100% - 32px);
   position: absolute;
   left: 0;

@@ -118,7 +118,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-
   // 로그인 폼 처리  
   $("#loginForm").submit(function (event) {
 
@@ -254,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function () {
   /* join.js의 폼의 input에 대한 change 이벤트 함수 */
   inputChangeHandler();
   
-});
+}); // END DOMContentLoaded
 
 /*
   유효성 검사 문구 띄우는 함수
