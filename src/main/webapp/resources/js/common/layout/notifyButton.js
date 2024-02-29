@@ -5,8 +5,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
   if(sessionStorage.USER_NUMB != null) {
     const notifyBtn = document.querySelector('.notifyBtn');
     const notifyList = document.querySelector('.notifyList');
-    const notiCountValue = notifyList.dataset.count;
     const delAllBtn = document.querySelector('.delAll'); // 읽음 버튼
+    let notiCountValue;
+
+    if(notifyList) {
+      notiCountValue = notifyList.dataset.count;
+    }
+
     
     btnControl(notiCountValue);
 
@@ -17,10 +22,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
 
     // 버튼 및 목록의 이벤트 핸들러 등록
-    [notifyBtn, notifyList].forEach(element => {
-       element.addEventListener('mouseenter', addClass);
-       element.addEventListener('mouseleave', removeClass);
-    });
+    if(notifyBtn || notifyList) {
+      [notifyBtn, notifyList].forEach(element => {
+         element.addEventListener('mouseenter', addClass);
+         element.addEventListener('mouseleave', removeClass);
+      });
+    }
 
     function addClass() {
       notifyList.classList.add('listact');
@@ -42,17 +49,18 @@ function btnControl(notiCount) {
   const delAll = document.querySelector('.delAll'); // 모두 삭제 버튼
   const noAlim = document.querySelector('.noAlim'); // 알림이 없습니다.
 
-
-  if(notiCount > "1"){
-
-    delAll.style.display = 'block';
-    noAlim.style.display = 'none';
-
-  } else {
-   
-    delAll.style.display = 'none';
-    noAlim.style.display = 'block';
-
+  if(delAll || noAlim ) {
+    if(notiCount > "1"){
+  
+      delAll.style.display = 'block';
+      noAlim.style.display = 'none';
+  
+    } else {
+     
+      delAll.style.display = 'none';
+      noAlim.style.display = 'block';
+    
+    }  
   }
 }
 
