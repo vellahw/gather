@@ -96,8 +96,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
     codeviewIframeFilter: false, // 코드 보기 iframe 필터 비활성화
     disableDragAndDrop: false,
     shortcuts: false,
-    height: 300,                 // 에디터 높이
-    minHeight: null,             // 최소 높이
+    height: 367,                 // 에디터 높이
+    minHeight: 367,             // 최소 높이
     maxHeight: null,             // 최대 높이
     focus: true,                 // 에디터 로딩후 포커스를 맞출지 여부
     lang: 'ko-KR',               // 한글 설정
@@ -129,10 +129,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
         if (files.length > 1) {
           for (let i = files.length - 1; i >= 0; i--) {
             const reader = new FileReader(); // 파일을 읽음
-            reader.onload = (function (file) {
+            reader.onload = (function (file, num) {
               return function (event) {
 
-                createImgNode(event.target.result, file.name);
+                createImgNode(event.target.result, file.name, `file${num}`);
 
                 comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 메인이미지 표시 삭제
 
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 uploadList.childNodes[0].querySelector('.mainTag').classList.add('mainTag_act'); // 메인이미지 태그 표시
                   
               };
-            })(files[i]); // 함수를 정의 후 바로 실행, 매개변수 file = (바깥 괄호)files[i]
+            })(files[i], fileNameNum); // 함수를 정의 후 바로 실행, 매개변수 file = (바깥 괄호)files[i], num = (바깥 괄호)fileNameNum
 
             reader.readAsDataURL(files[i]); // 파일을 base64로 읽어옴
         
@@ -157,13 +157,14 @@ document.addEventListener('DOMContentLoaded', ()=>{
           const reader = new FileReader();
           reader.onload = ({ target }) => {
 
-            createImgNode(target.result, files[0].name);
+            createImgNode(target.result, files[0].name, `file${fileNameNum}`);
 
             comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 메인이미지 표시 삭제
 
             uploadList.childNodes[0].classList.add('picked_thumnail'); // 메인이미지 표시
             uploadList.childNodes[0].querySelector('.mainTag').classList.add('mainTag_act'); // 메인이미지 태그 표시
             
+            fileNameNum++;
           };
 
           reader.readAsDataURL(files[0]);
@@ -175,19 +176,40 @@ document.addEventListener('DOMContentLoaded', ()=>{
             fileName: files[0].name
           });
 
-          fileNameNum++;
         }
       },
 
-      onMediaDelete: function ($target, editor, $editable) {
-        if (confirm('이미지를 삭제 하시겠습니까?')) {
-          // let deletedImageUrl = $target
-          //   .attr('src')
-          //   .split('/')
-          //   .pop()
+      // 업로드된 이미지 휴지통 아이콘 눌러 삭제
+      onMediaDelete: function ($target) {
 
-            // ajax 함수 호출
-            deleteSummernoteImageFile(deletedImageUrl);
+        let targetFileKey = $target[0].dataset.filekey
+        console.log($target[0].dataset.filekey);
+
+        const index = fileDataArray.findIndex((element) => element.key === targetFileKey); // 요소의 인덱스 찾기
+
+        if (index !== -1) { // 요소가 존재하는 경우
+            fileDataArray.splice(index, 1); // 배열에서 해당 요소 제거
+        }
+
+        for (let value of fileDataArray.values()) {
+          console.log('value '  + value); 
+        }
+
+      },
+
+      onKeydown: function(e) {
+        if (e.keyCode === 8) { // Backspace key code
+          // 현재 포커스된 영역이 이미지인지 확인
+          let $focusedElement = $(this).summernote('focus');
+
+          console.log($focusedElement);
+          console.log($focusedElement.currentSrc);
+          console.log($focusedElement.dataset.filename);
+
+          if ($focusedElement.contains('[data-filename]')) {
+              // 이미지를 삭제하는 로직을 추가
+              $focusedElement.remove(); // 예시로 이미지 요소를 삭제하는 코드
+          }
         }
       },
     }
@@ -221,24 +243,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
   });
 
-  const deleteSummernoteImageFile = function(imageName) {
-    alert('삭제왈료')
-    // data = new FormData()
-    // data.append('file', imageName)
-    // $.ajax({
-    //     data: data,
-    //     type: 'POST',
-    //     url: 'deleteSummernoteImageFile',
-    //     contentType: false,
-    //     enctype: 'multipart/form-data',
-    //     processData: false,
-    // })
-  }
-
   // 이미지 업로드 후 노드 생성/삽입
-  const createImgNode = function(file, fileName){
+  const createImgNode = function(file, fileName, filekey){
     // 본문에 이미지 삽입
-    $('#summernote').summernote('insertImage', file, fileName);
+    $('#summernote').summernote('insertImage', file, function ($image) {
+      $image.attr('data-fileName', fileName);
+      $image.attr('data-filekey', filekey); // forDataArray의 key
+    });
 
     // 업로드된 이미지 라이브러리 생성
     const item = document.createElement('li');
@@ -248,6 +259,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     img.id = 'uploadImgThumnail';
     img.src = file;
     img.dataset.name = fileName;
+    img.dataset.filekey = filekey;
 
     const mainTag = document.createElement('span');
     mainTag.innerHTML = '대표';
@@ -276,7 +288,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
       , CATE_IDXX : pickedCateData
     };
 
-    console.log('step1Data  ' + JSON.stringify(step1Data));
   });
 
   /**
@@ -320,9 +331,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
       };
     }
 
-    console.log('step2Data  ' + JSON.stringify(step2Data));
-    console.log('gatherAddressData  ' + JSON.stringify(gatherAddressData));
-    
   });
 
   /**
@@ -389,8 +397,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
       , APPR_GNDR : gathGender
     };
 
-    console.log('step3Data  ' + JSON.stringify(step3Data));
-
   });
 
 
@@ -456,8 +462,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
       })
       .then((data) => {
 
-        console.log(data)
-        
         if(data != 'fail') {
           comAlert3(
               '모임이 개설되었어요!'
