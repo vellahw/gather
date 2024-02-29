@@ -179,72 +179,114 @@ document.addEventListener('DOMContentLoaded', ()=>{
         }
       },
 
-      // 업로드된 이미지 휴지통 아이콘 눌러 삭제
+      // 업로드된 이미지 휴지통 아이콘 눌러 삭제 기능
       onMediaDelete: function ($target) {
 
-        let targetFileKey = $target[0].dataset.filekey
-        console.log($target[0].dataset.filekey);
+        let targetFileKey = $target[0].dataset.filekey; // file key를 가져옴
 
-        const index = fileDataArray.findIndex((element) => element.key === targetFileKey); // 요소의 인덱스 찾기
+        const index = fileDataArray.findIndex((element) =>
+          element.key === targetFileKey
+        ); // 요소의 인덱스 찾기
 
         if (index !== -1) { // 요소가 존재하는 경우
-            fileDataArray.splice(index, 1); // 배열에서 해당 요소 제거
+          fileDataArray.splice(index, 1); // 배열에서 해당 요소 제거
         }
 
-        for (let value of fileDataArray.values()) {
-          console.log('value '  + value); 
+        const findParent = document.querySelector(`[data-keyindex=${targetFileKey}`); // 삭제할 이미지의 부모요소 찾음
+        
+        if(findParent.classList.contains('picked_thumnail')) {
+          // 대표 이미지 표시 이동
+          updatePickedThumnail(targetFileKey);
         }
 
+        removeParentNode(findParent); // 부모요소까지 함께 삭제
       },
 
-      onKeydown: function(e) {
-        if (e.keyCode === 8) { // Backspace key code
-          // 현재 포커스된 영역이 이미지인지 확인
-          let $focusedElement = $(this).summernote('focus');
+      // onKeydown: function(e) {
+      //   if (e.keyCode === 8) { // Backspace key code
+      //     // 현재 포커스된 영역이 이미지인지 확인
+      //     let $focusedElement = $(this).summernote('focus');
 
-          console.log($focusedElement);
-          console.log($focusedElement.currentSrc);
-          console.log($focusedElement.dataset.filename);
+      //     console.log($focusedElement);
+      //     console.log($focusedElement.currentSrc);
+      //     console.log($focusedElement.dataset.filename);
 
-          if ($focusedElement.contains('[data-filename]')) {
-              // 이미지를 삭제하는 로직을 추가
-              $focusedElement.remove(); // 예시로 이미지 요소를 삭제하는 코드
-          }
-        }
-      },
+      //     if ($focusedElement.contains('[data-filename]')) {
+      //         // 이미지를 삭제하는 로직을 추가
+      //         $focusedElement.remove(); // 예시로 이미지 요소를 삭제하는 코드
+      //     }
+      //   }
+      // },
     }
   }); // END summernote
 
-  /* 메인 이미지 선택(클릭) 이벤트 */
-  document.getElementById('uploadList').addEventListener('click', (event)=>{
-    // const thumnailNode = document.getElementById('uploadImgThumnail');
-    // if(thumnailNode.name) {
-    //   thumnailNode.name = ''; // 클릭 했었던 이미지의 name 값 초기화
-    // }
 
-    const targetElement = event.target;
+  /* 삭제된 이미지의 형제 요소에 대표 이미지 표시 추가 */
+  const updatePickedThumnail = function(targetFileKey) {
 
-    // 클릭한 이미지에 '대표' 태그 표시
+    const removeTargetImg = uploadList.querySelector(`[data-filekey=${targetFileKey}`); // 삭제될 썸네일 img 태그
+    const removeTargetParent = removeTargetImg.parentNode; // img 태그를 감싸고 있는 부모 li 태그
+    const nextPick = removeTargetParent.nextSibling; // 삭제될 요소의 형제 요소
+
+    comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 원래 있던 border 삭제
+
+    // 원래 있던 대표 태그 삭제
     const mainTag = document.querySelector('.mainTag_act');
     if(mainTag) {
       mainTag.classList.remove('mainTag_act');
     }
-    
+
+    // 대표 이미지 표시 이동
+    if(nextPick) {
+      
+      nextPick.classList.add('picked_thumnail'); // 삭제되는 요소의 형제 요소에 추가
+      nextPick.querySelector('span.mainTag').classList.add('mainTag_act'); // 대표 태그 표시
+ 
+    } else { // 제일 마지막 이미지 삭제했다면
+
+      const firstChild = document.getElementById('uploadList').childNodes[0];
+      firstChild.classList.add('picked_thumnail');
+      firstChild.querySelector('span.mainTag').classList.add('mainTag_act');
+
+    }
+  }
+
+  /* uploadList에 있는 썸네일 노드를 삭제하는 함수 */
+  const removeParentNode = function(parentNode) {
+    if (parentNode && parentNode.parentNode) {
+        parentNode.parentNode.removeChild(parentNode);
+    }
+  }
+
+
+  /* 메인 이미지 선택(클릭) 이벤트 */
+  document.getElementById('uploadList').addEventListener('click', (event)=>{
+    const targetElement = event.target;
+
     // 가져온 요소가 img 태그일 때만 작동
     if(targetElement.tagName === 'IMG') {
+      
+      const mainTag = document.querySelector('.mainTag_act');
+      if(mainTag) {
+        mainTag.classList.remove('mainTag_act');
+      }
+      
       targetElement.nextSibling.classList.add('mainTag_act');
-    }
-
-    comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 클릭 했었던 이미지 추가했던 class 삭제
+      
+      comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 클릭 했었던 이미지 추가했던 class 삭제
     
-    // border 추가
-    if(targetElement.matches('#uploadImgThumnail')){
-      targetElement.parentNode.classList.toggle('picked_thumnail');
+      // border 추가
+      if(targetElement.matches('#uploadImgThumnail')){
+        targetElement.parentNode.classList.toggle('picked_thumnail');
+      }
+
     }
   });
 
-  // 이미지 업로드 후 노드 생성/삽입
+
+  /* 이미지 업로드 후 노드 생성/삽입 */
   const createImgNode = function(file, fileName, filekey){
+
     // 본문에 이미지 삽입
     $('#summernote').summernote('insertImage', file, function ($image) {
       $image.attr('data-fileName', fileName);
@@ -254,6 +296,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     // 업로드된 이미지 라이브러리 생성
     const item = document.createElement('li');
     item.className = 'uploadItem';
+    item.dataset.keyindex = filekey;
     
     const img = document.createElement('img');
     img.id = 'uploadImgThumnail';
