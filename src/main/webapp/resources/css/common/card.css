@@ -22,6 +22,7 @@
   height: 244px;
   position: relative;
   overflow: hidden;
+  border-bottom: 1px solid var(--color-gray100);
 }
 
 .thumnail {
@@ -30,6 +31,7 @@
   object-fit: cover;
   position: absolute;
 	transition: all 0.4s ease;
+	border-bottom: 1px solid var(--color-gray100);
 }
 
 .thumnail:hover {
