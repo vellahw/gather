@@ -24,7 +24,13 @@
         <form action="/gather/loginDo.com" method="post">
            <h2 class="LoginHead">로그인</h2>
            <input type="text" class="basicInput" name="USER_IDXX" id="USER_IDXX" placeholder="아이디(이메일 형식)">
-           <input type="password" class="basicInput" name="PASS_WORD" id="PASS_WORD" placeholder="비밀번호">
+           
+           <div class="userPwContainer">
+	           <input type="password" class="basicInput" name="PASS_WORD" id="PASS_WORD" placeholder="비밀번호">
+	           <button type="button" class="showPw" data-src="/resources/img/login/eyeIcon.png">
+				    	<img class="pwBtnImg" alt="비밀번호 표시 버튼" />
+				     </button>
+			     </div>
            <div id="append" class="append_login"></div>
            <button type="submit" class="basicInput btn">로그인</button>
            <div class="additionalButtons">
@@ -94,7 +100,7 @@
 		    <label class="joinlabel" for="userPw">⁕ 비밀번호</label>
 		    <div class="userPwContainer">
 			    <input type="password" id="userPw" class="basicInput _join step1" placeholder="영문, 숫자, 특수문자를 포함한 8~14자를 입력해주세요." maxlength="14">
-			    <button type="button" class="showPw" data-src="/resources/img/login/eyeIcon.png">
+			    <button type="button" class="showPw f-join" data-src="/resources/img/login/eyeIcon.png">
 			    	<img class="pwBtnImg" alt="비밀번호 표시 버튼" />
 			    </button>
 			    

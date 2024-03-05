@@ -1,11 +1,60 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const showPwBtn = document.querySelector('.showPw');
-  const showIconSrc = showPwBtn.getAttribute('data-src');
-  const pwBtnImg = showPwBtn.querySelector('.pwBtnImg');
-  const userPw = document.getElementById('userPw');
-  const pwConfirm = document.getElementById('pwConfirm');
+  const showPwBtn = document.querySelectorAll('.showPw'); // 비밀번호 표시 버튼
+  let showIconSrc;  // 비밀번호 표시 아이콘 src
 
-  pwBtnImg.src = showIconSrc; // 비밀번호 표시 버튼 이미지 초기화
+  const userPw = document.getElementById('userPw'); // joinform 비밀번호 입력 input
+  const pwConfirm = document.getElementById('pwConfirm'); // joinform 비밀번호 확인 입력 input
+
+  const userPwForm = document.getElementById('PASS_WORD'); // loginform 비빌번호 입력 input
+
+  showPwBtn.forEach(btn => { // forEach 이유: join, login 각 한 개씩 존재함
+
+    let pwBtnImg = btn.querySelector('.pwBtnImg'); // 각 버튼 안에 담긴 img 선택
+
+    showIconSrc = btn.getAttribute('data-src'); // 아이콘 src 가져옴
+    pwBtnImg.src = showIconSrc; // 아이콘 초기화
+
+   /**
+    * 240229 장한원 수정
+    * 비밀번호 표시, 숨김 버튼 클릭 이벤트
+    */
+    btn.addEventListener('click', ()=>{
+      btn.classList.toggle('active');
+
+      if(btn.classList.contains('active')) {
+
+        pwBtnImg.src = '/resources/img/login/eyeHideIcon.png';
+
+        if(btn.classList.contains('f-join')) { // joinform
+
+          userPw.type = 'text';
+          pwConfirm.type = 'text';
+        
+        } else { // loginform
+          userPwForm.type = 'text';
+        }
+        
+      } else {
+
+        pwBtnImg.src = showIconSrc;
+
+        if(btn.classList.contains('f-join')) { // joinform
+
+          userPw.type = 'password';
+          pwConfirm.type = 'password';
+
+        } else { // loginform
+          userPwForm.type = 'password';
+        }
+        
+      }
+    });
+  });
+
+  // const pwBtnImg = showPwBtn.querySelectorAll('.pwBtnImg');
+  // pwBtnImg.forEach(btn => {
+    
+  // });
 
   let pickedRegiCode = []; // 서버 통신을 위한 REGI_CODE 데이터
   let pickedRegiListForStep4 = []; // step4 폼을 위한 리스트
@@ -97,26 +146,6 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   
-  /**
-   * 240210 장한원
-   * step1
-   * 비밀번호 표시, 숨김 버튼
-   */
-  showPwBtn.addEventListener('click', ()=>{
-    showPwBtn.classList.toggle('active');
-
-    if(showPwBtn.classList.contains('active')) {
-      pwBtnImg.src = '/resources/img/login/eyeHideIcon.png';
-      userPw.type = 'text';
-      pwConfirm.type = 'text';
-      
-    } else {
-      pwBtnImg.src = showIconSrc;
-      userPw.type = 'password';
-      pwConfirm.type = 'password';
-    }
-  });
-
   const step1Btn = document.getElementById('next');
   const step2Btn = document.getElementById('next2');
   const submitBtn = document.getElementById('submit');

@@ -91,149 +91,201 @@ document.addEventListener('DOMContentLoaded', ()=>{
   /**
     * summernote 에디터 띄움
     */   
-   $('#summernote').summernote({
-      codeviewFilter: false, // 코드 보기 필터 비활성화
-      codeviewIframeFilter: false, // 코드 보기 iframe 필터 비활성화
-      disableDragAndDrop: false,
-      shortcuts: false,
-      height: 300,                 // 에디터 높이
-      minHeight: null,             // 최소 높이
-      maxHeight: null,             // 최대 높이
-      focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-      lang: "ko-KR",               // 한글 설정
+  $('#summernote').summernote({
+    codeviewFilter: false, // 코드 보기 필터 비활성화
+    codeviewIframeFilter: false, // 코드 보기 iframe 필터 비활성화
+    disableDragAndDrop: false,
+    shortcuts: false,
+    height: 367,                 // 에디터 높이
+    minHeight: 367,             // 최소 높이
+    maxHeight: null,             // 최대 높이
+    focus: true,                 // 에디터 로딩후 포커스를 맞출지 여부
+    lang: 'ko-KR',               // 한글 설정
+    placeholder: '모임 소개글을 작성해주세요.',
 
-      toolbar: [
-         ['style', ['style']], // 글자 스타일 설정 옵션
-         ['fontsize', ['fontsize']], // 글꼴 크기 설정 옵션
-         ['font', ['bold', 'underline', 'clear']], // 글자 굵게, 밑줄, 포맷 제거 옵션
-         ['color', ['color']], // 글자 색상 설정 옵션
-         ['para', ['ul', 'ol', 'paragraph']], // 문단 스타일, 순서 없는 목록, 순서 있는 목록 옵션
-         ['insert', ['picture', 'link', 'video']], // 이미지 삽입, 링크 삽입, 동영상 삽입 옵션
-      ],
+    toolbar: [
+      ['style', ['style']], // 글자 스타일 설정 옵션
+      ['fontsize', ['fontsize']], // 글꼴 크기 설정 옵션
+      ['font', ['bold', 'underline', 'clear']], // 글자 굵게, 밑줄, 포맷 제거 옵션
+      ['color', ['color']], // 글자 색상 설정 옵션
+      ['insert', ['picture', 'link', 'video']], // 이미지 삽입, 링크 삽입, 동영상 삽입 옵션
+    ],
 
-      fontSizes: [
-         '8', '9', '10', '11', '12', '14', '16', '18',
-         '20', '22', '24', '28', '30', '36', '50', '72',
-      ], // 글꼴 크기 옵션
+    fontSizes: [
+      '8', '9', '10', '11', '12', '14', '16', '18',
+      '20', '22', '24', '28', '30', '36', '50', '72',
+    ], // 글꼴 크기 옵션
 
-      styleTags: [
-         'p',  // 일반 문단 스타일 옵션
-         {
-               title: 'Blockquote',
-               tag: 'blockquote',
-               className: 'blockquote',
-               value: 'blockquote',
-         },  // 인용구 스타일 옵션
-         'pre',  // 코드 단락 스타일 옵션
-         {
-               title: 'code_light',
-               tag: 'pre',
-               className: 'code_light',
-               value: 'pre',
-         },  // 밝은 코드 스타일 옵션
-         {
-               title: 'code_dark',
-               tag: 'pre',
-               className: 'code_dark',
-               value: 'pre',
-         },  // 어두운 코드 스타일 옵션
-         'h1', 'h2', 'h3', 'h4', 'h5', 'h6',  // 제목 스타일 옵션
-      ],
+    styleTags: [
+      'p',  // 일반 문단 스타일 옵션
+      'h1', 'h2', 'h3', 'h4', 'h5', 'h6',  // 제목 스타일 옵션
+    ],
 
-      callbacks: {
-         onImageUpload: function (files) {
-          const uploadList = document.getElementById('uploadList');
+    callbacks: {
+      onImageUpload: function (files) {
+        const uploadList = document.getElementById('uploadList');
         
-          // 이미지 다중 업로드
-          if (files.length > 1) {
-            for (let i = files.length - 1; i >= 0; i--) {
-                const reader = new FileReader(); // 파일을 읽음
-                reader.onload = (function (file) {
-                  return function (event) {
+        // 이미지 다중 업로드
+        if (files.length > 1) {
+          for (let i = files.length - 1; i >= 0; i--) {
+            const reader = new FileReader(); // 파일을 읽음
+            reader.onload = (function (file, num) {
+              return function (event) {
 
-                    createImgNode(event.target.result, file.name);
+                createImgNode(event.target.result, file.name, `file${num}`);
 
-                    comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 메인이미지 표시 삭제
+                comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 메인이미지 표시 삭제
 
-                    document.getElementById('uploadList').childNodes[0].classList.add('picked_thumnail'); // 메인이미지 표시
-                    document.getElementById('uploadList').childNodes[0].querySelector('.mainTag').classList.add('mainTag_act'); // 메인이미지 태그 표시
+                uploadList.childNodes[0].classList.add('picked_thumnail'); // 메인이미지 표시
+                uploadList.childNodes[0].querySelector('.mainTag').classList.add('mainTag_act'); // 메인이미지 태그 표시
                   
-                  };
-                })(files[i]); // 함수를 정의 후 바로 실행, 매개변수 file = (바깥 괄호)files[i]
-                reader.readAsDataURL(files[i]); // 파일을 base64로 읽어옴
-        
-                // 파일 데이터 배열에 파일과 파일 이름 추가
-                fileDataArray.push({
-                  key: 'file' + fileNameNum,
-                  file: files[i],
-                  fileName: files[i].name
-                });
+              };
+            })(files[i], fileNameNum); // 함수를 정의 후 바로 실행, 매개변수 file = (바깥 괄호)files[i], num = (바깥 괄호)fileNameNum
 
-                fileNameNum++;
-            }
-          } else {
-            const reader = new FileReader();
-            reader.onload = ({ target }) => {
-
-              createImgNode(target.result, files[0].name);
-
-              comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 메인이미지 표시 삭제
-
-              document.getElementById('uploadList').childNodes[0].classList.add('picked_thumnail'); // 메인이미지 표시
-              document.getElementById('uploadList').childNodes[0].querySelector('.mainTag').classList.add('mainTag_act'); // 메인이미지 태그 표시
-            
-            };
-            reader.readAsDataURL(files[0]);
+            reader.readAsDataURL(files[i]); // 파일을 base64로 읽어옴
         
             // 파일 데이터 배열에 파일과 파일 이름 추가
             fileDataArray.push({
-              key: `file${fileNameNum}`,
-              file: files[0],
-              fileName: files[0].name
+              key: 'file' + fileNameNum,
+              file: files[i],
+              fileName: files[i].name
             });
 
             fileNameNum++;
           }
+        } else {
+          const reader = new FileReader();
+          reader.onload = ({ target }) => {
 
-          /* 메인 이미지 선택(클릭) 이벤트 */
-          document.getElementById('uploadList').addEventListener('click', (event)=>{
-            // const thumnailNode = document.getElementById('uploadImgThumnail');
-            // if(thumnailNode.name) {
-            //   thumnailNode.name = ''; // 클릭 했었던 이미지의 name 값 초기화
-            // }
+            createImgNode(target.result, files[0].name, `file${fileNameNum}`);
 
-            // 클릭한 이미지에 '대표' 태그 표시
-            const mainTag = document.querySelector('.mainTag_act');
-            if(mainTag) {
-              mainTag.classList.remove('mainTag_act');
-            }
+            comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 메인이미지 표시 삭제
+
+            uploadList.childNodes[0].classList.add('picked_thumnail'); // 메인이미지 표시
+            uploadList.childNodes[0].querySelector('.mainTag').classList.add('mainTag_act'); // 메인이미지 태그 표시
             
-            event.target.nextSibling.classList.add('mainTag_act');
+            fileNameNum++;
+          };
 
-            comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 클릭 했었던 이미지 추가했던 class 삭제
-            
-            // border 추가
-            if(event.target.matches('#uploadImgThumnail')){
-              event.target.parentNode.classList.toggle('picked_thumnail');
-            }
+          reader.readAsDataURL(files[0]);
+        
+          // 파일 데이터 배열에 파일과 파일 이름 추가
+          fileDataArray.push({
+            key: `file${fileNameNum}`,
+            file: files[0],
+            fileName: files[0].name
           });
-        }
-      }
-    });
 
-  // 이미지 업로드 후 노드 생성/삽입
-  const createImgNode = function(file, fileName){
+        }
+      },
+
+      // 업로드된 이미지 휴지통 아이콘 눌러 삭제 기능
+      onMediaDelete: function ($target) {
+
+        let targetFileKey = $target[0].dataset.filekey; // file key를 가져옴
+
+        const index = fileDataArray.findIndex((element) =>
+          element.key === targetFileKey
+        ); // 요소의 인덱스 찾기
+
+        if (index !== -1) { // 요소가 존재하는 경우
+          fileDataArray.splice(index, 1); // 배열에서 해당 요소 제거
+        }
+
+        const findParent = document.querySelector(`[data-keyindex=${targetFileKey}`); // 삭제할 이미지의 부모요소 찾음
+        
+        if(findParent.classList.contains('picked_thumnail')) {
+          // 대표 이미지 표시 이동
+          updatePickedThumnail(targetFileKey);
+        }
+
+        removeParentNode(findParent); // 부모요소까지 함께 삭제
+      },
+    }
+  }); // END summernote
+
+
+  /* 삭제된 이미지의 형제 요소에 대표 이미지 표시 추가 */
+  const updatePickedThumnail = function(targetFileKey) {
+
+    const removeTargetImg = uploadList.querySelector(`[data-filekey=${targetFileKey}`); // 삭제될 썸네일 img 태그
+    const removeTargetParent = removeTargetImg.parentNode; // img 태그를 감싸고 있는 부모 li 태그
+    const nextPick = removeTargetParent.nextSibling; // 삭제될 요소의 형제 요소
+
+    comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 원래 있던 border 삭제
+
+    // 원래 있던 대표 태그 삭제
+    const mainTag = document.querySelector('.mainTag_act');
+    if(mainTag) {
+      mainTag.classList.remove('mainTag_act');
+    }
+
+    // 대표 이미지 표시 이동
+    if(nextPick) {
+      
+      nextPick.classList.add('picked_thumnail'); // 삭제되는 요소의 형제 요소에 추가
+      nextPick.querySelector('span.mainTag').classList.add('mainTag_act'); // 대표 태그 표시
+ 
+    } else { // 제일 마지막 이미지 삭제했다면
+
+      const firstChild = document.getElementById('uploadList').childNodes[0];
+      firstChild.classList.add('picked_thumnail');
+      firstChild.querySelector('span.mainTag').classList.add('mainTag_act');
+
+    }
+  }
+
+  /* uploadList에 있는 썸네일 노드를 삭제하는 함수 */
+  const removeParentNode = function(parentNode) {
+    if (parentNode && parentNode.parentNode) {
+        parentNode.parentNode.removeChild(parentNode);
+    }
+  }
+
+
+  /* 메인 이미지 선택(클릭) 이벤트 */
+  document.getElementById('uploadList').addEventListener('click', (event)=>{
+    const targetElement = event.target;
+
+    // 가져온 요소가 img 태그일 때만 작동
+    if(targetElement.tagName === 'IMG') {
+      
+      const mainTag = document.querySelector('.mainTag_act');
+      if(mainTag) {
+        mainTag.classList.remove('mainTag_act');
+      }
+      
+      targetElement.nextSibling.classList.add('mainTag_act');
+
+      comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 클릭 했었던 이미지 추가했던 class 삭제
+    
+      // border 추가
+      if(targetElement.matches('#uploadImgThumnail')){
+        targetElement.parentNode.classList.toggle('picked_thumnail');
+      }
+    }
+  });
+
+
+  /* 이미지 업로드 후 노드 생성/삽입 */
+  const createImgNode = function(file, fileName, filekey){
+
     // 본문에 이미지 삽입
-    $('#summernote').summernote('insertImage', file, fileName);
+    $('#summernote').summernote('insertImage', file, function ($image) {
+      $image.attr('data-fileName', fileName);
+      $image.attr('data-filekey', filekey); // forDataArray의 key
+    });
 
     // 업로드된 이미지 라이브러리 생성
     const item = document.createElement('li');
     item.className = 'uploadItem';
+    item.dataset.keyindex = filekey;
     
     const img = document.createElement('img');
     img.id = 'uploadImgThumnail';
     img.src = file;
     img.dataset.name = fileName;
+    img.dataset.filekey = filekey;
 
     const mainTag = document.createElement('span');
     mainTag.innerHTML = '대표';
@@ -262,7 +314,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
       , CATE_IDXX : pickedCateData
     };
 
-    console.log('step1Data  ' + JSON.stringify(step1Data));
   });
 
   /**
@@ -306,9 +357,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
       };
     }
 
-    console.log('step2Data  ' + JSON.stringify(step2Data));
-    console.log('gatherAddressData  ' + JSON.stringify(gatherAddressData));
-    
   });
 
   /**
@@ -375,8 +423,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
       , APPR_GNDR : gathGender
     };
 
-    console.log('step3Data  ' + JSON.stringify(step3Data));
-
   });
 
 
@@ -442,8 +488,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
       })
       .then((data) => {
 
-        console.log(data)
-        
         if(data != 'fail') {
           comAlert3(
               '모임이 개설되었어요!'
