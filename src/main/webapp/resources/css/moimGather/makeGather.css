@@ -53,6 +53,34 @@
 	overflow-x: hidden;
 }
 
+#step4::-webkit-scrollbar {
+	display: block;
+	height: 0;
+  width: 20px;
+}
+
+/* 스크롤바 막대 설정*/
+#step4::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 10px; 
+	border: 7px solid #fff;
+}
+
+#step4::-webkit-scrollbar-track {
+	background-color: rgba(0,0,0,0);
+}
+
+#step4::-webkit-scrollbar-button:vertical:start:decrement,
+#step4::-webkit-scrollbar-button:vertical:start:increment {
+  display: block;
+  height: 50px;
+}
+
+#step4::-webkit-scrollbar-button:vertical:end:decrement {
+  display: block;
+  width: 50px;
+}
+
 .show_step {
 	width: 714px !important;
   opacity: 1 !important;

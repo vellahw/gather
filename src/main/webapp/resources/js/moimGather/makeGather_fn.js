@@ -201,22 +201,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
         removeParentNode(findParent); // 부모요소까지 함께 삭제
       },
-
-      // onKeydown: function(e) {
-      //   if (e.keyCode === 8) { // Backspace key code
-      //     // 현재 포커스된 영역이 이미지인지 확인
-      //     let $focusedElement = $(this).summernote('focus');
-
-      //     console.log($focusedElement);
-      //     console.log($focusedElement.currentSrc);
-      //     console.log($focusedElement.dataset.filename);
-
-      //     if ($focusedElement.contains('[data-filename]')) {
-      //         // 이미지를 삭제하는 로직을 추가
-      //         $focusedElement.remove(); // 예시로 이미지 요소를 삭제하는 코드
-      //     }
-      //   }
-      // },
     }
   }); // END summernote
 
@@ -272,14 +256,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
       }
       
       targetElement.nextSibling.classList.add('mainTag_act');
-      
+
       comRemoveActiveClass('.picked_thumnail', 'picked_thumnail'); // 클릭 했었던 이미지 추가했던 class 삭제
     
       // border 추가
       if(targetElement.matches('#uploadImgThumnail')){
         targetElement.parentNode.classList.toggle('picked_thumnail');
       }
-
     }
   });
 
