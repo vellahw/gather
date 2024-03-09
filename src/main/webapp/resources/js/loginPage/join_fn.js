@@ -1,153 +1,16 @@
+/**
+ * 회원가입 '기능'을 담당
+ */
 document.addEventListener('DOMContentLoaded', function () {
-  const showPwBtn = document.querySelectorAll('.showPw'); // 비밀번호 표시 버튼
-  let showIconSrc;  // 비밀번호 표시 아이콘 src
-
-  const userPw = document.getElementById('userPw'); // joinform 비밀번호 입력 input
-  const pwConfirm = document.getElementById('pwConfirm'); // joinform 비밀번호 확인 입력 input
-
-  const userPwForm = document.getElementById('PASS_WORD'); // loginform 비빌번호 입력 input
-
-  showPwBtn.forEach(btn => { // forEach 이유: join, login 각 한 개씩 존재함
-
-    let pwBtnImg = btn.querySelector('.pwBtnImg'); // 각 버튼 안에 담긴 img 선택
-
-    showIconSrc = btn.getAttribute('data-src'); // 아이콘 src 가져옴
-    pwBtnImg.src = showIconSrc; // 아이콘 초기화
-
-   /**
-    * 240229 장한원 수정
-    * 비밀번호 표시, 숨김 버튼 클릭 이벤트
-    */
-    btn.addEventListener('click', ()=>{
-      btn.classList.toggle('active');
-
-      if(btn.classList.contains('active')) {
-
-        pwBtnImg.src = '/resources/img/login/eyeHideIcon.png';
-
-        if(btn.classList.contains('f-join')) { // joinform
-
-          userPw.type = 'text';
-          pwConfirm.type = 'text';
-        
-        } else { // loginform
-          userPwForm.type = 'text';
-        }
-        
-      } else {
-
-        pwBtnImg.src = showIconSrc;
-
-        if(btn.classList.contains('f-join')) { // joinform
-
-          userPw.type = 'password';
-          pwConfirm.type = 'password';
-
-        } else { // loginform
-          userPwForm.type = 'password';
-        }
-        
-      }
-    });
-  });
-
-  // const pwBtnImg = showPwBtn.querySelectorAll('.pwBtnImg');
-  // pwBtnImg.forEach(btn => {
-    
-  // });
 
   let pickedRegiCode = []; // 서버 통신을 위한 REGI_CODE 데이터
   let pickedRegiListForStep4 = []; // step4 폼을 위한 리스트
 
   let userGender; // 유저 성별 정보
 
-  const btnContainer = document.querySelectorAll('.btnContainer');
-  const signupContainer = document.getElementById('signupContainer');
-  const signupStep2 = document.getElementById('signupStep2');
-  const signupStep3 = document.getElementById('signupStep3');
-  const signupStep4 = document.getElementById('signupStep4');
-
-  /* 
-  * 240215: 장한원
-  * 이전/다음 버튼 클릭 이벤트(수정)
-  */
-  btnContainer.forEach(btn=>{
-    btn.addEventListener('click', (event)=>{
-      const target = event.target;
-      const btnId = target.id; // 클릭한 버튼 아이디
-
-      /* 다음 버튼 */
-      if(target.matches('.next')) {
-
-        if(btnId == 'next') {
-
-          if (joinFormCheck('step1')) {
-
-            showStep(signupStep2);
-      
-            const appendNode = signupContainer.querySelectorAll('.append_join');
-            appendNode.forEach(element => {
-              element.innerHTML = '';
-            });
-            
-          }
-
-        } else if(btnId == 'next2'){
-
-          if (joinFormCheck('step2')) {
-            showStep(signupStep3);
-
-            const appendNode = signupStep2.querySelectorAll('.append_join');
-            appendNode.forEach(element => {
-              element.innerHTML = '';
-            });
-          }
-
-        } else if(btnId == 'next3') {
-
-          showStep(signupStep4);
-          const appendNode = signupStep3.querySelectorAll('.append_join');
-          appendNode.forEach(element => {
-            element.innerHTML = '';
-          });
-
-          if(pickedRegiListForStep4){
-            showUserPickedRegi(pickedRegiListForStep4, regiList);
-          }
-        }
-
-      /* 이전버튼 */
-      } else if(target.matches('.prev')){
-
-        if(btnId == 'prev') {
-
-          signupContainer.classList.remove('_act');
-          loginForm.classList.add('_act');
-      
-        } else if(btnId == 'prev2') {
-
-          signupStep2.classList.remove('_act');
-          signupContainer.classList.add('_act');
-      
-        } else if(btnId == 'prev3') {
-
-          signupStep3.classList.remove('_act');
-          signupStep2.classList.add('_act');
-      
-        } else if(btnId == 'prev4') {
-
-          signupStep4.classList.remove('_act');
-          signupStep3.classList.add('_act');
-      
-          removeCreatedElements();
-        }
-      }
-    });
-  });
-
-  
   const step1Btn = document.getElementById('next');
   const step2Btn = document.getElementById('next2');
+  const step3Btn = document.getElementById('next3');
   const submitBtn = document.getElementById('submit');
   const authmailBtn = document.querySelector('.authmail'); // '이메일 인증' 버튼
 
@@ -156,74 +19,10 @@ document.addEventListener('DOMContentLoaded', function () {
   let joinUserData;
 
   /**
-   * admin: 장한원
-   * step1 -> step2로 가는 '다음' 버튼
-   */
-  step1Btn.addEventListener('click', ()=>{
-    const userId = document.getElementById('userId').value;
-    const userPw = document.getElementById('userPw').value;
-    const userCellNum = document.getElementById('userCell').value;
-    
-    firstUserData ={
-        USER_IDXX : userId
-      , PASS_WORD : userPw
-      , CELL_NUMB : userCellNum
-    };
-  });
-  
-
-  /**
-   * admin: 장한원
-   * step2 -> step3로 가는 '다음' 버튼
-   * 폼 기입 내용 미리보기
-   */
-  step2Btn.addEventListener('click', ()=>{
-    const userName = document.getElementById('userName').value;
-    const userRegi1 = document.getElementById('userRegiNum').value;
-    const userRegi2 = document.getElementById('userRegiNum2').value;
-    const userRegiNum = userRegi1 + userRegi2;
-    const userNickname = document.getElementById('userNick').value;
-    const userIdValue = document.getElementById('userId').value;
-    const userSelfIntro = document.getElementById('userSelf').value;
-    const nicknameNode = document.querySelector('.nickname');
-    const idNode = document.querySelector('.id');
-    const selfIntroNode = document.querySelector('.selfIntro');
-
-    secondUserData = {
-        USER_NAME : userName
-       ,   REGI_NUMB : userRegiNum
-       , USER_NICK : userNickname
-       , SELF_INTR : userSelfIntro
-    };
-
-    nicknameNode.innerHTML = userNickname;
-    selfIntroNode.innerHTML = userSelfIntro;
-    idNode.innerHTML = `${userIdValue}`;
-
-    /* 유저의 성별에 따른 기본 프로필 사진 설정 */
-    if(userRegi2%2 == 0) {
-      userGender = 'W';
-    } else if(userRegi2%2 == 1) {
-      userGender = 'M';
-    }
-
-    const profileImgPreview = document.querySelector('.preview');
-
-    if(userGender == 'W') {
-      profileImgPreview.src = '/resources/img/basic/profile/basic-w.png'
-      profileImgPreview.dataset.gender = 'W'
-    } else if(userGender == 'M') {
-      profileImgPreview.src = '/resources/img/basic/profile/basic-m.png'
-      profileImgPreview.dataset.gender = 'M'
-    }
-
-  });
-
-/**
- * 240212 KSH 장한원
- * step1
- * 이메일 인증
- */
+   * 240212 KSH 장한원
+   * step1
+   * 이메일 인증
+  */
   authmailBtn.addEventListener('click' , ()=>{
     const userId = document.getElementById('userId');
 
@@ -324,17 +123,8 @@ document.addEventListener('DOMContentLoaded', function () {
     .catch(error => {
       console.error('데이터를 받아오는 중 오류 발생:', error);
     });
-
   });
 
-
-  /**
-   * 240207 장한원
-   * 선호 지역 데이터 처리
-   */
-
-  const regiData = document.getElementById('regi').value;
-  const regiList = comObjectInArray(regiData).result
 
   /* 부모 지역 노드 생성 및 자식 지역 노드 생성 함수 */
   const createNode = function(item) {
@@ -364,7 +154,26 @@ document.addEventListener('DOMContentLoaded', function () {
     parentRegiNode.appendChild(childRegiNode);
   }
 
-  /* 클릭 이벤트 콜백 함수 */
+  /* 자식 지역 버튼 생성 함수 */
+  const createChildRegi = function(item, pcode) {
+    if(item.PARENTS_CODE == pcode) {
+      const container = document.createElement('li');
+
+      const childRegi = document.createElement('button');
+      childRegi.type = 'button';
+      childRegi.className = 'child';
+      childRegi.textContent = item.REGI_NAME;
+      childRegi.dataset.regiCode = item.REGI_CODE;
+
+      childRegi.addEventListener('click', handleChange);
+      container.appendChild(childRegi)
+      
+      const targetElement = document.querySelector(`ul[data-pcode="${pcode}"]`);
+      targetElement.appendChild(container);
+    }
+  }
+
+  /* 자식 지역 버튼 클릭 이벤트 콜백 함수 */
   const handleChange = function(event) {
     event.stopPropagation();
 
@@ -412,26 +221,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   };
 
-  /* 자식 지역 버튼 생성 함수 */
-  const createChildRegi = function(item, pcode) {
-    if(item.PARENTS_CODE == pcode) {
-      const container = document.createElement('li');
 
-      const childRegi = document.createElement('button');
-      childRegi.type = 'button';
-      childRegi.className = 'child';
-      childRegi.textContent = item.REGI_NAME;
-      childRegi.dataset.regiCode = item.REGI_CODE;
-
-      childRegi.addEventListener('click', handleChange);
-      container.appendChild(childRegi)
-      
-      const targetElement = document.querySelector(`ul[data-pcode="${pcode}"]`);
-      targetElement.appendChild(container);
-    }
-  }
-
+  /**
+   * 240207 장한원
+   * 선호 지역 데이터 처리
+  */
+  const regiData = document.getElementById('regi').value;
+  const regiList = comObjectInArray(regiData).result
   let parentCodeList = [];
+
   regiList.forEach(item => {
     parentCodeList.push(item.PARENTS_CODE);
     const regiCode = item.REGI_CODE;
@@ -449,145 +247,27 @@ document.addEventListener('DOMContentLoaded', function () {
   let newParentCodeList = [...new Set(parentCodeList)];
 
   
-/*
- * 자식 지역 클릭 시 class toggle
-*/
-const showChildRegi = function(parentCodeList) {
+  /*
+  * 자식 지역 클릭 시 class toggle
+  */
 
-  parentCodeList.forEach((pcode, i) => {
+    newParentCodeList.forEach((pcode, i) => {
 
-    const targetElement = document.querySelector(`span[data-code="${pcode}"]`);
+      const targetElement = document.querySelector(`span[data-code="${pcode}"]`);
     
-    targetElement.addEventListener('click', (event)=>{
+      targetElement.addEventListener('click', (event)=>{
 
-      event.stopPropagation();
+        event.stopPropagation();
 
-      const parentNameElement = document.querySelector(`span[data-rcode="${pcode}"]`);
-      const childElement = document.querySelector(`ul[data-pcode="${pcode}"]`);
+        const parentNameElement = document.querySelector(`span[data-rcode="${pcode}"]`);
+        const childElement = document.querySelector(`ul[data-pcode="${pcode}"]`);
 
-      targetElement.classList.toggle('parentWrap_active');
-      parentNameElement.classList.toggle('parent_active');
-      childElement.classList.toggle('level2_active');
+        targetElement.classList.toggle('parentWrap_active');
+        parentNameElement.classList.toggle('parent_active');
+        childElement.classList.toggle('level2_active');
 
+      });
     });
-  });
-}
-
-showChildRegi(newParentCodeList);
-
-
-/**
- * 240211
- * 유저가 선택한 선호 지역을 보여주는 함수
- */
-const showUserPickedRegi = function(pickedList, regiList) {
-
-  let parentNameList = [];
-
-  // 사용자의 선호지역 데이터 가공
-  pickedList.forEach(item => {
-    regiList.forEach(data => {
-      if(data.REGI_CODE == item.parentCode) {
-        parentNameList.push({
-            'parentName' : data.REGI_NAME
-          , 'parentCode' : item.parentCode
-          , 'regiName' : item.regiName
-        });
-      }
-    });
-  });
-
-  let previousValue;
-
-  // 부모 지역 생성
-  parentNameList.forEach((current, index)=> {
-    if (index === 0) {
-      previousValue = current.parentCode; // 이전값 현재 값으로 초기화
-
-      createParent(current);
-
-      return;
-    }
-
-    // 현재 parentCode가 이전 parentCode와 같을 땐 요소 생성X
-    if (current.parentCode === previousValue) {
-      return;
-    }
-
-    createParent(current);
-
-    previousValue = current.parentCode; // 이전값 현재 값으로 초기화
-
-  });
-
-  // 자식 지역 생성
-  pickedList.forEach(current => {
-    const regiName = current.regiName;
-    
-    const regiItemTag = document.createElement('li');
-    regiItemTag.innerHTML = regiName;
-    regiItemTag.className = 'pickedChildRegiitem';
-    
-    const targetParent = document.querySelector(`ul[data-step4-child="${current.parentCode}"]`);
-
-    targetParent.appendChild(regiItemTag);
-  });
-}
-
-// 유저가 선택한 부모 지역 만드는 함수
-  const createParent = function(current) {
-    const regiList = document.querySelector('.regiList');
-
-    const parentList = document.createElement('ul');
-    parentList.dataset.step4Pcode = current.parentCode;
-    parentList.className = 'parentRegiItem';
-
-    const childRegiListTag = document.createElement('ul'); // 자식 li 담는 ul
-    childRegiListTag.className = 'pickedChildRegiList';
-    childRegiListTag.dataset.step4Child = current.parentCode;
-    
-    const parentName = document.createElement('span');
-    parentName.innerHTML = current.parentName;
-
-    parentList.appendChild(parentName);
-    parentList.appendChild(childRegiListTag);
-    regiList.append(parentList);
-  }
-
-  function removeCreatedElements() {
-    const parentRegiItems = document.querySelectorAll('.parentRegiItem');
-    parentRegiItems.forEach(item => {
-        item.parentNode.removeChild(item);
-    });
-  }
-  
-  /**
-   * 240214 장한원
-   * step4
-   * 기본 프로필 이미지 요소 생성
-   */
-  const profileImgList = document.querySelector('.profileImgList');
-
-  for (let i = 1; i < 8; i++) {
-    profileImgList.dataset.value = `basicProfile${i}`;
-
-    const item = document.createElement('div');
-    const imgWrap = document.createElement('div');
-    const imgTag = document.createElement('img');
-
-    item.classList.add('basicProfileItem');
-    
-    imgWrap.classList.add('profileImgWrap');
-    imgWrap.classList.add('basic-p');
-    
-    imgTag.src = `/resources/img/basic/profile/basicProfile${i}.png`;
-    imgTag.dataset.value = `basicProfile${i}`;
-    imgTag.classList.add('profileImg');
-
-    item.appendChild(imgWrap);
-    imgWrap.appendChild(imgTag);
-    profileImgList.appendChild(item);
-  }
 
 
   let formData = new FormData(); // 서버로 전송할 폼 객체 생성
@@ -628,6 +308,7 @@ const showUserPickedRegi = function(pickedList, regiList) {
    * 240214 장한원
    * 기본 프로필 사진 선택 시 동작
    */
+  const profileImgList = document.querySelector('.profileImgList');
   profileImgList.addEventListener('click', (event)=>{
     if(event.target.matches('[data-value]')){
       const target = event.target;
@@ -739,6 +420,140 @@ const showUserPickedRegi = function(pickedList, regiList) {
     bgPreview.classList.remove('show-bg');
     bgPreview.classList.add('none-bg');
   });
+
+
+  /**
+   * admin: 장한원
+   * step1 -> step2로 가는 '다음' 버튼
+  */
+  step1Btn.addEventListener('click', ()=>{
+    const userId = document.getElementById('userId').value;
+    const userPw = document.getElementById('userPw').value;
+    const userCellNum = document.getElementById('userCell').value;
+    
+    firstUserData ={
+        USER_IDXX : userId
+      , PASS_WORD : userPw
+      , CELL_NUMB : userCellNum
+    };
+  });
+  
+
+  /**
+   * admin: 장한원
+   * step2 -> step3로 가는 '다음' 버튼
+  */
+  step2Btn.addEventListener('click', ()=>{
+    const userName = document.getElementById('userName').value;
+    const userRegi1 = document.getElementById('userRegiNum').value;
+    const userRegi2 = document.getElementById('userRegiNum2').value;
+    const userRegiNum = userRegi1 + userRegi2;
+    const userNickname = document.getElementById('userNick').value;
+    const userIdValue = document.getElementById('userId').value;
+    const userSelfIntro = document.getElementById('userSelf').value;
+    const nicknameNode = document.querySelector('.nickname');
+    const idNode = document.querySelector('.id');
+    const selfIntroNode = document.querySelector('.selfIntro');
+
+    secondUserData = {
+        USER_NAME : userName
+       ,   REGI_NUMB : userRegiNum
+       , USER_NICK : userNickname
+       , SELF_INTR : userSelfIntro
+    };
+
+    nicknameNode.innerHTML = userNickname;
+    selfIntroNode.innerHTML = userSelfIntro;
+    idNode.innerHTML = `${userIdValue}`;
+
+    /* 유저의 성별에 따른 기본 프로필 사진 설정 */
+    if(userRegi2%2 == 0) {
+      userGender = 'W';
+    } else if(userRegi2%2 == 1) {
+      userGender = 'M';
+    }
+
+    const profileImgPreview = document.querySelector('.preview');
+
+    if(userGender == 'W') {
+      profileImgPreview.src = '/resources/img/basic/profile/basic-w.png'
+      profileImgPreview.dataset.gender = 'W'
+    } else if(userGender == 'M') {
+      profileImgPreview.src = '/resources/img/basic/profile/basic-m.png'
+      profileImgPreview.dataset.gender = 'M'
+    }
+
+  });
+
+
+  /**
+   * admin: 장한원
+   * step3 -> step4로 가는 '다음' 버튼
+  */
+  step3Btn.addEventListener('click', ()=>{
+    if(pickedRegiListForStep4){
+      showUserPickedRegi(pickedRegiListForStep4, regiList);
+    }
+  });
+
+  /**
+   * 240211
+   * 유저가 선택한 선호 지역을 보여주는 함수
+  */
+  const showUserPickedRegi = function(pickedList, regiList) {
+
+    let parentNameList = [];
+
+    // 사용자의 선호지역 데이터 가공
+    pickedList.forEach(item => {
+      regiList.forEach(data => {
+        if(data.REGI_CODE == item.parentCode) {
+          parentNameList.push({
+              'parentName' : data.REGI_NAME
+            , 'parentCode' : item.parentCode
+            , 'regiName' : item.regiName
+          });
+        }
+      });
+    });
+
+    let previousValue;
+
+    // 부모 지역 생성
+    parentNameList.forEach((current, index)=> {
+      if (index === 0) {
+        previousValue = current.parentCode; // 이전값 현재 값으로 초기화
+
+        createParent(current);
+
+        return;
+      }
+
+      // 현재 parentCode가 이전 parentCode와 같을 땐 요소 생성X
+      if (current.parentCode === previousValue) {
+        return;
+      }
+
+      createParent(current);
+
+      previousValue = current.parentCode; // 이전값 현재 값으로 초기화
+
+    });
+
+    // 자식 지역 생성
+    pickedList.forEach(current => {
+      const regiName = current.regiName;
+      
+      const regiItemTag = document.createElement('li');
+      regiItemTag.innerHTML = regiName;
+      regiItemTag.className = 'pickedChildRegiitem';
+      
+      const targetParent = document.querySelector(`ul[data-step4-child="${current.parentCode}"]`);
+
+      targetParent.appendChild(regiItemTag);
+    });
+  }
+
   
   /*
    * admin: 장한원
@@ -808,39 +623,9 @@ const showUserPickedRegi = function(pickedList, regiList) {
     });
   });
 
-});
+}); // END DOMContentLoaded
 
 
-/* 
- * admin: 장한원
- * 로그인/회원가입 폼 전환을 담당
-*/
-const toggleForm = function(formId) {
-  const loginForm = document.getElementById('loginForm');
-  const findIdForm = document.getElementById('findIdForm');
-  const findPwForm = document.getElementById('findPwForm');
-  const signupContainer = document.getElementById('signupContainer');
-
-  loginForm.classList.remove('_act');
-
-  if (formId === 'findIdForm') {
-    findIdForm.classList.add('_act');
-  } else if (formId === 'findPwForm') {
-    findPwForm.classList.add('_act');
-  } else if(formId === 'signupForm') {
-    signupContainer.classList.add('_act');
-    loginForm.classList.remove('_act');
-  }
-}
-
-
-/**
- * 버튼 클릭시 다음(이전) 폼 보여주는 함수
- */
-const showStep = function(stepElement) {
-  signupContainer.classList.remove('_act');
-  stepElement.classList.add('_act');
-}
 
 
 /**
@@ -1169,98 +954,3 @@ const showCapslockTooltip = function(event) {
     tooltip.classList.remove('show_hidden_element');
   }
 }
-
-/**
- * admin: 장한원
- * 유효성검사 경고 문구 띄우는 함수
-*/
-const controlStyleAndAppendWarning = function(element, appendId, appendText) {
-  const idContainer = document.querySelector('.userIdContainer');
-  const pwContainer = document.querySelector('.userPwContainer');
-  const authmailInput = document.querySelector('.authmailInput');
-
-  // margin 수정
-  // if(appendId == 'appendId') {
-  //   idContainer.classList.add('append-margin-bottom');
-  // } else if(appendId == 'appendPw') {
-  //   pwContainer.classList.add('append-margin-bottom');
-  // } else if(appendId == 'appendAuthnum') {
-  //   authmailInput.classList.add('append-margin-bottom');
-  // } else {
-  //   document.querySelector('.'+ appendId).classList.add('append-margin-bottom');
-  // }
-
-  document.getElementById(appendId).innerHTML = appendText;
-
-  element.focus();
-}
-
-
-/**
- * admin: 장한원
- * 유효성검사 경고 문구 숨기는 함수
-*/
-const hideWarning = function(className) {
-  const appendNode = document.querySelector(className);
-  const idContainer = document.querySelector('.userIdContainer');
-  const pwContainer = document.querySelector('.userPwContainer');
-  
-  // if(className == '.userId') {
-  //   idContainer.classList.remove('append-margin-bottom');
-  // } else if(className == '.userPw') {
-  //   pwContainer.classList.remove('append-margin-bottom');
-  // } else {
-  //   document.querySelector(className).classList.remove('append-margin-bottom');
-  // }
-
-  appendNode.innerHTML = '';
-}
-
-/**
-  * 240213 장한원
-  * 메일 인증 번호 유효시간 타이머
-*/
-let countdownInterval;
-function startTimer() {
-  const timeInMinutes = 3;
-  const timeInSeconds = timeInMinutes * 60;
-
-  const timerDisplay = document.getElementById('timer');
-  let currentTime = timeInSeconds;
-
-  clearInterval(countdownInterval); // 타이머 멈춤
-  timerDisplay.textContent = ''; // 타이머 표시 요소를 초기화
-
-  // 초단위로 감소하는 타이머
-  countdownInterval = setInterval(() => {
-      currentTime--;
-      updateTimerDisplay(currentTime);
-
-      if (currentTime <= 0) {
-          clearInterval(countdownInterval);
-
-          timerDisplay.textContent = '0:00';
-
-          comAlert3(
-              '인증 시간이 만료되었습니다.'
-            , null, 'warning'
-            , function(){
-                document.querySelector('.authmailContainer').style.display = 'none';
-                document.querySelector('#authnum').value = '';
-              }
-          );
-      }
-  }, 1000);
-}
-
-/* 
- * 240213 장한원
- * 타이머 표시 업데이트 함수
-*/
-function updateTimerDisplay(timeInSeconds) {
-  const timerDisplay = document.getElementById('timer');
-  const minutes = Math.floor(timeInSeconds / 60);
-  const seconds = timeInSeconds % 60;
-
-  timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-} 
