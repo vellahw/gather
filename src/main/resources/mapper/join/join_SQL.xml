@@ -9,7 +9,8 @@
 		<!--  회원번호 체번 -->
 	   <select  id="makeUserNumb" resultType="String">
     	<![CDATA[
-	      SELECT 'UR' ||TO_CHAR(SYSDATE, 'YYMM') ||LPAD(NVL(MAX(CAST(SUBSTR(USER_NUMB,7,4) AS NUMBER))+1,1),4,'0') AS USER_NUMB
+	      SELECT 'UR' ||TO_CHAR(SYSDATE, 'YYMM') ||LPAD(NVL(MAX(CAST(SUBSTR(USER_NUMB,7,4) AS NUMBER))+1,1),4,'0') 
+	      		 AS USER_NUMB
 		  	FROM TM_USERXM
 		   WHERE SUBSTR(USER_NUMB,3,4) = TO_CHAR(SYSDATE, 'YYMM')
     	]]>
@@ -65,6 +66,91 @@
                      ELSE '사용가능한 닉네임입니다.' END AS CHECK_NICK
     	   FROM TM_USERXM
 		  WHERE USER_NICK = #{USER_NICK}
+    ]]>
+   </select>
+   
+    <!-- vwGather -->
+   <select id="vwGather">
+      <![CDATA[
+        
+  		  CREATE OR REPLACE FORCE VIEW "GATHER"."VW_GATHER" AS 
+  		  SELECT /*VW_GATHER*/
+          		  A.MOIM_IDXX                                                          /*게더 ID*/
+         	    , A.MOIM_TITL                                                          /*게더 제목*/
+         		, A.MOIM_CNTT                                                          /*게더 내용*/
+         		, CASE WHEN LENGTH(A.FILE_SVNM) > 32
+                            THEN '/resources/img/upload/gather/' || A.MOIM_IDXX ||'/'|| A.FILE_SVNM 
+                       WHEN A.FILE_SVNM  IS NULL
+                            THEN '/resources/img/basic/moim/basicMoimThumnail.png'
+                       ELSE '/resources/img/basic/gather/' || A.FILE_SVNM
+                  END AS MOIM_IMAG                                                      /*게더 대표이미지*/
+                , A.CATE_IDXX                                                           /*카테고리 코드*/
+         		, getCodeName('CATE_IDXX',SUBSTR(A.CATE_IDXX,'1','1')) AS PARENTS_CATE  /*상위 카테고리*/
+         		, getCodeName('CATE_IDXX', A.CATE_IDXX) AS CHILD_CATE 					/*하위 카테고리*/
+                , NVL2(D.MEMB_COUNT, D.MEMB_COUNT||'/'|| A.MAXX_PEOP ,  0 ||'/'|| A.MAXX_PEOP) 
+                  AS PRES_PEOP                                                          /*현재 인원*/
+                , A.MAXX_PEOP
+                , D.MEMB_COUNT
+         		, A.APPR_YSNO                                                           /* 승인여부 */
+                , A.MINN_AGEE                                                           /* 최소나이 */    
+                , A.MAXX_AGEE                                                           /* 최대나이 */      
+                , CASE WHEN A.MINN_AGEE = 0 AND A.MAXX_AGEE = 100 
+                            THEN '15세 이상 ' ||
+                            NVL2(A.APPR_GNDR,getCodeName('COMM_GNDR', A.APPR_GNDR) || '만', ' ')
+                       WHEN A.MINN_AGEE > 0 AND A.MAXX_AGEE < 100 
+                            THEN A.MINN_AGEE || '세 이상 ' || A.MAXX_AGEE || '세 이하 ' ||
+                            NVL2(A.APPR_GNDR,getCodeName('COMM_GNDR', A.APPR_GNDR) || '만', ' ')
+                       WHEN A.MINN_AGEE = 0 AND A.MAXX_AGEE < 100 
+                             THEN '15세 이상 ' || A.MAXX_AGEE || '세 이하 ' ||
+                             NVL2(A.APPR_GNDR,getCodeName('COMM_GNDR', A.APPR_GNDR) || '만', ' ')
+                       ELSE A.MINN_AGEE || '세 이상 ' || A.MAXX_AGEE || '세 이하 ' ||
+                             NVL2(A.APPR_GNDR,getCodeName('COMM_GNDR', A.APPR_GNDR) || '만', ' ')
+                    END AS APPR_LMIT													/*모임 제한*/
+                , A.APPR_GNDR AS GNDR_CODE                                              /*모임 성별코드*/
+                , CASE WHEN A.MOIM_COST IS NOT NULL
+                       THEN CASE WHEN A.MOIM_COST = 0 
+                                 THEN '참가비 없음 '
+                            ELSE  TO_CHAR(A.MOIM_COST, 'FM999,999,999,999') || '원'
+                        END     
+                       ELSE '참가비 없음 '
+                   END AS MOIM_COST                                                     /*모임 비용*/
+         		, getCodeName('REGI_CODE',SUBSTR(A.REGI_CODE,1,1)) AS PREGI_NAME		/*부모 지역명*/
+                , getCodeName('REGI_CODE', A.REGI_CODE) AS REGI_NAME                    /*지역*/             
+                , A.REGI_CODE                                                           /*지역코드*/
+         		, A.USER_NUMB 															/*방장 회원번호*/
+         		, B.USER_NICK 															/*방장 닉네임*/
+         		, getuserimage(B.FILE_SVNM, B.USER_NUMB) AS USER_IMAG 					/*방장 프로필사진*/
+                , B.SELF_INTR                                                           /*방장 자기소개*/
+         		, TO_CHAR(A.MOIM_DATE, 'MM.DD(DY)') ||' '|| formatTime(A.MOIM_TIME) AS SMAL_DATE
+         		, formatDate(A.MOIM_DATE) ||' '|| formatTime(A.MOIM_TIME) AS FULL_DATE
+         		, NVL(C.LIKE_COUNT,0) AS LIKE_COUNT                                     /*좋아요 갯수*/      
+                , A.REGG_DATE                                                           /*등록날짜*/
+                , A.MOIM_TIME                                                           /*모임시간*/
+                , A.ENDD_YSNO                                                           /*모임마감여부*/
+                , CASE WHEN MEMB_COUNT >= MAXX_PEOP
+                            THEN 'Y'
+                       ELSE 'N'
+                   END AS FULL_YSNO                                                     /* 인원초과여부 */
+                , A.COMP_YSNO                                                           /*작성완료여부*/
+      	    FROM TM_GATHER A
+ 	   LEFT JOIN TM_USERXM B
+        	  ON A.USER_NUMB = B.USER_NUMB
+ 	   LEFT JOIN (SELECT COUNT(*) AS LIKE_COUNT
+                       , LIKE_IDXX
+              		FROM TM_HEARTS
+                GROUP BY LIKE_IDXX
+            	 ) C
+        	  ON A.MOIM_IDXX = C.LIKE_IDXX
+ 	   LEFT JOIN (SELECT COUNT(*) AS MEMB_COUNT
+                       , MOIM_IDXX
+              	   FROM TB_MEMBER
+                  WHERE BANN_YSNO = 'N'
+                    AND WAIT_YSNO = 'N'
+               GROUP BY MOIM_IDXX
+                ) D
+        	  ON A.MOIM_IDXX = D.MOIM_IDXX
+           WHERE A.DELT_YSNO = 'N'
+             AND A.COMP_YSNO = 'Y';
     ]]>
    </select>
    

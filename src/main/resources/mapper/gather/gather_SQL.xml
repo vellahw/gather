@@ -12,7 +12,8 @@
     	<![CDATA[
     	  
 	      SELECT /* gather.makeGatherNumb */
-	      		 'GT' ||TO_CHAR(SYSDATE, 'YYMM') ||LPAD(NVL(MAX(CAST(SUBSTR(MOIM_IDXX,7,4) AS NUMBER))+1,1),4,'0') AS MOIM_IDXX
+	      		 'GT' ||TO_CHAR(SYSDATE, 'YYMM') ||LPAD(NVL(MAX(CAST(SUBSTR(MOIM_IDXX,7,4) AS NUMBER))+1,1),4,'0') 
+	      		 AS MOIM_IDXX
 		  	FROM TM_GATHER
 		   WHERE SUBSTR(MOIM_IDXX,3,4) = TO_CHAR(SYSDATE, 'YYMM')
     	]]>
