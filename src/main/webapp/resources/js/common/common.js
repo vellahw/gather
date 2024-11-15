@@ -407,26 +407,33 @@ function comWhere2Go(pageName, params) {
 }
 
 /* 
-admin:Hanwon
+admin:Hanwon, KSH
 name:parseString
 Purpose: input value의 값을 JSON으로 파싱
 parameter: (targetValue: 파싱할 타겟의 value)
-*/	
+*/
 function parseString(targetValue) {
+    try {
+        // 1. 중괄호와 공백 제거
+        const cleanedString = targetValue.replace(/[{} ]/g, '');
 
-  // 1. 중괄호와 공백 제거
-  const cleanedString = targetValue.replace(/[{} ]/g, '');
-  
-  // 등호를 콜론으로 대체, 키와 값을 큰따옴표로 감쌈
-  const jsonString = cleanedString.replace(/([^,=]+)=([^,=]+)/g, '"$1":"$2"');
-  
-  // JSON 타입으로 파싱
-  const result = JSON.parse(`{${jsonString}}`);
-      
-  return { result: result };
+        // 2. 등호를 콜론으로 대체, 키와 값을 큰따옴표로 감쌈
+        const jsonString = cleanedString.replace(/([^,=]+)=([^,=]+)/g, (match, key, value) => {
+            // 키와 값 양쪽 공백 제거 후 큰따옴표로 감싸기
+            const sanitizedKey = key.trim().replace(/"/g, '\\"'); // 키 내부 큰따옴표 이스케이프
+            const sanitizedValue = value.trim().replace(/"/g, '\\"'); // 값 내부 큰따옴표 이스케이프
+            return `"${sanitizedKey}":"${sanitizedValue}"`;
+        });
 
+        // 3. JSON 타입으로 파싱
+        const result = JSON.parse(`{${jsonString}}`);
+
+        return { result: result };
+    } catch (error) {
+        console.error('JSON 파싱 중 에러가 발생했습니다:', error.message);
+        return { error: 'Invalid format', details: error.message };
+    }
 }
-
 
 /* 
 admin:Hanwon
