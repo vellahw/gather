@@ -76,12 +76,6 @@ public class MoimDetailController {
 
 				joinService.inertCate(cateIn, commandMap);
 				
-				// 로그인시 로그인 회원의 해당 게더 참여상태
-				List<Map<String, Object>> notify = notifyService.getNotify(commandMap.getMap(), commandMap, session);
-				
-				mv.addObject("notify", notify);
-				mv.addObject("notiCount", notify.size());
-				
 				Map<String, Object> result = gatherService.getGatherYourState(commandMap.getMap(), session, commandMap);
 				
 				if(result != null) {

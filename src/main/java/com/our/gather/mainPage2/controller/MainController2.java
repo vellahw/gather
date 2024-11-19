@@ -1,36 +1,28 @@
-package com.our.gather.mainPage.controller;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
+package com.our.gather.mainPage2.controller;
 
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.common.Criteria;
 import com.our.gather.common.common.Pager;
 import com.our.gather.common.oracleFunction.OracleFunction;
-import com.our.gather.common.service.CommonService;
 import com.our.gather.moimGather.service.GatherService;
-import com.our.gather.notify.service.NotifyService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-@Controller
-public class MainController {
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+@Controller("mainPage2Controller")
+public class MainController2 {
 
 	@Resource(name = "GatherService")
 	private GatherService gatherService;
 
-	@RequestMapping(value = "/gather.com")
+	@RequestMapping(value = "/gather2.com")
 	public ModelAndView main(@RequestParam(value = "type", required = false) String LIST_TYPE,
 							 @RequestParam(value = "cate", required = false) String CATE_IDXX,
 							 @RequestParam(value = "keyword", required = false) String KEYY_WORD,
@@ -206,7 +198,7 @@ public class MainController {
 	}
 	
 	//날씨에 따른 모임(챌린지, 클럽에 출력 유뮤 추후 결정)
-	@RequestMapping(value = "/getWeatherMoim.com", method = RequestMethod.POST)
+	@RequestMapping(value = "/getWeatherMoim2.com", method = RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView getWeatherMoim(@RequestBody Map<String, String> requestBody, CommandMap commandMap,
 			HttpSession session) throws Exception {
@@ -284,7 +276,7 @@ public class MainController {
 	}
 	
 	//비로그인 사용자 근처의 모임(챌린지, 클럽에 출력 유무 추후 결정)
-	@RequestMapping(value = "/getCurrentRegionMoim.com", method = RequestMethod.POST)
+	@RequestMapping(value = "/getCurrentRegionMoim2.com", method = RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView getCurrentRegionMoim(@RequestBody Map<String, String> requestBody, CommandMap commandMap,
 			HttpSession session) throws Exception {

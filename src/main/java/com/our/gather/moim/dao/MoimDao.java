@@ -1,22 +1,21 @@
-package com.our.gather.moimGather.dao;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
-
-import org.springframework.stereotype.Repository;
+package com.our.gather.moim.dao;
 
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.dao.AbstractDao;
 import com.our.gather.common.oracleFunction.OracleFunction;
 import com.our.gather.common.service.CommonService;
+import com.our.gather.moim.service.MoimService;
+import org.springframework.stereotype.Repository;
 
-@Repository("GatherDao")
-public class GatherDao extends AbstractDao {
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Repository("MoimDao")
+public class MoimDao extends AbstractDao {
 
     @Resource(name = "CommonService")
     private CommonService commonService;

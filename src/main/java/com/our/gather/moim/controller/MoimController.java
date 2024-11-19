@@ -1,13 +1,12 @@
-package com.our.gather.moimGather.controller;
+package com.our.gather.moim.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.our.gather.common.common.CommandMap;
+import com.our.gather.common.service.CommonService;
+import com.our.gather.detailPage.service.MoimDetailService;
+import com.our.gather.moimGather.service.GatherService;
+import com.our.gather.notify.service.NotifyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Isolation;
@@ -18,16 +17,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.our.gather.common.common.CommandMap;
-import com.our.gather.common.service.CommonService;
-import com.our.gather.detailPage.service.MoimDetailService;
-import com.our.gather.moimGather.service.GatherService;
-import com.our.gather.notify.service.NotifyService;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
-public class GatherController {
+public class MoimController {
 
 	@Resource(name = "CommonService")
 	private CommonService commonService;
@@ -42,7 +40,7 @@ public class GatherController {
 	private NotifyService notifyService;
 
 	// 개설 폼
-	@RequestMapping(value = "/gather/makeGather.com")
+	@RequestMapping(value = "/gather/makeMoim.com")
 	public ModelAndView moimResister(@RequestParam(value="MOIM_IDXX", required = false) String MOIM_IDXX, CommandMap commandMap, HttpSession session) throws Exception {
 
 		ModelAndView mv = new ModelAndView("/moimGather/makeGather");
@@ -70,7 +68,7 @@ public class GatherController {
 
 	// 게더 개설
 	@Transactional(isolation = Isolation.SERIALIZABLE)
-	@RequestMapping(value = "/gather/makeGatherDo.com", method = RequestMethod.POST)
+	@RequestMapping(value = "/gather/makeMoimDo.com", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<String> makeGather(@RequestParam("data") String gatherData,
 			@RequestParam("map") String mapData, HttpServletRequest request, CommandMap commandMap, HttpSession session)
@@ -124,8 +122,8 @@ public class GatherController {
 
 	}
 
-	// 개설 폼
-	@RequestMapping(value = "/gather/modifyGather.com")
+	// 수정 폼
+	@RequestMapping(value = "/gather/modifyMoim.com")
 	public ModelAndView modifyGatherForm(@RequestParam(value = "idx", required = false) String MOIM_IDXX, CommandMap commandMap, HttpSession session) throws Exception {
 
 		ModelAndView mv = new ModelAndView("/moimGather/makeGather");

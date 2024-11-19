@@ -23,7 +23,7 @@
 		<property name="logFormatter"><!-- 출력 로그에 관한 설정 -->
 			<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
 				<property name="loggingType" value="MULTI_LINE"/><!-- 줄바꿈 출력 -->
-				<property name="sqlPrefix" value="SQL	:"/><!-- 출력 쿼리문 앞에 붙일 문장 -->
+				<property name="sqlPrefix" value="SQL	:&#10;"/><!-- 출력 쿼리문 앞에 붙일 문장 -->
 			</bean>
 		</property>
 	</bean>

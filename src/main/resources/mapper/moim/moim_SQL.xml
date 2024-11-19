@@ -5,108 +5,98 @@
 	작성자:Hwai
     작성일:23.12.19
 -->
-<mapper namespace="gather">
-	
-		<!--  게더번호 체번 -->
-	    <select id="makeGatherNumb" resultType="String">
-    	<![CDATA[
-	      SELECT /* gather.makeGatherNumb */
-	      		 'GT' ||TO_CHAR(SYSDATE, 'YYMM') ||LPAD(NVL(MAX(CAST(SUBSTR(MOIM_IDXX,7,4) AS NUMBER))+1,1),4,'0') AS MOIM_IDXX
-		  	FROM TM_GATHER
-		   WHERE SUBSTR(MOIM_IDXX,3,4) = TO_CHAR(SYSDATE, 'YYMM')
-    	]]>
-    	</select>
-    	
-	   <!--  회원가입 -->
-	   <insert id="makeGather" parameterType="hashmap">
-	        <![CDATA[
-	        /* gather.makeGather */
-	          INSERT INTO TM_GATHER (
-					      MOIM_IDXX  	/* 게더번호 */
-					    , USER_NUMB  	/* 회원번호(방장번호) */
-					    , MOIM_TITL  	/* 게더명 7자리 */
-					    , MOIM_CNTT  	/* 상세내용 */
-					    , CATE_IDXX  	/* 카테고리PK */
-					    , FILE_SVNM  	/* 대표 이미지 파일 */
-					    , REGI_CODE  	/* 행정구역코드 */
-					    , APPR_YSNO  	/* 승인여부 (Y,N) */
-					    , APPR_GNDR  	/* 참가성별(NULL,M,W) */
-					    , MINN_AGEE		/* 최소참가연령(제한없음0) */
-					    , MAXX_AGEE     /* 최대참가연령(제한없음100) */
-					    , MINN_PEOP		/* 최소참가인원(2) */
-					    , MAXX_PEOP		/* 최대참가인원(30) */
-					    , MOIM_COST		/* 참가비용 */
-					    , MOIM_DATE		/* 모임날짜(마감날짜) */
-					    , MOIM_TIME		/* 모임시간(마감시간) */
-					    , REGG_DATE		/* 등록날짜 */
-					    , COMP_YSNO		/* 작성완료여부 */
-					    , DELT_YSNO		/* 삭제여부(Y,N) /  */
-					    , ENDD_YSNO		/* 마감여부 */
-			 )  VALUES (
-					      #{MOIM_IDXX}  					/* 게더번호 */
-					    , #{USER_NUMB}  					/* 회원번호(방장번호) */
-					    , #{MOIM_TITL, jdbcType=VARCHAR}  	/* 게더명 */
-					    , #{MOIM_CNTT, jdbcType=VARCHAR}  	/* 상세내용 */
-					    , #{CATE_IDXX, jdbcType=VARCHAR}  	/* 카테고리PK */
-					    , #{FILE_SVNM, jdbcType=VARCHAR}  	/* 대표 이미지 파일 */
-					    , #{REGI_CODE, jdbcType=VARCHAR}  	/* 행정구역코드 */
-					    , #{APPR_YSNO, jdbcType=VARCHAR}  	/* 승인여부 (Y,N) */
-					    , #{APPR_GNDR, jdbcType=VARCHAR} 	/* 참가성별(NULL,M,W) */
-					    , #{MINN_AGEE, jdbcType=INTEGER}	/* 최소참가연령(제한없음0) */
-					    , #{MAXX_AGEE, jdbcType=INTEGER}    /* 최대참가연령(제한없음100) */
-					    , #{MINN_PEOP, jdbcType=INTEGER}	/* 최소참가인원(2) */
-					    , #{MAXX_PEOP, jdbcType=INTEGER}	/* 최대참가인원(30) */
-					    , #{MOIM_COST, jdbcType=INTEGER}	/* 참가비용 */
-					    , #{MOIM_DATE, jdbcType=DATE}		/* 모임날짜(마감날짜) */
-					    , #{MOIM_TIME, jdbcType=VARCHAR}	/* 모임시간(마감시간) */
-					    , SYSDATE							/* 등록날짜 */
-					    , #{COMP_YSNO}						/* 작성완료여부 */
-					    , 'N'								/* 삭제여부(Y,N) */
-					    , 'N'								/* 마감여부 */
-					   )
-	            ]]>
-	   </insert>
-	
-   <!-- 게더 메인화면 -->
-   <select id="mainGather" parameterType='hashmap'
-      resultType="hashmap">
+<mapper namespace="moim">
+
+	<!--
+	작성자:Hwai
+    작성일:23.12.19
+    (모임 개설)
+    -->
+	<insert id="makeMoim" parameterType="hashmap" useGeneratedKeys="true" keyProperty="MOIM_IDXX">
+		<!-- 채번을 위한 selectKey -->
+		<selectKey keyProperty="MOIM_IDXX" resultType="String" order="BEFORE">
+			<![CDATA[
+			SELECT #{MOIM_TYPE} || TO_CHAR(SYSDATE, 'YYMM') ||
+				   LPAD(NVL(MAX(CAST(SUBSTR(MOIM_IDXX,7,4) AS NUMBER)) + 1, 1), 4, '0') AS MOIM_IDXX
+			  FROM TM_MOIMXM
+			 WHERE SUBSTR(MOIM_IDXX,3,4) = TO_CHAR(SYSDATE, 'YYMM')
+        ]]>
+		</selectKey>
+		<![CDATA[
+		/* moim.makeMoim */
+		  INSERT INTO TM_MOIMXM (
+					  MOIM_IDXX  						/* 모임번호 */
+					, USER_NUMB  						/* 회원번호(방장번호) */
+					, MOIM_TITL  						/* 게더명 7자리 */
+					, MOIM_CNTT  						/* 상세내용 */
+					, CATE_IDXX  						/* 카테고리PK */
+					, FILE_SVNM  						/* 대표 이미지 파일 */
+					, REGI_CODE  						/* 행정구역코드 */
+					, APPR_YSNO  						/* 승인여부 (Y,N) */
+					, APPR_GNDR  						/* 참가성별(NULL,M,W) */
+					, MINN_AGEE							/* 최소참가연령(제한없음0) */
+					, MAXX_AGEE     					/* 최대참가연령(제한없음100) */
+					, MINN_PEOP							/* 최소참가인원(2) */
+					, MAXX_PEOP							/* 최대참가인원(30) */
+					, MOIM_COST							/* 참가비용 */
+					, MOIM_DATE							/* 모임날짜(마감날짜) */
+					, MOIM_TIME							/* 모임시간(마감시간) */
+					, REGG_DATE							/* 등록날짜 */
+					, COMP_YSNO							/* 작성완료여부 */
+					, DELT_YSNO							/* 삭제여부(Y,N) */
+					, ENDD_YSNO							/* 마감여부 */
+		  ) VALUES (
+					  #{MOIM_IDXX}  					/* 게더번호 */
+					, #{USER_NUMB}  					/* 회원번호(방장번호) */
+					, #{MOIM_TITL, jdbcType=VARCHAR}  	/* 게더명 */
+					, #{MOIM_CNTT, jdbcType=VARCHAR}  	/* 상세내용 */
+					, #{CATE_IDXX, jdbcType=VARCHAR}  	/* 카테고리PK */
+					, #{FILE_SVNM, jdbcType=VARCHAR}  	/* 대표 이미지 파일 */
+					, #{REGI_CODE, jdbcType=VARCHAR}  	/* 행정구역코드 */
+					, #{APPR_YSNO, jdbcType=VARCHAR}  	/* 승인여부 (Y,N) */
+					, #{APPR_GNDR, jdbcType=VARCHAR} 	/* 참가성별(NULL,M,W) */
+					, #{MINN_AGEE, jdbcType=INTEGER}	/* 최소참가연령(제한없음0) */
+					, #{MAXX_AGEE, jdbcType=INTEGER}    /* 최대참가연령(제한없음100) */
+					, #{MINN_PEOP, jdbcType=INTEGER}	/* 최소참가인원(2) */
+					, #{MAXX_PEOP, jdbcType=INTEGER}	/* 최대참가인원(30) */
+					, #{MOIM_COST, jdbcType=INTEGER}	/* 참가비용 */
+					, #{MOIM_DATE, jdbcType=DATE}		/* 모임날짜(마감날짜) */
+					, #{MOIM_TIME, jdbcType=VARCHAR}	/* 모임시간(마감시간) */
+					, SYSDATE							/* 등록날짜 */
+					, #{COMP_YSNO}						/* 작성완료여부 */
+					, 'N'								/* 삭제여부(Y,N) */
+					, 'N'								/* 마감여부 */
+		)
+    ]]>
+	</insert>
+
+	<!-- 메인화면 -->
+   <select id="mainMoim" parameterType='hashmap' resultType="hashmap">
       <![CDATA[
          SELECT /*mainPage.mainGather*/
          		  RNUM
-                , TYPE                				/* 게더 타입 ('Taste': 취항 , 'Hot': 핫한게더 , 'Like':좋아요 많은 순 'Region': 지역) */
-                , MOIM_IDXX				            /* 게더 ID */
-                , MOIM_TITL			                /* 게더 제목 */
-                , MOIM_IMAG				            /* 게더 대표이미지 */
-                , CATE_IDXX							/* 카테고리 코드 */
-                , PARENTS_CATE						/* 상위 카테고리 */
-                , CHILD_CATE						/* 하위 카테고리 */
-                , PRES_PEOP							/* 현재 인원: (현재인원/최대인원)*/
-                , APPR_YSNO							/* 승인여부 */
-                , APPR_LMIT							/* 모임 제한 */
-                , PREGI_NAME						/* 부모지역명 */
-                , REGI_NAME							/* 지역명 */
-                , USER_NUMB							/* 방장 회원번호 */
-                , USER_NICK							/* 방장 닉네임 */
-                , USER_IMAG							/* 방장 프로필사진 */
-                , SMAL_DATE							/* 모임시간 (날짜 형식 MM.dd(day) 오전/오후 HH:mm) */
-                , FULL_DATE							/* 날짜 형식 (YYYY년 M월 오전/오후 HH:mm) */
-                , LIKE_COUNT						/* 좋아요 수 */
-                , REGG_DATE							/* 개설일 */
-                , ENDD_YSNO							/* 모임 시간*/
-                ]]>
-                 <if test="USER_NUMB != null">
-      			 	<![CDATA[
-                , getAmILike (MOIM_IDXX, #{USER_NUMB}) AS LIKE_YSNO					/* 로그인유저 좋아요 유무 */
-                , getAmIBkmk (MOIM_IDXX, #{USER_NUMB}) AS BKMK_YSNO					/* 로그인유저 북마크 유무 */
-                  	]]>
-     			 </if>
-     			 <if test="USER_NUMB == null">
-      			 	<![CDATA[
-                , getAmILike (MOIM_IDXX, null) AS LIKE_YSNO							/* 비로그인 시 좋아요 유무 없음 0 리턴 */
-                , getAmIBkmk (MOIM_IDXX, null) AS BKMK_YSNO							/* 비로그인 시 북마크 유무 없음 0 리턴 */
-                  	]]>
-     			 </if>
-     			 <![CDATA[
+                , TYPE                														/* 게더 타입 ('Taste': 취항 , 'Hot': 핫한게더 , 'Like':좋아요 많은 순 'Region': 지역) */
+                , MOIM_IDXX				            										/* 게더 ID */
+                , MOIM_TITL			                										/* 게더 제목 */
+                , MOIM_IMAG				            										/* 게더 대표이미지 */
+                , CATE_IDXX																	/* 카테고리 코드 */
+                , PARENTS_CATE																/* 상위 카테고리 */
+                , CHILD_CATE																/* 하위 카테고리 */
+                , PRES_PEOP																	/* 현재 인원: (현재인원/최대인원)*/
+                , APPR_YSNO																	/* 승인여부 */
+                , APPR_LMIT																	/* 모임 제한 */
+                , PREGI_NAME																/* 부모지역명 */
+                , REGI_NAME																	/* 지역명 */
+                , USER_NUMB																	/* 방장 회원번호 */
+                , USER_NICK																	/* 방장 닉네임 */
+                , USER_IMAG																	/* 방장 프로필사진 */
+                , SMAL_DATE																	/* 모임시간 (날짜 형식 MM.dd(day) 오전/오후 HH:mm) */
+                , FULL_DATE																	/* 날짜 형식 (YYYY년 M월 오전/오후 HH:mm) */
+                , LIKE_COUNT																/* 좋아요 수 */
+                , REGG_DATE																	/* 개설일 */
+                , ENDD_YSNO																	/* 모임 시간*/
+                , getAmILike(MOIM_IDXX, #{USER_NUMB, jdbcType=VARCHAR}) AS LIKE_YSNO		/* 로그인유저 좋아요 유무 */
+                , getAmIBkmk(MOIM_IDXX, #{USER_NUMB, jdbcType=VARCHAR}) AS BKMK_YSNO		/* 로그인유저 북마크 유무 */
              FROM (
              		]]>
                   	<if test="USER_NUMB != null">
@@ -134,7 +124,7 @@
 		                      , LIKE_COUNT
 		                      , REGG_DATE
 		                      , ENDD_YSNO
-		                   FROM VW_GATHER
+		                   FROM VW_MOIMXM
 		                  WHERE CATE_IDXX IN ( 
                                     		   SELECT CATE_IDXX
                                                  FROM(
@@ -171,7 +161,7 @@
 			                     , LIKE_COUNT
 			                     , REGG_DATE
 			                     , ENDD_YSNO
-			                  FROM VW_GATHER
+			                  FROM VW_MOIMXM
 			                 WHERE (MEMB_COUNT/MAXX_PEOP)*100 > 70
                  )
         UNION ALL
@@ -218,7 +208,7 @@
 	                                   , LIKE_COUNT
 	                                   , REGG_DATE
 	                                   , ENDD_YSNO
-	                                FROM VW_GATHER
+	                                FROM VW_MOIMXM
 	                               ORDER BY LIKE_COUNT DESC
                       			)
                  )
@@ -249,7 +239,7 @@
 			                     , LIKE_COUNT
 			                     , REGG_DATE
 			                     , ENDD_YSNO
-			                  FROM VW_GATHER
+			                  FROM VW_MOIMXM
 			                 WHERE REGI_CODE IN (
 			                                     SELECT REGI_CODE
 			                                       FROM TB_URREGI
@@ -268,9 +258,9 @@
 	<!-- 
 	작성자:Hwai
     작성일:23.12.19
-    (게더Search쿼리)
+    (모임Search쿼리)
     -->
-   <select id="getGather" parameterType="hashmap" resultType="hashmap">
+   <select id="getMoim" parameterType="hashmap" resultType="hashmap">
    	  <if test="pageNum != null">
          <include refid="common.pagingPre"></include>
       </if>
@@ -310,21 +300,10 @@
 		                , A.LIKE_COUNT																	/* 좋아요 수 */
 		                , A.REGG_DATE																	/* 모임 개설일 */
 		                , A.ENDD_YSNO																	/* 모임 마감 유무 */
-		                 ]]>
-		                 <if test="USER_NUMB != null">
-		      			 	<![CDATA[
-		                , getAmILike (A.MOIM_IDXX, #{USER_NUMB}) AS LIKE_YSNO							/* 로그인유저 좋아요 유무 */
-		                , getAmIBkmk (A.MOIM_IDXX, #{USER_NUMB}) AS BKMK_YSNO							/* 로그인유저 북마크 유무 */
-		                  	]]>
-		     			 </if>
-		     			  <if test="USER_NUMB == null">
-		      			 	<![CDATA[
-		                , getAmILike (A.MOIM_IDXX, null) AS LIKE_YSNO									/* 좋아요 유무 없음 0 리턴 */
-		                , getAmIBkmk (A.MOIM_IDXX, null) AS BKMK_YSNO									/* 북마크 유무 없음 0 리턴 */
-		                  	]]>
-		     			 </if>
+		                , getAmILike(MOIM_IDXX, #{USER_NUMB, jdbcType=VARCHAR}) AS LIKE_YSNO			/* 로그인유저 좋아요 유무 */
+                        , getAmIBkmk(MOIM_IDXX, #{USER_NUMB, jdbcType=VARCHAR}) AS BKMK_YSNO			/* 로그인유저 북마크 유무 */
 		     			 <![CDATA[
-					FROM VW_GATHER A
+					FROM VW_MOIMXM A
 			   LEFT JOIN TB_KKAMAP B
                       ON A.MOIM_IDXX = B.MOIM_IDXX
 				   WHERE 1=1
@@ -379,12 +358,12 @@
       </if>
    </select>
    
-   <select id="getGatherCount" parameterType="hashmap" resultType="int">
+   <select id="getMoimCount" parameterType="hashmap" resultType="int">
    	 <![CDATA[
    	 
-        SELECT /*mainPage.getGatherCount*/
+        SELECT /*moim.getMoimCount*/
         	   COUNT(*) AS MOIM_COUNT
-          FROM VW_GATHER
+          FROM VW_MOIMXM
          WHERE 1=1
         ]]>
         <if test="CATE_IDXX != null and CATE_IDXX != 'all'">
@@ -408,12 +387,16 @@
             ]]>
         </if>
 	</select>
-   
-    <!-- 게더 이미지 -->
-	<select id="getGatherImg" parameterType='hashmap'
+
+	<!--
+	작성자:Hwai
+	작성일:24.11.19
+	모임 이미지 추출
+	-->
+	<select id="getMoimImg" parameterType='hashmap'
       resultType="hashmap">
       <![CDATA[
-		  SELECT /*gather.getGatherImg*/
+		  SELECT /*moim.getMoimImg*/
 		  		  MOIM_IMAG
     
 	        FROM (
@@ -439,10 +422,10 @@
    
    	<!-- 
 	작성자:Hwai
-    작성일:23.12.19
-    (게더 맴버 추출, 로그인 회원 마스터 유무.)
+    작성일:24.11.19
+    (모임 맴버 추출, 로그인 회원 마스터 유무.)
     -->
-	<select id="getGatherMember" resultType="hashmap">
+	<select id="getMoimMember" resultType="hashmap">
     <![CDATA[
         SELECT /*gather.getGahterMember*/
 	             A.MOIM_IDXX														/* 모임번호 */		
@@ -470,10 +453,10 @@
 	        FROM TB_MEMBER A
 	   LEFT JOIN TM_USERXM B
 	          ON A.USER_NUMB = B.USER_NUMB
-	   LEFT JOIN TM_GATHER C
+	   LEFT JOIN TM_MOIMXM C
 	          ON A.MOIM_IDXX = C.MOIM_IDXX
 	   LEFT JOIN TB_REVIEW D 
-            ON A.MOIM_IDXX = D.MOIM_IDXX        
+              ON A.MOIM_IDXX = D.MOIM_IDXX
 	       WHERE A.MOIM_IDXX = #{MOIM_IDXX}
 	         ]]>
 	         <if test="USER_NUMB != null">
@@ -488,10 +471,10 @@
     
     <!-- 
 	작성자:Hwai
-    작성일:24.02.26
-    (게더수정)
+    작성일:24.11.19
+    모임수정
     -->
-   <update id="modifyGahter" parameterType="hashmap">
+   <update id="modifyMoim" parameterType="hashmap">
        <![CDATA[
       UPDATE TM_GATHER SET
 		     MOIM_TITL = #{MOIM_TITL}
@@ -513,10 +496,10 @@
    
     <!-- 
 	작성자:Hwai
-    작성일:23.12.19
-    (게더마감)
+    작성일:24.11.19
+    (모임마감)
     -->
-   <update id="setGatherEnd" parameterType="hashmap">
+   <update id="setMoimEnd" parameterType="hashmap">
        <![CDATA[
       UPDATE /*gather.setGatherEnd*/
       		 TM_GATHER SET

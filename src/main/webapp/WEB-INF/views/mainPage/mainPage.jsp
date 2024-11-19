@@ -10,7 +10,7 @@
 <script src="/resources/js/mainPage/mainPage.js"></script>
 
 <div class="bannerContainer">
-  <img src="/resources/img/banner/banner.png" class="bannerImg">
+  <img src="/resources/img/banner/banner2.png" class="bannerImg">
 </div>
 
 <%@ include file="../components/category.jsp"%>
@@ -47,7 +47,7 @@
 
 <%-- 근처의 게더 --%>
 <div class="contentsContainer mainContainer" data-id="regionList">
-  <div id="weatherSection">
+  <div id="regionSection">
   	<h1 id="regionTitle" class="mainAreaTitle"></h1>
 			<div class="slideWrap">
   	  	<div class="slideContainer">

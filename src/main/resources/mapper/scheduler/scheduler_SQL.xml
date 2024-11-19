@@ -15,7 +15,7 @@
     -->
 	<select id="getGatherMemberForScheduler" resultType="hashmap">
     <![CDATA[
-    	/*common.getGatherMemberForScheduler*/
+    	/*scheduler.getGatherMemberForScheduler*/
 		SELECT A.MOIM_IDXX
 	         , A.USER_NUMB
 	         , CASE WHEN A.USER_NUMB = B.USER_NUMB 			
@@ -38,7 +38,7 @@
     -->
 	<select id="getEnddedGahter" resultType="hashmap">
     <![CDATA[
-        SELECT /*gather.getEnddedGahter*/
+        SELECT /*scheduler.getEnddedGahter*/
         	   MOIM_IDXX
           FROM TM_GATHER
          WHERE TO_DATE(CONCAT(CONCAT(MOIM_DATE, ' '), MOIM_TIME), 'YY/MM/DD HH24:MI') <= SYSDATE
@@ -53,8 +53,8 @@
     -->
 	<select id="getOneDayLeftGather" resultType="hashmap">
     <![CDATA[
-   SELECT /*gather.getOneDayLeft*/
-    		   A.MOIM_IDXX
+       SELECT /*scheduler.getOneDayLeft*/
+    		  A.MOIM_IDXX
 		 FROM TM_GATHER A
 	LEFT JOIN TB_NOTIFY B 
 	       ON B.BOAD_IDXX = A.MOIM_IDXX

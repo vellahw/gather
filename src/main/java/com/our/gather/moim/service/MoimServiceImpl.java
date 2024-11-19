@@ -1,34 +1,30 @@
-package com.our.gather.moimGather.service;
-
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
+package com.our.gather.moim.service;
 
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.dao.CommonDao;
 import com.our.gather.common.utils.FileUtils;
+import com.our.gather.moim.dao.MoimDao;
 import com.our.gather.moimGather.dao.GatherDao;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
-@Service("GatherService")
-public class GatherServiceImpl implements GatherService {
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Map;
 
-   @Resource(name = "CommonDao")
-   private CommonDao commonDao;
+@Service("MoimService")
+public class MoimServiceImpl implements MoimService {
 
-   @Resource(name = "GatherDao")
-   private GatherDao gatherDao;
+   @Resource(name = "MoimDao")
+   private MoimDao gatherDao;
 
    @Resource(name = "fileUtils")
    private FileUtils fileUtils;
 
-   // 게더 메인리스트
+   // 모임 메인리스트
    @Override
    public List<Map<String, Object>> mainGather(Map<String, Object> map, HttpSession session, CommandMap commandMap)
          throws Exception {
@@ -45,7 +41,7 @@ public class GatherServiceImpl implements GatherService {
       return gatherDao.mainGather(map, commandMap, session);
    }
    
-	// 게더리스트
+	// 모임 리스트
 	@Override
 	public List<Map<String, Object>> getGatherList(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception {
@@ -63,7 +59,7 @@ public class GatherServiceImpl implements GatherService {
 		return gatherDao.getGatherList(map, commandMap, session);
 	}
 
-	// 게더 상세보기
+	// 모임 상세보기
 	@Override
 	public Map<String, Object> getGatherDetail(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception {
@@ -78,7 +74,7 @@ public class GatherServiceImpl implements GatherService {
 		return gatherDao.getGatherDetail(map, commandMap, session);
 	}
 
-	// 게더 이미지
+	// 모임 이미지
 	@Override
 	public List<Map<String, Object>> getGatherImg(Map<String, Object> map, CommandMap commandMap) throws Exception {
 		// TODO Auto-generated method stub
@@ -86,7 +82,7 @@ public class GatherServiceImpl implements GatherService {
 		return gatherDao.getGatherImg(map, commandMap);
 	}
 
-	// 게더 맴버 리스트
+	// 모임 맴버 리스트
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED)
 	public List<Map<String, Object>> getGatherMember(Map<String, Object> map, CommandMap commandMap,
@@ -96,7 +92,7 @@ public class GatherServiceImpl implements GatherService {
 		return gatherDao.getGatherMember(map, commandMap, session);
 	}
 
-	// 로그인 한 회원의 게더 참여 상황.
+	// 로그인 한 회원의 모임 참여 상황.
 	@Override
 	public Map<String, Object> getGatherYourState(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception {
@@ -111,7 +107,7 @@ public class GatherServiceImpl implements GatherService {
 		return gatherDao.getGatherYourState(map, commandMap, session);
 	}
 
-	// 게더 개설
+	// 모임 개설
 	@Override
 	public void makeGather(Map<String, Object> map, CommandMap commandMap, HttpServletRequest request,
 			HttpSession session) throws Exception {
