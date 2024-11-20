@@ -90,7 +90,7 @@ public class MoimController {
 
 			if (!resultMapData.get("MOIM_ADR1").equals("")) {
 
-				Map<String, Object> regiMap = commonService.extractRegiCode(resultMapData);
+				Map<String, Object> regiMap = commonService.extractRegiCode(resultMapData);//
 				resultMapData.put("MOIM_IDXX", gathNumb);
 				resultGahterData.put("REGI_CODE", regiMap.get("COMD_CODE"));
 				commonService.mapInsert(resultMapData, commandMap);

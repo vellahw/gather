@@ -112,7 +112,7 @@
                   	<if test="USER_NUMB != null">
       			 	<![CDATA[
                   	(
-                  
+
                     	SELECT  ROW_NUMBER() OVER (ORDER BY REGG_DATE DESC) RNUM
                               , 'Taste' AS TYPE
                     		  , MOIM_IDXX
@@ -135,7 +135,7 @@
 		                      , REGG_DATE
 		                      , ENDD_YSNO
 		                   FROM VW_GATHER
-		                  WHERE CATE_IDXX IN ( 
+		                  WHERE CATE_IDXX IN (
                                     		   SELECT CATE_IDXX
                                                  FROM(
                                     		  			SELECT ROW_NUMBER() OVER (ORDER BY REGG_DATE DESC) RNUM
@@ -176,7 +176,7 @@
                  )
         UNION ALL
                  (
-                 		 SELECT 
+                 		 SELECT
 	                             ROWNUM RNUM
 	                           , 'Like' AS TYPE
 	                           , MOIM_IDXX
@@ -198,7 +198,7 @@
 	                           , LIKE_COUNT
 	                           , REGG_DATE
 	                           , ENDD_YSNO
-	                       FROM ( SELECT 
+	                       FROM ( SELECT
 	                                     MOIM_IDXX
 	                                   , MOIM_TITL
 	                                   , MOIM_IMAG
@@ -222,7 +222,7 @@
 	                               ORDER BY LIKE_COUNT DESC
                       			)
                  )
-        
+
         ]]>
 		<if test="USER_NUMB != null">
       		<![CDATA[
@@ -253,7 +253,7 @@
 			                 WHERE REGI_CODE IN (
 			                                     SELECT REGI_CODE
 			                                       FROM TB_URREGI
-			                                      WHERE USER_NUMB = #{USER_NUMB}			                                     
+			                                      WHERE USER_NUMB = #{USER_NUMB}
 			                                     )
 			                 )
 			]]>

@@ -4,7 +4,7 @@ import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.common.Criteria;
 import com.our.gather.common.common.Pager;
 import com.our.gather.common.oracleFunction.OracleFunction;
-import com.our.gather.moimGather.service.GatherService;
+import com.our.gather.moim.service.MoimService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,182 +19,58 @@ import java.util.Map;
 @Controller("mainPage2Controller")
 public class MainController2 {
 
-	@Resource(name = "GatherService")
-	private GatherService gatherService;
+	@Resource(name = "MoimService")
+	private MoimService moimService;
 
 	@RequestMapping(value = "/gather2.com")
 	public ModelAndView main(@RequestParam(value = "type", required = false) String LIST_TYPE,
-							 @RequestParam(value = "cate", required = false) String CATE_IDXX,
-							 @RequestParam(value = "keyword", required = false) String KEYY_WORD,
 							 HttpSession session, CommandMap commandMap, Criteria cri,
 							 HttpServletRequest request) throws Exception {
 
-		ModelAndView mv1 = new ModelAndView("/mainPage/mainPage");
-		mv1.setViewName("mainPage");
+		ModelAndView mv = new ModelAndView("/mainPage/mainPage");
+		mv.setViewName("mainPage");
 
-		ModelAndView mv2 = new ModelAndView("/listPage/listPage");
-		mv2.setViewName("listPage");
 
 		commandMap.put("amount", cri.getAmount());
 		commandMap.put("pageNum", cri.getPageNum());
-
-		if(CATE_IDXX != null) {
-			
-			mv2.addObject("CATE_IDXX", CATE_IDXX);
-			
-		} else {
-			
-			mv2.addObject("CATE_IDXX", "all");
-			
-		}
-		
-		if(KEYY_WORD != null) {
-			
-			mv2.addObject("KEYY_WORD", KEYY_WORD);
-			
-		} 
+		String moimType = null;
 		
 		if(LIST_TYPE != null) {
 			
-			String moimType =  OracleFunction.getCodeName("MOIM_TYPE",LIST_TYPE.toUpperCase());
+			String moimType2 =  OracleFunction.getCodeName("MOIM_TYPE",LIST_TYPE.toUpperCase());
 			
-			mv1.addObject("moimType", moimType);
-			mv2.addObject("moimType", moimType);
-			
-			mv1.addObject("moimCode", LIST_TYPE);
-			mv2.addObject("moimCode", LIST_TYPE);
+			mv.addObject("moimType", moimType2);
+			mv.addObject("moimCode", LIST_TYPE);
+			moimType = LIST_TYPE;
 
+		} else {
+
+			mv.addObject("moimType", "게더");
+			mv.addObject("moimCode", "GT");
+			moimType = "GT";
 		}
 
-		if (LIST_TYPE == null) {
-			
-			mv1.addObject("moimType", "게더"); //모임타입
-			mv2.addObject("moimType", "게더");
+		// 1. Taste
+		commandMap.put("VIEW_TYPE", "Taste");
+		List<Map<String, Object>> tasteList = moimService.mainPageMoim(commandMap.getMap(), session, commandMap);
+		mv.addObject("tasteList", tasteList);
 
-			if (CATE_IDXX == null && KEYY_WORD == null) {
+		// 2. Hot
+		commandMap.put("VIEW_TYPE", "Hot");
+		List<Map<String, Object>>  hotList = moimService.mainPageMoim(commandMap.getMap(), session, commandMap);
+		mv.addObject("hotList", hotList);
 
-				mv1.addObject("main", gatherService.mainGather(commandMap.getMap(), session, commandMap)); // 게더 메인
+		// 3. Region
+		commandMap.put("VIEW_TYPE", "region");
+		List<Map<String, Object>>  regionList = moimService.mainPageMoim(commandMap.getMap(), session, commandMap);
+		mv.addObject("regionList", regionList);
 
-			} else if(CATE_IDXX != null && KEYY_WORD == null) {
+		// 4. LikeCount
+		commandMap.put("VIEW_TYPE", "LikeCount");
+		List<Map<String, Object>>  likeList = moimService.mainPageMoim(commandMap.getMap(), session, commandMap);
+		mv.addObject("likeList", likeList);
 
-				commandMap.put("CATE_IDXX", CATE_IDXX);
-				int total = gatherService.getGatherCount(commandMap.getMap(), commandMap);
-
-				if (CATE_IDXX.equals("all")) {
-
-					mv2.addObject("CATE_NAME", "전체");
-
-				} else {
-
-					String result = OracleFunction.getCodeName("CATE_IDXX", CATE_IDXX);
-					mv2.addObject("CATE_NAME", result);
-
-				}
-				
-				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //게더 카테고리검색 리스트
-				mv2.addObject("pageMaker", new Pager(cri, total));
-				
-				return mv2;
-
-			} else if(CATE_IDXX == null && KEYY_WORD != null) {
-				
-				commandMap.put("KEYY_WORD", KEYY_WORD);
-				int total = gatherService.getGatherCount(commandMap.getMap(), commandMap);
-				
-				mv2.addObject("list",  gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //게더 키워드 검색 리스트
-				mv2.addObject("pageMaker", new Pager(cri, total));
-				
-				return mv2;
-				
-			}
-			
-		}
-		
-		if (LIST_TYPE != null && LIST_TYPE.equals("cb")) {
-
-			if (CATE_IDXX == null && KEYY_WORD == null) {
-
-				mv1.addObject("main", gatherService.mainGather(commandMap.getMap(), session, commandMap)); //추후 클럽으로 변경
-
-			} else if(CATE_IDXX != null && KEYY_WORD == null) {
-
-				commandMap.put("CATE_IDXX", CATE_IDXX);
-				int total = gatherService.getGatherCount(commandMap.getMap(), commandMap);
-
-				if (CATE_IDXX.equals("all")) {
-
-					mv2.addObject("CATE_NAME", "전체");
-
-				} else {
-
-					String result = OracleFunction.getCodeName("CATE_IDXX", CATE_IDXX);
-					mv2.addObject("CATE_NAME", result);
-
-				}
-				
-				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //추후 클럽으로 변경
-				mv2.addObject("pageMaker", new Pager(cri, total));
-				
-				return mv2;
-
-		     } else if (CATE_IDXX == null && KEYY_WORD != null) {
-				
-				commandMap.put("KEYY_WORD", KEYY_WORD);
-				int total = gatherService.getGatherCount(commandMap.getMap(), commandMap);
-				
-				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //추후 클럽으로 변경
-				mv2.addObject("pageMaker", new Pager(cri, total));
-				
-				return mv2;
-				
-			}
-			
-		}
-		
-		if (LIST_TYPE != null && LIST_TYPE.equals("ch")) {
-
-			if (CATE_IDXX == null && KEYY_WORD == null) {
-
-				mv1.addObject("main", gatherService.mainGather(commandMap.getMap(), session, commandMap)); //추후 챌린지로 변경
-
-			} else if(CATE_IDXX != null && KEYY_WORD == null) {
-
-				commandMap.put("CATE_IDXX", CATE_IDXX);
-				int total = gatherService.getGatherCount(commandMap.getMap(), commandMap);
-
-				if (CATE_IDXX.equals("all")) {
-
-					mv2.addObject("CATE_NAME", "전체");
-
-				} else {
-
-					String result = OracleFunction.getCodeName("CATE_IDXX", CATE_IDXX);
-					mv2.addObject("CATE_NAME", result);
-
-				}
-				
-				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //추후 챌린지로 변경
-				mv2.addObject("pageMaker", new Pager(cri, total));
-				
-				return mv2;
-
-			} else if (CATE_IDXX == null && KEYY_WORD != null) {
-				
-				commandMap.put("KEYY_WORD", KEYY_WORD);
-				int total = gatherService.getGatherCount(commandMap.getMap(), commandMap);
-				
-				mv2.addObject("list", gatherService.getGatherList(commandMap.getMap(), session, commandMap)); //추후 챌린지로 변경
-				mv2.addObject("pageMaker", new Pager(cri, total));
-				
-				return mv2;
-				
-			}
-			
-		}
-		
-		
-
-		return mv1;
+		return mv;
 	}
 	
 	//날씨에 따른 모임(챌린지, 클럽에 출력 유뮤 추후 결정)
@@ -258,19 +134,10 @@ public class MainController2 {
 			
 		}
 
-		if (moimType.equals("gt")) {
+		commandMap.put("MOIM_TYPE", moimType.toUpperCase());
 
-			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
+		mv.addObject("data", moimService.mainPageMoim(commandMap.getMap(), session, commandMap));
 
-		} else if (moimType.equals("cb")) {
-			
-			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
-
-		} else if (moimType.equals("ch")) {
-			
-			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
-
-		}
 
 		return mv;
 	}
@@ -289,19 +156,10 @@ public class MainController2 {
 
 		commandMap.put("CITY_CODE", cityCode);
 
-		if (moimType.equals("gt")) {
+		commandMap.put("MOIM_TYPE", moimType.toUpperCase());
+		mv.addObject("data", moimService.mainPageMoim(commandMap.getMap(), session, commandMap));
 
-			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
 
-		} else if (moimType.equals("cb")) {
-			
-			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
-
-		} else if (moimType.equals("ch")) {
-			
-			mv.addObject("data", gatherService.getGatherList(commandMap.getMap(), session, commandMap));
-
-		}
 
 		return mv;
 	}

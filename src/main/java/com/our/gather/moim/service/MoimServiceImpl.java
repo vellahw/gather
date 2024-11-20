@@ -4,7 +4,6 @@ import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.dao.CommonDao;
 import com.our.gather.common.utils.FileUtils;
 import com.our.gather.moim.dao.MoimDao;
-import com.our.gather.moimGather.dao.GatherDao;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,14 +18,14 @@ import java.util.Map;
 public class MoimServiceImpl implements MoimService {
 
    @Resource(name = "MoimDao")
-   private MoimDao gatherDao;
+   private MoimDao moimDao;
 
    @Resource(name = "fileUtils")
    private FileUtils fileUtils;
 
    // 모임 메인리스트
    @Override
-   public List<Map<String, Object>> mainGather(Map<String, Object> map, HttpSession session, CommandMap commandMap)
+   public List<Map<String, Object>> mainPageMoim(Map<String, Object> map, HttpSession session, CommandMap commandMap)
          throws Exception {
       // TODO Auto-generated method stub
 
@@ -38,12 +37,12 @@ public class MoimServiceImpl implements MoimService {
 		  commandMap.put("USER_NUMB", null);
 	  }
       
-      return gatherDao.mainGather(map, commandMap, session);
+      return moimDao.mainPageMoim(map, commandMap, session);
    }
    
 	// 모임 리스트
 	@Override
-	public List<Map<String, Object>> getGatherList(Map<String, Object> map, HttpSession session, CommandMap commandMap)
+	public List<Map<String, Object>> getMoimList(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception {
 		// TODO Auto-generated method stub
 
@@ -56,12 +55,12 @@ public class MoimServiceImpl implements MoimService {
 		}
 
 
-		return gatherDao.getGatherList(map, commandMap, session);
+		return moimDao.getMoimList(map, commandMap, session);
 	}
 
 	// 모임 상세보기
 	@Override
-	public Map<String, Object> getGatherDetail(Map<String, Object> map, HttpSession session, CommandMap commandMap)
+	public Map<String, Object> getMoimDetail(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception {
 		// TODO Auto-generated method stub
 
@@ -71,30 +70,30 @@ public class MoimServiceImpl implements MoimService {
 
 		}
 
-		return gatherDao.getGatherDetail(map, commandMap, session);
+		return moimDao.getMoimDetail(map, commandMap, session);
 	}
 
 	// 모임 이미지
 	@Override
-	public List<Map<String, Object>> getGatherImg(Map<String, Object> map, CommandMap commandMap) throws Exception {
+	public List<Map<String, Object>> getMoimImg(Map<String, Object> map, CommandMap commandMap) throws Exception {
 		// TODO Auto-generated method stub
 
-		return gatherDao.getGatherImg(map, commandMap);
+		return moimDao.getMoimImg(map, commandMap);
 	}
 
 	// 모임 맴버 리스트
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED)
-	public List<Map<String, Object>> getGatherMember(Map<String, Object> map, CommandMap commandMap,
+	public List<Map<String, Object>> getMoimMember(Map<String, Object> map, CommandMap commandMap,
 			HttpSession session) throws Exception {
 		// TODO Auto-generated method stub
 
-		return gatherDao.getGatherMember(map, commandMap, session);
+		return moimDao.getMoimMember(map, commandMap, session);
 	}
 
 	// 로그인 한 회원의 모임 참여 상황.
 	@Override
-	public Map<String, Object> getGatherYourState(Map<String, Object> map, HttpSession session, CommandMap commandMap)
+	public Map<String, Object> getMoimYourState(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception {
 		// TODO Auto-generated method stub
 
@@ -104,12 +103,12 @@ public class MoimServiceImpl implements MoimService {
 
 		}
 
-		return gatherDao.getGatherYourState(map, commandMap, session);
+		return moimDao.getMoimYourState(map, commandMap, session);
 	}
 
 	// 모임 개설
 	@Override
-	public void makeGather(Map<String, Object> map, CommandMap commandMap, HttpServletRequest request,
+	public void makeMoim(Map<String, Object> map, CommandMap commandMap, HttpServletRequest request,
 			HttpSession session) throws Exception {
 
 		try {
@@ -150,27 +149,21 @@ public class MoimServiceImpl implements MoimService {
 
 		}
 
-		gatherDao.makeGather(map, commandMap);
+		moimDao.makeMoim(map, commandMap);
 
-	}
-
-	// 게더 번호 채번
-	public String makeGatherNumb() throws Exception {
-
-		return gatherDao.makeGatherNumb();
 	}
 
 	// 게더 갯수 return
-	public int getGatherCount(Map<String, Object> map, CommandMap commandMap) throws Exception {
+	public int getMoimCount(Map<String, Object> map, CommandMap commandMap) throws Exception {
 
-		return gatherDao.getGatherCount(map, commandMap);
+		return moimDao.getMoimCount(map, commandMap);
 	}
 
 	// 게더 마감
 	@Override
 	@Transactional(isolation = Isolation.SERIALIZABLE)
-	public void setGatherEnd(Map<String, Object> map) throws Exception {
-		gatherDao.setGatherEnd(map);
+	public void setMoimEnd(Map<String, Object> map) throws Exception {
+		moimDao.setMoimEnd(map);
 	}
    
 }

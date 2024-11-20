@@ -10,40 +10,36 @@ import java.util.Map;
 public interface MoimService {
 
 	// 메인 게더
-	List<Map<String, Object>> mainGather(Map<String, Object> map, HttpSession session, CommandMap commandMap)
+	List<Map<String, Object>> mainPageMoim(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception;
 
 	// 게더 리스트
-	List<Map<String, Object>> getGatherList(Map<String, Object> map, HttpSession session, CommandMap commandMap)
+	List<Map<String, Object>> getMoimList(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception;
 
 	// 게더 상세보기
-	Map<String, Object> getGatherDetail(Map<String, Object> map, HttpSession session, CommandMap commandMap)
+	Map<String, Object> getMoimDetail(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception;
 
 	// 게더 이미지
-	List<Map<String, Object>> getGatherImg(Map<String, Object> map, CommandMap commandMap) throws Exception;
+	List<Map<String, Object>> getMoimImg(Map<String, Object> map, CommandMap commandMap) throws Exception;
 
 	// 게더 멤버
-	List<Map<String, Object>> getGatherMember(Map<String, Object> map, CommandMap commandMap, HttpSession session)
+	List<Map<String, Object>> getMoimMember(Map<String, Object> map, CommandMap commandMap, HttpSession session)
 			throws Exception;
 
 	// 로그인 회원 현재 게더 참여상태
-	Map<String, Object> getGatherYourState(Map<String, Object> map, HttpSession session, CommandMap commandMap)
+	Map<String, Object> getMoimYourState(Map<String, Object> map, HttpSession session, CommandMap commandMap)
 			throws Exception;
 
 	// 게더 갯수 return
-	int getGatherCount(Map<String, Object> map, CommandMap commandMap) throws Exception;
+	int getMoimCount(Map<String, Object> map, CommandMap commandMap) throws Exception;
 	
-	// 게더번호 채번
-	String makeGatherNumb()
-			throws Exception;
-
 	// 회원가입
-	void makeGather(Map<String, Object> map, CommandMap commandMap, HttpServletRequest request, HttpSession session)
+	void makeMoim(Map<String, Object> map, CommandMap commandMap, HttpServletRequest request, HttpSession session)
 			throws Exception;
 
 	// 게더마감
-	void setGatherEnd(Map<String, Object> map) throws Exception;
+	void setMoimEnd(Map<String, Object> map) throws Exception;
 
 }

@@ -22,10 +22,10 @@ public class MoimDao extends AbstractDao {
 
     // 로그인시 메인 게더
     @SuppressWarnings("unchecked")
-    public List<Map<String, Object>> mainGather(Map<String, Object> map, CommandMap commandMap, HttpSession session)
+    public List<Map<String, Object>> mainPageMoim(Map<String, Object> map, CommandMap commandMap, HttpSession session)
             throws Exception {
 
-        List<Map<String, Object>> mainGather = (List<Map<String, Object>>) selectList("gather.mainGather", map);
+        List<Map<String, Object>> mainGather = (List<Map<String, Object>>) selectList("moim.mainPageMoim", map);
 
         for (int i = 0; i < mainGather.size(); i++) {
             Map<String, Object> hash = new HashMap<>();
@@ -69,10 +69,10 @@ public class MoimDao extends AbstractDao {
 
     // 게더추출
     @SuppressWarnings("unchecked")
-    public List<Map<String, Object>> getGatherList(Map<String, Object> map, CommandMap commandMap, HttpSession session)
+    public List<Map<String, Object>> getMoimList(Map<String, Object> map, CommandMap commandMap, HttpSession session)
             throws Exception {
 
-        List<Map<String, Object>> getGatherList = (List<Map<String, Object>>) selectList("gather.getGather", map);
+        List<Map<String, Object>> getGatherList = (List<Map<String, Object>>) selectList("moim.getMoim", map);
 
         for (int i = 0; i < getGatherList.size(); i++) {
             Map<String, Object> hash = new HashMap<>();
@@ -106,10 +106,10 @@ public class MoimDao extends AbstractDao {
 
     // 게더 상세보기
     @SuppressWarnings("unchecked")
-    public Map<String, Object> getGatherDetail(Map<String, Object> map, CommandMap commandMap, HttpSession session)
+    public Map<String, Object> getMoimDetail(Map<String, Object> map, CommandMap commandMap, HttpSession session)
             throws Exception {
 
-        Map<String, Object> getGatherDetail = (Map<String, Object>) selectOne("gather.getGather", map);
+        Map<String, Object> getGatherDetail = (Map<String, Object>) selectOne("moim.getMoim", map);
 
         if (session.getAttribute("USER_NUMB") != null) {
 
@@ -122,10 +122,10 @@ public class MoimDao extends AbstractDao {
 
     // 게더맴버
     @SuppressWarnings("unchecked")
-    public List<Map<String, Object>> getGatherMember(Map<String, Object> map, CommandMap commandMap,
+    public List<Map<String, Object>> getMoimMember(Map<String, Object> map, CommandMap commandMap,
                                                      HttpSession session) throws Exception {
 
-        List<Map<String, Object>> getGatherMember = (List<Map<String, Object>>) selectList("gather.getGatherMember",
+        List<Map<String, Object>> getGatherMember = (List<Map<String, Object>>) selectList("moim.getMoimMember",
                 map);
 
         for (int i = 0; i < getGatherMember.size(); i++) {
@@ -143,39 +143,34 @@ public class MoimDao extends AbstractDao {
 
     // 게더 이미지 불러오기
     @SuppressWarnings("unchecked")
-    public List<Map<String, Object>> getGatherImg(Map<String, Object> map, CommandMap commandMap) throws Exception {
+    public List<Map<String, Object>> getMoimImg(Map<String, Object> map, CommandMap commandMap) throws Exception {
 
         List<Map<String, Object>> getGatherImg = (List<Map<String, Object>>) selectList("gather.getGatherImg", map);
 
         return getGatherImg;
     }
 
-    public int getGatherCount(Map<String, Object> map, CommandMap commandMap) throws Exception {
-        return Integer.parseInt(selectOne("gather.getGatherCount", map).toString());
+    public int getMoimCount(Map<String, Object> map, CommandMap commandMap) throws Exception {
+        return Integer.parseInt(selectOne("gather.getMoimCount", map).toString());
     }
 
     // 로그인 맴버 현재 상태
     @SuppressWarnings("unchecked")
-    public Map<String, Object> getGatherYourState(Map<String, Object> map, CommandMap commandMap, HttpSession session)
+    public Map<String, Object> getMoimYourState(Map<String, Object> map, CommandMap commandMap, HttpSession session)
             throws Exception {
 
-        Map<String, Object> getGatherYourState = (Map<String, Object>) selectOne("gather.getGatherMember", map);
+        Map<String, Object> getGatherYourState = (Map<String, Object>) selectOne("moim.getMoimMember", map);
 
         return getGatherYourState;
     }
 
-    //게더 번호 채번
-    public String makeGatherNumb() throws Exception {
-        return (String) selectOne("gather.makeGatherNumb");
-    }
-
     //게더 개설
-    public void makeGather(Map<String, Object> map, CommandMap commandMap) throws Exception {
-        insert("gather.makeGather", map);
+    public void makeMoim(Map<String, Object> map, CommandMap commandMap) throws Exception {
+        insert("moim.makeMoim", map);
     }
 
     // 모임마감
-    public void setGatherEnd(Map<String, Object> map) throws Exception {
-        update("gather.setGatherEnd", map);
+    public void setMoimEnd(Map<String, Object> map) throws Exception {
+        update("moim.setMoimEnd", map);
     }
 }
