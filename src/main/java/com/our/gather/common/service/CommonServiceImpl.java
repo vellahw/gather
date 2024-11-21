@@ -97,10 +97,10 @@ public class CommonServiceImpl implements CommonService {
 
 	// 지역 한글정보 코드로 치환
 	@Override
-	public Map<String, Object> extractRegiCode(Map<String, Object> map) throws Exception {
+	public String extractRegiCode(String adr) throws Exception {
 		// TODO Auto-generated method stub
 
-		String[] moimRegi = ((String) map.get("MOIM_ADR1")).split(" ");
+		String[] moimRegi = adr.split(" ");
 
 		String pRegi = moimRegi[0].substring(0, 2);
 		String cRegi = moimRegi[1].substring(0, 2);
@@ -198,7 +198,11 @@ public class CommonServiceImpl implements CommonService {
 
 		regiMap.put("COMD_NAME", cRegi);
 
-		return commonDao.searchRegi(regiMap);
+		Map<String, Object> map = commonDao.searchRegi(regiMap);
+		String adrCode = (String)map.get("COMD_CODE");
+
+		return adrCode;
+
 
 	}
 	

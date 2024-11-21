@@ -75,21 +75,23 @@
 	<!-- 메인화면 -->
    <select id="mainPageMoim" parameterType='hashmap' resultType="hashmap">
       <![CDATA[
-    SELECT /*mainPage.getGather*/
+    SELECT /*mainPage.mainPageMoim*/
        	  *
 		FROM (
 		SELECT ROW_NUMBER() OVER (ORDER BY
     	]]>
-	   <if test="VIEW_TYPE eq 'Like'">
+	   <choose>
+	   	<when test="VIEW_TYPE != null and VIEW_TYPE == 'like'">
            <![CDATA[
-        									LIKE_COUNT DESC, REGG_DATE DESC, MOIM_TIME DESC, MOIM_IDXX DESC
+        									LIKE_COUNT DESC, REGG_DATE DESC
         ]]>
-	   </if>
-	   <if test="VIEW_TYPE neq 'Like'">
+	   </when>
+	   <otherwise>
            <![CDATA[
        										REGG_DATE DESC, MOIM_TIME DESC, MOIM_IDXX DESC
         ]]>
-	   </if>
+	   </otherwise>
+	   </choose>
        <![CDATA[
     			) RNUM
 				, MOIM_IDXX										   							/* 모임아이디 */
@@ -106,7 +108,7 @@
 				, MEMB_COUNT																/* 현재 인원수 */
 				, MOIM_COST																	/* 참가 비용 */
 				, APPR_YSNO																	/* 승인 여부 */
-				, ACCR_YSNO																	/* 챌린지 주 인증 횟수*/
+				, ACCR_TMNO																	/* 챌린지 주 인증 횟수*/
 				, MINN_AGEE						 											/* 최소나이 */
 				, MAXX_AGEE																	/* 최대나이 */
 				, APPR_LMIT																	/* 모임 제한 KR */
@@ -120,7 +122,7 @@
 				, SMAL_DATE																	/* 날짜 형식 MM.dd(day) 오전/오후 HH:mm */
 				, FULL_DATE																	/* 날짜 형식 YYYY년 M월 오전/오후 HH:mm */
 				, CHAL_BEDT_FORMAT															/* 챌린지 시작일*/
-				, CAHL_EDDT_FORMAT															/* 챌린지 종료일*/
+				, CHAL_EDDT_FORMAT															/* 챌린지 종료일*/
 				, LIKE_COUNT																/* 좋아요 수 */
 				, REGG_DATE																	/* 모임 개설일 */
 				, ENDD_YSNO																	/* 모임 마감 유무 */
@@ -129,8 +131,9 @@
 		   FROM VW_MOIMXM
 		  WHERE MOIM_TYPE_CODE = #{MOIM_TYPE}
       		]]>
+	   <if test="VIEW_TYPE != null">
 	   <choose>
-		   <when test="VIEW_TYPE eq Taste">
+		   <when test="VIEW_TYPE == 'taste'">
                <![CDATA[
 		    AND CATE_IDXX IN (
 							   SELECT CATE_IDXX
@@ -143,12 +146,12 @@
 							 )
 	    	]]>
 		   </when>
-		   <when test="VIEW_TYPE eq Hot">
+		   <when test="VIEW_TYPE == 'hot'">
                <![CDATA[
 		    AND (MEMB_COUNT/MAXX_PEOP)*100 > 70
 	    	]]>
 		   </when>
-		   <when test="VIEW_TYPE eq region">
+		   <when test="VIEW_TYPE == 'region'">
                <![CDATA[
 		    AND REGI_CODE IN (
 			                    SELECT REGI_CODE
@@ -158,18 +161,18 @@
 	    	]]>
 		   </when>
 	   </choose>
+	   </if>
 	   <if test="WEATH_CATE != null">
            <![CDATA[
-		    AND A.CATE_IDXX IN
+		    AND CATE_IDXX IN
 ]]>
-		   <foreach collection="WEATH_CATE" item="WEATH_CATE" open="(" separator="," close=")">               #{WEATH_CATE}
+		   <foreach collection="WEATH_CATE" item="WEATH_CATE" open="(" separator="," close=")">
+               #{WEATH_CATE}
 		   </foreach>
 	   </if>
-	   <if
-       test="
-       CITY_CODE != null">
+	   <if test="CITY_CODE != null">
            <![CDATA[
-		    AND A.REGI_CODE LIKE '%'||#{CITY_CODE}||'%'
+		    AND REGI_CODE LIKE '%'||#{CITY_CODE}||'%'
 		    ]]>
 	   </if>
        <![CDATA[

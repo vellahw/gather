@@ -29,7 +29,7 @@ public interface CommonService {
 	
 	List<Map<String, Object>> getRegi(Map<String, Object> map, CommandMap commandMap) throws Exception;
 	
-	Map<String, Object> extractRegiCode(Map<String, Object> map) throws Exception;
+	String extractRegiCode(String adr) throws Exception;
 	
 	Object makeFollowBtn(Object data, HttpSession session) throws Exception;
 	

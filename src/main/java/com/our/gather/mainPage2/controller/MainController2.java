@@ -4,6 +4,7 @@ import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.common.Criteria;
 import com.our.gather.common.common.Pager;
 import com.our.gather.common.oracleFunction.OracleFunction;
+import com.our.gather.common.service.CommonService;
 import com.our.gather.moim.service.MoimService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +24,10 @@ public class MainController2 {
 	@Resource(name = "MoimService")
 	private MoimService moimService;
 
-	@RequestMapping(value = "/gather2.com")
+	@Resource(name = "CommonService")
+	private CommonService commonService;
+
+	@RequestMapping(value = "/gather.com")
 	public ModelAndView main(@RequestParam(value = "type", required = false) String LIST_TYPE,
 							 HttpSession session, CommandMap commandMap, Criteria cri,
 							 HttpServletRequest request) throws Exception {
@@ -39,41 +44,39 @@ public class MainController2 {
 
 			moimType = OracleFunction.getCodeName("MOIM_TYPE", LIST_TYPE.toUpperCase());
 			mv.addObject("moimCode", LIST_TYPE);
+			commandMap.put("MOIM_TYPE", LIST_TYPE.toUpperCase());
 
 		}else{
 
 			moimType = OracleFunction.getCodeName("MOIM_TYPE", "GT");
 			mv.addObject("moimCode", "GT");
+			commandMap.put("MOIM_TYPE", "GT");
 
 		}
-			
 			mv.addObject("moimType", moimType);
 
-		// 취향저격
-		commandMap.put("VIEW_TYPE", "Taste");
-		List<Map<String, Object>> tasteList = moimService.mainPageMoim(commandMap.getMap(), session, commandMap);
-		mv.addObject("tasteList", tasteList);
+		String[] viewTypes;
 
-		// 2. Hot
-		commandMap.put("VIEW_TYPE", "Hot");
-		List<Map<String, Object>>  hotList = moimService.mainPageMoim(commandMap.getMap(), session, commandMap);
-		mv.addObject("hotList", hotList);
+		if (session.getAttribute("USER_NUMB") != null) {
+			viewTypes = new String[] {"taste", "hot", "region", "like"};
+		} else {
+			viewTypes = new String[] {"hot", "like"};
+		}
 
-		// 3. Region
-		commandMap.put("VIEW_TYPE", "region");
-		List<Map<String, Object>>  regionList = moimService.mainPageMoim(commandMap.getMap(), session, commandMap);
-		mv.addObject("regionList", regionList);
+		for (String viewType : viewTypes) {
 
-		// 4. LikeCount
-		commandMap.put("VIEW_TYPE", "LikeCount");
-		List<Map<String, Object>>  likeList = moimService.mainPageMoim(commandMap.getMap(), session, commandMap);
-		mv.addObject("likeList", likeList);
+			commandMap.put("VIEW_TYPE", viewType);
+			System.out.println("뷰타이이이입" + viewType);
+			System.out.println("어떤 리스트 일까요...? :::::::::::::::::" + viewType + "List:::::::::::::::::::::::");
+			List<Map<String, Object>> list = moimService.mainPageMoim(commandMap.getMap(), session, commandMap);
+			mv.addObject(viewType + "List", list);
+		}
 
 		return mv;
 	}
 	
 	//날씨에 따른 모임(챌린지, 클럽에 출력 유뮤 추후 결정)
-	@RequestMapping(value = "/getWeatherMoim2.com", method = RequestMethod.POST)
+	@RequestMapping(value = "/getWeatherMoim.com", method = RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView getWeatherMoim(@RequestBody Map<String, String> requestBody, CommandMap commandMap,
 			HttpSession session) throws Exception {
@@ -142,20 +145,19 @@ public class MainController2 {
 	}
 	
 	//비로그인 사용자 근처의 모임(챌린지, 클럽에 출력 유무 추후 결정)
-	@RequestMapping(value = "/getCurrentRegionMoim2.com", method = RequestMethod.POST)
+	@RequestMapping(value = "/getCurrentRegionMoim.com", method = RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView getCurrentRegionMoim(@RequestBody Map<String, String> requestBody, CommandMap commandMap,
 			HttpSession session) throws Exception {
 
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("jsonView");
-
-		String cityCode = requestBody.get("cityCode");
+		String city = requestBody.get("city");
 		String moimType = requestBody.get("moimType");
 
-		commandMap.put("CITY_CODE", cityCode);
-
+		commandMap.put("CITY_CODE", commonService.extractRegiCode(city));
 		commandMap.put("MOIM_TYPE", moimType.toUpperCase());
+
 		mv.addObject("data", moimService.mainPageMoim(commandMap.getMap(), session, commandMap));
 
 

@@ -3,26 +3,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
   const isNaver = sessionStorage.getItem('isNaver');
   var USER_NUMB = sessionStorage.getItem('USER_NUMB');
-  var city = {
-    'Seoul'             : 'A',
-    'Gyeongg-do'        : 'B',
-    'Incheon'           : 'C',
-    'Gangwon-do'        : 'D',
-    'Chungcheongbuk-do' : 'E',
-    'Chungcheongnam-do' : 'F',
-    'Gongju'            : 'G',
-    'Daejeon'           : 'H',
-    'Gwangju'           : 'I',
-    'Jeollabuk-do'      : 'J',
-    'Gyeongsangbuk-do'  : 'K',
-    'Daegu'             : 'L',
-    'Jeju'              : 'M',
-    'Jeollanam-do'      : 'N',
-    'Ulsan'             : 'O',
-    'Gyeongsangnam-do'  : 'P',
-    'Busan'             : 'Q'
-  };
-  
+
   /*
   230110 KSH
   날씨에 따른 모임추천
@@ -39,6 +20,22 @@ document.addEventListener("DOMContentLoaded", function(){
     var apiURI = "http://api.openweathermap.org/data/2.5/weather?"
       + "lat="+ latitude + "&lon=" + longitude
       + "&lang=kr&appid=12984781cde1466744c656c07b5a583c&units=metric";
+
+    var city = "";
+
+    getAddr(latitude,longitude);
+    function getAddr(lat,lng){
+      let geocoder = new kakao.maps.services.Geocoder();
+
+      let coord = new kakao.maps.LatLng(lat, lng);
+      let callback = function(result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+          city = result[0].address.address_name;
+          console.log(result[0].address.address_name);
+        }
+      }
+      geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+    }
           
     $.ajax({  //(날씨)openweathermapApi ajax 시작부분
               
@@ -48,12 +45,9 @@ document.addEventListener("DOMContentLoaded", function(){
       async : "false",
       success : function(data) {
 
-        debugger;
         const weatherTitleArea = document.getElementById('weatherTitle');
         //const tempArea = weatherTitleArea.querySelector('.tempArea');
         var weatherType = "";
-        var cityName = data.name;
-        var cityCode = city[cityName];
         var weather = (data.weather[0].icon).substr(0, 2); //날씨코드
         var temp = Number((data.main.temp).toFixed(1));
         console.log("날씨 : "+weather + " 온도 :" + temp)
@@ -140,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function(){
           if(regionList.childElementCount == 0) {
             regionList.style.display = 'none';
             recomandRegionList.style.display = 'block';
-            getCurrentRegionMoim(cityCode, moimType);
+            getCurrentRegionMoim(city, moimType);
           }
 
         }
@@ -150,17 +144,16 @@ document.addEventListener("DOMContentLoaded", function(){
         console.log("error : " + res, req);
       }
     });
-    console.log("도시이르으으으으음" + cityCode);
   });
 
 
   /* 근처에 있는 게더 생성 함수 */
-  function getCurrentRegionMoim(cityCode, moimType) {
+  function getCurrentRegionMoim(city, moimType) {
     debugger;
     $.ajax({ //현재 위치정보 전달
 
       url : "/getCurrentRegionMoim.com",
-      data: JSON.stringify({ cityCode : cityCode,
+      data: JSON.stringify({ city : city,
                               moimType: moimType }),
       type : "post",
       dataType: "json",

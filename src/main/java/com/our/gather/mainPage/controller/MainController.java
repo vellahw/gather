@@ -1,6 +1,7 @@
 package com.our.gather.mainPage.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +31,11 @@ public class MainController {
 	@Resource(name = "GatherService")
 	private GatherService gatherService;
 
-	@RequestMapping(value = "/gather.com")
+	@Resource(name = "CommonService")
+	private CommonService commonService;
+
+
+	//@RequestMapping(value = "/gather.com")
 	public ModelAndView main(@RequestParam(value = "type", required = false) String LIST_TYPE,
 							 @RequestParam(value = "cate", required = false) String CATE_IDXX,
 							 @RequestParam(value = "keyword", required = false) String KEYY_WORD,
@@ -206,7 +211,7 @@ public class MainController {
 	}
 	
 	//날씨에 따른 모임(챌린지, 클럽에 출력 유뮤 추후 결정)
-	@RequestMapping(value = "/getWeatherMoim.com", method = RequestMethod.POST)
+	//@RequestMapping(value = "/getWeatherMoim.com", method = RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView getWeatherMoim(@RequestBody Map<String, String> requestBody, CommandMap commandMap,
 			HttpSession session) throws Exception {
@@ -284,7 +289,7 @@ public class MainController {
 	}
 	
 	//비로그인 사용자 근처의 모임(챌린지, 클럽에 출력 유무 추후 결정)
-	@RequestMapping(value = "/getCurrentRegionMoim.com", method = RequestMethod.POST)
+	//@RequestMapping(value = "/getCurrentRegionMoim.com", method = RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView getCurrentRegionMoim(@RequestBody Map<String, String> requestBody, CommandMap commandMap,
 			HttpSession session) throws Exception {
@@ -292,12 +297,10 @@ public class MainController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("jsonView");
 
-		String cityCode = requestBody.get("cityCode");
+		String city = requestBody.get("city");
 		String moimType = requestBody.get("moimType");
 
-		System.out.println("시티코오오오오오드:" + cityCode);
-
-		commandMap.put("CITY_CODE", cityCode);
+		commandMap.put("CITY_CODE", commonService.extractRegiCode(city));
 
 		if (moimType.equals("gt")) {
 

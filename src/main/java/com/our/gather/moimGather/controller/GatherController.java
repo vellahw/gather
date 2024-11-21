@@ -92,9 +92,8 @@ public class GatherController {
 
 			if (!resultMapData.get("MOIM_ADR1").equals("")) {
 
-				Map<String, Object> regiMap = commonService.extractRegiCode(resultMapData);
 				resultMapData.put("MOIM_IDXX", gathNumb);
-				resultGahterData.put("REGI_CODE", regiMap.get("COMD_CODE"));
+				resultGahterData.put("REGI_CODE", commonService.extractRegiCode((String)resultMapData.get("MOIM_ADR1")));
 				commonService.mapInsert(resultMapData, commandMap);
 			}
 
