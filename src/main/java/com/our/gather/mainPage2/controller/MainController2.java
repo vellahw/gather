@@ -36,21 +36,20 @@ public class MainController2 {
 		String moimType = null;
 		
 		if(LIST_TYPE != null) {
-			
-			String moimType2 =  OracleFunction.getCodeName("MOIM_TYPE",LIST_TYPE.toUpperCase());
-			
-			mv.addObject("moimType", moimType2);
+
+			moimType = OracleFunction.getCodeName("MOIM_TYPE", LIST_TYPE.toUpperCase());
 			mv.addObject("moimCode", LIST_TYPE);
-			moimType = LIST_TYPE;
 
-		} else {
+		}else{
 
-			mv.addObject("moimType", "게더");
+			moimType = OracleFunction.getCodeName("MOIM_TYPE", "GT");
 			mv.addObject("moimCode", "GT");
-			moimType = "GT";
-		}
 
-		// 1. Taste
+		}
+			
+			mv.addObject("moimType", moimType);
+
+		// 취향저격
 		commandMap.put("VIEW_TYPE", "Taste");
 		List<Map<String, Object>> tasteList = moimService.mainPageMoim(commandMap.getMap(), session, commandMap);
 		mv.addObject("tasteList", tasteList);

@@ -295,6 +295,8 @@ public class MainController {
 		String cityCode = requestBody.get("cityCode");
 		String moimType = requestBody.get("moimType");
 
+		System.out.println("시티코오오오오오드:" + cityCode);
+
 		commandMap.put("CITY_CODE", cityCode);
 
 		if (moimType.equals("gt")) {

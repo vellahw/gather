@@ -48,15 +48,17 @@ document.addEventListener("DOMContentLoaded", function(){
       async : "false",
       success : function(data) {
 
+        debugger;
         const weatherTitleArea = document.getElementById('weatherTitle');
         //const tempArea = weatherTitleArea.querySelector('.tempArea');
-  
         var weatherType = "";
         var cityName = data.name;
         var cityCode = city[cityName];
         var weather = (data.weather[0].icon).substr(0, 2); //날씨코드
         var temp = Number((data.main.temp).toFixed(1));
-                  
+        console.log("날씨 : "+weather + " 온도 :" + temp)
+        console.log(data);
+
         //tempArea.innerHTML = temp;
   
         if(temp > 0 && temp < 27){  //날씨data 결과에 따른 title
@@ -142,18 +144,19 @@ document.addEventListener("DOMContentLoaded", function(){
           }
 
         }
-
       },//(날씨)openweathermapApi ajax success
   
       error:function(res, req) {
         console.log("error : " + res, req);
       }
     });
+    console.log("도시이르으으으으음" + cityCode);
   });
 
 
   /* 근처에 있는 게더 생성 함수 */
   function getCurrentRegionMoim(cityCode, moimType) {
+    debugger;
     $.ajax({ //현재 위치정보 전달
 
       url : "/getCurrentRegionMoim.com",
