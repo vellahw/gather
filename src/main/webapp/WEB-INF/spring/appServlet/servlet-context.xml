@@ -86,9 +86,9 @@
    </bean> 
    
    <!-- apiBO Class에 대한 Bean설정 추가 -->
-	<bean id="NaverLoginVO" class="com.our.gather.loginPage.dao.NaverLoginVO" />
-	<bean id="KakaoLoginVO" class="com.our.gather.loginPage.dao.KakaoLoginVO" />
-	<bean id="GoogleLoginVO" class="com.our.gather.loginPage.dao.GoogleLoginVO" />
+	<bean id="NaverLoginVO" class="com.our.gather.userLoginPage.dao.NaverLoginVO" />
+	<bean id="KakaoLoginVO" class="com.our.gather.userLoginPage.dao.KakaoLoginVO" />
+	<bean id="GoogleLoginVO" class="com.our.gather.userLoginPage.dao.GoogleLoginVO" />
    
 	<!-- bean 스캔 -->
 	<context:component-scan base-package="com.our.gather" >

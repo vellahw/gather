@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GATHER | 투게더? 게더!</title>
+<title>gather? togather!</title>
 <link rel="stylesheet" href="/resources/css/common/layout/header.css">
 <link rel="stylesheet" href="/resources/css/common/layout/variable.css">
 <link rel="stylesheet" href="/resources/css/common/common.css">

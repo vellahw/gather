@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-
 <div class="slideContents">
 	<div class="eachWrap">
 		<div class="thumnailContainer" onclick="comWhere2Go('detail','${list.MOIM_IDXX}')">
