@@ -63,18 +63,21 @@ document.addEventListener("DOMContentLoaded", function(){
  240115 Hwai
 */
 function cateOnclick(cateCode) {
+  const baseURL = '/gatherList.com'; // 항상 /gatherList.com으로 리디렉션
+  const currentURL = location.href; // 현재 URL 가져오기
+  const params = new URL(currentURL).searchParams; // 현재 URL의 파라미터 가져오기
+  const comType = params.get('type'); // 기존 type 파라미터 가져오기
 
-  const currentURL = location.href;
-  const params = new URL(location.href).searchParams;
-  const comType = params.get('type'); 
+  // 새로운 URL 생성
+  let newURL = baseURL;
 
-  // URL에서 모든 type 및 cate 파라미터를 제거
-  const newURL = currentURL.replace(/(\?|&)type=[^&]*/g, '').replace(/(\?|&)cate=[^&]*/g, '').replace(/(\?|&)keyword=[^&]*/g, '').replace(/(\?|&)pageNum=[^&]*/g, '');
-
-  // type 및 cate 파라미터가 함께 추가되도록 조작
+  // 필요한 파라미터 추가
   if (comType) {
-    location.href = newURL + '?type=' + comType + '&cate=' + cateCode;
+    newURL += `?type=${comType}&cate=${cateCode}`;
   } else {
-    location.href = newURL +  '?cate=' + cateCode;
+    newURL += `?cate=${cateCode}`;
   }
+
+  // 새 URL로 리디렉션
+  location.href = newURL;
 }

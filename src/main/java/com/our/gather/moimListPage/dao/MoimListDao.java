@@ -24,11 +24,11 @@ public class MoimListDao extends AbstractDao {
     public List<Map<String, Object>> getMoimList(Map<String, Object> map, CommandMap commandMap, HttpSession session)
             throws Exception {
 
-        List<Map<String, Object>> getGatherList = (List<Map<String, Object>>) selectList("moim.getMoim", map);
+        List<Map<String, Object>> getMoimList = (List<Map<String, Object>>) selectList("moim.getMoim", map);
 
-        for (int i = 0; i < getGatherList.size(); i++) {
+        for (int i = 0; i < getMoimList.size(); i++) {
             Map<String, Object> hash = new HashMap<>();
-            hash.put("HASH_IDXX", getGatherList.get(i).get("MOIM_IDXX"));
+            hash.put("HASH_IDXX", getMoimList.get(i).get("MOIM_IDXX"));
 
             List<Map<String, Object>> HashTag = (List<Map<String, Object>>) selectList("common.hashTag", hash);
 
@@ -42,87 +42,25 @@ public class MoimListDao extends AbstractDao {
 
                 }
 
-                getGatherList.get(i).put("HASH_TAGG", hashTag);
+                getMoimList.get(i).put("HASH_TAGG", hashTag);
             }
 
             if (session.getAttribute("USER_NUMB") != null) {
 
-                commonService.makeFollowBtn(getGatherList, session);
+                commonService.makeFollowBtn(getMoimList, session);
 
             }
 
         }
 
-        return getGatherList;
+        return getMoimList;
     }
 
-    // 게더 상세보기
-    @SuppressWarnings("unchecked")
-    public Map<String, Object> getMoimDetail(Map<String, Object> map, CommandMap commandMap, HttpSession session)
-            throws Exception {
 
-        Map<String, Object> getGatherDetail = (Map<String, Object>) selectOne("moim.getMoim", map);
-
-        if (session.getAttribute("USER_NUMB") != null) {
-
-            commonService.makeFollowBtn(getGatherDetail, session);
-
-        }
-
-        return getGatherDetail;
-    }
-
-    // 게더맴버
-    @SuppressWarnings("unchecked")
-    public List<Map<String, Object>> getMoimMember(Map<String, Object> map, CommandMap commandMap,
-                                                     HttpSession session) throws Exception {
-
-        List<Map<String, Object>> getGatherMember = (List<Map<String, Object>>) selectList("moim.getMoimMember",
-                map);
-
-        for (int i = 0; i < getGatherMember.size(); i++) {
-
-            if (session.getAttribute("USER_NUMB") != null) {
-
-                commonService.makeFollowBtn(getGatherMember, session);
-
-            }
-
-        }
-
-        return getGatherMember;
-    }
-
-    // 게더 이미지 불러오기
-    @SuppressWarnings("unchecked")
-    public List<Map<String, Object>> getMoimImg(Map<String, Object> map, CommandMap commandMap) throws Exception {
-
-        List<Map<String, Object>> getGatherImg = (List<Map<String, Object>>) selectList("gather.getGatherImg", map);
-
-        return getGatherImg;
-    }
-
+    //모임 총 갯수
     public int getMoimCount(Map<String, Object> map, CommandMap commandMap) throws Exception {
-        return Integer.parseInt(selectOne("gather.getMoimCount", map).toString());
+        return Integer.parseInt(selectOne("moim.getMoimCount", map).toString());
     }
 
-    // 로그인 맴버 현재 상태
-    @SuppressWarnings("unchecked")
-    public Map<String, Object> getMoimYourState(Map<String, Object> map, CommandMap commandMap, HttpSession session)
-            throws Exception {
 
-        Map<String, Object> getGatherYourState = (Map<String, Object>) selectOne("moim.getMoimMember", map);
-
-        return getGatherYourState;
-    }
-
-    //게더 개설
-    public void makeMoim(Map<String, Object> map, CommandMap commandMap) throws Exception {
-        insert("moim.makeMoim", map);
-    }
-
-    // 모임마감
-    public void setMoimEnd(Map<String, Object> map) throws Exception {
-        update("moim.setMoimEnd", map);
-    }
 }

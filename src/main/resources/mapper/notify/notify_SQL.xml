@@ -38,98 +38,33 @@
     <!-- 로그인회원 읽지 않은 알림조회 -->
    <select id="getNotify" parameterType='hashmap' resultType="hashmap">
       <![CDATA[
-      SELECT  /*notify.getNotify*/
-               ROW_NUMBER() OVER (ORDER BY REGG_DATE DESC) RNUM
-          , POST_USER         /* 받는 회원번호 */
-          , SEND_USER         /* 보낸 회원번호 */
-          , NOTI_SEQC         /* 알림시퀀스 */
-          , USER_NICK         /* 보낸 회원 닉네임 */
-             , CASE WHEN SUBSTR(NOTI_CODE,1,1) = 'A'
-                         THEN '님이 ' ||MOIM_TYPEKR|| ' '
-                    ELSE MOIM_TYPEKR
-                END AS NOTI_CNT1
-          , MOIM_TITL         /* 모임 제목 */
-          , NOTI_CNT2         /* 내용2 */
-          , CNTT_IDXX         /* 컨텐츠 번호 */
-          , REGG_DATEKR         /* 날짜 MM월DD일 */
-          , REGG_DATE         /* 날짜 */
-        FROM
-            ( SELECT 
-                    A.USER_NUMB AS POST_USER              
-                   , B.USER_NUMB AS SEND_USER              
-                     , A.NOTI_SEQC 
-                       , A.NOTI_CODE
-                   , B.USER_NICK                                                 
-                  , C.MOIM_TITL AS MOIM_TITL              
-                  , D.CODE_OPT1 AS NOTI_CNT2            
-                  , C.MOIM_IDXX AS CNTT_IDXX 
-                       , getCodeName('MOIM_TYPE',SUBSTR(C.MOIM_IDXX,1,2)) AS MOIM_TYPEKR
-                  , SUBSTR(formatDate(A.REGG_DATE), 7, 11) AS REGG_DATEKR
-                  , A.REGG_DATE
-               FROM TB_NOTIFY A
-            LEFT JOIN TM_USERXM B 
-                   ON A.SEND_USER = B.USER_NUMB
-            LEFT JOIN TM_GATHER C 
-                   ON A.BOAD_IDXX = C.MOIM_IDXX
-            LEFT JOIN TB_CODEXD D 
-                   ON D.COMD_CODE = A.NOTI_CODE
-                   AND D.COMM_CODE = 'NOTI_CODE'
-               WHERE A.BOAD_IDXX = C.MOIM_IDXX
-                AND A.READ_YSNO = 'N'
-      
-             UNION ALL
-      
-              SELECT 
-                     A.USER_NUMB AS POST_USER
-                   , B.USER_NUMB AS SEND_USER
-                   , A.NOTI_SEQC
-                       , A.NOTI_CODE
-                   , B.USER_NICK
-                   , C.MOIM_TITL AS MOIM_TITL
-                   , D.CODE_OPT1 AS NOTI_CNT2
-                   , C.MOIM_IDXX AS CNTT_IDXX
-                       , getCodeName('MOIM_TYPE',SUBSTR(C.MOIM_IDXX,1,2)) AS MOIM_TYPEKR
-                   , SUBSTR(formatDate(A.REGG_DATE), 7, 11) AS REGG_DATEKR
-                   , A.REGG_DATE
-                FROM TB_NOTIFY A
-            LEFT JOIN TM_USERXM B 
-                  ON A.SEND_USER = B.USER_NUMB
-            LEFT JOIN TM_CHALNG C 
-                   ON A.BOAD_IDXX = C.MOIM_IDXX
-            LEFT JOIN TB_CODEXD D 
-                   ON D.COMD_CODE = A.NOTI_CODE
-                  AND D.COMM_CODE = 'NOTI_CODE'
-               WHERE A.READ_YSNO = 'N'
-                 AND A.BOAD_IDXX =  C.MOIM_IDXX
-            
-            UNION ALL
-            
-              SELECT   
-                     A.USER_NUMB AS POST_USER
-                   , B.USER_NUMB AS SEND_USER
-                   , A.NOTI_SEQC
-                       , A.NOTI_CODE
-                   , B.USER_NICK 
-                   , C.MOIM_TITL AS MOIM_TITL
-                   , D.CODE_OPT1 AS NOTI_CNT2
-                   , C.MOIM_IDXX AS CNTT_IDXX
-                       , getCodeName('MOIM_TYPE',SUBSTR(C.MOIM_IDXX,1,2)) AS MOIM_TYPEKR
-                   , SUBSTR(formatDate(A.REGG_DATE), 7, 11) AS REGG_DATEKR
-                   , A.REGG_DATE
-                
-                FROM TB_NOTIFY A
-            LEFT JOIN TM_USERXM B 
-                   ON A.SEND_USER = B.USER_NUMB
-            LEFT JOIN TM_CLUBXM C 
-                   ON A.BOAD_IDXX = C.MOIM_IDXX
-            LEFT JOIN TB_CODEXD D 
-                   ON D.COMD_CODE = A.NOTI_CODE
-                  AND D.COMM_CODE = 'NOTI_CODE'
-               WHERE A.READ_YSNO = 'N'
-                 AND A.BOAD_IDXX =  C.MOIM_IDXX
-            )
-      WHERE POST_USER = #{USER_NUMB}
-    ORDER BY REGG_DATE DESC
+       SELECT
+              A.USER_NUMB AS POST_USER
+            , B.USER_NUMB AS SEND_USER
+            , A.NOTI_SEQC
+            , A.NOTI_CODE
+            , B.USER_NICK
+            , CASE WHEN SUBSTR(A.NOTI_CODE,1,1) = 'A'
+                       THEN '님이 ' || getCodeName('MOIM_TYPE',SUBSTR(C.MOIM_IDXX,1,2)) || ' '
+                   ELSE getCodeName('MOIM_TYPE',SUBSTR(C.MOIM_IDXX,1,2))
+               END AS NOTI_CNT1
+            , C.MOIM_TITL AS MOIM_TITL
+            , D.CODE_OPT1 AS NOTI_CNT2
+            , C.MOIM_IDXX AS CNTT_IDXX
+            , SUBSTR(formatDate(A.REGG_DATE), 7, 11) AS REGG_DATEKR
+            , A.REGG_DATE
+       FROM TB_NOTIFY A
+  LEFT JOIN TM_USERXM B
+         ON A.SEND_USER = B.USER_NUMB
+  LEFT JOIN TM_MOIMXM C
+         ON A.BOAD_IDXX = C.MOIM_IDXX
+  LEFT JOIN TB_CODEXD D
+         ON D.COMD_CODE = A.NOTI_CODE
+        AND D.COMM_CODE = 'NOTI_CODE'
+      WHERE A.BOAD_IDXX = C.MOIM_IDXX
+        AND A.READ_YSNO = 'N'
+        AND A.USER_NUMB = #{USER_NUMB}
+   ORDER BY A.REGG_DATE DESC
     ]]>
     </select>
     
@@ -137,8 +72,8 @@
        <![CDATA[
       UPDATE /*notify.updateReadNoti*/
              TB_NOTIFY SET
-           READ_YSNO = 'Y'
-      WHERE USER_NUMB = #{USER_NUMB}
+             READ_YSNO = 'Y'
+       WHERE USER_NUMB = #{USER_NUMB}
       ]]>
       <if test="NOTI_SEQC != null">
         <![CDATA[

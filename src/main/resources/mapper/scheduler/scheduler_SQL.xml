@@ -23,9 +23,10 @@
                     ELSE 'N'
                 END AS MAST_YSNO	
 	      FROM TB_MEMBER A
-	 LEFT JOIN TM_GATHER B
+	 LEFT JOIN TM_MOIMXM B
 	        ON A.MOIM_IDXX = B.MOIM_IDXX
-	     WHERE A.MOIM_IDXX = #{MOIM_IDXX}
+	     WHERE SUBSTR(A.MOIM_IDXX,1,2) = 'GT'
+	       AND A.MOIM_IDXX = #{MOIM_IDXX}
 	       AND A.BANN_YSNO = 'N'
 	       AND A.WAIT_YSNO = 'N'
 	      	]]>
@@ -40,9 +41,10 @@
     <![CDATA[
         SELECT /*scheduler.getEnddedGahter*/
         	   MOIM_IDXX
-          FROM TM_GATHER
-         WHERE TO_DATE(CONCAT(CONCAT(MOIM_DATE, ' '), MOIM_TIME), 'YY/MM/DD HH24:MI') <= SYSDATE
+          FROM TM_MOIMXM
+         WHERE SUBSTR(MOIM_IDXX,1,2) = 'GT'
            AND ENDD_YSNO = 'N'
+           AND TO_DATE(CONCAT(CONCAT(MOIM_DATE, ' '), MOIM_TIME), 'YY/MM/DD HH24:MI') <= SYSDATE
      ]]>
     </select>
     
@@ -55,13 +57,14 @@
     <![CDATA[
        SELECT /*scheduler.getOneDayLeft*/
     		  A.MOIM_IDXX
-		 FROM TM_GATHER A
+		 FROM TM_MOIMXM A
 	LEFT JOIN TB_NOTIFY B 
 	       ON B.BOAD_IDXX = A.MOIM_IDXX
           AND B.NOTI_CODE = 'C01'
-		WHERE TO_DATE(CONCAT(CONCAT(MOIM_DATE, ' '), MOIM_TIME), 'YY/MM/DD HH24:MI') - SYSDATE <= 1
-		  AND TO_DATE(CONCAT(CONCAT(MOIM_DATE, ' '), MOIM_TIME), 'YY/MM/DD HH24:MI') - SYSDATE > 0
+		WHERE SUBSTR(A.MOIM_IDXX,1,2) = 'GT'
 		  AND ENDD_YSNO = 'N'
+		  AND TO_DATE(CONCAT(CONCAT(MOIM_DATE, ' '), MOIM_TIME), 'YY/MM/DD HH24:MI') - SYSDATE <= 1
+		  AND TO_DATE(CONCAT(CONCAT(MOIM_DATE, ' '), MOIM_TIME), 'YY/MM/DD HH24:MI') - SYSDATE > 0
 		  AND B.BOAD_IDXX IS NULL
      ]]>
     </select>

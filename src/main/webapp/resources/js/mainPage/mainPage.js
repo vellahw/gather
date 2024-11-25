@@ -5,7 +5,7 @@ function contentsSlider(){
   * 컨텐츠 슬라이더
   */
  const slideContainer = document.querySelectorAll('.slideWrap'); // 리스트를 감싸는 부모
- 
+
   slideContainer.forEach((slideContainer) => {
 
     const slideList = slideContainer.querySelectorAll('.slideList'); // 컨텐츠를 감싸는 리스트
@@ -43,26 +43,26 @@ function contentsSlider(){
         let translate = 0; // 슬라이드 위치 값
 
         const rigthBtn = slideContainer.querySelector('#rigthBtn');
-    
+
         const leftBtn = slideContainer.querySelector('#leftBtn');
-        const lastPage = Math.round((slideContentCount / 4) - 1); 
-        
+        const lastPage = Math.ceil((slideContentCount / 4) - 1);
+
         slideContainer.addEventListener('mouseenter', (e) => {
 
           if(currentIdx >= 0 && currentIdx !== lastPage) {
             addBtnHover(rigthBtn);
           }
-          
+
           if(currentIdx !== 0) {
             addBtnHover(leftBtn);
-          } 
+          }
         })
-        
+
         slideContainer.addEventListener('mouseleave', () => {
           if(currentIdx === lastPage) {
             removeBtnHover(rigthBtn);
           }
-          
+
           if(currentIdx === 0) {
             removeBtnHover(leftBtn);
           }
@@ -75,7 +75,7 @@ function contentsSlider(){
         function addBtnHover(targetBtn) {
           targetBtn.classList.add('_hover');
         }
-        
+
         function removeBtnHover(targetBtn) {
           targetBtn.classList.remove('_hover');
         }
@@ -119,15 +119,16 @@ function contentsSlider(){
                   event.target.classList.remove('_hover');
                 }
               }
+             console.log(currentIdx);
           }
-          
+
         }) // END btn.forEach
 
       } else if(slideContentCount == 0) {
 				// const parent = slideContainer.parentNode.parentNode;
 				// parent.style.display = 'none';
 
-        // if(sessionStorage.getItem('isNaver') == 'true') { 
+        // if(sessionStorage.getItem('isNaver') == 'true') {
         //   const region = document.querySelector('div[data-type="Region"]');
         //   region.style.display = 'block';
         // }
@@ -135,7 +136,8 @@ function contentsSlider(){
       } // END  if(slideContentCount > 4)
     }) // END slideList.forEach
 
-  }) // END slideContainer.forEach  
+  }) // END slideContainer.forEach
+
 }
 
 /**

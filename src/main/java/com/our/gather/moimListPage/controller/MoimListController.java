@@ -1,33 +1,18 @@
 package com.our.gather.moimListPage.controller;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.common.Criteria;
 import com.our.gather.common.common.Pager;
 import com.our.gather.common.oracleFunction.OracleFunction;
-import com.our.gather.common.service.CommonService;
-import com.our.gather.moimDetailPage.service.MoimDetailService;
-import com.our.gather.moimGather.service.GatherService;
 import com.our.gather.moimListPage.service.MoimListService;
-import com.our.gather.notify.service.NotifyService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 public class MoimListController {
@@ -42,8 +27,8 @@ public class MoimListController {
 							 HttpSession session, CommandMap commandMap, Criteria cri,
 							 HttpServletRequest request) throws Exception {
 
-		ModelAndView mv = new ModelAndView("/listPage/listPage");
-		mv.setViewName("listPage");
+		ModelAndView mv = new ModelAndView("/moim/moimListPage");
+		mv.setViewName("moimListPage");
 
 		commandMap.put("amount", cri.getAmount());
 		commandMap.put("pageNum", cri.getPageNum());
@@ -51,35 +36,29 @@ public class MoimListController {
 
 		if (LIST_TYPE != null) {
 			moimType = OracleFunction.getCodeName("MOIM_TYPE", LIST_TYPE.toUpperCase());
-			mv.addObject("moimCode", LIST_TYPE);
+			mv.addObject("MOIM_TYPE", LIST_TYPE);
 			commandMap.put("MOIM_TYPE", LIST_TYPE.toUpperCase());
 		} else {
 			moimType = OracleFunction.getCodeName("MOIM_TYPE", "GT");
-			mv.addObject("moimCode", "GT");
+			mv.addObject("MOIM_TYPE", "GT");
 			commandMap.put("MOIM_TYPE", "GT");
 		}
 
-		mv.addObject("moimType", moimType);
+		mv.addObject("MOIM_TYPE", moimType);
 
-		if (CATE_IDXX != null && KEYY_WORD == null) {
-			commandMap.put("CATE_IDXX", CATE_IDXX);
-			int total = moimListService.getMoimCount(commandMap.getMap(), commandMap);
+		commandMap.put("CATE_IDXX", CATE_IDXX);
+		commandMap.put("KEYY_WORD", KEYY_WORD);
 
-			String result = OracleFunction.getCodeName("CATE_IDXX", CATE_IDXX);
-			mv.addObject("CATE_NAME", result);
-			mv.addObject("pageMaker", new Pager(cri, total));
+		int total = moimListService.getMoimCount(commandMap.getMap(), commandMap);
 
-			return mv;
-		} else if (CATE_IDXX == null && KEYY_WORD != null) {
-			commandMap.put("KEYY_WORD", KEYY_WORD);
-			int total = moimListService.getMoimCount(commandMap.getMap(), commandMap);
-
-			mv.addObject("list", moimListService.getMoimList(commandMap.getMap(), session, commandMap)); // 추후 챌린지로 변경
-			mv.addObject("pageMaker", new Pager(cri, total));
-
-			return mv;
-		}
+		mv.addObject("list", moimListService.getMoimList(commandMap.getMap(), session, commandMap));
+		String CATE_NAME = OracleFunction.getCodeName("CATE_IDXX", CATE_IDXX);
+		mv.addObject("CATE_IDXX", CATE_IDXX);
+		mv.addObject("CATE_NAME", CATE_NAME);
+		mv.addObject("KEYY_WORD", KEYY_WORD);
+		mv.addObject("pageMaker", new Pager(cri, total));
 
 		return mv;
+
 	}
 }

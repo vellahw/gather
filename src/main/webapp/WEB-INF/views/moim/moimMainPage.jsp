@@ -21,7 +21,7 @@
 	<div class="contentsWrap">
 		<h1 class="mainAreaTitlegr">
 			<c:out value="${USER_NICK}님의 취향 저격 ${moimType}" />
-				<img src="/resources/img/icon/tasteTitleIcon.png" class="areaTitleIcon" alt="타이틀 아이콘">
+			<img src="/resources/img/icon/tasteTitleIcon.png" class="areaTitleIcon" alt="타이틀 아이콘">
 		</h1>
 		<div class="slideWrap">
 			<div class="slideContainer">
@@ -61,16 +61,16 @@
 													<img src="/resources/img/icon/locationIcon.png"
 														 class="locationIcon" alt="장소 아이콘">
 													<span class="location">
-							<c:out value="${list.REGI_NAME}" />
-						</span>
+														<c:out value="${list.REGI_NAME}" />
+													</span>
 													<div class="tooltiptext">
 														<c:out value="${list.PREGI_NAME}" />
 													</div>
 												</div>
 											</div>
 											<span class="dateContainer">
-					<c:out value="${list.SMAL_DATE}" />
-				</span>
+												<c:out value="${list.SMAL_DATE}" />
+											</span>
 										</div>
 										<div class="userContainer">
 											<div class="userProfileWrap">
@@ -78,8 +78,8 @@
 													<img src="${list.USER_IMAG}"class="profileImg" alt="프로필사진" onclick="comWhere2Go('userPage','${list.USER_NUMB}')">
 												</div>
 												<span class="nickname">
-						<c:out value="${list.USER_NICK}" />
-					</span>
+													<c:out value="${list.USER_NICK}" />
+												</span>
 											</div>
 											<div class="heartWrap">
 												<input type="hidden" data-like-id="${list.MOIM_IDXX}" value="${list.LIKE_YSNO}" id="heartYN"/>
@@ -96,7 +96,7 @@
 							</div>
 						</c:if>
 						<c:if test="${fn:length(list) == 0}">
-						<div class="none">조회된 결과가 없습니다!</div>
+							<div class="none">조회된 결과가 없습니다!</div>
 						</c:if>
 					</c:forEach>
 				</div>
@@ -148,16 +148,16 @@
 													<img src="/resources/img/icon/locationIcon.png"
 														 class="locationIcon" alt="장소 아이콘">
 													<span class="location">
-							<c:out value="${list.REGI_NAME}" />
-						</span>
+														<c:out value="${list.REGI_NAME}" />
+													</span>
 													<div class="tooltiptext">
 														<c:out value="${list.PREGI_NAME}" />
 													</div>
 												</div>
 											</div>
 											<span class="dateContainer">
-					<c:out value="${list.SMAL_DATE}" />
-				</span>
+												<c:out value="${list.SMAL_DATE}" />
+											</span>
 										</div>
 										<div class="userContainer">
 											<div class="userProfileWrap">
@@ -165,8 +165,8 @@
 													<img src="${list.USER_IMAG}"class="profileImg" alt="프로필사진" onclick="comWhere2Go('userPage','${list.USER_NUMB}')">
 												</div>
 												<span class="nickname">
-						<c:out value="${list.USER_NICK}" />
-					</span>
+													<c:out value="${list.USER_NICK}" />
+												</span>
 											</div>
 											<div class="heartWrap">
 												<input type="hidden" data-like-id="${list.MOIM_IDXX}" value="${list.LIKE_YSNO}" id="heartYN"/>
@@ -196,33 +196,33 @@
 
 <%-- 날씨 추천 게더 --%>
 <div class="contentsContainer mainContainer" data-id="weatherList">
-  <div id="weatherSection">
-  	<h1 id="weatherTitle" class="mainAreaTitle">
-  	<span class="tempArea">
-  	</span>
-  	</h1>
+	<div id="weatherSection">
+		<h1 id="weatherTitle" class="mainAreaTitle">
+			<span class="tempArea">
+			</span>
+		</h1>
 		<div class="slideWrap">
-  	  <div class="slideContainer">
-			  <button type="button" class="arrowBtn left" id="leftBtn"></button>
-			  <button type="button" class="arrowBtn right" id="rigthBtn"></button>
-			  <div class="slideList" id="weatherList">
-			  </div>
-		  </div>
-	  </div>
+			<div class="slideContainer">
+				<button type="button" class="arrowBtn left" id="leftBtn"></button>
+				<button type="button" class="arrowBtn right" id="rigthBtn"></button>
+				<div class="slideList" id="weatherList">
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
 <%-- 근처의 게더 --%>
 <div class="contentsContainer mainContainer" data-id="regionList">
-  <div id="regionSection">
-  	<h1 id="regionTitle" class="mainAreaTitle"></h1>
-			<div class="slideWrap">
-  	  	<div class="slideContainer">
-			  	<button type="button" class="arrowBtn left" id="leftBtn"></button>
-			  	<button type="button" class="arrowBtn right" id="rigthBtn"></button>
-			  	<div class="slideList" id="regionList">
-		  	</div>
-	  	</div>
+	<div id="regionSection">
+		<h1 id="regionTitle" class="mainAreaTitle"></h1>
+		<div class="slideWrap">
+			<div class="slideContainer">
+				<button type="button" class="arrowBtn left" id="leftBtn"></button>
+				<button type="button" class="arrowBtn right" id="rigthBtn"></button>
+				<div class="slideList" id="regionList">
+				</div>
+			</div>
 		</div>	
 	</div>
 </div>
@@ -270,16 +270,16 @@
 													<img src="/resources/img/icon/locationIcon.png"
 														 class="locationIcon" alt="장소 아이콘">
 													<span class="location">
-							<c:out value="${list.REGI_NAME}" />
-						</span>
+														<c:out value="${list.REGI_NAME}" />
+													</span>
 													<div class="tooltiptext">
 														<c:out value="${list.PREGI_NAME}" />
 													</div>
 												</div>
 											</div>
 											<span class="dateContainer">
-					<c:out value="${list.SMAL_DATE}" />
-				</span>
+												<c:out value="${list.SMAL_DATE}" />
+											</span>
 										</div>
 										<div class="userContainer">
 											<div class="userProfileWrap">
@@ -287,8 +287,8 @@
 													<img src="${list.USER_IMAG}"class="profileImg" alt="프로필사진" onclick="comWhere2Go('userPage','${list.USER_NUMB}')">
 												</div>
 												<span class="nickname">
-						<c:out value="${list.USER_NICK}" />
-					</span>
+													<c:out value="${list.USER_NICK}" />
+												</span>
 											</div>
 											<div class="heartWrap">
 												<input type="hidden" data-like-id="${list.MOIM_IDXX}" value="${list.LIKE_YSNO}" id="heartYN"/>
@@ -358,16 +358,16 @@
 													<img src="/resources/img/icon/locationIcon.png"
 														 class="locationIcon" alt="장소 아이콘">
 													<span class="location">
-							<c:out value="${list.REGI_NAME}" />
-						</span>
+														<c:out value="${list.REGI_NAME}" />
+													</span>
 													<div class="tooltiptext">
 														<c:out value="${list.PREGI_NAME}" />
 													</div>
 												</div>
 											</div>
 											<span class="dateContainer">
-					<c:out value="${list.SMAL_DATE}" />
-				</span>
+												<c:out value="${list.SMAL_DATE}" />
+											</span>
 										</div>
 										<div class="userContainer">
 											<div class="userProfileWrap">
@@ -375,8 +375,8 @@
 													<img src="${list.USER_IMAG}"class="profileImg" alt="프로필사진" onclick="comWhere2Go('userPage','${list.USER_NUMB}')">
 												</div>
 												<span class="nickname">
-						<c:out value="${list.USER_NICK}" />
-					</span>
+													<c:out value="${list.USER_NICK}" />
+												</span>
 											</div>
 											<div class="heartWrap">
 												<input type="hidden" data-like-id="${list.MOIM_IDXX}" value="${list.LIKE_YSNO}" id="heartYN"/>

@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class="rightContainer">
-  		<form action="/gather.com" method="get">	
+  		<form action="/gatherList.com" method="get">
     		<div class="searchContainer">
 	    	<input type="text" name="keyword" class="searchBox" placeholder="관심사, 해시태그, 회원명을 검색해주세요!">
 	      	<button type="submit" class="searchBtn" >

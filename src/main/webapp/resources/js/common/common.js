@@ -386,13 +386,13 @@ function comWhere2Go(pageName, params) {
 
     case 'search':
 
-    location.href = `/gather.com?keyword=${params}`
+    location.href = `/gatherList.com?keyword=${params}`
     
     break;
 
-    case 'makeGather':
+    case 'makeMoim':
 
-    location.href = `/gather/makeGather.com`
+    location.href = `/gather/makeMoim.com`
     
     break;
 
@@ -455,7 +455,7 @@ function comObjectInArray(targetValue) {
           // 등호를 기준으로 키와 값을 나누어 맵에 추가
           const [key, value] = pair.split("=");
           map[key] = value;
-      });
+      })
 
       result.push(map); // 배열에 맵 추가
 

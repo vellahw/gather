@@ -11,14 +11,17 @@
     작성일:23.12.19
     (모임 개설)
     -->
+	<!--모임 채번-->
+	<select id="makeMoimNumb" parameterType="hashmap" resultType="hashmap">
+		SELECT #{MOIM_TYPE} || TO_CHAR(SYSDATE, 'YYMM') ||
+			   LPAD(NVL(MAX(CAST(SUBSTR(MOIM_IDXX,7,4) AS NUMBER)) + 1, 1), 4, '0') AS MOIM_IDXX
+		  FROM TM_MOIMXM
+		 WHERE SUBSTR(MOIM_IDXX,3,4) = TO_CHAR(SYSDATE, 'YYMM')
+		   AND SUBSTR(MOIM_IDXX,1,2) = #{MOIM_TYPE}
+	</select>
+
+	<!--모임 개설-->
 	<insert id="makeMoim" parameterType="hashmap" useGeneratedKeys="true" keyProperty="MOIM_IDXX">
-		<selectKey keyProperty="MOIM_IDXX" resultType="String" order="BEFORE">
-			SELECT #{MOIM_TYPE} || TO_CHAR(SYSDATE, 'YYMM') ||
-				   LPAD(NVL(MAX(CAST(SUBSTR(MOIM_IDXX,7,4) AS NUMBER)) + 1, 1), 4, '0') AS MOIM_IDXX
-			  FROM TM_MOIMXM
-			 WHERE SUBSTR(MOIM_IDXX,3,4) = TO_CHAR(SYSDATE, 'YYMM')
-			   AND SUBSTR(MOIM_IDXX,1,2) = #{MOIM_TYPE}
-		</selectKey>
 		  INSERT INTO TM_MOIMXM (
 					  MOIM_IDXX  						/* 모임번호 */
 					, USER_NUMB  						/* 회원번호(방장번호) */
@@ -95,7 +98,7 @@
        <![CDATA[
     			) RNUM
 				, MOIM_IDXX										   							/* 모임아이디 */
-				, MOIM_TYPE_CODE															/* 모임 타입 코드*/
+				, MOIM_TYPE																	/* 모임 타입 코드*/
 				, MOIM_TYPE_KR																/* 모임 타입 */
 				, MOIM_TITL										   							/* 모임 제목 */
 				, MOIM_CNTT																	/* 모임 내용 */
@@ -129,7 +132,7 @@
 				, getAmILike(MOIM_IDXX, #{USER_NUMB, jdbcType=VARCHAR}) AS LIKE_YSNO		/* 로그인유저 좋아요 유무 */
 				, getAmIBkmk(MOIM_IDXX, #{USER_NUMB, jdbcType=VARCHAR}) AS BKMK_YSNO		/* 로그인유저 북마크 유무 */
 		   FROM VW_MOIMXM
-		  WHERE MOIM_TYPE_CODE = #{MOIM_TYPE}
+		  WHERE MOIM_TYPE = #{MOIM_TYPE}
       		]]>
 	   <if test="VIEW_TYPE != null">
 	   <choose>
@@ -227,12 +230,12 @@
 		                , A.LIKE_COUNT																	/* 좋아요 수 */
 		                , A.REGG_DATE																	/* 모임 개설일 */
 		                , A.ENDD_YSNO																	/* 모임 마감 유무 */
-		                , getAmILike(MOIM_IDXX, #{USER_NUMB, jdbcType=VARCHAR}) AS LIKE_YSNO		/* 로그인유저 좋아요 유무 */
-                		, getAmIBkmk(MOIM_IDXX, #{USER_NUMB, jdbcType=VARCHAR}) AS BKMK_YSNO		/* 로그인유저 북마크 유무 */
+		                , getAmILike(A.MOIM_IDXX, #{USER_NUMB, jdbcType=VARCHAR}) AS LIKE_YSNO		/* 로그인유저 좋아요 유무 */
+                		, getAmIBkmk(A.MOIM_IDXX, #{USER_NUMB, jdbcType=VARCHAR}) AS BKMK_YSNO		/* 로그인유저 북마크 유무 */
 					FROM VW_MOIMXM A
 			   LEFT JOIN TB_KKAMAP B
                       ON A.MOIM_IDXX = B.MOIM_IDXX
-				   WHERE A.MOIM_TYPE_CODE = #{MOIM_TYPE}
+				   WHERE A.MOIM_TYPE = #{MOIM_TYPE}
 		      ]]>
 		<if test="MOIM_IDXX != null">
 			<![CDATA[
@@ -278,7 +281,7 @@
         SELECT /*moim.getMoimCount*/
         	   COUNT(*) AS MOIM_COUNT
           FROM VW_MOIMXM
-         WHERE 1=1
+         WHERE MOIM_TYPE = #{MOIM_TYPE}
         ]]>
         <if test="CATE_IDXX != null and CATE_IDXX != 'all'">
          <![CDATA[
@@ -420,6 +423,37 @@
 		     ENDD_YSNO = 'Y'
 	   WHERE MOIM_IDXX = #{MOIM_IDXX}
        ]]>
+   </update>
+
+	<!-- 맴버에 가입 -->
+	<insert id="moimJoin" parameterType='hashmap'>
+      <![CDATA[
+		/* detail.moimJoin */
+		INSERT INTO TB_MEMBER (
+								MOIM_IDXX
+							  , USER_NUMB
+							  , BANN_YSNO
+							  , WAIT_YSNO
+							  , PART_DATE
+		) VALUES (
+				   #{MOIM_IDXX}
+				 , #{USER_NUMB}
+				 , 'N'
+				 , #{WAIT_YSNO}
+				 , SYSDATE
+				 )
+		]]>
+   </insert>
+
+	<update id="moimStateUpdate" parameterType='hashmap'>
+      <![CDATA[
+		/* detail.moimStateUpdate */
+		UPDATE TB_MEMBER
+		SET BANN_YSNO = #{BANN_YSNO}
+		  , WAIT_YSNO = #{WAIT_YSNO}
+		WHERE MOIM_IDXX = #{MOIM_IDXX}
+		  AND USER_NUMB = #{USER_NUMB}
+		]]>
    </update>
    
 </mapper>

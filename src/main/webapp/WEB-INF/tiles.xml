@@ -4,33 +4,29 @@
   "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<definition name="mainPage" template="/WEB-INF/views/layout/layout.jsp">
+	<definition name="moimMainPage" template="/WEB-INF/views/layout/layout.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
-		<put-attribute name="body" value="/WEB-INF/views/mainPage/mainPage.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/moim/moimMainPage.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
 	</definition>
 
-  <definition name="login" extends="mainPage">
+  <definition name="login" extends="moimMainPage">
     <put-attribute name="body" value="/WEB-INF/views/loginPage/login.jsp"/>
   </definition>
   
-  <definition name="listPage" extends="mainPage">
-    <put-attribute name="body" value="/WEB-INF/views/listPage/listPage.jsp"/>
-  </definition>
-  
-  <definition name="searchPage" extends="mainPage">
-    <put-attribute name="body" value="/WEB-INF/views/searchPage/searchPage.jsp"/>
+  <definition name="moimListPage" extends="moimMainPage">
+    <put-attribute name="body" value="/WEB-INF/views/moim/moimListPage.jsp"/>
   </definition>
 
-  <definition name="detailPage" extends="mainPage">
-    <put-attribute name="body" value="/WEB-INF/views/detailPage/detailPage.jsp"/>
+  <definition name="moimDetailPage" extends="moimMainPage">
+    <put-attribute name="body" value="/WEB-INF/views/moim/moimDetailPage.jsp"/>
   </definition>
   
-  <definition name="makeGather" extends="mainPage">
-    <put-attribute name="body" value="/WEB-INF/views/moimGather/makeGather.jsp"/>
+  <definition name="moimMakePage" extends="moimMainPage">
+    <put-attribute name="body" value="/WEB-INF/views/moim/moimMakePage.jsp"/>
   </definition>
   
-  <definition name="userPage" extends="mainPage">
+  <definition name="userPage" extends="moimMainPage">
     <put-attribute name="body" value="/WEB-INF/views/userPage/userPage.jsp"/>
   </definition>
   

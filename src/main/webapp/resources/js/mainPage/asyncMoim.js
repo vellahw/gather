@@ -74,54 +74,54 @@ document.addEventListener("DOMContentLoaded", function(){
               dayNightKr = "밤";
             }
   
-              weatherTitleArea.innerHTML = '기분 좋은 맑은 ' + dayNightKr                 
-                                         + weatherImg
-                                         + ' 이런 ' + comWhereAmI().moimTypeKr +" 어때요?"
+            weatherTitleArea.innerHTML = '기분 좋은 맑은 ' + dayNightKr
+                + weatherImg
+                + ' 이런 ' + comWhereAmI().moimTypeKr +" 어때요?"
   
           } else if(weather == '03' || weather == '04' || weather == '50'){
                             
             weatherType = "cloudy";
             weatherTitleArea.innerHTML = '구름 많은 흐린 날 '                 
-                                       + '<img src="/resources/img/icon/weather/cloudy.png" class="areaTitleIcon"/>' 
-                                       + ' 이런 ' + comWhereAmI().moimTypeKr +" 어때요?"
+                + '<img src="/resources/img/icon/weather/cloudy.png" class="areaTitleIcon"/>'
+                + ' 이런 ' + comWhereAmI().moimTypeKr +" 어때요?"
   
           } else if(weather == '09' || weather == '10'){
                             
             weatherType = "rainy";
             weatherTitleArea.innerHTML = '비 오는 날 '                 
-                                       + '<img src="/resources/img/icon/weather/rainy.png" class="areaTitleIcon"/>' 
-                                       + ' 이런 ' + comWhereAmI().moimTypeKr +" 어때요?"
+                + '<img src="/resources/img/icon/weather/rainy.png" class="areaTitleIcon"/>'
+                + ' 이런 ' + comWhereAmI().moimTypeKr +" 어때요?"
   
   
           } else if(weather == '11'){ 
                             
             weatherType = "thunder";
             weatherTitleArea.innerHTML = '천둥 번개 치는 날 '                 
-                                       + '<img src="/resources/img/icon/weather/thunder.png" class="areaTitleIcon"/>' 
-                                       + ' 이런 ' + comWhereAmI().moimTypeKr +" 어때요?"
+                + '<img src="/resources/img/icon/weather/thunder.png" class="areaTitleIcon"/>'
+                + ' 이런 ' + comWhereAmI().moimTypeKr +" 어때요?"
   
   
           } else if(weather == '13'){
                             
             weatherType = "snowy";
             weatherTitleArea.innerHTML = '눈 오는 날 '                 
-                                       + '<img src="/resources/img/icon/weather/snow.png" class="areaTitleIcon"/>' 
-                                       + ' 이런 ' + comWhereAmI().moimTypeKr +" 어때요?"
+                + '<img src="/resources/img/icon/weather/snow.png" class="areaTitleIcon"/>'
+                + ' 이런 ' + comWhereAmI().moimTypeKr +" 어때요?"
           }
                         
         } else if(temp >= 27 && weather == '01'){
                             
           weatherType = "hot";
           weatherTitleArea.innerHTML = '오늘 같이 더운 날 '                 
-                                     + '<img src="/resources/img/icon/weather/sunny.png" class="areaTitleIcon"/>' 
-                                     + ' 이런 ' + comWhereAmI().moimTypeKr +" 어때요?"
+              + '<img src="/resources/img/icon/weather/sunny.png" class="areaTitleIcon"/>'
+              + ' 이런 ' + comWhereAmI().moimTypeKr +" 어때요?"
    
         } else if(temp <= 0 ){
                             
           weatherType = "cold";
           weatherTitleArea.innerHTML = '오늘 같이 추운 날 '                 
-                                     + '<img src="/resources/img/icon/weather/cold.png" class="areaTitleIcon"/>' 
-                                      + ' 이런 ' + comWhereAmI().moimTypeKr +" 어때요?"
+              + '<img src="/resources/img/icon/weather/cold.png" class="areaTitleIcon"/>'
+              + ' 이런 ' + comWhereAmI().moimTypeKr +" 어때요?"
         }
   
         getWeatherMoim(weatherType, moimType);
@@ -130,11 +130,11 @@ document.addEventListener("DOMContentLoaded", function(){
           const Region = document.querySelector('div[data-type="Region"]');
           const regionList = Region.querySelector('.slideList');
           const recomandRegionList = document.querySelector('div[data-id="regionList"]');
-          
+          getCurrentRegionMoim(city, moimType);
+
           if(regionList.childElementCount == 0) {
             regionList.style.display = 'none';
             recomandRegionList.style.display = 'block';
-            getCurrentRegionMoim(city, moimType);
           }
 
         }
@@ -149,12 +149,12 @@ document.addEventListener("DOMContentLoaded", function(){
 
   /* 근처에 있는 게더 생성 함수 */
   function getCurrentRegionMoim(city, moimType) {
-    debugger;
+
     $.ajax({ //현재 위치정보 전달
 
       url : "/getCurrentRegionMoim.com",
-      data: JSON.stringify({ city : city,
-                              moimType: moimType }),
+      data: JSON.stringify({   city : city,
+                                  moimType: moimType }),
       type : "post",
       dataType: "json",
       contentType: "application/json",
@@ -195,6 +195,7 @@ document.addEventListener("DOMContentLoaded", function(){
   
   /* 날씨에 따른 게더 추천 함수 */
   function getWeatherMoim(weatherType, moimType) {
+
     $.ajax({ //날씨 정보전달
 
       url : "/getWeatherMoim.com",

@@ -473,10 +473,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
   
       // 파일 데이터 배열을 formData에 추가
       fileDataArray.forEach(({ key, file }) => {
-        formData.append(key, file);
+        formData.append(key, file);``
       });
   
-      fetch("/gather/makeGatherDo.com", {
+      fetch("/gather/makeMoimDo.com", {
         method: "POST",
         body: formData,
       })

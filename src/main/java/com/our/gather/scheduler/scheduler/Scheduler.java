@@ -1,24 +1,19 @@
 package com.our.gather.scheduler.scheduler;
 
+import com.our.gather.common.common.CommandMap;
+import com.our.gather.moimDetailPage.service.MoimDetailService;
+import com.our.gather.notify.service.NotifyService;
+import com.our.gather.scheduler.service.SchedulerService;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
-
-import com.our.gather.common.common.CommandMap;
-import com.our.gather.moimGather.service.GatherService;
-import com.our.gather.notify.service.NotifyService;
-import com.our.gather.scheduler.service.SchedulerService;
-
 @Component
 public class Scheduler {
-
-	@Resource(name = "GatherService")
-	private GatherService gatherService;
 
 	@Resource(name = "SchedulerService")
 	private SchedulerService schedulerService;
@@ -26,6 +21,8 @@ public class Scheduler {
 	@Resource(name = "NotifyService")
 	private NotifyService notifyService;
 
+	@Resource(name = "MoimDetailService")
+	private MoimDetailService moimDetailService;
 	// 모임시간이 지난 게더 마감 후 알림 전송
 	@Scheduled(fixedRate = 6000000) // 현재 1시간마다 실행 -- 배포 시 5초로 변경.
 	public void updateGatherEnd() throws Exception {
@@ -46,7 +43,7 @@ public class Scheduler {
 					Map<String, Object> paramMap = new HashMap<>();
 					paramMap.put("MOIM_IDXX", gathIdxx);
 
-					gatherService.setGatherEnd(paramMap);
+					moimDetailService.setMoimEnd(paramMap);
 
 					commandMap.put("MOIM_IDXX", gathIdxx);
 					List<Map<String, Object>> memList = schedulerService.getGatherMemberForSD(commandMap.getMap(),

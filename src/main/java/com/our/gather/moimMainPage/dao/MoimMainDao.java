@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Repository("MainDao")
-public class moimMainDao extends AbstractDao {
+@Repository("MoimMainDao")
+public class MoimMainDao extends AbstractDao {
 
     // 메인화면
     @SuppressWarnings("unchecked")

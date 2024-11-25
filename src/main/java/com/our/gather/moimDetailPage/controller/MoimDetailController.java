@@ -1,13 +1,8 @@
 package com.our.gather.moimDetailPage.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import com.our.gather.common.common.CommandMap;
+import com.our.gather.moimDetailPage.service.MoimDetailService;
+import com.our.gather.userJoinPage.service.JoinService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,27 +12,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.our.gather.common.common.CommandMap;
-import com.our.gather.common.service.CommonService;
-import com.our.gather.moimDetailPage.service.MoimDetailService;
-import com.our.gather.userJoinPage.service.JoinService;
-import com.our.gather.moimGather.service.GatherService;
-import com.our.gather.notify.service.NotifyService;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MoimDetailController {
 
-	@Resource(name = "CommonService")
-	private CommonService commonService;
-
 	@Resource(name = "MoimDetailService")
 	private MoimDetailService moimDetailService;
 
-	@Resource(name = "NotifyService")
-	private NotifyService notifyService;
-	
-	@Resource(name = "GatherService")
-	private GatherService gatherService;
 	
 	@Resource(name = "JoinService")
 	private JoinService joinService;
@@ -48,55 +35,55 @@ public class MoimDetailController {
 	public ModelAndView main(@RequestParam(value = "idx", required = false) String MOIM_IDXX, HttpSession session,
 			CommandMap commandMap, Model model) throws Exception {
 
-		ModelAndView mv = new ModelAndView("/detailPage/detailPage");
-		mv.setViewName("detailPage");
+		ModelAndView mv = new ModelAndView("/moim/moimDetailPage");
+		mv.setViewName("moimDetailPage");
 
 		commandMap.put("MOIM_IDXX", MOIM_IDXX);
 
 		String moimType = MOIM_IDXX.substring(0, 2);
 
-		if (moimType.equals("GT")) {
+		commandMap.put("MOIM_TYPE", moimType);
 
-			List<Map<String, Object>> memList = gatherService.getGatherMember(commandMap.getMap(), commandMap, session);
-			Map<String, Object> detailMap = gatherService.getGatherDetail(commandMap.getMap(), session, commandMap);
+		List<Map<String, Object>> memList = moimDetailService.getMoimMember(commandMap.getMap(), commandMap, session);
+		Map<String, Object> detailMap = moimDetailService.getMoimDetail(commandMap.getMap(), session, commandMap);
 			
-			mv.addObject("member", memList); // 게더맴버
-			mv.addObject("detail", detailMap); // 게더
-			mv.addObject("contents", detailMap.remove("MOIM_CNTT"));
-			mv.addObject("img", gatherService.getGatherImg(commandMap.getMap(), commandMap)); // 게더 이미지
+		mv.addObject("member", memList); // 게더맴버
+		mv.addObject("detail", detailMap); // 게더
+		mv.addObject("contents", detailMap.remove("MOIM_CNTT"));
+		mv.addObject("img", moimDetailService.getMoimImg(commandMap.getMap(), commandMap)); // 게더 이미지
 
-			if (session.getAttribute("USER_NUMB") != null) {
+		if (session.getAttribute("USER_NUMB") != null) {
 
-				commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
+			commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 				
-				Map<String, Object> cateIn = new HashMap<>();
+			Map<String, Object> cateIn = new HashMap<>();
 
-				cateIn.put("CATE_IDXX", detailMap.get("CATE_IDXX"));
-				cateIn.put("USER_NUMB", session.getAttribute("USER_NUMB"));
+			cateIn.put("CATE_IDXX", detailMap.get("CATE_IDXX"));
+			cateIn.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 
-				joinService.inertCate(cateIn, commandMap);
+			joinService.inertCate(cateIn, commandMap);
 				
-				Map<String, Object> result = gatherService.getGatherYourState(commandMap.getMap(), session, commandMap);
+			Map<String, Object> result = moimDetailService.getMoimYourState(commandMap.getMap(), session, commandMap);
 				
-				if(result != null) {
+			if(result != null) {
 					
-					mv.addObject("yourState", result); 
+				mv.addObject("yourState", result);
 					
-				} else {
+			} else {
 					
-					mv.addObject("yourState", "null");
-				}
+				mv.addObject("yourState", "null");
 			}
 		}
 
-		return mv;
-	}
+
+	return mv;
+}
 	
-	// 모임참여
-	@RequestMapping("/moimJoin.com")
-	@ResponseBody
-	public ResponseEntity<String> moimJoin(@RequestBody Map<String, String> requestBody, HttpSession session, 
-			HttpServletRequest request, CommandMap commandMap) throws Exception {
+// 모임참여
+@RequestMapping("/moimJoin.com")
+@ResponseBody
+public ResponseEntity<String> moimJoin(@RequestBody Map<String, String> requestBody, HttpSession session,
+									   HttpServletRequest request, CommandMap commandMap) throws Exception {
 		
 		
 		String MOIM_IDXX = requestBody.get("MOIM_IDXX");
@@ -158,7 +145,7 @@ public class MoimDetailController {
 				commandMap.put("BANN_YSNO", "Y"); 
 				
 			}
-				
+
 			moimDetailService.moimStateUpdate(commandMap.getMap(), commandMap);
 
 			return ResponseEntity.ok("Success");
@@ -172,9 +159,9 @@ public class MoimDetailController {
 	}
 		
 	// 모임참여 상태변경
-	@RequestMapping("/setGatherEnd.com")
+	@RequestMapping("/setMoimEnd.com")
 	@ResponseBody
-	public ResponseEntity<String> setGatherEnd(@RequestBody Map<String, String> requestBody, HttpSession session, 
+	public ResponseEntity<String> setMoimEnd(@RequestBody Map<String, String> requestBody, HttpSession session,
 			HttpServletRequest request, CommandMap commandMap) throws Exception {
 		
 		String MOIM_IDXX = requestBody.get("MOIM_IDXX");
@@ -184,8 +171,8 @@ public class MoimDetailController {
 			 Map<String, Object> paramMap = new HashMap<>();
 			 
 			 paramMap.put("MOIM_IDXX", MOIM_IDXX);
-			
-			 gatherService.setGatherEnd(paramMap);
+
+			moimDetailService.setMoimEnd(paramMap);
 
 			return ResponseEntity.ok("Success");
 

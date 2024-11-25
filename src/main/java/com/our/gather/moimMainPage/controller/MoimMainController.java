@@ -4,7 +4,7 @@ import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.common.Criteria;
 import com.our.gather.common.oracleFunction.OracleFunction;
 import com.our.gather.common.service.CommonService;
-import com.our.gather.moimMainPage.service.moimMainService;
+import com.our.gather.moimMainPage.service.MoimMainService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,10 +17,10 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class moimMainController {
+public class MoimMainController {
 
-	@Resource(name = "moimMainPageService")
-	private moimMainService moimMainPageService;
+	@Resource(name = "MoimMainService")
+	private MoimMainService moimMainService;
 
 	@Resource(name = "CommonService")
 	private CommonService commonService;
@@ -30,8 +30,8 @@ public class moimMainController {
 							 HttpSession session, CommandMap commandMap, Criteria cri,
 							 HttpServletRequest request) throws Exception {
 
-		ModelAndView mv = new ModelAndView("/mainPage/mainPage");
-		mv.setViewName("mainPage");
+		ModelAndView mv = new ModelAndView("/moim/moimMainPage");
+		mv.setViewName("moimMainPage");
 
 
 		commandMap.put("amount", cri.getAmount());
@@ -62,13 +62,17 @@ public class moimMainController {
 		}
 
 		for (String viewType : viewTypes) {
-
 			commandMap.put("VIEW_TYPE", viewType);
 			System.out.println(":::::::::::::::::" + viewType + "List:::::::::::::::::::::::");
 
-			List<Map<String, Object>> list = moimMainPageService.mainPageMoim(commandMap.getMap(), session, commandMap);
-			System.out.println(viewType + "list :::" + list.get(0));
-			mv.addObject(viewType + "List", list);
+			List<Map<String, Object>> list = moimMainService.mainPageMoim(commandMap.getMap(), session, commandMap);
+
+			if (list != null && !list.isEmpty()) {
+				System.out.println(viewType + "list :::" + list.get(0));
+				mv.addObject(viewType + "List", list);
+			} else {
+				System.out.println(viewType + "list is empty or null");
+			}
 		}
 
 		return mv;
@@ -141,7 +145,7 @@ public class moimMainController {
 
 		commandMap.put("MOIM_TYPE", moimType.toUpperCase());
 
-		mv.addObject("data", moimMainPageService.mainPageMoim(commandMap.getMap(), session, commandMap));
+		mv.addObject("data", moimMainService.mainPageMoim(commandMap.getMap(), session, commandMap));
 
 
 		return mv;
@@ -153,15 +157,18 @@ public class moimMainController {
 	public ModelAndView getCurrentRegionMoim(@RequestBody Map<String, String> requestBody, CommandMap commandMap,
 											 HttpSession session) throws Exception {
 
+
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("jsonView");
+
 		String city = requestBody.get("city");
+		System.out.println("city::::::::::::::::::::::::::::::" + city);
 		String moimType = requestBody.get("moimType");
 
 		commandMap.put("CITY_CODE", commonService.extractRegiCode(city));
 		commandMap.put("MOIM_TYPE", moimType.toUpperCase());
 
-		mv.addObject("data", moimMainPageService.mainPageMoim(commandMap.getMap(), session, commandMap));
+		mv.addObject("data", moimMainService.mainPageMoim(commandMap.getMap(), session, commandMap));
 
 
 

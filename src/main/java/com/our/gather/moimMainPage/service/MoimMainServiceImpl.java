@@ -2,7 +2,7 @@ package com.our.gather.moimMainPage.service;
 
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.utils.FileUtils;
-import com.our.gather.moimModifyPage.dao.MoimDao;
+import com.our.gather.moimMainPage.dao.MoimMainDao;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  * <pre>
- * &#64;FileName : moimMainPageServiceImpl
+ * &#64;FileName : moimMainServiceImpl
  * &#64;Date : 2024-11-22
  * &#64;author 강승현
  * &#64;History :
@@ -21,11 +21,11 @@ import java.util.Map;
  * <p>
  * Copyright (C) 2019 by Bluewaves All right reserved.
  */
-@Service("moimMainPageService")
-public class moimMainServiceImpl implements moimMainService {
+@Service("MoimMainService")
+public class MoimMainServiceImpl implements MoimMainService {
 
-    @Resource(name = "MoimDao")
-    private MoimDao moimDao;
+    @Resource(name = "MoimMainDao")
+    private MoimMainDao moimMainDao;
 
     @Resource(name = "fileUtils")
     private FileUtils fileUtils;
@@ -44,6 +44,6 @@ public class moimMainServiceImpl implements moimMainService {
             commandMap.put("USER_NUMB", null);
         }
 
-        return moimDao.mainPageMoim(map, commandMap, session);
+        return moimMainDao.mainPageMoim(map, commandMap, session);
     }
 }

@@ -27,6 +27,7 @@
        </mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/gather.com/**"/>
+			<mvc:mapping path="/gatherList.com/**"/>
 			<bean id="categoryInterceptor" class="com.our.gather.common.interceptor.CategoryInterceptor"/>
 		</mvc:interceptor>
 		<mvc:interceptor>

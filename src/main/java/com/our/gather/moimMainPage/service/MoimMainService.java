@@ -17,7 +17,7 @@ import java.util.Map;
  * <p>
  * Copyright (C) 2019 by Bluewaves All right reserved.
  */
-public interface moimMainService {
+public interface MoimMainService {
 
     // 메인 게더
     List<Map<String, Object>> mainPageMoim(Map<String, Object> map, HttpSession session, CommandMap commandMap)
