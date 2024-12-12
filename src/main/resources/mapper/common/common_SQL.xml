@@ -175,7 +175,7 @@
 	 ]]>
 	 </select>
    
-	<!-- 카테고리검색 -->
+	<!-- 지역 코드 검색 -->
 	<select id="getRegi" parameterType='hashmap'
 	   resultType="hashmap">
 	   <![CDATA[
@@ -202,13 +202,14 @@
                		 			 THEN 1
               	      ELSE 2
                   END AS CATE_LEVL                              	/* 카테고리 레벨 */
-	   		   , SUBSTR(COMD_CODE,'1','1') AS PARENTS_CODE			/* 부모 지역 코드 */
-	           , COMD_CODE AS CATE_CODE								/* 부모 지역 코드 */
-	    	   , COMD_NAME AS CATE_NAME   							/* 부모 지역 이름 */
-               , CODE_OPT2 AS CATE_IMAG                         	/* 부모 지역 이름 */
+	   		   , SUBSTR(COMD_CODE,'1','1') AS PARENTS_CODE			/* 부모 카테고리 코드 */
+	           , COMD_CODE AS CATE_CODE								/* 부모 카테고리 코드 */
+	    	   , COMD_NAME AS CATE_NAME   							/* 부모 카테고리 이름 */
+               , CODE_OPT2 AS CATE_IMAG                         	/* 부모 카테고리 이미지 */
 		   FROM TB_CODEXD
 	  	  WHERE COMM_CODE = 'CATE_IDXX'
-				ORDER BY COMD_CODE
+			AND SUBSTR(COMD_CODE,'1','1') != 'a'                    /* 전체 제외 */
+	   ORDER BY COMD_CODE
 	 ]]>
 	 </select>
 	

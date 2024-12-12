@@ -12,7 +12,7 @@
     (모임 개설)
     -->
 	<!--모임 채번-->
-	<select id="makeMoimNumb" parameterType="hashmap" resultType="hashmap">
+	<select id="makeMoimNumb" parameterType="hashmap" resultType="String">
 		SELECT #{MOIM_TYPE} || TO_CHAR(SYSDATE, 'YYMM') ||
 			   LPAD(NVL(MAX(CAST(SUBSTR(MOIM_IDXX,7,4) AS NUMBER)) + 1, 1), 4, '0') AS MOIM_IDXX
 		  FROM TM_MOIMXM
@@ -344,7 +344,7 @@
     -->
 	<select id="getMoimMember" resultType="hashmap">
     <![CDATA[
-        SELECT /*gather.getGahterMember*/
+         SELECT /*gather.getGahterMember*/
 	             A.MOIM_IDXX														/* 모임번호 */		
 	           , CASE WHEN A.USER_NUMB = C.USER_NUMB 			
                            THEN 'Y'
@@ -429,28 +429,29 @@
 	<insert id="moimJoin" parameterType='hashmap'>
       <![CDATA[
 		/* detail.moimJoin */
-		INSERT INTO TB_MEMBER (
-								MOIM_IDXX
-							  , USER_NUMB
-							  , BANN_YSNO
-							  , WAIT_YSNO
-							  , PART_DATE
-		) VALUES (
-				   #{MOIM_IDXX}
-				 , #{USER_NUMB}
-				 , 'N'
-				 , #{WAIT_YSNO}
-				 , SYSDATE
-				 )
+		INSERT INTO
+		  TB_MEMBER (
+				       MOIM_IDXX
+				     , USER_NUMB
+				     , BANN_YSNO
+				     , WAIT_YSNO
+				     , PART_DATE
+		   ) VALUES (
+				       #{MOIM_IDXX}
+				     , #{USER_NUMB}
+				     , 'N'
+				     , #{WAIT_YSNO}
+				     , SYSDATE
+				     )
 		]]>
    </insert>
 
 	<update id="moimStateUpdate" parameterType='hashmap'>
       <![CDATA[
 		/* detail.moimStateUpdate */
-		UPDATE TB_MEMBER
-		SET BANN_YSNO = #{BANN_YSNO}
-		  , WAIT_YSNO = #{WAIT_YSNO}
+	   UPDATE TB_MEMBER
+		  SET BANN_YSNO = #{BANN_YSNO}
+		    , WAIT_YSNO = #{WAIT_YSNO}
 		WHERE MOIM_IDXX = #{MOIM_IDXX}
 		  AND USER_NUMB = #{USER_NUMB}
 		]]>

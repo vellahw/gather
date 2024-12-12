@@ -51,7 +51,7 @@
 					</div>
 					
 					<div class="btnContainer btnContainer_act" style="justify-content: right;">
-					  <button type="button" class="waybtn next" id="next">다음</button>
+						<button type="button" class="waybtn next" id="next">다음</button>
 					</div>
 				</div>
 
@@ -70,48 +70,48 @@
 					
 					<div class="eachInputWrap">
 						<h3>
-			        <span class="required" aria-label="필수 입력값입니다.">⁕</span>
+							<span class="required" aria-label="필수 입력값입니다.">⁕</span>
 							언제 모일까요?
 						</h3>
 						<div class="_row moimWhen">
 							<div>
-				        <label for="moimDate" >모임 날짜</label>
-				        <input type="date" id="moimDate" class="basicInput register-p">
+								<label for="moimDate" >모임 날짜</label>
+								<input type="date" id="moimDate" class="basicInput register-p">
 							</div>
 							<div>
-				        <label for="moimTime">모임 시간</label>
-				        <input type="time" id="moimTime" class="basicInput register-p" style="width: 113.33px;">
+								<label for="moimTime">모임 시간</label>
+								<input type="time" id="moimTime" class="basicInput register-p" style="width: 113.33px;">
 							</div>
 						</div>
 					</div>	
 					
 					<div class="eachInputWrap">
 						<h3>
-			        <span class="required" aria-label="필수 입력값입니다.">⁕</span>
+							<span class="required" aria-label="필수 입력값입니다.">⁕</span>
 							어디에서 모일까요?
 						</h3>
 						<div class="chooseLocation">
-		          <button type="button" id="online" class="locaBtn parent" data-loca="on">온라인에서 모여요</button>
-		          <button type="button" id="offline" class="locaBtn parent" data-loca="off">오프라인에서 모여요</button>
+							<button type="button" id="online" class="locaBtn parent" data-loca="on">온라인에서 모여요</button>
+							<button type="button" id="offline" class="locaBtn parent" data-loca="off">오프라인에서 모여요</button>
 						</div>
-            <button type="button" class="searchMap hashtag">주소 검색하기</button>
-	          <input type="text" id="moimAddress" class="basicInput register-p moimRegion" readonly="readonly">
-	          <input type="text" id="moimDetailAddress" class="basicInput register-p moimRegion" placeholder="상세주소를 입력해주세요.">
-	          <input type="hidden" id="moimLati" />
-	          <input type="hidden" id="moimLong" />
-	          <div id="map"></div>
+						<button type="button" class="searchMap hashtag">주소 검색하기</button>
+						<input type="text" id="moimAddress" class="basicInput register-p moimRegion" readonly="readonly">
+						<input type="text" id="moimDetailAddress" class="basicInput register-p moimRegion" placeholder="상세주소를 입력해주세요.">
+						<input type="hidden" id="moimLati" />
+						<input type="hidden" id="moimLong" />
+						<div id="map"></div>
 					</div>
 					
-						<div class="btnContainer" style="margin-top: 30px;">
-							<button type="button" class="waybtn prev" id="prev2">이전</button>
-						  <button type="button" class="waybtn next" id="next2">다음</button>
-						</div>
+					<div class="btnContainer" style="margin-top: 30px;">
+						<button type="button" class="waybtn prev" id="prev2">이전</button>
+						<button type="button" class="waybtn next" id="next2">다음</button>
+					</div>
 				</div>
 				
 				<div id="step3">
 					<div class="eachInputWrap">
 						<h3 style="margin-bottom: 5px;">
-			        <span class="required" aria-label="필수 입력값입니다.">⁕</span>
+							<span class="required" aria-label="필수 입력값입니다.">⁕</span>
 							어떻게 멤버를 모을까요?
 						</h3>
 						
@@ -120,94 +120,94 @@
 								<img src="/resources/img/form/peopleApprIcon.png" alt="참여승인제 아이콘">
 								참여 승인제 여부
 							</h3>
-								<div class="apprBtnContainer">
-									<div class="apprBtn parent" data-appr="Y" id="apprY" onclick="chooseAppr(this)">
-										<label for="apprY" aria-label="승인 필요">필요</label>
-										<p>직접 멤버의 참여 요청을 수락하거나 거절할 수 있어요.</p>
-									</div>
-									<div class="apprBtn parent" data-appr="N" id="apprN" onclick="chooseAppr(this)">
-										<label for="apprN" aria-label="승 인 불필요">불필요</label>
-										<p>멤버들의 신청과 동시에 참여가 완료돼요.</p>
-									</div>
+							<div class="apprBtnContainer">
+								<div class="apprBtn parent" data-appr="Y" id="apprY" onclick="chooseAppr(this)">
+									<label for="apprY" aria-label="승인 필요">필요</label>
+									<p>직접 멤버의 참여 요청을 수락하거나 거절할 수 있어요.</p>
+								</div>
+								<div class="apprBtn parent" data-appr="N" id="apprN" onclick="chooseAppr(this)">
+									<label for="apprN" aria-label="승 인 불필요">불필요</label>
+									<p>멤버들의 신청과 동시에 참여가 완료돼요.</p>
 								</div>
 							</div>
 						</div>
+					</div>
 						
-						<div class="row">
-							<h3 class="secondLabel" aria-label="moimAge">
-								<img src="/resources/img/form/peopleAgeIcon.png" alt="연령대 아이콘">
-								연령대
-								<span id="appendAgeRange" style="padding-left: 8px;">
-									15세 이상
-								</span>
-								<span id="appendMaxAgeRange"></span>
-							</h3>
-			        <div slider id="slider-distance">
-							  <div>
-							    <div inverse-left style="width:70%;"></div>
-							    <div inverse-right style="width:70%;"></div>
-							    <div range style="left:0%;right:0%;"></div>
-							    <span thumb style="left:0%;"></span>
-							    <span thumb style="left:100%;"></span>
-							    <div sign style="left:0%;">
-							      <span id="value">15</span>
-							    </div>
-							    <div sign style="left:100%;">
-							      <span id="value">50</span>
-							    </div>
-							  </div>
-							  <input type="range" id="minAge" class="range1" tabindex="0" value="15" max="50" min="15" />
-							  <input type="range" id="maxAge" class="range2" tabindex="0" value="50"  max="50" min="15" />
-							</div>
-							  <div class="scale">
-							  	<span style="padding-left: 18px;">15</span>
-							  	<span>20</span>
-							  	<span style="padding-left: 32px;">25</span>
-							  	<span>30</span>
-							  	<span style="padding-left: 32px;">35</span>
-							  	<span>40</span>
-							  	<span style="padding-left: 32px;">45</span>
-							  	<span style="padding-right: 0;">50+</span>
-							  </div>
-						</div>
-						
-						<div class="row">
-							<h3 class="secondLabel">
-								<img src="/resources/img/form/peopleCountIcon.png" alt="인원수 아이콘">
-								인원수 (2명~30명)
-								<span class="peopleLimitInfo">본인을 포함한 참여 인원 수를 작성해주세요.</span>
-							</h3>
-							<div id="peopleInputContainer">
-								<div>
-					        <label for="minPeople" >최소 인원</label>
-					        <input type="text" id="minPeople" value="2" class="basicInput register-p" placeHolder="숫자만 입력 가능">명
+					<div class="row">
+						<h3 class="secondLabel" aria-label="moimAge">
+							<img src="/resources/img/form/peopleAgeIcon.png" alt="연령대 아이콘">
+							연령대
+							<span id="appendAgeRange" style="padding-left: 8px;">
+								15세 이상
+							</span>
+							<span id="appendMaxAgeRange"></span>
+						</h3>
+						<div slider id="slider-distance">
+							<div>
+								<div inverse-left style="width:70%;"></div>
+								<div inverse-right style="width:70%;"></div>
+								<div range style="left:0%;right:0%;"></div>
+								<span thumb style="left:0%;"></span>
+								<span thumb style="left:100%;"></span>
+								<div sign style="left:0%;">
+									<span id="value">15</span>
 								</div>
-								<div style="margin-right: 10px;">
-					        <label for="maxPeople" >최대 인원</label>
-					        <input type="text" id="maxPeople" class="basicInput register-p" placeHolder="숫자만 입력 가능">명
+								<div sign style="left:100%;">
+									<span id="value">50</span>
 								</div>
 							</div>
-							<div id="noLimitContainer">
-							  <button type="button" id="peopleNoLimit" class="parent" onclick="peopleNoLimit(this)">제한 없음</button>
-							  <span id="bubble">👈 다시 누르면 입력창이 나와요</span>
-							</div>
+							<input type="range" id="minAge" class="range1" tabindex="0" value="15" max="50" min="15" />
+							<input type="range" id="maxAge" class="range2" tabindex="0" value="50"  max="50" min="15" />
 						</div>
+						<div class="scale">
+							<span style="padding-left: 18px;">15</span>
+							<span>20</span>
+							<span style="padding-left: 32px;">25</span>
+							<span>30</span>
+							<span style="padding-left: 32px;">35</span>
+							<span>40</span>
+							<span style="padding-left: 32px;">45</span>
+							<span style="padding-right: 0;">50+</span>
+						</div>
+					</div>
 						
-						<div class="row">
-							<h3 class="secondLabel" style="margin-bottom: 7px;">
-							  <img src="/resources/img/form/peopleGenderIcon.png" alt="성별 아이콘" style="width: 16px;">
-							  성별
-							</h3>
-							<div style="display: flex; margin-right: 10px;">
-								<button type="button" class="genderBtn parent" data-gender="">누구나</button>
-								<button type="button" class="genderBtn parent" data-gender="W">여자만</button>
-								<button type="button" class="genderBtn parent" data-gender="M">남자만</button>
+					<div class="row">
+						<h3 class="secondLabel">
+							<img src="/resources/img/form/peopleCountIcon.png" alt="인원수 아이콘">
+							인원수 (2명~30명)
+							<span class="peopleLimitInfo">본인을 포함한 참여 인원 수를 작성해주세요.</span>
+						</h3>
+						<div id="peopleInputContainer">
+							<div>
+								<label for="minPeople" >최소 인원</label>
+								<input type="text" id="minPeople" value="2" class="basicInput register-p" placeHolder="숫자만 입력 가능">명
+							</div>
+							<div style="margin-right: 10px;">
+								<label for="maxPeople" >최대 인원</label>
+								<input type="text" id="maxPeople" class="basicInput register-p" placeHolder="숫자만 입력 가능">명
 							</div>
 						</div>
+						<div id="noLimitContainer">
+							<button type="button" id="peopleNoLimit" class="parent" onclick="peopleNoLimit(this)">제한 없음</button>
+							<span id="bubble">👈 다시 누르면 입력창이 나와요</span>
+						</div>
+					</div>
+						
+					<div class="row">
+						<h3 class="secondLabel" style="margin-bottom: 7px;">
+							<img src="/resources/img/form/peopleGenderIcon.png" alt="성별 아이콘" style="width: 16px;">
+							성별
+						</h3>
+						<div style="display: flex; margin-right: 10px;">
+							<button type="button" class="genderBtn parent" data-gender="">누구나</button>
+							<button type="button" class="genderBtn parent" data-gender="W">여자만</button>
+							<button type="button" class="genderBtn parent" data-gender="M">남자만</button>
+						</div>
+					</div>
 					
 					<div class="btnContainer" style="margin-top: 30px;">
 						<button type="button" class="waybtn prev" id="prev3">이전</button>
-					  <button type="button" class="waybtn next" id="next3">다음</button>
+						<button type="button" class="waybtn next" id="next3">다음</button>
 					</div>
 				</div>		
 				
@@ -224,12 +224,12 @@
 					</div>
 					<div class="btnContainer" style="margin-top: 30px;">
 						<button type="button" class="waybtn prev" id="prev4">이전</button>
-					  <button type="button" class="waybtn next" id="submit">확인</button>
+						<button type="button" class="waybtn next" id="submit">확인</button>
 					</div>
 				</div>
 				
-				</div>
 			</div>
 		</div>
 	</div>
+</div>
 <input id="cateData" type="hidden" value="${cate}">

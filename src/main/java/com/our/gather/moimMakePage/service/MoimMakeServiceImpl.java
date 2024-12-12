@@ -64,7 +64,7 @@ public class MoimMakeServiceImpl implements MoimMakeService {
 				}
 				
 			}
-			
+			System.out.println("moim_idxx in serviceImpl::::::::::::::: " + map.get("MOIM_IDXX"));
 			map.put("MOIM_CNTT", moimCntt);
 
 		} catch (Exception e) {

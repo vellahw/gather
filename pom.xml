@@ -12,7 +12,7 @@
 	<!-- POM 내 공통 사용되는 값. POM 내 다른 곳에서 ${태그명} 으로 사용 -->
 	<properties>
 		<!-- JDK 버전 변경 -->
-		<java-version>11</java-version>
+		<java-version>17</java-version>
 		<!-- 스프링 버전 변경 -->
 		<org.springframework-version>5.0.7.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.7.3</org.aspectj-version>

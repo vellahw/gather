@@ -310,7 +310,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
     
     step1Data ={
-        MOIM_TITL : moimTitle
+        MOIM_TYPE : 'GT'
+      , MOIM_TITL : moimTitle
       , CATE_IDXX : pickedCateData
     };
 

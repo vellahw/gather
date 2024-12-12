@@ -115,9 +115,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 			targetParent.classList.add('level1_active');
 
 			// 선택한 카테고리 화면에 띄움
-			const picekParent = targetParent.querySelector('.name').innerHTML;
+			const pickedParent = targetParent.querySelector('.name').innerHTML;
 			const pickedChild = document.querySelector('.picked_child').innerHTML;
-			document.getElementById('addPickedCate').innerHTML = `${picekParent} | ${pickedChild}`;
+			document.getElementById('addPickedCate').innerHTML = `${pickedParent} | ${pickedChild}`;
 			document.getElementById('addPickedCate').classList.add('addPicked');
 		}
 	});
