@@ -87,10 +87,6 @@ public class MoimMainController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("jsonView");
 
-		/*ModelAndView mv = new ModelAndView("/mainPage/mainPage");
-		mv.setViewName("mainPage");*/
-
-
 		String weatherType = requestBody.get("weatherType");
 		String moimType = requestBody.get("moimType");
 

@@ -32,19 +32,19 @@ public class MoimListController {
 
 		commandMap.put("amount", cri.getAmount());
 		commandMap.put("pageNum", cri.getPageNum());
-		String moimType = null;
+		String moimTypeKr = null;
 
-		if (LIST_TYPE != null) {
-			moimType = OracleFunction.getCodeName("MOIM_TYPE", LIST_TYPE.toUpperCase());
+		if (LIST_TYPE != null) { //챌린지, 클럽
+			moimTypeKr = OracleFunction.getCodeName("MOIM_TYPE", LIST_TYPE.toUpperCase());
 			mv.addObject("MOIM_TYPE", LIST_TYPE);
 			commandMap.put("MOIM_TYPE", LIST_TYPE.toUpperCase());
-		} else {
-			moimType = OracleFunction.getCodeName("MOIM_TYPE", "GT");
+		} else { // 게더
+			moimTypeKr = OracleFunction.getCodeName("MOIM_TYPE", "GT");
 			mv.addObject("MOIM_TYPE", "GT");
 			commandMap.put("MOIM_TYPE", "GT");
 		}
 
-		mv.addObject("MOIM_TYPE", moimType);
+		mv.addObject("MOIM_TYPE_KR", moimTypeKr);
 
 		commandMap.put("CATE_IDXX", CATE_IDXX);
 		commandMap.put("KEYY_WORD", KEYY_WORD);
