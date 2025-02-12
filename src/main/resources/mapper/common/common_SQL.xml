@@ -149,8 +149,7 @@
 	       SELECT /* common.pCate */
 	    		  COMD_CODE AS CATE_CODE												/* 부모 카테고리 코드 */
 	    		, COMD_NAME AS CATE_NAME    											/* 부모 카테고리 이름 */
-	    		, CODE_OPT1 AS CATE_PATH												/*  카테고리 경로 */
-	    		, CODE_OPT2 AS IMAG_SRCC												/*  카테고리 이미지 경로 */
+	    		, CODE_OPT1 AS IMAG_SRCC												/*  카테고리 이미지 경로 */
 			FROM TB_CODEXD
 	       WHERE COMM_CODE = 'CATE_IDXX'
 	         AND LENGTH(COMD_CODE) = 1
@@ -217,7 +216,6 @@
 	<select id="searchRegi" parameterType='hashmap'
 	   resultType="hashmap">
 	   <![CDATA[
-	   		   
 	   	 SELECT /*common.searchRegi*/
 	   	        * 
 	   	   FROM TB_CODEXD 
@@ -246,10 +244,21 @@
     <![CDATA[
 	    /* common.likeDelete */
 	    DELETE TM_HEARTS 
-	     WHERE LIKE_IDXX = #{LIKE_IDXX}  
+	     WHERE LIKE_IDXX = #{LIKE_IDXX}
 	       AND USER_NUMB = #{USER_NUMB}  
             ]]>
 	</delete>
+
+	<!-- 코드 옵션 호출 -->
+	<select id="getCodeOption" parameterType='hashmap' resultType="hashmap">
+	   <![CDATA[
+		SELECT /* common.getCodeOption */
+			CODE_OPT${OPTN_NUMB} AS CODE_OPTN												/* 코드옵션 */
+		FROM TB_CODEXD
+		WHERE COMM_CODE = #{COMM_CODE}
+		  AND COMD_CODE = #{COMD_CODE}
+		]]>
+	 </select>
 	
 	<!-- 팔로우 -->
 	<insert id="follow" parameterType="hashmap">

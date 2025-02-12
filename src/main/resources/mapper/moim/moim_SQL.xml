@@ -22,6 +22,7 @@
 
 	<!--모임 개설-->
 	<insert id="makeMoim" parameterType="hashmap" useGeneratedKeys="true" keyProperty="MOIM_IDXX">
+		  /*moim.makeMoim*/
 		  INSERT INTO TM_MOIMXM (
 					  MOIM_IDXX  						/* 모임번호 */
 					, USER_NUMB  						/* 회원번호(방장번호) */
@@ -78,7 +79,7 @@
 	<!-- 메인화면 -->
    <select id="mainPageMoim" parameterType='hashmap' resultType="hashmap">
       <![CDATA[
-    SELECT /*mainPage.mainPageMoim*/
+    SELECT /*moim.mainPageMoim*/
        	  *
 		FROM (
 		SELECT ROW_NUMBER() OVER (ORDER BY
@@ -195,7 +196,7 @@
 			<include refid="common.pagingPre"></include>
 		</if>
 		<![CDATA[
-       	SELECT /*mainPage.getGather*/
+       	SELECT /*moim.getMoimr*/
        			*
 		  FROM (
 		       	  SELECT  ROW_NUMBER() OVER (ORDER BY A.REGG_DATE, A.MOIM_TIME, A.MOIM_IDXX DESC) RNUM
@@ -344,7 +345,7 @@
     -->
 	<select id="getMoimMember" resultType="hashmap">
     <![CDATA[
-         SELECT /*gather.getGahterMember*/
+         SELECT /*moim.getMoimMember*/
 	             A.MOIM_IDXX														/* 모임번호 */		
 	           , CASE WHEN A.USER_NUMB = C.USER_NUMB 			
                            THEN 'Y'
@@ -418,8 +419,8 @@
     -->
    <update id="setMoimEnd" parameterType="hashmap">
        <![CDATA[
-      UPDATE /*gather.setGatherEnd*/
-		     VW_MOIMXM SET
+      UPDATE /*moim.setMoimrEnd*/
+		     TM_MOIMXM SET
 		     ENDD_YSNO = 'Y'
 	   WHERE MOIM_IDXX = #{MOIM_IDXX}
        ]]>
@@ -428,7 +429,7 @@
 	<!-- 맴버에 가입 -->
 	<insert id="moimJoin" parameterType='hashmap'>
       <![CDATA[
-		/* detail.moimJoin */
+		/* moim.MoimJoin */
 		INSERT INTO
 		  TB_MEMBER (
 				       MOIM_IDXX
@@ -448,7 +449,7 @@
 
 	<update id="moimStateUpdate" parameterType='hashmap'>
       <![CDATA[
-		/* detail.moimStateUpdate */
+		/* moim.MoimStateUpdate */
 	   UPDATE TB_MEMBER
 		  SET BANN_YSNO = #{BANN_YSNO}
 		    , WAIT_YSNO = #{WAIT_YSNO}

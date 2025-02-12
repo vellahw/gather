@@ -1,11 +1,10 @@
 package com.our.gather.common.service;
 
-import java.util.List;
-import java.util.Map;
+import com.our.gather.common.common.CommandMap;
 
 import javax.servlet.http.HttpSession;
-
-import com.our.gather.common.common.CommandMap;
+import java.util.List;
+import java.util.Map;
 
 public interface CommonService {
 
@@ -28,6 +27,8 @@ public interface CommonService {
 	List<Map<String, Object>> getCate(Map<String, Object> map, CommandMap commandMap) throws Exception;
 	
 	List<Map<String, Object>> getRegi(Map<String, Object> map, CommandMap commandMap) throws Exception;
+
+	String getCodeOption(String COMM_CODE, String COMD_CODE, String OPTN_NUMB) throws Exception;
 	
 	String extractRegiCode(String adr) throws Exception;
 	

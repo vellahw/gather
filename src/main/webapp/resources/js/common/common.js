@@ -1,3 +1,4 @@
+window.fallbackImage = "/resources/img/basic/moim/basicMoimThumnail.png";
 /**
  * name:comRemoveArray
  * Purpose: 배열 겹치는 값 삭제

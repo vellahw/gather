@@ -1,21 +1,18 @@
 package com.our.gather.common.service;
 
-import java.util.ArrayList;
+import com.our.gather.common.common.CommandMap;
+import com.our.gather.common.dao.CommonDao;
+import com.our.gather.common.oracleFunction.OracleFunction;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
-
-import org.springframework.stereotype.Service;
-
-import com.our.gather.common.common.CommandMap;
-import com.our.gather.common.dao.CommonDao;
-import com.our.gather.common.oracleFunction.OracleFunction;
 
 @Service("CommonService")
 public class CommonServiceImpl implements CommonService {
@@ -61,6 +58,12 @@ public class CommonServiceImpl implements CommonService {
 		// TODO Auto-generated method stub
 
 		commonDao.unfollow(map, commandMap);
+	}
+
+	// 코드 옵션 호출
+	@Override
+	public String getCodeOption(String COMM_CODE, String COMD_CODE, String OPTN_NUMB) throws Exception {
+		return commonDao.getCodeOption(COMM_CODE, COMD_CODE, OPTN_NUMB);
 	}
 
 	// 부모카테고리

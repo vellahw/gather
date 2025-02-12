@@ -1,11 +1,11 @@
 package com.our.gather.common.dao;
 
-import java.util.List;
-import java.util.Map;
-
+import com.our.gather.common.common.CommandMap;
 import org.springframework.stereotype.Repository;
 
-import com.our.gather.common.common.CommandMap;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Repository("CommonDao")
 public class CommonDao extends AbstractDao {
@@ -50,6 +50,21 @@ public class CommonDao extends AbstractDao {
 		delete("common.tagDelete", map);
 	}
 
+	// 코드 옵션 호출
+	@SuppressWarnings("unchecked")
+	public String getCodeOption(String COMM_CODE, String COMD_CODE, String OPTN_NUMB) throws Exception {
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("COMM_CODE", COMM_CODE);
+		map.put("COMD_CODE", COMD_CODE);
+		map.put("OPTN_NUMB", OPTN_NUMB);
+
+		Map<String, Object> getCodeOption = (Map<String, Object>) selectOne("common.getCodeOption", map);
+		String codeOption = (String) getCodeOption.get("CODE_OPTN");
+
+		return codeOption;
+	}
+	
 	// 부모카테고리
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> pCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
@@ -59,15 +74,6 @@ public class CommonDao extends AbstractDao {
 		return pCate;
 	}
 
-	// 자식카테고리
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> cCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
-
-		List<Map<String, Object>> cCate = (List<Map<String, Object>>) selectList("common.cCate", map);
-
-		return cCate;
-	}
-
 	// 카테고리 전체
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
@@ -75,6 +81,15 @@ public class CommonDao extends AbstractDao {
 		List<Map<String, Object>> getCate = (List<Map<String, Object>>) selectList("common.getCate", map);
 
 		return getCate;
+	}
+
+	// 자식카테고리
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> cCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
+
+		List<Map<String, Object>> cCate = (List<Map<String, Object>>) selectList("common.cCate", map);
+
+		return cCate;
 	}
 
 	// 지역 전체
