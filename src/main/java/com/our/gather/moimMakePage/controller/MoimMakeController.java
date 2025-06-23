@@ -38,7 +38,7 @@ public class MoimMakeController {
 		ModelAndView mv = new ModelAndView("/moim/moimMakePage");
 		mv.setViewName("moimMakePage");
 
-		List<Map<String, Object>> cate = commonService.getCate(commandMap.getMap(), commandMap);
+		List<Map<String, Object>> cate = commonService.getAllCate(commandMap.getMap(), commandMap);
 		List<Map<String, Object>> regi = commonService.getRegi(commandMap.getMap(), commandMap);
 
 		mv.addObject("cate", cate);

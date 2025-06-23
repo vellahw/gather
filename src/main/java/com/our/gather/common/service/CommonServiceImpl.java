@@ -20,7 +20,7 @@ public class CommonServiceImpl implements CommonService {
 	@Resource(name = "CommonDao")
 	private CommonDao commonDao;
 
-	// 좋아요 insert
+	//kakaoMap insert
 	@Override
 	public void mapInsert(Map<String, Object> map, CommandMap commandMap) throws Exception {
 		// TODO Auto-generated method stub
@@ -68,26 +68,26 @@ public class CommonServiceImpl implements CommonService {
 
 	// 부모카테고리
 	@Override
-	public List<Map<String, Object>> pCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
+	public List<Map<String, Object>> getParentsCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
 		// TODO Auto-generated method stub
 
-		return commonDao.pCate(map, commandMap);
+		return commonDao.getParentsCate(map, commandMap);
 	}
 
 	// 자식카테고리
 	@Override
-	public List<Map<String, Object>> cCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
+	public List<Map<String, Object>> getChildCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
 		// TODO Auto-generated method stub
 
-		return commonDao.cCate(map, commandMap);
+		return commonDao.getChildCate(map, commandMap);
 	}
 
 	// 카테고리전체
 	@Override
-	public List<Map<String, Object>> getCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
+	public List<Map<String, Object>> getAllCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
 		// TODO Auto-generated method stub
 
-		return commonDao.getCate(map, commandMap);
+		return commonDao.getAllCate(map, commandMap);
 	}
 
 	// 지역전체
@@ -239,7 +239,7 @@ public class CommonServiceImpl implements CommonService {
 
 	}
 	
-	// moim객체에 follow버튼 추가
+	// moim 객체에 follow버튼 추가
 	public Object makeFollowBtn(Object data, HttpSession session) throws Exception {
 		
         if (data instanceof Map) {

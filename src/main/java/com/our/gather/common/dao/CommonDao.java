@@ -45,7 +45,7 @@ public class CommonDao extends AbstractDao {
 		insert("common.tagInsert", map);
 	}
 
-	// 좋아요 Delete
+	// 해시태그 Delete
 	public void tagDelete(Map<String, Object> map, CommandMap commandMap) throws Exception {
 		delete("common.tagDelete", map);
 	}
@@ -67,29 +67,29 @@ public class CommonDao extends AbstractDao {
 	
 	// 부모카테고리
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> pCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
+	public List<Map<String, Object>> getParentsCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
 
-		List<Map<String, Object>> pCate = (List<Map<String, Object>>) selectList("common.pCate", map);
+		List<Map<String, Object>> getParentsCate = (List<Map<String, Object>>) selectList("common.pCate", map);
 
-		return pCate;
-	}
-
-	// 카테고리 전체
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> getCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
-
-		List<Map<String, Object>> getCate = (List<Map<String, Object>>) selectList("common.getCate", map);
-
-		return getCate;
+		return getParentsCate;
 	}
 
 	// 자식카테고리
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> cCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
+	public List<Map<String, Object>> getChildCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
 
-		List<Map<String, Object>> cCate = (List<Map<String, Object>>) selectList("common.cCate", map);
+		List<Map<String, Object>> getChildCate = (List<Map<String, Object>>) selectList("common.cCate", map);
 
-		return cCate;
+		return getChildCate;
+	}
+
+	// 카테고리 전체
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> getAllCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
+
+		List<Map<String, Object>> getAllCate = (List<Map<String, Object>>) selectList("common.getCate", map);
+
+		return getAllCate;
 	}
 
 	// 지역 전체

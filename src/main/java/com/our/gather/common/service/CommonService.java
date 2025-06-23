@@ -20,11 +20,11 @@ public interface CommonService {
 	
 	void tagInsert(Map<String, Object> map) throws Exception;
 	
-	List<Map<String, Object>> pCate(Map<String, Object> map, CommandMap commandMap) throws Exception;
+	List<Map<String, Object>> getParentsCate(Map<String, Object> map, CommandMap commandMap) throws Exception;
 
-	List<Map<String, Object>> cCate(Map<String, Object> map, CommandMap commandMap) throws Exception;
+	List<Map<String, Object>> getChildCate(Map<String, Object> map, CommandMap commandMap) throws Exception;
 
-	List<Map<String, Object>> getCate(Map<String, Object> map, CommandMap commandMap) throws Exception;
+	List<Map<String, Object>> getAllCate(Map<String, Object> map, CommandMap commandMap) throws Exception;
 	
 	List<Map<String, Object>> getRegi(Map<String, Object> map, CommandMap commandMap) throws Exception;
 
@@ -33,6 +33,5 @@ public interface CommonService {
 	String extractRegiCode(String adr) throws Exception;
 	
 	Object makeFollowBtn(Object data, HttpSession session) throws Exception;
-	
 
 }

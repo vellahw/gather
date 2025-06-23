@@ -1,10 +1,9 @@
 package com.our.gather.common.interceptor;
 
+import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.service.CommonService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-import com.our.gather.common.common.CommandMap;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -36,12 +35,12 @@ import java.util.Map;
             commandMap.putAll(request.getParameterMap());
 
             // 부모 카테고리와 자식 카테고리 조회
-            List<Map<String, Object>> pCate = commonService.pCate(commandMap.getMap(), commandMap);
-            List<Map<String, Object>> cCate = commonService.cCate(commandMap.getMap(), commandMap);
+            List<Map<String, Object>> parentsCate = commonService.getParentsCate(commandMap.getMap(), commandMap);
+            List<Map<String, Object>> childCate = commonService.getChildCate(commandMap.getMap(), commandMap);
 
             // 요청 속성에 카테고리 데이터 저장
-            request.setAttribute("pCate", pCate);
-            request.setAttribute("cCate", cCate);
+            request.setAttribute("pCate", parentsCate);
+            request.setAttribute("cCate", childCate);
 
             return true; // 다음 단계로 진행
     }

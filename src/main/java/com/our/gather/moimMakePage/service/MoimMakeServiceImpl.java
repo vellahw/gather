@@ -38,9 +38,14 @@ public class MoimMakeServiceImpl implements MoimMakeService {
 		try {
 
 			map.put("FILE_IDXX", map.get("MOIM_IDXX"));
-			
+
+			if(map.get("REGI_CODE") == null) {
+				map.put("ONOF_CODE","1");
+			} else {
+				map.put("ONOF_CODE","0");
+			}
+
 			String moimCntt = (String) map.get("MOIM_CNTT");
-			
 			moimCntt = moimCntt.replaceAll("src=\"data:image/[a-zA-Z0-9]+;base64,[^\"]+\"", "");// 기존 base64 형태의 src 를 replaceAll
 
 			List<Map<String, Object>> flist = fileUtils.fileInsert(map, request, session);

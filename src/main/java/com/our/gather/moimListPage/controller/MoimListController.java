@@ -55,7 +55,7 @@ public class MoimListController {
 		int total = moimListService.getMoimCount(commandMap.getMap(), commandMap); //모임 수
 		String cateName = OracleFunction.getCodeName("CATE_IDXX", CATE_IDXX);//카테고리 코드로 카테고리 명 호출
 
-		if(!CATE_IDXX.equals("all")) {
+		if(CATE_IDXX != null && !CATE_IDXX.equals("all")) {
 			String CateImg = commonService.getCodeOption("CATE_IDXX", CATE_IDXX.substring(0, 1), "1");//카테고리 이미지
 			mv.addObject("CATE_IMGG", CateImg);
 		}

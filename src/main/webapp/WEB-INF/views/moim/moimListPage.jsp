@@ -29,7 +29,7 @@
 		</h1>
 		<% if(session.getAttribute("USER_NUMB") != null) { %>
 		<button type="button" class="moimRegiBtn" onclick="comWhere2Go('makeMoim')">
-			<c:out value="${MOIM_TYPE}"/> 개설하기
+			<c:out value="${MOIM_TYPE_KR}"/> 개설하기
 		</button>
 		<% } %>
 	</div>
@@ -57,7 +57,6 @@
 					<a href="${pageMaker.startPage - 1 }"></a>
 				</li>
 			</c:if>
-
 			<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 				<li ${pageMaker.cri.pageNum == num ? "active":""}>
 					<c:if test="${CATE_IDXX ne null and MOIM_TYPE eq null}">

@@ -28,13 +28,20 @@
 			<div class="locationDateContainer">
 				<div class="locationContainer">
 					<div class="tooltip">
-						<img src="/resources/img/icon/locationIcon.png" class="locationIcon" alt="장소 아이콘">
-						<span class="location">
-							<c:out value="${list.REGI_NAME}" />
-						</span>
-						<div class="tooltiptext">
-							<c:out value="${list.PREGI_NAME}" />
-						</div>
+						<c:if test="${list.ONOF_CODE ne '1'}">
+							<img src="/resources/img/icon/locationIcon.png" class="locationIcon" alt="장소 아이콘">
+							<span class="location">
+								<c:out value="${list.REGI_NAME}" />
+							</span>
+							<div class="tooltiptext">
+								<c:out value="${list.PREGI_NAME}" />
+							</div>
+						</c:if>
+						<c:if test="${list.ONOF_CODE eq '1'}">
+							<span class="location">
+								<c:out value="온라인" />
+							</span>
+						</c:if>
 					</div>
 				</div>
 				<span class="dateContainer">

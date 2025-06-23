@@ -113,6 +113,7 @@
 				, MOIM_COST																	/* 참가 비용 */
 				, APPR_YSNO																	/* 승인 여부 */
 				, ACCR_TMNO																	/* 챌린지 주 인증 횟수*/
+		        , ONOF_CODE																	/* 온,오프라인 여부코드*/
 				, MINN_AGEE						 											/* 최소나이 */
 				, MAXX_AGEE																	/* 최대나이 */
 				, APPR_LMIT																	/* 모임 제한 KR */
@@ -215,6 +216,7 @@
 		                , A.PRES_PEOP																	/* 현재 인원  n/n */
 		                , A.MEMB_COUNT																	/* 현재 인원수 */
 		                , A.MOIM_COST																	/* 참가 비용 */
+		       	        , A.ONOF_CODE																	/* 온,오프라인 여부코드*/
 		                , A.APPR_YSNO																	/* 승인 여부 */
 		                , A.MINN_AGEE						 											/* 최소나이 */
                 		, A.MAXX_AGEE																	/* 최대나이 */
