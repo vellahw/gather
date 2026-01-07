@@ -6,8 +6,12 @@
 
 날씨, 위치, 좋아요 기반 모임들을 메인화면에서 확인할 수 있습니다.
 
+<br/>
+
+  
 <img width="1020" height="371" alt="image" src="https://github.com/user-attachments/assets/35610009-3514-4fec-9cd6-5c6966aa0dd9" />
 
+<br/><br/>
 
 ## 개발 목표
 
@@ -16,7 +20,8 @@
 순수 자바스크립트로 코드를 작성하고 이미지 슬라이더도 직접 만들어보며 자바스크립트를 깊게 이해하고자 노력했습니다.
 
 
-  
+<br/><br/>
+
 ## 프로젝트 정보
 
 - 개발 인원: 2명
@@ -31,8 +36,9 @@
     - UX/UI 구현
     - 디자인 시스템 구축
 
-  
-## Overview ✨
+<br/><br/>
+
+## 둘러보기 ✨
 <img width="938" height="527" alt="image 1" src="https://github.com/user-attachments/assets/67e36129-5beb-494f-a715-d8f513d9f2f2" />
 <img width="942" height="527" alt="image 2" src="https://github.com/user-attachments/assets/a9d82134-4e85-4a46-b3b2-0ced7e7b588b" />
 <img width="941" height="526" alt="image 3" src="https://github.com/user-attachments/assets/e8747eae-f6cb-4f7a-a96f-325eea4a2dd0" />
