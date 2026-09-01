@@ -1,8 +1,5 @@
 package com.our.gather.common.common;
 
-import lombok.RequiredArgsConstructor;
-
-@RequiredArgsConstructor
 public class PageInfo {
 
     //전체 카운트
@@ -31,6 +28,9 @@ public class PageInfo {
 
     //페이징 유무
     private String pagingYn = "N"; //초기값 설정
+
+    public PageInfo() {
+    }
 
     public PageInfo(String pagingYn, String page, String rowPerPage, int totalCnt) {
         this.pagingYn = pagingYn;
