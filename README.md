@@ -1,56 +1,43 @@
-# gather 게더
+# GATHER
 
-***투게더? 게더!***
+취향·지역·날씨를 기준으로 모임을 찾고, 개설·승인·참여·팔로우·알림까지 이어지는 Spring MVC 기반 커뮤니티 서비스입니다.
 
-모임을 주제로 한 커뮤니티 사이트를 개발했습니다.
+## 주요 기능
 
-날씨, 위치, 좋아요 기반 모임들을 메인화면에서 확인할 수 있습니다.
+- 취향, 지역, 인기, 날씨 기반 모임 탐색과 검색
+- 모임 개설, 이미지 업로드, 위치 선택, 참여 승인 및 마감
+- 회원가입 이메일 인증과 네이버·카카오·구글 OAuth 로그인
+- 좋아요, 팔로우, 참여 상태 및 읽음 알림
+- 외부 저장소 기반 이미지 제공과 배치 스케줄러
 
-<br/>
+## 배포 전 필수 작업
 
-  
-<img width="1020" height="371" alt="image" src="https://github.com/user-attachments/assets/35610009-3514-4fec-9cd6-5c6966aa0dd9" />
+1. Java 11, Maven, Oracle DB, Tomcat 9 환경을 준비합니다. 이 프로젝트는 `javax.servlet` 기반이므로 Jakarta 전용 Tomcat 10+에 그대로 배포할 수 없습니다.
+2. [.env.example](.env.example)의 환경 변수를 실제 배포 환경에 등록합니다. `.env` 파일을 자동으로 읽는 방식은 아니며, 운영체제나 배포 플랫폼의 환경 변수 기능을 사용해야 합니다.
+3. [V2__security_hardening.sql](db/migration/V2__security_hardening.sql)을 애플리케이션보다 먼저 운영 DB에 1회 적용합니다. PBKDF2 비밀번호 저장을 위해 `PASS_WORD`는 255자 이상이어야 하며, 이메일·닉네임·팔로우·좋아요·모임 참여 중복 데이터가 있으면 먼저 정리해야 합니다.
+4. `GATHER_UPLOAD_DIR`에 애플리케이션 프로세스의 쓰기 권한을 부여하고 영속 볼륨으로 연결합니다.
+5. OAuth 공급자에 `${GATHER_BASE_URL}/gather/{provider}LoginDo.com` 콜백을 등록합니다.
+6. HTTPS 리버스 프록시 뒤에서 서비스하고 세션 쿠키에 `Secure`, `HttpOnly`, `SameSite=Lax` 이상을 설정합니다.
 
-<br/><br/>
+> 현재 애플리케이션은 기존 `javax`/Tomcat 9 호환성을 유지하기 위해 공개 배포된 Spring Framework 5.3 계열을 사용합니다. Spring 5.3의 오픈소스 지원은 종료되었으므로, 인터넷에 공개하는 장기 운영 서비스라면 Java 17·Jakarta·Tomcat 10.1·Spring 6 이상으로 별도 마이그레이션하거나 상용 보안 지원을 받는 Spring 5.3 배포판을 사용해야 합니다.
 
-## 개발 목표
+## 빌드
 
-과거에 개발했던 프로젝트[(sosu)](https://github.com/vellahw/sosu)를 기반으로, UI/UX 개선을 시작으로 코드의 역할을 명확히 분리하고 구조화하여 확장성과 재사용성을 높이는데 집중했습니다.
+```text
+mvn clean package
+```
 
-순수 자바스크립트로 코드를 작성하고 이미지 슬라이더도 직접 만들어보며 자바스크립트를 깊게 이해하고자 노력했습니다.
+생성된 `target/ROOT.war`를 Tomcat 9의 루트 애플리케이션으로 배포합니다. 기존 화면 경로가 루트 컨텍스트를 기준으로 작성되어 있으므로 다른 컨텍스트 이름을 쓰려면 프런트엔드 URL도 함께 변경해야 합니다.
 
+## 보안 설계
 
-<br/><br/>
+- 상태 변경 요청은 세션 기반 CSRF 토큰과 로그인 인터셉터로 보호됩니다.
+- 비밀번호는 PBKDF2-HMAC-SHA256으로 저장하며, 기존 평문 비밀번호는 정상 로그인 시 자동 전환됩니다.
+- 모임 참여 제한, 방장 권한, 알림 수신자 관계는 서버에서 다시 검증합니다.
+- 업로드 이미지는 크기와 실제 이미지 여부를 검사한 뒤 PNG로 재인코딩하여 외부 저장 경로에 둡니다.
+- 모임 본문의 허용 HTML만 OWASP Java HTML Sanitizer로 보존합니다.
+- DB·메일·OAuth·날씨 키는 소스가 아닌 환경 변수에서 주입됩니다.
 
-## 프로젝트 정보
+## 확인 범위
 
-- 개발 인원: 2명
-- 개발 환경
-    - JavaScript
-    - HTML/CSS
-    - Java 11, JSP
-    - Spring Framework 5.0.7
-    - Oracle 11g, MyBatis
-- 맡은 역할
-    - 메인/상세보기/회원가입/로그인/알림 페이지
-    - UX/UI 구현
-    - 디자인 시스템 구축
-
-<br/><br/>
-
-## 둘러보기 ✨
-<img width="938" height="527" alt="image 1" src="https://github.com/user-attachments/assets/67e36129-5beb-494f-a715-d8f513d9f2f2" />
-<img width="942" height="527" alt="image 2" src="https://github.com/user-attachments/assets/a9d82134-4e85-4a46-b3b2-0ced7e7b588b" />
-<img width="941" height="526" alt="image 3" src="https://github.com/user-attachments/assets/e8747eae-f6cb-4f7a-a96f-325eea4a2dd0" />
-<img width="941" height="528" alt="image 4" src="https://github.com/user-attachments/assets/010e9a6a-93ec-4c39-b860-5bd6f94dc34e" />
-<img width="942" height="525" alt="image 5" src="https://github.com/user-attachments/assets/7109d170-debf-4418-a645-cc985d9622c1" />
-<img width="941" height="527" alt="image 6" src="https://github.com/user-attachments/assets/394324bc-f479-48b7-808f-f7c2d7f26ca0" />
-<img width="939" height="527" alt="image 7" src="https://github.com/user-attachments/assets/cbdf19a4-45f7-4ecd-8562-0987a2c5ce40" />
-<img width="940" height="528" alt="image 8" src="https://github.com/user-attachments/assets/125f9fea-5ee7-48ce-8543-b347a2c3282e" />
-<img width="942" height="527" alt="image 9" src="https://github.com/user-attachments/assets/3fcc87d0-b97e-44a5-847b-d8c2fcc53d52" />
-<img width="940" height="527" alt="image 10" src="https://github.com/user-attachments/assets/4cba0c58-b9cd-46bc-b425-d982db7d44be" />
-
-
-
-
-
+저장소에는 비밀번호 해시, HTML 정화, 전체 MyBatis 매퍼 로딩에 대한 자동 테스트가 포함되어 있습니다. 로컬에서 Java 11 대상 컴파일, 테스트 4개, `ROOT.war` 패키징까지 통과했습니다. Oracle 테스트 DB를 연결한 통합 테스트는 수행하지 않았으므로, 배포 전 가입 → 로그인 → 모임 개설 → 참여/승인 → 알림 흐름을 스테이징에서 확인하세요.
