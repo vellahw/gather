@@ -130,20 +130,9 @@ DB, SMTP, OAuth, 날씨 API와 업로드 경로 설정을 환경 변수로 이�
 
 ## 구조
 
-```mermaid
-flowchart LR
-    U[Browser] --> F[CSRF·보안 헤더 필터]
-    F --> I[인증·권한 인터셉터]
-    I --> C[Spring MVC Controller]
-    C --> S[Service·Transaction]
-    S --> D[DAO·MyBatis]
-    D --> O[(Oracle)]
-    C --> W[OpenWeather]
-    C --> A[OAuth Providers]
-    C --> M[SMTP]
-    S --> P[(Persistent Upload Storage)]
-    J[Scheduler] --> S
-```
+<p align="center">
+  <img src="./docs/images/gather-architecture.svg" width="1100" alt="GATHER 시스템 구조도">
+</p>
 
 ```text
 src/main/java/com/our/gather
