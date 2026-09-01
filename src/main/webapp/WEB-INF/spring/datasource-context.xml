@@ -29,5 +29,5 @@
 	</bean>
 	
 	<!-- config파일 자동 로드 -->
-    <context:property-placeholder location="/WEB-INF/config/config.properties" /> 
+    <context:property-placeholder location="classpath:config.properties" />
 </beans>
