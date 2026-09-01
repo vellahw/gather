@@ -1,12 +1,5 @@
 package com.our.gather.common.common;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
-@Setter
-@Getter
-@ToString
 public class Criteria {
 	
 	 private int pageNum; //페이지 번호
@@ -19,8 +12,24 @@ public class Criteria {
      
      // 변수에 저장
      public Criteria(int pageNum, int amount) {
-        this.pageNum = pageNum;
-        this.amount = amount;
+		setPageNum(pageNum);
+		setAmount(amount);
      }
+
+	public int getPageNum() {
+		return pageNum;
+	}
+
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum < 1 ? 1 : Math.min(pageNum, 10_000);
+	}
+
+	public int getAmount() {
+		return amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount = amount < 1 ? 16 : Math.min(amount, 50);
+	}
 
 }
