@@ -2,9 +2,11 @@ package com.our.gather.moimMainPage.controller;
 
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.common.Criteria;
-import com.our.gather.common.oracleFunction.OracleFunction;
 import com.our.gather.common.service.CommonService;
 import com.our.gather.moimMainPage.service.MoimMainService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,18 +14,49 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @Controller
 public class MoimMainController {
+	private final HttpClient httpClient = HttpClient.newBuilder()
+			.connectTimeout(Duration.ofSeconds(3)).build();
+
+	@Value("${app.openweather.apiKey}")
+	private String openWeatherApiKey;
 
 	@Resource(name = "MoimMainService")
 	private MoimMainService moimMainService;
 
 	@Resource(name = "CommonService")
 	private CommonService commonService;
+
+	@ResponseBody
+	@RequestMapping(value = "/weather.com", method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> weather(@RequestParam double lat, @RequestParam double lon) throws Exception {
+		if (lat < -90 || lat > 90 || lon < -180 || lon > 180
+				|| openWeatherApiKey == null || openWeatherApiKey.startsWith("${")) {
+			return ResponseEntity.badRequest().body("{\"error\":\"weather_unavailable\"}");
+		}
+		String uri = String.format(Locale.ROOT,
+				"https://api.openweathermap.org/data/2.5/weather?lat=%.6f&lon=%.6f&lang=kr&units=metric&appid=%s",
+				lat, lon, openWeatherApiKey);
+		HttpRequest request = HttpRequest.newBuilder(URI.create(uri))
+				.timeout(Duration.ofSeconds(5)).GET().build();
+		HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+		if (response.statusCode() < 200 || response.statusCode() >= 300) {
+			return ResponseEntity.status(502).body("{\"error\":\"weather_provider_failed\"}");
+		}
+		return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response.body());
+	}
 
 	@RequestMapping(value = "/gather.com")
 	public ModelAndView main(@RequestParam(value = "type", required = false) String LIST_TYPE,
@@ -40,13 +73,13 @@ public class MoimMainController {
 
 		if(LIST_TYPE != null) {
 
-			moimType = OracleFunction.getCodeName("MOIM_TYPE", LIST_TYPE.toUpperCase());
+			moimType = commonService.getCodeName("MOIM_TYPE", LIST_TYPE.toUpperCase());
 			mv.addObject("moimCode", LIST_TYPE);
 			commandMap.put("MOIM_TYPE", LIST_TYPE.toUpperCase());
 
 		}else{
 
-			moimType = OracleFunction.getCodeName("MOIM_TYPE", "GT");
+			moimType = commonService.getCodeName("MOIM_TYPE", "GT");
 			mv.addObject("moimCode", "GT");
 			commandMap.put("MOIM_TYPE", "GT");
 
@@ -91,6 +124,9 @@ public class MoimMainController {
 		String moimType = requestBody.get("moimType");
 
 		List<String> dataList = new ArrayList<>();
+		if (weatherType == null || moimType == null || !moimType.matches("[A-Za-z]{2}")) {
+			return mv;
+		}
 
 		switch (weatherType) {
 
@@ -137,6 +173,9 @@ public class MoimMainController {
 
 				break;
 
+			default:
+				return mv;
+
 		}
 
 		commandMap.put("MOIM_TYPE", moimType.toUpperCase());
@@ -158,8 +197,10 @@ public class MoimMainController {
 		mv.setViewName("jsonView");
 
 		String city = requestBody.get("city");
-		System.out.println("city::::::::::::::::::::::::::::::" + city);
 		String moimType = requestBody.get("moimType");
+		if (city == null || city.length() > 100 || moimType == null || !moimType.matches("[A-Za-z]{2}")) {
+			return mv;
+		}
 
 		commandMap.put("CITY_CODE", commonService.extractRegiCode(city));
 		commandMap.put("MOIM_TYPE", moimType.toUpperCase());

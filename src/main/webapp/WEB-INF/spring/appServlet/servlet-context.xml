@@ -38,9 +38,8 @@
 		<bean id="notificationInterceptor" class="com.our.gather.common.interceptor.NoticeInterceptor"/>
 	</mvc:interceptor>
         <mvc:interceptor>
-           <mvc:mapping path="/gather/makeGather.com"/>
-          <mvc:mapping path="/gather/makeGatherDo.com"/>
-          <mvc:mapping path="/gather/modifyGather.com"/>
+           <mvc:mapping path="/gather/makeMoim.com"/>
+           <mvc:mapping path="/gather/makeMoimDo.com"/>
           <mvc:mapping path="/moimJoin.com"/>
           <mvc:mapping path="/moimStateUpdate.com"/>
           <mvc:mapping path="/setGatherEnd.com"/>

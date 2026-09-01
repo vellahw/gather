@@ -49,8 +49,8 @@
 	<update id="fileDelete" parameterType="hashMap">
   		<![CDATA[
   		/* common.mapUpdate */
-	    UPDATE SET TM_FILEXM
-	         	   DELT_YSNO = 'Y'
+	    UPDATE TM_FILEXM
+	       SET DELT_YSNO = 'Y'
 	         WHERE FILE_IDXX = #{MOIM_IDXX}
 	           AND FILE_SVNM = #{FILE_PATH}
  		]]>
@@ -101,10 +101,10 @@
 	<update id="mapUpdate" parameterType="hashMap">
   		<![CDATA[
   		/* common.mapUpdate */
-	    UPDATE SET TB_KKAMAP
-	         	   MOIM_LATI = #{MOIM_LATI}
-	         	   MOIM_LONG = #{MOIM_LONG}
-	         	   MOIM_ADR1 = #{MOIM_ADR1}
+	    UPDATE TB_KKAMAP
+	       SET MOIM_LATI = #{MOIM_LATI},
+	           MOIM_LONG = #{MOIM_LONG},
+	           MOIM_ADR1 = #{MOIM_ADR1},
 	         	   MOIM_ADR2 = #{MOIM_ADR2}
 	         WHERE MOIM_IDXX = #{MOIM_IDXX}
  		]]>
@@ -221,6 +221,40 @@
 	   	    AND COMD_NAME LIKE '%'||#{COMD_NAME}||'%'
 	 ]]>
 	 </select>
+
+	<select id="hashTags" parameterType="hashmap" resultType="hashmap">
+		SELECT HASH_IDXX, HASH_SEQC, HASH_TAGG
+		  FROM (
+		        SELECT HASH_IDXX, HASH_SEQC, HASH_TAGG,
+		               SUM(LENGTH(HASH_TAGG) + 3) OVER
+		                   (PARTITION BY HASH_IDXX ORDER BY HASH_SEQC) AS RUNNING_LENGTH
+		          FROM TB_HASHTG
+		         WHERE HASH_IDXX IN
+		         <foreach collection="IDS" item="id" open="(" separator="," close=")">
+		             #{id}
+		         </foreach>
+		       )
+		 WHERE RUNNING_LENGTH &lt;= 23
+		 ORDER BY HASH_IDXX, HASH_SEQC
+	</select>
+
+	<select id="getCodeName" parameterType="hashmap" resultType="string">
+		SELECT getCodeName(#{COMM_CODE}, #{COMD_CODE}) FROM DUAL
+	</select>
+
+	<select id="getFollowStates" parameterType="hashmap" resultType="hashmap">
+		SELECT FOLW_USER,
+		       RELATION_CODE AS FOLW_CODE,
+		       getCodeName('FOLW_CODE', RELATION_CODE) AS FOLW_BTNN
+		  FROM (
+		        SELECT FOLW_USER, getRelationCode(#{USER_NUMB}, FOLW_USER) AS RELATION_CODE
+		          FROM (
+		          <foreach collection="FOLW_USERS" item="followUser" separator=" UNION ALL ">
+		              SELECT #{followUser} AS FOLW_USER FROM DUAL
+		          </foreach>
+		          )
+		       )
+	</select>
 	 
 	<!--모임 like insert -->
 	<insert id="likeInsert" parameterType="hashmap">

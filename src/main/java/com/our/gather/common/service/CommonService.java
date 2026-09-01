@@ -32,6 +32,10 @@ public interface CommonService {
 	
 	String extractRegiCode(String adr) throws Exception;
 	
-	Object makeFollowBtn(Object data, HttpSession session) throws Exception;
+	void makeFollowBtn(Map<String, Object> data, HttpSession session) throws Exception;
+
+	void makeFollowBtn(List<Map<String, Object>> data, HttpSession session) throws Exception;
+
+	String getCodeName(String commonCode, String detailCode) throws Exception;
 
 }

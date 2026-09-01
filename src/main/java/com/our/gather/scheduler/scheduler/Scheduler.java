@@ -6,12 +6,12 @@ import com.our.gather.notify.service.NotifyService;
 import com.our.gather.scheduler.service.SchedulerService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 @Component
 public class Scheduler {
 
@@ -24,7 +24,8 @@ public class Scheduler {
 	@Resource(name = "MoimDetailService")
 	private MoimDetailService moimDetailService;
 	// 모임시간이 지난 게더 마감 후 알림 전송
-	@Scheduled(fixedRate = 6000000) // 현재 1시간마다 실행 -- 배포 시 5초로 변경.
+	@Scheduled(fixedDelay = 3600000, initialDelay = 60000)
+	@Transactional(rollbackFor = Exception.class)
 	public void updateGatherEnd() throws Exception {
 
 		CommandMap commandMap = new CommandMap();
@@ -70,13 +71,13 @@ public class Scheduler {
 			}
 
 		} catch (Exception e) {
-			// 예외 처리 로직 추가
-			e.printStackTrace();
+			throw e;
 		}
 	}
 
 	// 모임시간 하루남은 게더 알림 전송
-	@Scheduled(fixedRate = 6000000) // 1시간마다 실행
+	@Scheduled(fixedDelay = 3600000, initialDelay = 120000)
+	@Transactional(rollbackFor = Exception.class)
 	public void updateGatherWithNoti() throws Exception {
 
 		CommandMap commandMap = new CommandMap();
@@ -115,8 +116,7 @@ public class Scheduler {
 			}
 
 		} catch (Exception e) {
-			// 예외 처리 로직 추가
-			e.printStackTrace();
+			throw e;
 		}
 	}
 }

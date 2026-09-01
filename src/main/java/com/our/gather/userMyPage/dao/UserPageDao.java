@@ -25,7 +25,7 @@ public class UserPageDao extends AbstractDao {
 
 		Map<String, Object> userPage = (Map<String, Object>) selectOne("userPage.userInfo", map);
 
-		if (session.getAttribute("USER_NUMB") != null) {
+		if (userPage != null && session.getAttribute("USER_NUMB") != null) {
 
 			commonService.makeFollowBtn(userPage, session);
 
