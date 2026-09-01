@@ -27,7 +27,7 @@ public class JoinDao extends AbstractDao {
 
 	// 회원 선호카테고리 업데이트
 	public void updateNewstCate(Map<String, Object> map, CommandMap commandMap) throws Exception {
-		insert("join.updateNewstCate", map);
+		update("join.updateNewstCate", map);
 	}
 
 	// 회원 선호지역 저장

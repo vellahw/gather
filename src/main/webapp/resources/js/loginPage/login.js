@@ -4,109 +4,22 @@ document.addEventListener('DOMContentLoaded', function () {
   const userPwForm = document.getElementById('PASS_WORD'); // pw 입력 input
   const appendArea = document.getElementById('append'); // 안내문구 띄울 공간
   
-    /*
-      네아로 로그인 시 세션 저장 및 알럿
-      parameter: (text: 띄울 문구)
-    */ 
-      const params = new URL(location.href).searchParams;
-      const api = params.get('api');
-      const result = params.get('result');
-      const firstTime = params.get('firstTime');
-      const USER_NUMB = params.get('USER_NUMB');
-      const USER_TYPE = params.get('USER_TYPE');
-      const TYPE_CODE = params.get('TYPE_CODE');
-      const USER_NAME = params.get('USER_NAME');
-      const USER_NICK = params.get('USER_NICK');
-      const USER_IMAG = params.get('USER_IMAG');
-      const USER_BIRTH = params.get('USER_BIRTH');
-      const USER_JUMIN2 = params.get('USER_JUMIN2');
-      const USER_AGEE = params.get('USER_AGEE');
-      const USER_GNDR = params.get('USER_GNDR');
-      const REGI_NUMB = params.get('REGI_NUMB');
-      const BANN_STRT = params.get('BANN_STRT');
-      const BANN_ENDD = params.get('BANN_ENDD');
-      const BANN_CNTT = params.get('BANN_CNTT');
-
-      if(api){
-
-        if(result == "success"){
-
-            if(api == "naver"){
-
-                    sessionStorage.setItem('USER_NUMB', USER_NUMB);       //회원번호
-                    sessionStorage.setItem('USER_TYPE', USER_TYPE);       //회원타입(사용자, 개발자, 운영자)
-                    sessionStorage.setItem('TYPE_CODE', TYPE_CODE);       //회원타입코드(UR: 사용자, DV:개발자, AD:운영자)
-                    sessionStorage.setItem('USER_NAME', USER_NAME);       //회원이름
-                    sessionStorage.setItem('USER_NICK', USER_NICK);      //회원 닉네임
-                    sessionStorage.setItem('USER_IMAG', USER_IMAG);       //회원 프로필사진
-                    sessionStorage.setItem('USER_BIRTH', USER_BIRTH);     //회원생일
-                    sessionStorage.setItem('USER_JUMIN2', USER_JUMIN2);   //회원 주민번호 뒷자리
-                    sessionStorage.setItem('USER_AGEE', USER_AGEE);       //회원나이
-                    sessionStorage.setItem('REGI_NUMB', REGI_NUMB);       //회원 주민등록번호
-                    sessionStorage.setItem('USER_GNDR', USER_GNDR);       //회원성별
-                    sessionStorage.setItem('api', api);                   //api 종류
-
-                if(firstTime == 'N') { //첫번째 로그인이 아닐때
-
-                    comAlert2( 5
-                        ,"로그인 완료"
-                        , USER_NICK + "님 반갑습니다!"
-                        , "let's gather!"
-                        , function(){
-                        location.href = "/gather.com"});
-
-                } else {
-
-                    comAlert2( 5
-                        ,"로그인 완료!"
-                        , USER_NICK + "님 가입을 환영합니다!"
-                        , "let's gather!"
-                        , function(){
-                        location.href = "/gather.com"});
-
-                }
-
-            } else if(api == "kakao") {
-
-                if(firstTime == 'N') { //첫번째 로그인이 아닐때
-
-                    sessionStorage.setItem('USER_NUMB', USER_NUMB);       //회원번호
-                    sessionStorage.setItem('USER_TYPE', USER_TYPE);       //회원타입(사용자, 개발자, 운영자)
-                    sessionStorage.setItem('TYPE_CODE', TYPE_CODE);       //회원타입코드(UR: 사용자, DV:개발자, AD:운영자)
-                    sessionStorage.setItem('USER_NAME', USER_NAME);       //회원이름
-                    sessionStorage.setItem('USER_NICK', USER_NICK);      //회원 닉네임
-                    sessionStorage.setItem('USER_IMAG', USER_IMAG);       //회원 프로필사진
-                    sessionStorage.setItem('USER_BIRTH', USER_BIRTH);     //회원생일
-                    sessionStorage.setItem('USER_JUMIN2', USER_JUMIN2);   //회원 주민번호 뒷자리
-                    sessionStorage.setItem('USER_AGEE', USER_AGEE);       //회원나이
-                    sessionStorage.setItem('REGI_NUMB', REGI_NUMB);       //회원 주민등록번호
-                    sessionStorage.setItem('USER_GNDR', USER_GNDR);       //회원성별
-                    sessionStorage.setItem('api', api);                   //api 종류
-
-                    comAlert2( 5
-                        ,"로그인 완료"
-                        , USER_NICK + "님 반갑습니다!"
-                        , "let's gather!"
-                        , function(){
-                        location.href = "/gather.com"});
-
-                } else {
-
-                        
-                }
-                
-            }
-
-        } else {
-        
-            comAlert2(3
-                , "정지된 계정입니다." 
-                , USER_NICK + "님의 계정은 현재 정지상태입니다.\n 정지사유:  " 
-                + BANN_CNTT 
-                + "\n 정지기간:  " + BANN_STRT + " ~ " + BANN_ENDD
-                , "확인", null);
-
-        }                  
+  const params = new URL(location.href).searchParams;
+  const social = params.get('social');
+  const prefill = document.getElementById('socialPrefill');
+  if (social && prefill) {
+    toggleForm('signupForm');
+    document.getElementById('userId').value = prefill.dataset.email || '';
+    document.getElementById('userNick').value = prefill.dataset.nick || '';
+    document.getElementById('userId').readOnly = true;
+    document.querySelector('.authmail').style.display = 'none';
+    document.querySelector('.authmailContainer').style.display = 'none';
+    isAuth = 'Y';
+  }
+  if (params.get('error') === 'banned') {
+    appendWarning('append', '정지된 계정입니다. 관리자에게 문의해주세요.');
+  } else if (params.get('error') === 'oauth') {
+    appendWarning('append', '소셜 계정의 이메일을 확인할 수 없습니다. 다른 로그인 방법을 이용해주세요.');
   }
 
   // 아이디(이메일) 입력 검사
@@ -147,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
     $.ajax({
       type: "POST",
       url: "/gather/loginDo.com",
+      headers: comCsrfHeaders(),
       data: JSON.stringify(data),
       contentType: "application/json",
       success: function (result) {
@@ -160,10 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
           sessionStorage.setItem('USER_NAME',result.USER_NAME);     //회원이름
           sessionStorage.setItem('USER_NICK', result.USER_NICK);    //회원 닉네임
           sessionStorage.setItem('USER_IMAG',result.USER_IMAG);     //회원 프로필사진
-          sessionStorage.setItem('USER_BIRTH',result.USER_BIRTH);   //회원생일
-          sessionStorage.setItem('USER_JUMIN2',result.USER_JUMIN2);   //회원 주민번호 뒷자리
           sessionStorage.setItem('USER_AGEE',result.USER_AGEE);     //회원나이
-          sessionStorage.setItem('REGI_NUMB',result.REGI_NUMB);     //회원 주민등록번호
           sessionStorage.setItem('USER_GNDR',result.USER_GNDR);     //회원성별
 
           if(result.TYPE_CODE == "UR" ){  //일반 사용자
@@ -173,12 +84,13 @@ document.addEventListener('DOMContentLoaded', function () {
                   , result.USER_NICK + "님 반갑습니다!"
                   , "let's gather!"
                   , function(){
-                    const referrerUrl = document.referrer;
-                    if(referrerUrl != '/gather/login.com') {
-                      location.href = document.referrer;
-                    } else {
-                      location.href = '/gather.com';
+                    const referrerUrl = document.referrer ? new URL(document.referrer) : null;
+                    if (referrerUrl && referrerUrl.origin === location.origin
+                        && referrerUrl.pathname !== '/gather/login.com') {
+                      location.href = referrerUrl.href;
+                      return;
                     }
+                    location.href = '/gather.com';
                   });
 
           } else if (result.TYPE_CODE == "DV" || result.TYPE_CODE == "AD") {  //관리자 또는 개발자.
@@ -219,6 +131,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 + result.BANN_CNTT 
                 + "\n 정지기간:  " + result.BANN_STRT + " ~ " + result.BANN_ENDD
                 , "확인", null);
+
+        } else if (result.result === 'locked') {
+
+          appendWarning('append', "로그인 시도가 너무 많습니다. 5분 뒤 다시 시도해주세요.");
 
         } else {
 
@@ -262,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function appendWarning(id, text) {
   const appendArea = document.getElementById(id);
   appendArea.style.display = 'block';
-  appendArea.innerHTML = text; 
+  appendArea.textContent = text;
   appendArea.style.marginBottom = '10px';
 }
     

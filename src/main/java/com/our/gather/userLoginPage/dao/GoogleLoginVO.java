@@ -17,14 +17,16 @@ import com.our.gather.userLoginPage.service.GoogleLoginApi;
 
 public class GoogleLoginVO {
 
-	@Value("${app.naver.clientId}")
+	@Value("${app.google.clientId}")
 	private String GOOGLE_CLIENT_ID;
 
-	@Value("${app.naver.clientSecret}")
+	@Value("${app.google.clientSecret}")
 	private String GOOGLE_CLIENT_SECRET;
 
-	private final static String REDIRECT_URI = "http://localhost:8080/gather/googleLoginDo.com";
-	private final static String SESSION_STATE = "oauth_state";
+	@Value("${app.base-url}")
+	private String baseUrl;
+
+	private final static String SESSION_STATE = "google_oauth_state";
 	private final static String PROFILE_API_URL = "https://www.googleapis.com/oauth2/v3/userinfo";
 
 	public String getAuthorizationUrl(HttpSession session) {
@@ -36,7 +38,8 @@ public class GoogleLoginVO {
 					
 				.apiKey(GOOGLE_CLIENT_ID)
 				.apiSecret(GOOGLE_CLIENT_SECRET)
-				.callback(REDIRECT_URI)
+				.callback(baseUrl + "/gather/googleLoginDo.com")
+				.scope("openid email profile")
 				.state(state) 
 				.build(GoogleLoginApi.instance());
 	
@@ -45,11 +48,16 @@ public class GoogleLoginVO {
 	}
 
 	public OAuth2AccessToken getAccessToken(HttpSession session, String code, String state) throws IOException {
+		Object expected = session.getAttribute(SESSION_STATE);
+		session.removeAttribute(SESSION_STATE);
+		if (expected == null || !expected.equals(state)) {
+			throw new IOException("Invalid OAuth state");
+		}
 		
 		OAuth20Service oauthService = new ServiceBuilder()
 			.apiKey(GOOGLE_CLIENT_ID)
 			.apiSecret(GOOGLE_CLIENT_SECRET)
-			.callback(REDIRECT_URI)
+			.callback(baseUrl + "/gather/googleLoginDo.com")
 			.state(state)
 			.build(GoogleLoginApi.instance());
 			
@@ -64,12 +72,15 @@ public class GoogleLoginVO {
 		OAuth20Service oauthService = new ServiceBuilder()
 				.apiKey(GOOGLE_CLIENT_ID)
 				.apiSecret(GOOGLE_CLIENT_SECRET)
-				.callback(REDIRECT_URI)
+				.callback(baseUrl + "/gather/googleLoginDo.com")
 				.build(GoogleLoginApi.instance());
 		
 		OAuthRequest request = new OAuthRequest(Verb.GET, PROFILE_API_URL, oauthService);
 		oauthService.signRequest(oauthToken, request);
 		Response response = request.send();
+		if (response.getCode() < 200 || response.getCode() >= 300) {
+			throw new IOException("Google profile request failed");
+		}
 		return response.getBody();
 	}
 	

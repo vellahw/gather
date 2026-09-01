@@ -9,9 +9,8 @@
 		<!--  회원번호 체번 -->
 	   <select  id="makeUserNumb" resultType="String">
     	<![CDATA[
-	      SELECT 'UR' ||TO_CHAR(SYSDATE, 'YYMM') ||LPAD(NVL(MAX(CAST(SUBSTR(USER_NUMB,7,4) AS NUMBER))+1,1),4,'0') AS USER_NUMB
-		  	FROM TM_USERXM
-		   WHERE SUBSTR(USER_NUMB,3,4) = TO_CHAR(SYSDATE, 'YYMM')
+	      SELECT 'UR' || TO_CHAR(SYSDATE, 'YYMM') || TO_CHAR(SQ_GATHER_USER.NEXTVAL, 'FM0000') AS USER_NUMB
+	        FROM DUAL
     	]]>
     	</select>
     	
@@ -81,7 +80,7 @@
    </select>
    
      <!-- 선호 카테고리 저장 -->
-   <select id="updateNewstCate" parameterType="hashmap" resultType="int">
+   <update id="updateNewstCate" parameterType="hashmap">
       <![CDATA[
       	 /*join.updateNewstCate*/
         UPDATE TB_URCATE
@@ -89,7 +88,7 @@
          WHERE USER_NUMB = #{USER_NUMB}
   		   AND CATE_IDXX = #{CATE_IDXX}
     ]]>
-   </select>
+   </update>
    
    <!-- 선호 카테고리 저장 -->
    <insert id="inertCate" parameterType="hashmap">

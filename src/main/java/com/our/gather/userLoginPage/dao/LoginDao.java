@@ -29,6 +29,10 @@ public class LoginDao extends AbstractDao {
 		return (Map<String, Object>) selectOne("login.login", map);
 	}
 
+	public void updatePassword(Map<String, Object> map) throws Exception {
+		update("login.updatePassword", map);
+	}
+
 	// 아이디찾기
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> findId(Map<String, Object> map) throws Exception {
