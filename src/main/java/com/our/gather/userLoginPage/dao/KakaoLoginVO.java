@@ -21,8 +21,10 @@ public class KakaoLoginVO {
 
 	@Value("${app.kakao.clientSecret}")
 	private String KAKAO_CLIENT_SECRET;
+
+	@Value("${app.base-url}")
+	private String baseUrl;
 	
-	private final static String KAKAO_REDIRECT_URI = "http://localhost:8080/gather/kakaoLoginDo.com"; // Redirect URL
 	private final static String SESSION_STATE = "kakao_oauth_state";
 	private final static String PROFILE_API_URL = "https://kapi.kakao.com/v2/user/me";
 
@@ -34,7 +36,7 @@ public class KakaoLoginVO {
 		OAuth20Service oauthService = new ServiceBuilder()
 			.apiKey(KAKAO_CLIENT_ID)
 			.apiSecret(KAKAO_CLIENT_SECRET)
-			.callback(KAKAO_REDIRECT_URI)
+			.callback(baseUrl + "/gather/kakaoLoginDo.com")
 			.state(state)
 			.build(KakaoLoginApi.instance());
 		
@@ -42,11 +44,16 @@ public class KakaoLoginVO {
 	}
 
 	public OAuth2AccessToken getAccessToken(HttpSession session, String code, String state) throws Exception {
+		Object expected = session.getAttribute(SESSION_STATE);
+		session.removeAttribute(SESSION_STATE);
+		if (expected == null || !expected.equals(state)) {
+			throw new IllegalArgumentException("Invalid OAuth state");
+		}
 
 		OAuth20Service oauthService = new ServiceBuilder()
 			.apiKey(KAKAO_CLIENT_ID)
 			.apiSecret(KAKAO_CLIENT_SECRET)
-			.callback(KAKAO_REDIRECT_URI)
+			.callback(baseUrl + "/gather/kakaoLoginDo.com")
 			.state(state)
 			.build(KakaoLoginApi.instance());
 		
@@ -61,12 +68,15 @@ public class KakaoLoginVO {
 		OAuth20Service oauthService = new ServiceBuilder()
 				.apiKey(KAKAO_CLIENT_ID)
 				.apiSecret(KAKAO_CLIENT_SECRET)
-				.callback(KAKAO_REDIRECT_URI)
+				.callback(baseUrl + "/gather/kakaoLoginDo.com")
 				.build(KakaoLoginApi.instance());
 		
 		OAuthRequest request = new OAuthRequest(Verb.GET, PROFILE_API_URL, oauthService);
 		oauthService.signRequest(oauthToken, request);
 		Response response = request.send();
+		if (response.getCode() < 200 || response.getCode() >= 300) {
+			throw new IllegalStateException("Kakao profile request failed");
+		}
 		return response.getBody();
 	}
 

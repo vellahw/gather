@@ -24,8 +24,7 @@
           SELECT /*login.loginCheck*/
        	    	 COUNT(1)
   		    FROM TM_USERXM
- 		   WHERE USER_IDXX = #{USER_IDXX}
-   			 AND PASS_WORD = #{PASS_WORD}
+		 WHERE USER_IDXX = #{USER_IDXX}
     ]]>
    </select>
    
@@ -34,11 +33,17 @@
       <![CDATA[
 	   SELECT /*login.login*/
 	       		A.USER_NUMB																			/* 회원번호 */
+	      , A.PASS_WORD AS STORED_PASSWORD
 	     	  , getCodeName('USER_TYPE',SUBSTR(A.USER_NUMB,1,2)) AS USER_TYPE						/* 회원타입(사용자, 개발자, 관리자) */
 	     	  , SUBSTR(A.USER_NUMB,1,2) AS TYPE_CODE												/* 회원타입(UR, DV, AD) */
 	     	  , A.USER_NAME																			/* 회원 이름 */
 	     	  , A.USER_NICK																			/* 회원 닉네임 */
-	          ,  getuserimage(A.FILE_SVNM, A.USER_NUMB) AS USER_IMAG 								/* 회원 프로필 사진 */
+	          , NVL((SELECT MAX(F.FILE_PATH)
+	                   FROM TM_FILEXM F
+	                  WHERE F.FILE_IDXX = A.USER_NUMB
+	                    AND F.FILE_SVNM = A.FILE_SVNM
+	                    AND F.DELT_YSNO = 'N'),
+	                getuserimage(A.FILE_SVNM, A.USER_NUMB)) AS USER_IMAG
 	     	  , SUBSTR(A.REGI_NUMB, 1, 6) AS USER_BIRTH												/* 회원 생일 */
 	     	  , SUBSTR(A.REGI_NUMB, 7) AS USER_JUMIN2												/* 회원 주민번호 뒷자리 */
 	     	  , A.REGI_NUMB																			/* 회원 주민번호 */
@@ -69,8 +74,13 @@
 	         ON C.COMM_CODE = 'REPT_CODE'
 	        AND B.REPT_CODE = C.COMD_CODE
 	      WHERE A.USER_IDXX = #{USER_IDXX}
-	      	AND A.PASS_WORD = #{PASS_WORD}
     ]]>
    </select>
+
+   <update id="updatePassword" parameterType="hashmap">
+      UPDATE TM_USERXM
+         SET PASS_WORD = #{PASS_WORD}
+       WHERE USER_IDXX = #{USER_IDXX}
+   </update>
   
 </mapper>

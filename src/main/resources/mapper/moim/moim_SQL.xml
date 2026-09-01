@@ -14,10 +14,8 @@
 	<!--모임 채번-->
 	<select id="makeMoimNumb" parameterType="hashmap" resultType="String">
 		SELECT #{MOIM_TYPE} || TO_CHAR(SYSDATE, 'YYMM') ||
-			   LPAD(NVL(MAX(CAST(SUBSTR(MOIM_IDXX,7,4) AS NUMBER)) + 1, 1), 4, '0') AS MOIM_IDXX
-		  FROM TM_MOIMXM
-		 WHERE SUBSTR(MOIM_IDXX,3,4) = TO_CHAR(SYSDATE, 'YYMM')
-		   AND SUBSTR(MOIM_IDXX,1,2) = #{MOIM_TYPE}
+		       TO_CHAR(SQ_GATHER_MOIM.NEXTVAL, 'FM0000') AS MOIM_IDXX
+		  FROM DUAL
 	</select>
 
 	<!--모임 개설-->
@@ -459,5 +457,31 @@
 		  AND USER_NUMB = #{USER_NUMB}
 		]]>
    </update>
-   
+
+	<select id="isMoimOwner" parameterType="hashmap" resultType="int">
+		SELECT COUNT(1)
+		  FROM TM_MOIMXM
+		 WHERE MOIM_IDXX = #{MOIM_IDXX}
+		   AND USER_NUMB = #{USER_NUMB}
+		   AND DELT_YSNO = 'N'
+	</select>
+
+	<select id="isMoimRelatedUser" parameterType="hashmap" resultType="int">
+		SELECT COUNT(1)
+		  FROM (
+				SELECT USER_NUMB FROM TM_MOIMXM WHERE MOIM_IDXX = #{MOIM_IDXX}
+				UNION
+				SELECT USER_NUMB FROM TB_MEMBER WHERE MOIM_IDXX = #{MOIM_IDXX}
+		       )
+		 WHERE USER_NUMB = #{USER_NUMB}
+	</select>
+
+	<select id="lockMoim" parameterType="String" resultType="String">
+		SELECT MOIM_IDXX
+		  FROM TM_MOIMXM
+		 WHERE MOIM_IDXX = #{value}
+		   AND DELT_YSNO = 'N'
+		 FOR UPDATE
+	</select>
+
 </mapper>

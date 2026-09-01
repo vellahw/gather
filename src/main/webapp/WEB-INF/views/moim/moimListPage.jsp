@@ -19,12 +19,12 @@
 		<h1 class="areaTitle">
 			<c:if test="${CATE_NAME ne null}">
 				<c:if test="${CATE_IMGG ne null}">
-					<img src="${CATE_IMGG}" class="listCategoryIcon" alt="카테고리 이미지"/>
+					<img src="<c:out value='${CATE_IMGG}'/>" class="listCategoryIcon" alt="카테고리 이미지"/>
 				</c:if>
 				<c:out value="${CATE_NAME}" />
 			</c:if>
 			<c:if test="${KEYY_WORD ne null}">
-				<span style = "color:#fd8731; font-weight: bold">'${KEYY_WORD}'&nbsp;</span><span>의 검색 결과</span>
+				<span style = "color:#fd8731; font-weight: bold">'<c:out value="${KEYY_WORD}"/>'&nbsp;</span><span>의 검색 결과</span>
 			</c:if>
 		</h1>
 		<% if(session.getAttribute("USER_NUMB") != null) { %>
@@ -54,29 +54,36 @@
 		<ul>
 			<c:if test="${pageMaker.prev}">
 				<li class="arrow prev">
-					<a href="${pageMaker.startPage - 1 }"></a>
+					<c:url var="prevUrl" value="/gatherList.com">
+						<c:if test="${MOIM_TYPE ne null}"><c:param name="type" value="${MOIM_TYPE}"/></c:if>
+						<c:if test="${CATE_IDXX ne null}"><c:param name="cate" value="${CATE_IDXX}"/></c:if>
+						<c:if test="${KEYY_WORD ne null}"><c:param name="keyword" value="${KEYY_WORD}"/></c:if>
+						<c:param name="pageNum" value="${pageMaker.startPage - 1}"/>
+					</c:url>
+					<a href="<c:out value='${prevUrl}'/>"></a>
 				</li>
 			</c:if>
 			<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-				<li ${pageMaker.cri.pageNum == num ? "active":""}>
-					<c:if test="${CATE_IDXX ne null and MOIM_TYPE eq null}">
-						<a href="/gatherList.com?cate=${CATE_IDXX}&pageNum=${num}"<c:if test="${pageMaker.cri.pageNum == num}">class="act"</c:if>>${num}</a>
-					</c:if>
-					<c:if test="${CATE_IDXX ne null and MOIM_TYPE ne null}">
-						<a href="/gatherList.com?type=${MOIM_TYPE}&cate=${CATE_IDXX}&pageNum=${num}"<c:if test="${pageMaker.cri.pageNum == num}">class="act"</c:if>>${num}</a>
-					</c:if>
-					<c:if test="${KEYY_WORD ne null and MOIM_TYPE eq null}">
-						<a href="/gatherList.com?keyword=${KEYY_WORD}&pageNum=${num}"<c:if test="${pageMaker.cri.pageNum == num}">class="act"</c:if>>${num}</a>
-					</c:if>
-					<c:if test="${KEYY_WORD ne null and MOIM_TYPE ne null}">
-						<a href="/gatherList.com?type=${MOIM_TYPE}&keyword=${KEYY_WORD}&pageNum=${num}"<c:if test="${pageMaker.cri.pageNum == num}">class="act"</c:if>>${num}</a>
-					</c:if>
+				<c:url var="pageUrl" value="/gatherList.com">
+					<c:if test="${MOIM_TYPE ne null}"><c:param name="type" value="${MOIM_TYPE}"/></c:if>
+					<c:if test="${CATE_IDXX ne null}"><c:param name="cate" value="${CATE_IDXX}"/></c:if>
+					<c:if test="${KEYY_WORD ne null}"><c:param name="keyword" value="${KEYY_WORD}"/></c:if>
+					<c:param name="pageNum" value="${num}"/>
+				</c:url>
+				<li<c:if test="${pageMaker.cri.pageNum == num}"> class="active"</c:if>>
+					<a href="<c:out value='${pageUrl}'/>"<c:if test="${pageMaker.cri.pageNum == num}"> class="act"</c:if>><c:out value="${num}"/></a>
 				</li>
 			</c:forEach>
 
 			<c:if test="${pageMaker.next}">
 				<li class="arrow next">
-					<a href="${pageMaker.endPage + 1 }"></a>
+					<c:url var="nextUrl" value="/gatherList.com">
+						<c:if test="${MOIM_TYPE ne null}"><c:param name="type" value="${MOIM_TYPE}"/></c:if>
+						<c:if test="${CATE_IDXX ne null}"><c:param name="cate" value="${CATE_IDXX}"/></c:if>
+						<c:if test="${KEYY_WORD ne null}"><c:param name="keyword" value="${KEYY_WORD}"/></c:if>
+						<c:param name="pageNum" value="${pageMaker.endPage + 1}"/>
+					</c:url>
+					<a href="<c:out value='${nextUrl}'/>"></a>
 				</li>
 			</c:if>
 		</ul>

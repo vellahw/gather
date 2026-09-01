@@ -2,7 +2,6 @@ package com.our.gather.common.service;
 
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.dao.CommonDao;
-import com.our.gather.common.oracleFunction.OracleFunction;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -13,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 @Service("CommonService")
 public class CommonServiceImpl implements CommonService {
 
@@ -231,58 +229,48 @@ public class CommonServiceImpl implements CommonService {
 			tagMap.put("MOIM_IDXX", map.get("MOIM_IDXX"));
 			tagMap.put("HASH_TAGG", hashtags.get(i));
 
-			System.out.println("tagMap " + tagMap);
-
 			commonDao.tagInsert(tagMap);
 
 		}
 
 	}
 	
-	// moim 객체에 follow버튼 추가
-	public Object makeFollowBtn(Object data, HttpSession session) throws Exception {
-		
-        if (data instanceof Map) {
-        	
-            Map<String, Object> map = (Map<String, Object>) data;
-            String userId = map.get("USER_NUMB").toString();
-            String me = session.getAttribute("USER_NUMB").toString();
+	// moim객체에 follow버튼 추가
+	@Override
+	public void makeFollowBtn(Map<String, Object> data, HttpSession session) throws Exception {
+		if (data == null) {
+			return;
+		}
+		makeFollowBtn(java.util.Collections.singletonList(data), session);
+	}
 
-            String folwCode = OracleFunction.getRelationCode(me, userId);
-            String folwBtn = OracleFunction.getCodeName("FOLW_CODE", folwCode);
+	@Override
+	public void makeFollowBtn(List<Map<String, Object>> items, HttpSession session) throws Exception {
+		if (items.isEmpty()) {
+			return;
+		}
+		List<Object> userIds = new ArrayList<>();
+		for (Map<String, Object> item : items) {
+			userIds.add(item.get("USER_NUMB"));
+		}
+		String me = String.valueOf(session.getAttribute("USER_NUMB"));
+		List<Map<String, Object>> states = commonDao.getFollowStates(me, userIds);
+		Map<String, Map<String, Object>> stateByUser = new HashMap<>();
+		for (Map<String, Object> state : states) {
+			stateByUser.put(String.valueOf(state.get("FOLW_USER")), state);
+		}
+		for (Map<String, Object> item : items) {
+			Map<String, Object> state = stateByUser.get(String.valueOf(item.get("USER_NUMB")));
+			if (state != null) {
+				item.put("FOLW_CODE", state.get("FOLW_CODE"));
+				item.put("FOLW_BTNN", state.get("FOLW_BTNN"));
+			}
+		}
+	}
 
-            map.put("FOLW_CODE", folwCode);
-            map.put("FOLW_BTNN", folwBtn);
-
-            return map;
-            
-        } else if (data instanceof List) {
-            List<Map<String, Object>> list = (List<Map<String, Object>>) data;
-            List<Map<String, Object>> processedList = new ArrayList<>();
-            
-            for (int i = 0; i < list.size(); i++) {
-            	
-                Map<String, Object> item = list.get(i);
-                String userId = item.get("USER_NUMB").toString();
-                String me = session.getAttribute("USER_NUMB").toString();
-
-                String folwCode = OracleFunction.getRelationCode(me, userId);
-                String folwBtn = OracleFunction.getCodeName("FOLW_CODE", folwCode);
-
-                item.put("FOLW_CODE", folwCode);
-                item.put("FOLW_BTNN", folwBtn);
-
-                processedList.add(item);
-                
-            }
-            
-            return processedList;
-            
-        } else {
-        	
-            throw new IllegalArgumentException("Unsupported data type: " + data.getClass());
-            
-        }
-    }
+	@Override
+	public String getCodeName(String commonCode, String detailCode) throws Exception {
+		return commonDao.getCodeName(commonCode, detailCode);
+	}
 
 }

@@ -2,6 +2,7 @@ package com.our.gather.moimMakePage.service;
 
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.utils.FileUtils;
+import com.our.gather.common.utils.HtmlUtils;
 import com.our.gather.moimMakePage.dao.MoimMakeDao;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -30,14 +31,12 @@ public class MoimMakeServiceImpl implements MoimMakeService {
 	}
 
 	// 모임 개설
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void makeMoim(Map<String, Object> map, CommandMap commandMap, HttpServletRequest request,
 			HttpSession session) throws Exception {
 
-		try {
-
-			map.put("FILE_IDXX", map.get("MOIM_IDXX"));
+		map.put("FILE_IDXX", map.get("MOIM_IDXX"));
 
 			if(map.get("REGI_CODE") == null) {
 				map.put("ONOF_CODE","1");
@@ -58,7 +57,7 @@ public class MoimMakeServiceImpl implements MoimMakeService {
 
 				if (moimCntt.contains(dataFileName)) {
 
-					moimCntt = moimCntt.replaceAll(dataFileName, newSrc); //기존 data-filename을 현src로 변경
+					moimCntt = moimCntt.replace(dataFileName, newSrc); //기존 data-filename을 현src로 변경
 
 				}
 				
@@ -69,13 +68,7 @@ public class MoimMakeServiceImpl implements MoimMakeService {
 				}
 				
 			}
-			map.put("MOIM_CNTT", moimCntt);
-
-		} catch (Exception e) {
-
-			System.out.println("userJoin 오류 발생! " + e.getMessage());
-
-		}
+		map.put("MOIM_CNTT", HtmlUtils.sanitizeRichText(moimCntt));
 
 		moimMakeDao.makeMoim(map, commandMap);
 

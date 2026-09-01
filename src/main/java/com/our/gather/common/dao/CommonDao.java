@@ -110,4 +110,19 @@ public class CommonDao extends AbstractDao {
 		return searchRegi;
 	}
 
+	public String getCodeName(String commonCode, String detailCode) throws Exception {
+		Map<String, Object> map = new java.util.HashMap<>();
+		map.put("COMM_CODE", commonCode);
+		map.put("COMD_CODE", detailCode);
+		return (String) selectOne("common.getCodeName", map);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> getFollowStates(String userNumb, List<Object> followUsers) throws Exception {
+		Map<String, Object> map = new java.util.HashMap<>();
+		map.put("USER_NUMB", userNumb);
+		map.put("FOLW_USERS", followUsers);
+		return (List<Map<String, Object>>) selectList("common.getFollowStates", map);
+	}
+
 }

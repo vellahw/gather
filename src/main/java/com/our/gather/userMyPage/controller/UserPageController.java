@@ -7,6 +7,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,10 +34,16 @@ public class UserPageController {
 
 		ModelAndView mv = new ModelAndView("/userPage/userPage");
 		mv.setViewName("userPage");
+		if (USER_NUMB == null || !USER_NUMB.matches("[0-9A-Za-z_-]{1,40}")) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
 
 		commandMap.put("USER_NUMB", USER_NUMB);
 
 		Map<String, Object> userMap = userPageService.userPage(commandMap.getMap(), session, commandMap);
+		if (userMap == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
 		
 		List<Map<String, Object>> userRegi = userPageService.userRegi(commandMap.getMap(), commandMap);
 

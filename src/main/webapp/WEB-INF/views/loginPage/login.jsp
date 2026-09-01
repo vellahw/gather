@@ -5,9 +5,12 @@
 <link rel="stylesheet" href="/resources/css/login/login.css">
 <script src="/resources/js/loginPage/login.js"></script>
 <script src="/resources/js/loginPage/join.js"></script>
-<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
 
 <div class="backGroundContainer">
+  <span id="socialPrefill"
+        data-email="<c:out value='${sessionScope.SOCIAL_EMAIL}'/>"
+        data-nick="<c:out value='${sessionScope.SOCIAL_NICK}'/>"
+        hidden></span>
   <ul class="backGroundList">
      <c:forEach var="Bimag" items="${Bimag}">
      <li>
@@ -41,16 +44,15 @@
          </form>
    
         <div class="socialButtons">
-           <div id="naverIdLogin"></div>
-          <button id="naverLogin" onclick="location.href='${urlNaver}'"class="loginButton naver">
+          <button id="naverLogin" type="button" data-url="<c:out value='${urlNaver}'/>" onclick="location.href=this.dataset.url" class="loginButton naver">
             <img class="navericon" src="/resources/img/icon/loginApi/naver.png">
               네이버 로그인
           </button>
-          <button class="loginButton kakao" onclick="location.href='${urlKakao}'">
+          <button type="button" class="loginButton kakao" data-url="<c:out value='${urlKakao}'/>" onclick="location.href=this.dataset.url">
               <img class="kakaoicon" src="/resources/img/icon/loginApi/kakao.png" alt="Kakao Icon">
                카카오 로그인
            </button>
-           <button class="Login google" onclick="location.href='${urlGoogle}'">
+           <button type="button" class="Login google" data-url="<c:out value='${urlGoogle}'/>" onclick="location.href=this.dataset.url">
               <img class="googleicon" src="/resources/img/icon/loginApi/google.png" alt="Google Icon">
                구글 로그인
            </button>
@@ -237,4 +239,4 @@
       </div>
   
 </div>
-<input type="hidden" id="regi" value="${regi}" />
+<input type="hidden" id="regi" value="<c:out value='${regi}'/>" />

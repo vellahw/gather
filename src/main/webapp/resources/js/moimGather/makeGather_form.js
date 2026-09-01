@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 			
 			const parentNameNode = document.createElement('span');
 			parentNameNode.className = 'name';
-			parentNameNode.innerHTML = item.CATE_NAME;
+			parentNameNode.textContent = item.CATE_NAME;
 			parentNameNode.dataset.code1 = item.CATE_CODE;
 
 			const parentIcon = document.createElement('img');
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 			const childNameNode = document.createElement('button');
 			childNameNode.className = 'child';
-			childNameNode.innerHTML = item.CATE_NAME;
+			childNameNode.textContent = item.CATE_NAME;
 			childNameNode.dataset.code2 = item.CATE_CODE;
 		
 			childNode.appendChild(childNameNode);
@@ -115,9 +115,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 			targetParent.classList.add('level1_active');
 
 			// 선택한 카테고리 화면에 띄움
-			const pickedParent = targetParent.querySelector('.name').innerHTML;
-			const pickedChild = document.querySelector('.picked_child').innerHTML;
-			document.getElementById('addPickedCate').innerHTML = `${pickedParent} | ${pickedChild}`;
+			const pickedParent = targetParent.querySelector('.name').textContent;
+			const pickedChild = document.querySelector('.picked_child').textContent;
+			document.getElementById('addPickedCate').textContent = `${pickedParent} | ${pickedChild}`;
 			document.getElementById('addPickedCate').classList.add('addPicked');
 		}
 	});

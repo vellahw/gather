@@ -22,7 +22,7 @@
          <div class="imgSlideList">
             <div class="imgWrap">
               <c:forEach var="i" items="${img}" varStatus="status">
-                <img src="${i.MOIM_IMAG}" class="img" alt="모임 이미지" data-iindex="${status.index}">
+                <img src="<c:out value='${i.MOIM_IMAG}'/>" class="img" alt="모임 이미지" data-iindex="${status.index}">
               </c:forEach>
             </div>
          </div>
@@ -33,8 +33,8 @@
    <div class="detailInfoContainer">
      <div class="headArea">
       <div class="headLeft">
-        <h2 class="detailTitle">${detail.MOIM_TITL}</h2>
-        <div class="category">${detail.PARENTS_CATE}  |  ${detail.CHILD_CATE}</div>
+        <h2 class="detailTitle"><c:out value="${detail.MOIM_TITL}"/></h2>
+        <div class="category"><c:out value="${detail.PARENTS_CATE}"/> | <c:out value="${detail.CHILD_CATE}"/></div>
       </div>
        
        <div class="icons">
@@ -116,14 +116,14 @@
       <h3 class="infoTitle">방장 정보</h3>
       <div class="masterProfile">
         <div class="profileImgWrap dp">
-          <img class="profileImg" src="${detail.USER_IMAG}" onclick="comWhere2Go('userPage','${detail.USER_NUMB}')"/>
+          <img class="profileImg" src="<c:out value='${detail.USER_IMAG}'/>" onclick="comWhere2Go('userPage','${detail.USER_NUMB}')"/>
         </div>
         <div class="profileInfo master">
            <p style="margin-bottom: 5px;">
               <c:out value="${detail.USER_NICK}" />
            </p>
            <p class="self" data-intr-length="${fn:length(detail.SELF_INTR)}">
-              <input type="hidden" value="${detail.SELF_INTR}" id="selfIntr">
+              <input type="hidden" value="<c:out value='${detail.SELF_INTR}'/>" id="selfIntr">
               <c:out value="${detail.SELF_INTR}" />
            </p>
          </div>
@@ -143,14 +143,14 @@
                       <div class="profileWrapper">
                         <div class="profileImgContainer">
                            <div class="profileImgWrap dp" data-count="${count}" id="count">
-                             <img class="profileImg" src="${m.USER_IMAG}" onclick="comWhere2Go('userPage','${m.USER_NUMB}')"/>
+                             <img class="profileImg" src="<c:out value='${m.USER_IMAG}'/>" onclick="comWhere2Go('userPage','${m.USER_NUMB}')"/>
                            </div>
                         </div>
                         <div class="profileInfo">
                            <div style="padding-right: 25px;">
                               <p><c:out value="${m.USER_NICK}" /></p>
                               <p class="self" data-intr-length="${fn:length(m.SELF_INTR)}">
-                              <input type="hidden" value="${m.SELF_INTR}" id="selfIntr">
+                              <input type="hidden" value="<c:out value='${m.SELF_INTR}'/>" id="selfIntr">
                                  <c:out value="${m.SELF_INTR}" />
                               </p>
                            </div>
@@ -177,14 +177,14 @@
                    <div class="profileWrapper">
                       <div class="profileImgContainer">
                          <div class="profileImgWrap dp" data-count="${count}" id="count">
-                            <img class="profileImg" src="${m.USER_IMAG}" onclick="comWhere2Go('userPage','${m.USER_NUMB}')"/>
+                            <img class="profileImg" src="<c:out value='${m.USER_IMAG}'/>" onclick="comWhere2Go('userPage','${m.USER_NUMB}')"/>
                          </div>
                       </div>
                       <div class="profileInfo">
                          <div style="padding-right: 25px;">
                             <p><c:out value="${m.USER_NICK}" /></p>
                               <p class="self" data-intr-length="${fn:length(m.SELF_INTR)}">
-                                 <input type="hidden" value="${m.SELF_INTR}" id="selfIntr">
+                                 <input type="hidden" value="<c:out value='${m.SELF_INTR}'/>" id="selfIntr">
                                  <c:out value="${m.SELF_INTR}" />
                               </p>
                          </div>
@@ -207,8 +207,8 @@
     </div>
     
      <div class="btnContainer">
-       <input type="hidden" value="${yourState}" id="yourState" />
-       <input type="hidden" value="${detail}" id="detail"/> 
+       <input type="hidden" value="<c:out value='${yourState}'/>" id="yourState" />
+       <input type="hidden" value="<c:out value='${detail}'/>" id="detail"/>
        <div class="bubble">참여 승인 대기중이에요!</div>
        
        <button class="basicBtn loginPlz" onclick="loginOnClick()">로그인하고 참여하기</button>

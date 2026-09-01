@@ -11,13 +11,15 @@
    <select id="userInfo" parameterType='hashmap' resultType="hashmap">
      <![CDATA[
            SELECT /* userPage.userInfo */
-                   A.USER_NUMB                                          							/* 회원번호 */                       
-		         , A.USER_NAME																		/* 회원이름 */ 
-		         , A.USER_NICK																		/* 회원닉네임 */
-		         , A.USER_IDXX																		/* 회원아이디 */
-		         , A.CELL_NUMB																		/* 회원 전화번호 */
-		         , A.SELF_INTR																		/* 회원 자기소개 */
-		         , getUserImage(A.FILE_SVNM,A.USER_NUMB) AS USER_IMAG   							/* 회원 프로필 사진*/
+                  A.USER_NUMB
+		        , A.USER_NICK
+		        , A.SELF_INTR
+		         , NVL((SELECT MAX(FI.FILE_PATH)
+		                  FROM TM_FILEXM FI
+		                 WHERE FI.FILE_IDXX = A.USER_NUMB
+		                   AND FI.FILE_SVNM = A.FILE_SVNM
+		                   AND FI.DELT_YSNO = 'N'),
+		               getUserImage(A.FILE_SVNM,A.USER_NUMB)) AS USER_IMAG
 		         , NVL(B.FILE_PATH ,'/resources/img/basic/profile/basicBg.png') AS BACK_IMAG  		/* 회원 배경이미지 */
 		         , NVL(D.FOLW_COUNT, 0) AS FOLW_COUNT												/* 팔로워 수 */
 		         , NVL(C.FOLN_COUNT, 0) AS FOLN_COUNT												/* 팔로잉 수 */

@@ -36,4 +36,10 @@ public interface MoimDetailService {
 	// 게더마감
 	void setMoimEnd(Map<String, Object> map) throws Exception;
 
+	boolean isMoimOwner(String moimId, String userNumb) throws Exception;
+
+	boolean isMoimRelatedUser(String moimId, String userNumb) throws Exception;
+
+	void lockMoim(String moimId) throws Exception;
+
 }

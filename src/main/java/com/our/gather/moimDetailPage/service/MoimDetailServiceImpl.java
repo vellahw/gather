@@ -85,5 +85,20 @@ public class MoimDetailServiceImpl implements MoimDetailService {
 		moimDetailDao.setMoimEnd(map);
 	}
 
+	@Override
+	public boolean isMoimOwner(String moimId, String userNumb) throws Exception {
+		return moimDetailDao.isMoimOwner(moimId, userNumb) > 0;
+	}
+
+	@Override
+	public boolean isMoimRelatedUser(String moimId, String userNumb) throws Exception {
+		return moimDetailDao.isMoimRelatedUser(moimId, userNumb) > 0;
+	}
+
+	@Override
+	public void lockMoim(String moimId) throws Exception {
+		moimDetailDao.lockMoim(moimId);
+	}
+
 
 }

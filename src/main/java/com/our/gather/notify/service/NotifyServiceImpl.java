@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.notify.dao.NotifyDao;
@@ -18,7 +19,9 @@ public class NotifyServiceImpl implements NotifyService {
 
 	//알림 insert
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void insertNotify(Map<String, Object> map, CommandMap commondMap) throws Exception {
+		notifyDao.lockRecipient(map);
 		notifyDao.insertNotify(map, commondMap);
 	}
 

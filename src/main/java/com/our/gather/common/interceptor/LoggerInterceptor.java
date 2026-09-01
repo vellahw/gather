@@ -5,9 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
-public class LoggerInterceptor extends HandlerInterceptorAdapter{
+public class LoggerInterceptor implements HandlerInterceptor {
 	protected Log log = LogFactory.getLog(LoggerInterceptor.class);
 
 	@Override
@@ -17,7 +17,7 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter{
 			log.debug("=======================          START         =======================");
 			log.debug(" Request URI \t:  " + request.getRequestURI());
 		}
-		return super.preHandle(request, response, handler);
+		return true;
 	}
 
 	@Override

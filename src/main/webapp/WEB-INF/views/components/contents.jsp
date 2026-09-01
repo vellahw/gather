@@ -5,7 +5,7 @@
 
 	<div class="eachWrap">
 		<div class="thumnailContainer" onclick="comWhere2Go('detail','${list.MOIM_IDXX}')">
-			<img src="${list.MOIM_IMAG}" onerror="this.onerror=null; this.src='/resources/img/basic/moim/basicMoimThumnail.png';" data-end="${list.ENDD_YSNO}" class="thumnail" alt="썸네일">
+			<img src="<c:out value='${list.MOIM_IMAG}'/>" onerror="this.onerror=null; this.src='/resources/img/basic/moim/basicMoimThumnail.png';" data-end="${list.ENDD_YSNO}" class="thumnail" alt="썸네일">
 		</div>
 		<div class="infoContainer">
 			<h3 class="title" onclick="comWhere2Go('detail','${list.MOIM_IDXX}')">
@@ -51,7 +51,7 @@
 			<div class="userContainer">
 				<div class="userProfileWrap">
 					<div class="profileImgWrap">
-						<img src="${list.USER_IMAG}"class="profileImg" alt="프로필사진" onclick="comWhere2Go('userPage','${list.USER_NUMB}')">
+						<img src="<c:out value='${list.USER_IMAG}'/>" class="profileImg" alt="프로필사진" onclick="comWhere2Go('userPage','${list.USER_NUMB}')">
 					</div>
 					<span class="nickname">
 						<c:out value="${list.USER_NICK}" />

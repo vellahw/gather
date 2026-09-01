@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,13 +35,21 @@ public class CommonController {
 	private SchedulerService schedulerService;
 
 	// 좋아요 update
-	@Transactional
-	@RequestMapping("/likeUpdate.com")
+	@Transactional(rollbackFor = Exception.class)
+	@RequestMapping(value = "/likeUpdate.com", method = RequestMethod.POST)
 	public ResponseEntity<String> likeUpdate(@RequestBody List<Map<String, String>> jsonArray, HttpSession session,
 			HttpServletRequest request, CommandMap commandMap) throws Exception {
+		if (jsonArray == null || jsonArray.isEmpty() || jsonArray.size() > 100) {
+			return ResponseEntity.badRequest().body("invalid_request");
+		}
 
 		for (Map<String, String> item : jsonArray) {
 			String clikeYsno = item.get("CLIKE_YSNO");
+			String likeId = item.get("LIKE_IDXX");
+			if (!("0".equals(clikeYsno) || "1".equals(clikeYsno))
+					|| likeId == null || !likeId.matches("GT[0-9A-Za-z_-]{1,30}")) {
+				return ResponseEntity.badRequest().body("invalid_request");
+			}
 			if ("1".equals(clikeYsno)) {
 
 				commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
@@ -80,13 +89,18 @@ public class CommonController {
 	}
 
 	// 좋아요 update
-	@Transactional
-	@RequestMapping("/followUpdate.com")
+	@Transactional(rollbackFor = Exception.class)
+	@RequestMapping(value = "/followUpdate.com", method = RequestMethod.POST)
 	public ResponseEntity<String> followUpdate(@RequestBody Map<String, String> responseMap, HttpSession session,
 			HttpServletRequest request, CommandMap commandMap) throws Exception {
 
 		String folwCode = responseMap.get("folwCode");
 		String folwUser = responseMap.get("folwUser");
+		String currentUser = String.valueOf(session.getAttribute("USER_NUMB"));
+		if (!("FI".equals(folwCode) || "FO".equals(folwCode)) || folwUser == null
+				|| folwUser.equals(currentUser) || !folwUser.matches("[0-9A-Za-z_-]{1,40}")) {
+			return ResponseEntity.badRequest().body("invalid_request");
+		}
 		
 		commandMap.put("USER_NUMB", session.getAttribute("USER_NUMB"));
 		commandMap.put("FOLW_USER", folwUser);
@@ -109,8 +123,8 @@ public class CommonController {
 	    } catch(Exception e) {
 	    	
 	    	
-	    	System.out.println("error : " + e.getMessage());       
-	    	return ResponseEntity.ok("fail");    	
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			return ResponseEntity.status(409).body("follow_update_failed");
 	    }
 	}
 

@@ -56,10 +56,10 @@ function loginOnClick() {
   로그아웃 클릭 이벤트
   */
  function logoutOnclick() {
- 	
-   sessionStorage.clear();
-   location.href = "/gather/logoutDo.com";
-   
+   comAjax("POST", "/gather/logoutDo.com", null, null, function() {
+     sessionStorage.clear();
+     location.href = "/gather.com";
+   });
  }
  
 document.addEventListener("DOMContentLoaded", function(){

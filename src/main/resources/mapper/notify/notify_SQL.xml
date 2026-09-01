@@ -5,6 +5,13 @@
 알림
  -->
 <mapper namespace="notify">
+
+   <select id="lockRecipient" parameterType="hashMap" resultType="String">
+      SELECT USER_NUMB
+        FROM TM_USERXM
+       WHERE USER_NUMB = #{USER_NUMB}
+         FOR UPDATE
+   </select>
    
    <!-- 알림 INSERT -->
    <insert id="insertNotify" parameterType="hashMap">

@@ -11,15 +11,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 
 import com.our.gather.common.common.CommandMap;
-import com.our.gather.common.dao.CommonDao;
 import com.our.gather.common.utils.FileUtils;
+import com.our.gather.common.utils.PasswordUtils;
 import com.our.gather.userJoinPage.dao.JoinDao;
 
 @Service("JoinService")
 public class JoinServiceImpl implements JoinService {
-
-	@Resource(name = "CommonDao")
-	private CommonDao commonDao;
 
 	@Resource(name = "JoinDao")
 	private JoinDao joinDao;
@@ -30,10 +27,9 @@ public class JoinServiceImpl implements JoinService {
 	@Override
 	public void userJoin(Map<String, Object> map, CommandMap commandMap, HttpServletRequest request,
 			HttpSession session) throws Exception {
+		map.put("PASS_WORD", PasswordUtils.hash(String.valueOf(map.get("PASS_WORD"))));
 
-		try {
-			
-			map.put("FILE_IDXX",map.get("USER_NUMB"));
+		map.put("FILE_IDXX",map.get("USER_NUMB"));
 			
 			List<Map<String, Object>> flist = fileUtils.fileInsert(map, request, session);
 
@@ -45,11 +41,6 @@ public class JoinServiceImpl implements JoinService {
 
 				}
 			}
-
-		} catch (Exception e) {
-			System.out.println("userJoin 오류 발생! " + e.getMessage());
-
-		}
 
 		joinDao.joinUs(map, commandMap);
 

@@ -196,9 +196,9 @@ document.addEventListener('DOMContentLoaded', function () {
        , SELF_INTR : userSelfIntro
     };
 
-    nicknameNode.innerHTML = userNickname;
-    selfIntroNode.innerHTML = userSelfIntro;
-    idNode.innerHTML = `${userIdValue}`;
+    nicknameNode.textContent = userNickname;
+    selfIntroNode.textContent = userSelfIntro;
+    idNode.textContent = userIdValue;
 
     /* 유저의 성별에 따른 기본 프로필 사진 설정 */
     if(userRegi2%2 == 0) {
@@ -240,6 +240,7 @@ document.addEventListener('DOMContentLoaded', function () {
     fetch("/gather/checkidDo.com", {
       method: "POST",
       headers: {
+        ...comCsrfHeaders(),
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -262,14 +263,12 @@ document.addEventListener('DOMContentLoaded', function () {
         let email = $("#userId").val(); // 입력한 이메일
         
         comAjax(
-            "GET"
-          , "/gather/mailCheck?email=" + email
-          , null
-          , null
+            "POST"
+          , "/gather/mailCheck"
+          , JSON.stringify({ email: email })
+          , "application/json"
           , function(data){
           
-            console.log('인증번호: '+ data);
-
             if(data != 'fail') {
               comAlert3("이메일이 발송되었습니다.", null, "success", function(){ document.getElementById('authnum').focus(); });
 
@@ -288,13 +287,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const authNum = document.getElementById('authnum');
   
-                // 인증번호 불일치
-                if(authNum.value != data) {
-                  // 경고문 띄움
-                  controlStyleAndAppendWarning(authNum, 'appendAuthnum', '인증번호가 틀립니다. 다시 확인해주세요.');
-                
-                // 인증번호 일치
-                } else {
+                comAjax(
+                  "POST",
+                  "/gather/mailVerify",
+                  JSON.stringify({ email: userId.value, code: authNum.value }),
+                  "application/json",
+                  function(verifyResult) {
+                    if (verifyResult !== 'verified') {
+                      controlStyleAndAppendWarning(authNum, 'appendAuthnum', '인증번호가 틀렸거나 만료되었습니다.');
+                      return;
+                    }
                   comAlert3(
                     '인증 완료되었습니다'
                   , null
@@ -308,7 +310,8 @@ document.addEventListener('DOMContentLoaded', function () {
                   );
 
                   isAuth = 'Y'; // 인증 유무 저장
-                }
+                  }
+                );
 
               });
             
@@ -349,7 +352,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const parentRegiNameNode = document.createElement('span');
     parentRegiNameNode.className = 'parent';
-    parentRegiNameNode.innerHTML = item.REGI_NAME;
+    parentRegiNameNode.textContent = item.REGI_NAME;
     parentRegiNameNode.dataset.rcode = item.PARENTS_CODE;
 
     parentRegiWrap.appendChild(parentRegiNameNode)
@@ -525,7 +528,7 @@ const showUserPickedRegi = function(pickedList, regiList) {
     const regiName = current.regiName;
     
     const regiItemTag = document.createElement('li');
-    regiItemTag.innerHTML = regiName;
+    regiItemTag.textContent = regiName;
     regiItemTag.className = 'pickedChildRegiitem';
     
     const targetParent = document.querySelector(`ul[data-step4-child="${current.parentCode}"]`);
@@ -547,7 +550,7 @@ const showUserPickedRegi = function(pickedList, regiList) {
     childRegiListTag.dataset.step4Child = current.parentCode;
     
     const parentName = document.createElement('span');
-    parentName.innerHTML = current.parentName;
+    parentName.textContent = current.parentName;
 
     parentList.appendChild(parentName);
     parentList.appendChild(childRegiListTag);
@@ -782,6 +785,7 @@ const showUserPickedRegi = function(pickedList, regiList) {
 
     fetch("/gather/joinDo.com", {
       method: "POST",
+      headers: comCsrfHeaders(),
       body: formData
     })
     .then(response => {
@@ -1110,6 +1114,7 @@ const inputChangeHandler = function() {
       fetch("/gather/checknickDo.com", {
         method: "POST",
         headers: {
+          ...comCsrfHeaders(),
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -1190,7 +1195,7 @@ const controlStyleAndAppendWarning = function(element, appendId, appendText) {
   //   document.querySelector('.'+ appendId).classList.add('append-margin-bottom');
   // }
 
-  document.getElementById(appendId).innerHTML = appendText;
+  document.getElementById(appendId).textContent = appendText;
 
   element.focus();
 }
@@ -1263,4 +1268,4 @@ function updateTimerDisplay(timeInSeconds) {
   const seconds = timeInSeconds % 60;
 
   timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-} 
+}

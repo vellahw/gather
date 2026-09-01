@@ -22,9 +22,11 @@ public class NaverLoginVO {
 
     @Value("${app.naver.clientSecret}")
     private String NAVER_CLIENT_SECRET;
+
+    @Value("${app.base-url}")
+    private String baseUrl;
     
-	private final static String REDIRECT_URI = "http://localhost:8080/gather/naverLoginDo.com";
-	private final static String SESSION_STATE = "oauth_state";
+	private final static String SESSION_STATE = "naver_oauth_state";
 	private final static String PROFILE_API_URL = "https://openapi.naver.com/v1/nid/me";
 
 	public String getAuthorizationUrl(HttpSession session) {
@@ -36,7 +38,7 @@ public class NaverLoginVO {
 				
 			.apiKey(NAVER_CLIENT_ID)
 			.apiSecret(NAVER_CLIENT_SECRET)
-			.callback(REDIRECT_URI)
+			.callback(baseUrl + "/gather/naverLoginDo.com")
 			.state(state) 
 			.build(NaverLoginApi.instance());
 
@@ -45,11 +47,12 @@ public class NaverLoginVO {
 	}
 
 	public OAuth2AccessToken getAccessToken(HttpSession session, String code, String state) throws IOException {
+		validateState(session, state);
 		
 		OAuth20Service oauthService = new ServiceBuilder()
 			.apiKey(NAVER_CLIENT_ID)
 			.apiSecret(NAVER_CLIENT_SECRET)
-			.callback(REDIRECT_URI)
+			.callback(baseUrl + "/gather/naverLoginDo.com")
 			.state(state)
 			.build(NaverLoginApi.instance());
 			
@@ -64,12 +67,15 @@ public class NaverLoginVO {
 		OAuth20Service oauthService = new ServiceBuilder()
 				.apiKey(NAVER_CLIENT_ID)
 				.apiSecret(NAVER_CLIENT_SECRET)
-				.callback(REDIRECT_URI)
+				.callback(baseUrl + "/gather/naverLoginDo.com")
 				.build(NaverLoginApi.instance());
 		
 		OAuthRequest request = new OAuthRequest(Verb.GET, PROFILE_API_URL, oauthService);
 		oauthService.signRequest(oauthToken, request);
 		Response response = request.send();
+		if (response.getCode() < 200 || response.getCode() >= 300) {
+			throw new IOException("Naver profile request failed");
+		}
 		return response.getBody();
 	}
 	
@@ -83,6 +89,14 @@ public class NaverLoginVO {
 	private void setSession(HttpSession session, String state) {
 		session.setAttribute(SESSION_STATE, state);
 
+	}
+
+	private void validateState(HttpSession session, String state) throws IOException {
+		Object expected = session.getAttribute(SESSION_STATE);
+		session.removeAttribute(SESSION_STATE);
+		if (expected == null || !expected.equals(state)) {
+			throw new IOException("Invalid OAuth state");
+		}
 	}
 
 

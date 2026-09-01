@@ -10,6 +10,9 @@ import com.our.gather.common.dao.AbstractDao;
 
 @Repository("NotifyDao")
 public class NotifyDao extends AbstractDao {
+	public void lockRecipient(Map<String, Object> map) throws Exception {
+		selectOne("notify.lockRecipient", map);
+	}
 
 	// 알림 insert
 	public void insertNotify(Map<String, Object> map, CommandMap commondMap) throws Exception {

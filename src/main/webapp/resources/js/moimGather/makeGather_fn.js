@@ -479,6 +479,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   
       fetch("/gather/makeMoimDo.com", {
         method: "POST",
+        headers: comCsrfHeaders(),
         body: formData,
       })
       .then(response => {

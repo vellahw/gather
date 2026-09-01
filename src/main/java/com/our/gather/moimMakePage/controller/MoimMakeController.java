@@ -5,9 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.service.CommonService;
 import com.our.gather.moimMakePage.service.MoimMakeService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +25,8 @@ import java.util.Map;
 
 @Controller
 public class MoimMakeController {
+	@Value("${app.kakao.mapAppKey}")
+	private String kakaoMapAppKey;
 
 	@Resource(name = "CommonService")
 	private CommonService commonService;
@@ -43,12 +47,13 @@ public class MoimMakeController {
 
 		mv.addObject("cate", cate);
 		mv.addObject("regi", regi);
+		mv.addObject("kakaoMapAppKey", kakaoMapAppKey);
 
 		return mv;
 	}
 
 	// 게더 개설 (Transactional 처리: 트랜잭션 내에서 데이터 변경)
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@RequestMapping(value = "/gather/makeMoimDo.com", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<String> makeGather(@RequestParam("data") String gatherData, @RequestParam("map") String mapData
@@ -61,6 +66,9 @@ public class MoimMakeController {
 			// gatherData JSON 문자열을 Map으로 변환 (모임 정보)
 			Map<String, Object> resultMoimData = objectMapper.readValue(gatherData,
 					new TypeReference<Map<String, Object>>() {});
+			if (!isValidMoim(resultMoimData)) {
+				return ResponseEntity.badRequest().body("invalid_moim_data");
+			}
 
 			// mapData JSON 문자열을 Map으로 변환 (지도 정보)
 			Map<String, Object> resultMapData = objectMapper.readValue(mapData,
@@ -76,7 +84,8 @@ public class MoimMakeController {
 			String moimNumb = moimMakeService.makeMoimNumb(commandMap.getMap(), commandMap);
 
 			// 오프라인 모임인 경우 (모임 주소가 비어 있지 않은 경우)
-			if (!resultMapData.get("MOIM_ADR1").equals("")) {
+			if (!String.valueOf(resultMapData.get("MOIM_ADR1")).trim().isEmpty()
+					&& !"null".equals(String.valueOf(resultMapData.get("MOIM_ADR1")))) {
 				resultMapData.put("MOIM_IDXX", moimNumb); // 생성된 모임 ID를 위치 데이터에 추가
 
 				// 주소를 기반으로 행정 구역 코드 추출
@@ -114,11 +123,38 @@ public class MoimMakeController {
 			return ResponseEntity.ok(moimNumb);
 
 		} catch (Exception e) {
-			// 예외 발생 시 스택 트레이스 출력 및 오류 메시지 반환
-			e.printStackTrace();
-			System.out.println("error : " + e.getMessage());
-			return ResponseEntity.ok("fail");
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			return ResponseEntity.status(400).body("moim_creation_failed");
 		}
+	}
+
+	private boolean isValidMoim(Map<String, Object> moim) {
+		String type = text(moim.get("MOIM_TYPE"));
+		String title = text(moim.get("MOIM_TITL"));
+		String content = text(moim.get("MOIM_CNTT"));
+		String category = text(moim.get("CATE_IDXX"));
+		String approval = text(moim.get("APPR_YSNO"));
+		String gender = text(moim.get("APPR_GNDR"));
+		try {
+			int minAge = Integer.parseInt(text(moim.get("MINN_AGEE")));
+			int maxAge = Integer.parseInt(text(moim.get("MAXX_AGEE")));
+			int minPeople = Integer.parseInt(text(moim.get("MINN_PEOP")));
+			int maxPeople = Integer.parseInt(text(moim.get("MAXX_PEOP")));
+			int cost = Integer.parseInt(text(moim.get("MOIM_COST")));
+			return type.matches("[A-Z]{2}") && !title.isEmpty() && title.length() <= 100
+					&& content.length() <= 100000 && category.matches("[0-9A-Za-z_-]{1,20}")
+					&& ("Y".equals(approval) || "N".equals(approval))
+					&& (gender.isEmpty() || "N".equals(gender) || "M".equals(gender) || "W".equals(gender))
+					&& minAge >= 0 && maxAge <= 100 && minAge <= maxAge
+					&& minPeople >= 1 && maxPeople <= 100 && minPeople <= maxPeople
+					&& cost >= 0 && cost <= 100000000;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+	private String text(Object value) {
+		return value == null ? "" : String.valueOf(value).trim();
 	}
 
 }

@@ -89,4 +89,22 @@ public class MoimDetailDao extends AbstractDao {
 		update("moim.setMoimEnd", map);
 	}
 
+	public int isMoimOwner(String moimId, String userNumb) throws Exception {
+		Map<String, Object> map = new java.util.HashMap<>();
+		map.put("MOIM_IDXX", moimId);
+		map.put("USER_NUMB", userNumb);
+		return Integer.parseInt(selectOne("moim.isMoimOwner", map).toString());
+	}
+
+	public int isMoimRelatedUser(String moimId, String userNumb) throws Exception {
+		Map<String, Object> map = new java.util.HashMap<>();
+		map.put("MOIM_IDXX", moimId);
+		map.put("USER_NUMB", userNumb);
+		return Integer.parseInt(selectOne("moim.isMoimRelatedUser", map).toString());
+	}
+
+	public void lockMoim(String moimId) throws Exception {
+		selectOne("moim.lockMoim", moimId);
+	}
+
 }

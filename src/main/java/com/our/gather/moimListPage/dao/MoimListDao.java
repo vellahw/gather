@@ -2,7 +2,6 @@ package com.our.gather.moimListPage.dao;
 
 import com.our.gather.common.common.CommandMap;
 import com.our.gather.common.dao.AbstractDao;
-import com.our.gather.common.oracleFunction.OracleFunction;
 import com.our.gather.common.service.CommonService;
 import org.springframework.stereotype.Repository;
 
@@ -26,31 +25,9 @@ public class MoimListDao extends AbstractDao {
 
         List<Map<String, Object>> getMoimList = (List<Map<String, Object>>) selectList("moim.getMoim", map);
 
-        for (int i = 0; i < getMoimList.size(); i++) {
-            Map<String, Object> hash = new HashMap<>();
-            hash.put("HASH_IDXX", getMoimList.get(i).get("MOIM_IDXX"));
-
-            List<Map<String, Object>> HashTag = (List<Map<String, Object>>) selectList("common.hashTag", hash);
-
-            List<Object> hashTag = new ArrayList<>();
-
-            if (!HashTag.isEmpty()) {
-
-                for (Map<String, Object> tag : HashTag) {
-
-                    hashTag.add(tag.get("HASH_TAGG"));
-
-                }
-
-                getMoimList.get(i).put("HASH_TAGG", hashTag);
-            }
-
-            if (session.getAttribute("USER_NUMB") != null) {
-
-                commonService.makeFollowBtn(getMoimList, session);
-
-            }
-
+        enrichHashTags(getMoimList);
+        if (session.getAttribute("USER_NUMB") != null) {
+            commonService.makeFollowBtn(getMoimList, session);
         }
 
         return getMoimList;
@@ -60,6 +37,32 @@ public class MoimListDao extends AbstractDao {
     //모임 총 갯수
     public int getMoimCount(Map<String, Object> map, CommandMap commandMap) throws Exception {
         return Integer.parseInt(selectOne("moim.getMoimCount", map).toString());
+    }
+
+    @SuppressWarnings("unchecked")
+    private void enrichHashTags(List<Map<String, Object>> moims) throws Exception {
+        if (moims.isEmpty()) {
+            return;
+        }
+        List<Object> ids = new ArrayList<>();
+        Map<Object, List<Object>> tagsById = new HashMap<>();
+        for (Map<String, Object> moim : moims) {
+            Object id = moim.get("MOIM_IDXX");
+            ids.add(id);
+            tagsById.put(id, new ArrayList<>());
+        }
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("IDS", ids);
+        List<Map<String, Object>> tags = (List<Map<String, Object>>) selectList("common.hashTags", parameters);
+        for (Map<String, Object> tag : tags) {
+            List<Object> values = tagsById.get(tag.get("HASH_IDXX"));
+            if (values != null) {
+                values.add(tag.get("HASH_TAGG"));
+            }
+        }
+        for (Map<String, Object> moim : moims) {
+            moim.put("HASH_TAGG", tagsById.get(moim.get("MOIM_IDXX")));
+        }
     }
 
 

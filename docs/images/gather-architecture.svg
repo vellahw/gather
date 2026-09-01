@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="800" viewBox="0 0 1400 800" role="img" aria-labelledby="title desc">
+  <title id="title">GATHER 시스템 구조</title>
+  <desc id="desc">브라우저 요청이 보안 필터, Spring MVC 컨트롤러, 서비스, MyBatis를 거쳐 Oracle 데이터베이스로 전달되고 외부 API, 파일 저장소, 스케줄러와 연동되는 구조</desc>
+
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="7" stdDeviation="10" flood-color="#6f4c35" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7b716b"/>
+    </marker>
+    <style>
+      .title { font: 700 28px Arial, 'Noto Sans KR', sans-serif; fill: #29231f; letter-spacing: 1px; }
+      .subtitle { font: 400 14px Arial, 'Noto Sans KR', sans-serif; fill: #756a63; }
+      .group-label { font: 700 12px Arial, 'Noto Sans KR', sans-serif; fill: #9a7b66; letter-spacing: 1.5px; }
+      .node-title { font: 700 17px Arial, 'Noto Sans KR', sans-serif; fill: #2f2925; }
+      .node-text { font: 400 13px Arial, 'Noto Sans KR', sans-serif; fill: #6f625a; }
+      .chip-text { font: 600 12px Arial, 'Noto Sans KR', sans-serif; fill: #4d5868; }
+      .edge-label { font: 600 11px Arial, 'Noto Sans KR', sans-serif; fill: #8a7d75; }
+      .flow { fill: none; stroke: #7b716b; stroke-width: 2.2; marker-end: url(#arrow); }
+      .flow-soft { fill: none; stroke: #a99b92; stroke-width: 1.8; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1400" height="800" rx="28" fill="#fffaf6"/>
+  <circle cx="1320" cy="70" r="120" fill="#ffead9" opacity="0.65"/>
+  <circle cx="72" cy="744" r="145" fill="#fff0e4" opacity="0.8"/>
+
+  <text x="700" y="52" text-anchor="middle" class="title">GATHER SYSTEM ARCHITECTURE</text>
+  <text x="700" y="79" text-anchor="middle" class="subtitle">요청 검증부터 비즈니스 규칙, 데이터 저장과 외부 연동까지</text>
+
+  <text x="58" y="137" class="group-label">CLIENT</text>
+  <text x="304" y="137" class="group-label">REQUEST SECURITY</text>
+  <text x="594" y="137" class="group-label">APPLICATION</text>
+  <text x="928" y="137" class="group-label">DATA &amp; STORAGE</text>
+  <text x="1150" y="137" class="group-label">EXTERNAL SERVICES</text>
+
+  <g filter="url(#shadow)">
+    <rect x="54" y="174" width="190" height="112" rx="20" fill="#ffffff"/>
+    <circle cx="94" cy="216" r="20" fill="#ff8a34"/>
+    <path d="M82 211h24M82 218h24M88 204c-8 8-8 20 0 28M100 204c8 8 8 20 0 28" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+    <text x="124" y="213" class="node-title">Browser</text>
+    <text x="124" y="237" class="node-text">JSP · JavaScript</text>
+    <text x="76" y="266" class="node-text">탐색 · 가입 · 모임 운영</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="302" y="158" width="220" height="248" rx="22" fill="#eef5ff"/>
+    <text x="412" y="194" text-anchor="middle" class="node-title">Request Protection</text>
+
+    <rect x="326" y="218" width="172" height="44" rx="12" fill="#ffffff"/>
+    <circle cx="351" cy="240" r="10" fill="#5b8def"/>
+    <path d="M347 240l3 3 6-7" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="371" y="245" class="chip-text">CSRF Filter</text>
+
+    <rect x="326" y="276" width="172" height="44" rx="12" fill="#ffffff"/>
+    <circle cx="351" cy="298" r="10" fill="#5b8def"/>
+    <path d="M347 298l3 3 6-7" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="371" y="303" class="chip-text">Security Headers</text>
+
+    <rect x="326" y="334" width="172" height="44" rx="12" fill="#ffffff"/>
+    <circle cx="351" cy="356" r="10" fill="#5b8def"/>
+    <path d="M347 356l3 3 6-7" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="371" y="361" class="chip-text">Auth Interceptor</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="592" y="158" width="260" height="106" rx="20" fill="#fff0e3"/>
+    <rect x="592" y="158" width="8" height="106" rx="4" fill="#ff8a34"/>
+    <text x="622" y="200" class="node-title">Spring MVC Controller</text>
+    <text x="622" y="226" class="node-text">요청 검증 · 화면/JSON 응답</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="592" y="310" width="260" height="112" rx="20" fill="#fff0e3"/>
+    <rect x="592" y="310" width="8" height="112" rx="4" fill="#ff8a34"/>
+    <text x="622" y="352" class="node-title">Service · Transaction</text>
+    <text x="622" y="378" class="node-text">권한 · 정원 · 상태 전이</text>
+    <text x="622" y="400" class="node-text">알림 · 파일 처리 · 데이터 조립</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="592" y="468" width="260" height="106" rx="20" fill="#fff0e3"/>
+    <rect x="592" y="468" width="8" height="106" rx="4" fill="#ff8a34"/>
+    <text x="622" y="510" class="node-title">DAO · MyBatis</text>
+    <text x="622" y="536" class="node-text">배치 조회 · 행 잠금 · SQL 매핑</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="928" y="452" width="168" height="122" rx="20" fill="#eaf7ef"/>
+    <ellipse cx="1012" cy="486" rx="34" ry="12" fill="#5bb47b"/>
+    <path d="M978 486v42c0 7 15 13 34 13s34-6 34-13v-42" fill="#dff3e7" stroke="#5bb47b" stroke-width="2"/>
+    <path d="M978 507c0 7 15 13 34 13s34-6 34-13" fill="none" stroke="#5bb47b" stroke-width="2"/>
+    <text x="1012" y="562" text-anchor="middle" class="node-title">Oracle</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="928" y="278" width="168" height="120" rx="20" fill="#eaf7ef"/>
+    <path d="M995 312h34l12 12v32h-46z" fill="#ffffff" stroke="#5bb47b" stroke-width="2"/>
+    <path d="M1029 312v13h12M1006 337h24M1006 347h18" fill="none" stroke="#5bb47b" stroke-width="2" stroke-linecap="round"/>
+    <text x="1012" y="382" text-anchor="middle" class="node-title">Upload Storage</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1148" y="158" width="198" height="106" rx="20" fill="#f3efff"/>
+    <text x="1174" y="199" class="node-title">OAuth 2.0</text>
+    <text x="1174" y="226" class="node-text">Naver · Kakao · Google</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1148" y="310" width="198" height="106" rx="20" fill="#f3efff"/>
+    <text x="1174" y="351" class="node-title">OpenWeather</text>
+    <text x="1174" y="378" class="node-text">날씨 기반 모임 추천</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1148" y="462" width="198" height="106" rx="20" fill="#f3efff"/>
+    <text x="1174" y="503" class="node-title">SMTP</text>
+    <text x="1174" y="530" class="node-text">이메일 인증번호 발송</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="54" y="490" width="190" height="112" rx="20" fill="#fff5dc"/>
+    <circle cx="94" cy="532" r="20" fill="#e6ac32"/>
+    <circle cx="94" cy="532" r="11" fill="none" stroke="#ffffff" stroke-width="2"/>
+    <path d="M94 525v8l6 4" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+    <text x="124" y="529" class="node-title">Scheduler</text>
+    <text x="124" y="553" class="node-text">1시간 주기</text>
+    <text x="76" y="581" class="node-text">사전 알림 · 자동 마감</text>
+  </g>
+
+  <path d="M244 230H302" class="flow"/>
+  <text x="273" y="218" text-anchor="middle" class="edge-label">HTTP</text>
+
+  <path d="M522 230H592" class="flow"/>
+  <text x="557" y="218" text-anchor="middle" class="edge-label">검증된 요청</text>
+
+  <path d="M722 264V310" class="flow"/>
+  <text x="736" y="290" class="edge-label">위임</text>
+
+  <path d="M722 422V468" class="flow"/>
+  <text x="736" y="448" class="edge-label">조회·변경</text>
+
+  <path d="M852 521H928" class="flow"/>
+  <text x="890" y="509" text-anchor="middle" class="edge-label">SQL</text>
+
+  <path d="M852 366H892V338H928" class="flow-soft"/>
+  <text x="895" y="326" text-anchor="middle" class="edge-label">파일</text>
+
+  <path d="M244 546H520V366H592" class="flow-soft"/>
+  <text x="404" y="532" text-anchor="middle" class="edge-label">예약 작업</text>
+
+  <path d="M852 190H1108V211H1148" class="flow-soft"/>
+  <path d="M852 211H1120V363H1148" class="flow-soft"/>
+  <path d="M852 232H1108V515H1148" class="flow-soft"/>
+  <text x="1000" y="179" text-anchor="middle" class="edge-label">외부 API 연동</text>
+
+  <g transform="translate(54 690)">
+    <rect width="1292" height="62" rx="16" fill="#2f2925"/>
+    <circle cx="32" cy="31" r="9" fill="#ff8a34"/>
+    <text x="54" y="27" style="font:700 13px Arial, 'Noto Sans KR', sans-serif; fill:#ffffff;">핵심 원칙</text>
+    <text x="54" y="46" style="font:400 12px Arial, 'Noto Sans KR', sans-serif; fill:#d9d0ca;">신뢰 경계에서 요청을 검증하고, 서비스 계층에서 비즈니스 규칙을 보장하며, DB 제약으로 데이터 무결성을 완성합니다.</text>
+  </g>
+</svg>
