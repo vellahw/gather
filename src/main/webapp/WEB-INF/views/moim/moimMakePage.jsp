@@ -10,7 +10,7 @@
 <script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d204e67062ee2684baf0eaa95db96a85&libraries=services"></script>
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=<c:out value='${kakaoMapAppKey}'/>&libraries=services"></script>
 
 <% if(session.getAttribute("USER_NUMB") ==  null)  { %>
 	<script>
@@ -232,4 +232,4 @@
 		</div>
 	</div>
 </div>
-<input id="cateData" type="hidden" value="${cate}">
+<input id="cateData" type="hidden" value="<c:out value='${cate}'/>">

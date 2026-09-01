@@ -6,7 +6,7 @@
 
 <div class="userInfo1">
 	<div class="background-image">
-		<img src="${user.BACK_IMAG}" alt="프로필 사진">
+		<img src="<c:out value='${user.BACK_IMAG}'/>" alt="프로필 사진">
 		<div class="profileBtnContainer">
 		    <button class="Btn f" data-code="${user.FOLW_CODE}"data-numb="${user.USER_NUMB}" onclick="comFollow('${user.FOLW_CODE}','${user.USER_NUMB}')" >
 	        	<c:out value="${user.FOLW_BTNN}" />
@@ -14,7 +14,7 @@
 		</div>
 	</div>
 	<div class="profile-picture">
-	    <img src="${user.USER_IMAG}" alt="프로필 사진">
+	    <img src="<c:out value='${user.USER_IMAG}'/>" alt="프로필 사진">
 	</div>
 	<div class="nickname">
 	    <c:out value="${user.USER_NICK}"/>
@@ -38,8 +38,7 @@
 </div>
 <div class="userInfo2">
 	<div class="user">
-		<p class="id">${user.USER_IDXX}</p>
-		<p class="selfIntro">${user.SELF_INTR}</p>
+		<p class="selfIntro"><c:out value="${user.SELF_INTR}"/></p>
 		<div class="pickedRegiContianer">
 			<h3>
 				<img src="/resources/img/icon/detail/location_detail.png" alt="지역 아이콘" />

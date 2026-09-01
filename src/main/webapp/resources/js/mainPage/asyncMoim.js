@@ -17,9 +17,8 @@ document.addEventListener("DOMContentLoaded", function(){
           
     var latitude= pos.coords.latitude;
     var longitude = pos.coords.longitude;
-    var apiURI = "http://api.openweathermap.org/data/2.5/weather?"
-      + "lat="+ latitude + "&lon=" + longitude
-      + "&lang=kr&appid=12984781cde1466744c656c07b5a583c&units=metric";
+    var apiURI = "/weather.com?lat=" + encodeURIComponent(latitude)
+      + "&lon=" + encodeURIComponent(longitude);
 
     var city = "";
 
@@ -42,7 +41,6 @@ document.addEventListener("DOMContentLoaded", function(){
       url : apiURI,
       dataType : "json",
       type : "GET",
-      async : "false",
       success : function(data) {
 
         const weatherTitleArea = document.getElementById('weatherTitle');
@@ -109,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function(){
                 + ' 이런 ' + comWhereAmI().moimTypeKr +" 어때요?"
           }
                         
-        } else if(temp >= 27 && weather == '01'){
+        } else if(temp >= 27){
                             
           weatherType = "hot";
           weatherTitleArea.innerHTML = '오늘 같이 더운 날 '                 
@@ -122,6 +120,8 @@ document.addEventListener("DOMContentLoaded", function(){
           weatherTitleArea.innerHTML = '오늘 같이 추운 날 '                 
               + '<img src="/resources/img/icon/weather/cold.png" class="areaTitleIcon"/>'
               + ' 이런 ' + comWhereAmI().moimTypeKr +" 어때요?"
+        } else {
+          weatherType = "cloudy";
         }
   
         getWeatherMoim(weatherType, moimType);
@@ -156,6 +156,7 @@ document.addEventListener("DOMContentLoaded", function(){
       data: JSON.stringify({   city : city,
                                   moimType: moimType }),
       type : "post",
+      headers: comCsrfHeaders(),
       dataType: "json",
       contentType: "application/json",
       success : function(data) {
@@ -202,6 +203,7 @@ document.addEventListener("DOMContentLoaded", function(){
       data: JSON.stringify({ weatherType: weatherType ,
                                  moimType: moimType }),
       type : "post",
+      headers: comCsrfHeaders(),
       dataType: "json",
       contentType: "application/json",
       success : function(data) {
@@ -238,22 +240,27 @@ document.addEventListener("DOMContentLoaded", function(){
 
   // 요소 만듦
   function createElement(data) {
+    const safe = {};
+    Object.keys(data).forEach(key => safe[key] = comEscapeHtml(data[key]));
+    const safeId = encodeURIComponent(String(data.MOIM_IDXX || ''));
     const hashtag = data.HASH_TAGG;
     let str =
       `<div class="eachWrap">
-       <div class="thumnailContainer" onclick="comWhere2Go('detail','${data.MOIM_IDXX}')">
-       <img src="${data.MOIM_IMAG}" data-end="${data.ENDD_YSNO}" class="thumnail" alt="썸네일">
+       <div class="thumnailContainer" onclick="comWhere2Go('detail','${safeId}')">
+       <img src="${safe.MOIM_IMAG}" data-end="${safe.ENDD_YSNO}" class="thumnail" alt="썸네일">
        </div>
        <div class="infoContainer">
-       <h3 class="title" onclick="comWhere2Go('detail','${data.MOIM_IDXX}')">${data.MOIM_TITL}</h3>
+       <h3 class="title" onclick="comWhere2Go('detail','${safeId}')">${safe.MOIM_TITL}</h3>
        <div class="hashtagContainer">`;
     
     if(hashtag) {
       if(hashtag.length !=0) {
   
         for (let i = 0; i < hashtag.length; i++) {
-          str += `<button type="submit" class="hashtag" onclick="comWhere2Go('search','${data.HASH_TAGG[i]}')"">
-                    #${data.HASH_TAGG[i]}
+          const safeTag = comEscapeHtml(data.HASH_TAGG[i]);
+          const safeTagParam = encodeURIComponent(String(data.HASH_TAGG[i] || ''));
+          str += `<button type="submit" class="hashtag" onclick="comWhere2Go('search','${safeTagParam}')">
+                    #${safeTag}
                   </button>`
         }
   
@@ -267,26 +274,26 @@ document.addEventListener("DOMContentLoaded", function(){
               <div class="locationContainer">
                 <div class="tooltip">
                   <img src="/resources/img/icon/locationIcon.png" class="locationIcon" alt="장소 아이콘">
-                  <span class="location">${data.REGI_NAME}</span>
-                  <div class="tooltiptext">${data.PREGI_NAME}</div>
+                  <span class="location">${safe.REGI_NAME}</span>
+                  <div class="tooltiptext">${safe.PREGI_NAME}</div>
                   </div>
                 </div>
-                <span class="dateContainer">${data.SMAL_DATE}</span>
+                <span class="dateContainer">${safe.SMAL_DATE}</span>
               </div>
               <div class="userContainer">
                 <div class="userProfileWrap">
                   <div class="profileImgWrap">
-                    <img src="${data.USER_IMAG}" class="profileImg" alt="프로필사진">
+                    <img src="${safe.USER_IMAG}" class="profileImg" alt="프로필사진">
                   </div>
-                  <span class="nickname">${data.USER_NICK}</span>
+                  <span class="nickname">${safe.USER_NICK}</span>
                 </div>
                 <div class="heartWrap">
-                  <input type="hidden" data-like-id="${data.MOIM_IDXX}" value="${data.LIKE_YSNO}" id="heartYN"/>
+                  <input type="hidden" data-like-id="${safe.MOIM_IDXX}" value="${safe.LIKE_YSNO}" id="heartYN"/>
                   <div class="heartContainer">
-                    <input class="heart-box" type="checkbox" id="${data.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
-                    <label class="heartIcon" for="${data.MOIM_IDXX}"></label>
-                    <input id="realCount" type="hidden" data-realCount-id="${data.MOIM_IDXX}" value="${data.LIKE_COUNT}" >
-                    <span id="showCount" class="heartCount main" data-ShowCount-id="${data.MOIM_IDXX}"></span>
+                    <input class="heart-box" type="checkbox" id="${safe.MOIM_IDXX}" onchange="handleCheckboxChange(this)">
+                    <label class="heartIcon" for="${safe.MOIM_IDXX}"></label>
+                    <input id="realCount" type="hidden" data-realCount-id="${safe.MOIM_IDXX}" value="${safe.LIKE_COUNT}" >
+                    <span id="showCount" class="heartCount main" data-ShowCount-id="${safe.MOIM_IDXX}"></span>
                   </div>
                 </div>
               </div>

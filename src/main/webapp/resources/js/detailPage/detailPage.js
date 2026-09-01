@@ -245,10 +245,10 @@ document.addEventListener("DOMContentLoaded", function(){
           if(cutValue.substring(11, 12) == ' ') {
             cutValue.substring(0, 11);
 
-            selfIntrNode.innerHTML = `${cutValue}...`;
+            selfIntrNode.textContent = `${cutValue}...`;
           }
 
-          selfIntrNode.innerHTML = `${cutValue}...`;
+          selfIntrNode.textContent = `${cutValue}...`;
         }
 
       });
@@ -479,7 +479,7 @@ document.addEventListener("DOMContentLoaded", function(){
   /* 참여 유효성 검사 */
   function onClickHandler() {
     const { MINN_AGEE, MAXX_AGEE, GNDR_CODE, MOIM_IDXX, APPR_YSNO, MAXX_PEOP, MEMB_COUNT } = detail;
-    const { USER_AGEE, USER_JUMIN2, USER_NUMB} = sessionStorage;
+    const { USER_AGEE, USER_GNDR, USER_NUMB} = sessionStorage;
     const yourStateValue = document.getElementById('yourState').value;
 
     // 인원
@@ -491,7 +491,7 @@ document.addEventListener("DOMContentLoaded", function(){
       comAlert2(4, null, '회원님의 나이가 모임의 연령대에 맞지 않아요');
   
     // 성별
-    } else if(isGenderMismatch(GNDR_CODE, USER_JUMIN2)) {
+    } else if(isGenderMismatch(GNDR_CODE, USER_GNDR)) {
       comAlert2(4, null, getGenderMismatchMessage(GNDR_CODE));
 
     } else if(yourStateValue != 'null') {
@@ -808,15 +808,15 @@ document.addEventListener("DOMContentLoaded", function(){
     }
   }
 
-  function isGenderMismatch(moimGender, userJumin2) {
+  function isGenderMismatch(moimGender, userGender) {
     if(moimGender == null) {
 
       return false;
 
     } else {
       
-      return (moimGender === 'M' && userJumin2 === '2' || userJumin2 === '4') ||
-            (moimGender === 'W' && userJumin2 === '1' || userJumin2 === '3');
+      return (moimGender === 'M' && userGender !== 'M') ||
+            (moimGender === 'W' && userGender !== 'W');
 
     }
   }

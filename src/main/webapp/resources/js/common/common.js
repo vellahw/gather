@@ -53,6 +53,7 @@ function comAjax(targetType, targetUrl, targetData, targetContentType, targetSuc
     url: targetUrl,
     data: targetData,
     contentType: targetContentType,
+    headers: comCsrfHeaders(),
     success: targetSuccess,
     error: function (xhr) {
         console.log(xhr.responseText);
@@ -567,3 +568,26 @@ parameter: (targetValue : replace하려는 값)
 const comOnlyNumber = function(targetValue) {
 	return targetValue.replace(/[^0-9]/g, '');
 }
+
+function comCsrfHeaders() {
+  const meta = document.querySelector('meta[name="csrf-token"]');
+  return meta && meta.content ? { "X-CSRF-TOKEN": meta.content } : {};
+}
+
+function comEscapeHtml(value) {
+  const span = document.createElement('span');
+  span.textContent = value == null ? '' : String(value);
+  return span.innerHTML;
+}
+document.addEventListener('DOMContentLoaded', function () {
+  fetch('/gather/session.com', { credentials: 'same-origin' })
+    .then(function (response) { return response.ok ? response.json() : null; })
+    .then(function (session) {
+      if (!session || !session.authenticated) return;
+      ['USER_NUMB', 'USER_TYPE', 'TYPE_CODE', 'USER_NAME', 'USER_NICK',
+        'USER_IMAG', 'USER_AGEE', 'USER_GNDR'].forEach(function (key) {
+        if (session[key] != null) sessionStorage.setItem(key, session[key]);
+      });
+    })
+    .catch(function () { /* 서버 세션이 없으면 비로그인 상태를 유지한다. */ });
+});
