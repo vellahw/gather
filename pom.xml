@@ -16,7 +16,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<!-- 스프링 버전 변경 -->
-		<org.springframework-version>5.3.39</org.springframework-version>
+		<org.springframework-version>6.1.21</org.springframework-version>
 		<org.slf4j-version>1.7.36</org.slf4j-version>
 		<!-- tiles관련 추가 -->
 		<org.apache.tiles-version>3.0.8</org.apache.tiles-version>
